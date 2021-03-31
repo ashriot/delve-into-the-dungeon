@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/battles/PlayerPanel.gd" type="Script" id=1]
+[ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/sheets/minirogue-c64-all.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/icons/selector.png" type="Texture" id=4]
+
+[node name="PlayerPanel" type="Control"]
+margin_right = 32.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 33, 12 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPCur" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -13.0
+margin_top = 2.0
+margin_right = -1.0
+margin_bottom = 8.0
+text = "023"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPPercent" type="TextureProgress" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -13.0
+margin_top = -3.0
+margin_right = -2.0
+margin_bottom = -2.0
+mouse_filter = 2
+value = 50.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 2 )
+tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_progress = Color( 0.533333, 0.721569, 0.498039, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Potrait" type="Sprite" parent="."]
+position = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+centered = false
+vframes = 13
+hframes = 10
+frame = 73
+
+[node name="Status" type="Sprite" parent="."]
+position = Vector2( 11, 2 )
+texture = ExtResource( 3 )
+centered = false
+vframes = 13
+hframes = 10
+frame = 38
+
+[node name="Selector" type="Sprite" parent="."]
+visible = false
+position = Vector2( -1, -1 )
+texture = ExtResource( 4 )
+centered = false

@@ -1,0 +1,158 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/battles/EnemyPanel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/enemies/death.tres" type="Resource" id=2]
+[ext_resource path="res://src/players/jobs/sorcerer.tres" type="Resource" id=3]
+[ext_resource path="res://src/players/jobs/fighter.tres" type="Resource" id=4]
+[ext_resource path="res://src/battles/PlayerPanel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/battles/Battle.gd" type="Script" id=6]
+[ext_resource path="res://src/battles/BattleButton.tscn" type="PackedScene" id=7]
+
+[node name="Battle" type="Control"]
+margin_right = 72.0
+margin_bottom = 128.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+player1 = ExtResource( 4 )
+player2 = ExtResource( 3 )
+enemy1 = ExtResource( 2 )
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0392157, 0.0392157, 0.0392157, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerPanels" type="Control" parent="."]
+margin_left = 2.0
+margin_top = 48.0
+margin_right = 70.0
+margin_bottom = 74.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerPanel" parent="PlayerPanels" instance=ExtResource( 5 )]
+margin_right = 33.0
+
+[node name="PlayerPanel2" parent="PlayerPanels" instance=ExtResource( 5 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_right = 0.0
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -50.0
+margin_right = -1.0
+margin_bottom = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BattleButton" parent="Buttons" instance=ExtResource( 7 )]
+margin_top = 0.0
+margin_bottom = 9.0
+
+[node name="BattleButton2" parent="Buttons" instance=ExtResource( 7 )]
+
+[node name="BattleButton3" parent="Buttons" instance=ExtResource( 7 )]
+margin_top = 20.0
+margin_bottom = 29.0
+
+[node name="BattleButton4" parent="Buttons" instance=ExtResource( 7 )]
+margin_top = 30.0
+margin_bottom = 39.0
+
+[node name="BattleButton5" parent="Buttons" instance=ExtResource( 7 )]
+margin_top = 40.0
+margin_bottom = 49.0
+
+[node name="EnemyPanels" type="Control" parent="."]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 61.0
+margin_bottom = 41.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyPanel" parent="EnemyPanels" instance=ExtResource( 1 )]
+
+[node name="InfoPanel" type="Panel" parent="."]
+visible = false
+margin_left = 1.0
+margin_top = 75.0
+margin_right = 63.0
+margin_bottom = 113.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="InfoPanel"]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 61.0
+margin_bottom = 38.0
+custom_constants/line_separation = 0
+bbcode_enabled = true
+bbcode_text = "Orfus casts Blizzard!"
+text = "Orfus casts Blizzard!"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip" type="Panel" parent="."]
+visible = false
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 63.0
+margin_bottom = 61.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Tooltip"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 61.0
+margin_bottom = 9.0
+
+[node name="Name" type="Label" parent="Tooltip"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 42.0
+margin_bottom = 8.0
+text = "Blizzard"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Uses" type="Label" parent="Tooltip"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 33.0
+margin_top = 1.0
+margin_right = 61.0
+margin_bottom = 8.0
+text = "x17"
+align = 2
+
+[node name="Label" type="Label" parent="Tooltip"]
+margin_left = 2.0
+margin_top = 9.0
+margin_right = 61.0
+margin_bottom = 59.0
+text = "Deal INTx8 WTR dmg. to all foes.
+
+50% chance to add SLOW."
+autowrap = true

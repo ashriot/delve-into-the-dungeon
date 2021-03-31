@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://src/players/player.gd" type="Script" id=1]
+[ext_resource path="res://src/players/tomes/scorch.tres" type="Resource" id=2]
+[ext_resource path="res://src/players/tomes/heal.tres" type="Resource" id=3]
+[ext_resource path="res://src/players/weapons/wooden_sword.tres" type="Resource" id=4]
+
+[resource]
+script = ExtResource( 1 )
+name = "Fighter"
+job = "Fighter"
+frame = 73
+hp_max = 60
+hp_cur = 60
+strength = 10
+agility = 9
+intellect = 6
+defense = 7
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+str_mod = 0
+agi_mod = 0
+int_mod = 0
+def_mod = 0
+actions = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ]

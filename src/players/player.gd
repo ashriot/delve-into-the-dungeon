@@ -1,0 +1,26 @@
+extends Resource
+class_name Player
+
+export var name: String
+export var job: String
+export var frame: int
+
+export var hp_max: int
+export var hp_cur: int
+
+export var strength: int
+export var agility: int
+export var intellect: int
+export var defense: int
+
+export var str_bonus: int
+export var agi_bonus: int
+export var int_bonus: int
+export var def_bonus: int
+
+export var str_mod: int
+export var agi_mod: int
+export var int_mod: int
+export var def_mod: int
+
+export(Array, Resource) var actions

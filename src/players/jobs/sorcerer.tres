@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://src/players/player.gd" type="Script" id=1]
+[ext_resource path="res://src/players/tomes/scorch.tres" type="Resource" id=2]
+[ext_resource path="res://src/players/tomes/heal.tres" type="Resource" id=3]
+
+[resource]
+script = ExtResource( 1 )
+name = "Wizard"
+job = "Fighter"
+frame = 78
+hp_max = 42
+hp_cur = 34
+strength = 3
+agility = 8
+intellect = 12
+defense = 4
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+str_mod = 0
+agi_mod = 0
+int_mod = 0
+def_mod = 0
+actions = [ ExtResource( 3 ), ExtResource( 2 ) ]

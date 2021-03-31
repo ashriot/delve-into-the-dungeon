@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/players/action.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Wooden Sword"
+desc = "Deal {potency} {dmg} damage to {target}."
+frame = 69
+uses = 50
+action_type = 0
+target_type = 4
+damage_type = 0
+stat_used = 0
+stat_vs = 3
+multiplier = 2.5
+bonus_damage = 0
+hits = 1
+sound_fx = "bonk"
