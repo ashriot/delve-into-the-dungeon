@@ -6,5 +6,9 @@ func _ready() -> void:
 	self.queue_free()
 
 func init(parent, text) -> void:
-	$Text.text = text
+	$Text/TextL.text = text
+	$Text/TextR.text = text
+	$Text/TextU.text = text
+	$Text/TextD.text = text
+	$Text/Text.text = text
 	parent.add_child(self)

@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Resource",
-"class": "Action",
-"language": "GDScript",
-"path": "res://src/players/action.gd"
-}, {
 "base": "Button",
 "class": "BattleButton",
 "language": "GDScript",
@@ -35,6 +30,16 @@ _global_script_classes=[ {
 "path": "res://src/core/enum.gd"
 }, {
 "base": "Resource",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://src/core/inventory.gd"
+}, {
+"base": "Resource",
+"class": "Item",
+"language": "GDScript",
+"path": "res://src/core/item.gd"
+}, {
+"base": "Resource",
 "class": "Player",
 "language": "GDScript",
 "path": "res://src/players/player.gd"
@@ -43,15 +48,22 @@ _global_script_classes=[ {
 "class": "PlayerPanel",
 "language": "GDScript",
 "path": "res://src/battles/PlayerPanel.gd"
+}, {
+"base": "Resource",
+"class": "SaveData",
+"language": "GDScript",
+"path": "res://src/core/save_data.gd"
 } ]
 _global_script_class_icons={
-"Action": "",
 "BattleButton": "",
 "Enemy": "",
 "EnemyPanel": "",
 "Enum": "",
+"Inventory": "",
+"Item": "",
 "Player": "",
-"PlayerPanel": ""
+"PlayerPanel": "",
+"SaveData": ""
 }
 
 [application]
@@ -59,6 +71,12 @@ _global_script_class_icons={
 config/name="Legend RPG"
 run/main_scene="res://src/core/Game.tscn"
 config/icon="res://icon.png"
+config/Version="0.1"
+
+[autoload]
+
+ItemDb="*res://src/singletons/ItemDb.gd"
+GameManager="*res://src/singletons/GameManager.gd"
 
 [display]
 
@@ -100,6 +118,7 @@ texture={
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/2d/use_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_environment="res://default_env.tres"

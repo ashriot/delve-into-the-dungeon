@@ -4,7 +4,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "Bounce"
-length = 1.2
+length = 0.8
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Text:modulate")
@@ -13,7 +13,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.8, 1 ),
+"times": PoolRealArray( 0, 0.15, 0.7, 0.8 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -25,35 +25,91 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.25, 0.4, 0.55, 0.7 ),
+"times": PoolRealArray( 0.1, 0.2, 0.35, 0.45, 0.55 ),
 "transitions": PoolRealArray( 0.5, 2, 2, 2, 2 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 0 ), Vector2( 0, -5 ), Vector2( 0, 0 ) ]
 }
 
 [node name="DamageText" type="Control"]
-margin_left = -6.0
-margin_top = -4.0
-margin_right = 8.0
-margin_bottom = 3.0
+margin_left = -12.0
+margin_right = 12.0
+margin_bottom = 7.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text" type="Label" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+[node name="Text" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 7, 3.5 )
+
+[node name="TextL" type="Label" parent="Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_right = -1.0
+rect_pivot_offset = Vector2( 7, 3.5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "999!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextR" type="Label" parent="Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+rect_pivot_offset = Vector2( 7, 3.5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "999!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextU" type="Label" parent="Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+rect_pivot_offset = Vector2( 7, 3.5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "999!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextD" type="Label" parent="Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 7, 3.5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "999!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="Label" parent="Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
 custom_constants/shadow_as_outline = 1
 text = "999!"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Bounce"

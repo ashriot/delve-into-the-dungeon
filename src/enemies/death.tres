@@ -8,6 +8,7 @@ name = "Death"
 desc = "BOOGIE"
 level = 1
 gold = 25
+hp_max = 110
 strength = 8
 agility = 3
 intellect = 6

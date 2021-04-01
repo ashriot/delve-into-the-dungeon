@@ -1,6 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
+[ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/players/jobs/sorcerer.tres" type="Resource" id=3]
+[ext_resource path="res://src/players/jobs/fighter.tres" type="Resource" id=4]
+[ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -44,10 +48,12 @@ shader = SubResource( 3 )
 [node name="Game" type="Control"]
 margin_right = 72.0
 margin_bottom = 128.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+players = [ ExtResource( 4 ), ExtResource( 3 ) ]
 
 [node name="Battle" parent="." instance=ExtResource( 2 )]
 
@@ -61,10 +67,23 @@ __meta__ = {
 }
 
 [node name="SepiaShader" type="ColorRect" parent="."]
+visible = false
 material = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PartyMenu" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="InventoryMenu" type="Control" parent="PartyMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

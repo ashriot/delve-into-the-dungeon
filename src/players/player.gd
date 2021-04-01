@@ -1,9 +1,12 @@
 extends Resource
 class_name Player
 
+signal player_changed
+
 export var name: String
 export var job: String
 export var frame: int
+export var slot: int
 
 export var hp_max: int
 export var hp_cur: int
@@ -23,4 +26,7 @@ export var agi_mod: int
 export var int_mod: int
 export var def_mod: int
 
-export(Array, Resource) var actions
+export(Array, Resource) var items
+
+func changed():
+	emit_signal("player_changed", self)

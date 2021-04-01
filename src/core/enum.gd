@@ -7,7 +7,7 @@ enum StatType {
 	INT,
 	DEF
 }
-enum ActionType {
+enum ItemType {
 	WEAPON,
 	SKILL,
 	TOME,
