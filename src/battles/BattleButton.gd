@@ -27,11 +27,11 @@ func setup(_item: Item) -> void:
 
 func set_uses_remain(value):
 	uses_remain = value
+	item.uses = value
 	uses.text = str(uses_remain)
 	uses2.text = str(uses_remain)
 
 func set_selected(value: bool):
 	selected = value
-	print("button selected: ", value)
 	if selected: selector.show()
 	else: selector.hide()

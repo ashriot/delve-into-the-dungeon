@@ -14,7 +14,7 @@ func initialize_game_data(_game):
 	var dir = Directory.new();
 	if dir.file_exists(file_path):
 		save_data = load(file_path)
-#		loading = true
+		loading = true
 	else:
 		dir.make_dir_recursive(path)
 		save_data = SaveData.new()
@@ -22,10 +22,13 @@ func initialize_game_data(_game):
 		loading = false
 
 func initialize_party():
-	var players = game.players
+	var players = []
 	if loading:
-		for player in save_data.players:
+		print("LOADING DATA")
+		for player in save_data.players.values():
 			var new_player = Player.new()
+			new_player.slot = player["slot"]
+			new_player.frame = player["frame"]
 			new_player.hp_max = player["hp_max"]
 			new_player.hp_cur = player["hp_cur"]
 			new_player.strength = player["str"]
@@ -33,9 +36,15 @@ func initialize_party():
 			new_player.intellect = player["int"]
 			new_player.defense = player["def"]
 			new_player.items = array_to_items(player["items"])
+			players.insert(new_player.slot, new_player)
+		game.players = players
+	else: players = game.players
+	var i = 0
 	for player in players:
+		player.slot = i
 		player.connect("player_changed", self, "_on_player_changed")
 		player.changed()
+		i += 1
 
 func items_to_array(items: Array) -> Array:
 	var array = []
@@ -52,19 +61,17 @@ func array_to_items(array: Array) -> Array:
 	return items
 
 func _on_player_changed(player: Player):
-	print("Player Changed")
 	var new_player = {}
 	new_player["slot"] = player.slot
 	new_player["hp_max"] = player.hp_max
 	new_player["hp_cur"] = player.hp_cur
+	new_player["frame"] = player.frame
 	new_player["str"] = player.strength
 	new_player["agi"] = player.agility
 	new_player["int"] = player.intellect
 	new_player["def"] = player.defense
 	new_player["items"] = items_to_array(player.items)
-	for member in save_data.party:
-		if member["slot"] == new_player["slot"]:
-			member = new_player
+	save_data.players[player.slot] = new_player
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(file_path, error)
 
@@ -81,9 +88,7 @@ func _on_inventory_changed(inventory):
 	var item_list = []
 	for item in inventory.get_items():
 		item_list.append([item.name, item.uses])
-	print("Item List: ")
 	for i in item_list:
-		print(i)
 		save_data.inventory.append(i)
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(file_path, error)

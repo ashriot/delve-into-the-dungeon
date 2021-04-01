@@ -37,6 +37,7 @@ func init(game):
 
 func setup_buttons() -> void:
 	var i = 0
+	for item in current_player.player.items: print(item)
 	for button in buttons.get_children():
 		if i < current_player.player.items.size():
 			var item = current_player.player.items[i]
@@ -83,9 +84,9 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		cur_btn = null
 		get_tree().call_group("enemy_panels", "targetable", false)
 		return
-	button.selected = true
 	if cur_btn != null: cur_btn.selected = false
 	cur_btn = button
+	button.selected = true
 	get_tree().call_group("enemy_panels", "targetable", true)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
@@ -109,6 +110,7 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	damage_text.init(self, str(dmg))
 	panel.take_hit()
 	panel.hp_cur -= dmg
+	current_player.player.changed()
 	get_next_player()
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:

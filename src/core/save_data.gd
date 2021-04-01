@@ -6,4 +6,4 @@ export var profile_name: String
 export(Array, String) var profiles
 
 export var inventory: Array
-export var party: Array
+export var players: Dictionary
