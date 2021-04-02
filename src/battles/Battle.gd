@@ -56,6 +56,7 @@ func select_player(panel: PlayerPanel) -> void:
 
 func get_next_player() -> void:
 	yield(get_tree().create_timer(0.5), "timeout")
+	cur_btn = null
 	for panel in player_panels.get_children():
 		if panel.enabled and panel.ready:
 			select_player(panel)
@@ -74,7 +75,7 @@ func enemy_turns():
 	# ENEMY TURNS DONE
 	for panel in player_panels.get_children():
 		panel.ready = true
-	select_player(player_panels.get_child(0))
+	select_player(player_panels.get_children()[0])
 
 func show_dmg_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
@@ -115,10 +116,11 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	execute_vs_enemy(panel)
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
-	if cur_btn and cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
-		if not panel.valid_target: return
-		execute_vs_player(panel)
-	else: select_player(panel)
+	if cur_btn:
+		if cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
+			if not panel.valid_target: return
+			execute_vs_player(panel)
+	select_player(panel)
 
 func execute_vs_enemy(panel) -> void:
 	clear_selections()
