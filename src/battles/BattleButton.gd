@@ -2,7 +2,6 @@ extends Button
 class_name BattleButton
 
 onready var sprite = $Sprite
-onready var sprite2 = $Selected/Sprite2
 onready var title = $Title
 onready var title2 = $Selected/Title2
 onready var uses = $Uses
@@ -19,7 +18,6 @@ func init(battle) -> void:
 func setup(_item: Item) -> void:
 	item = _item
 	sprite.frame = item.frame
-	sprite2.frame = item.frame
 	title.text = item.name
 	title2.text = item.name
 	self.uses_remain = item.uses

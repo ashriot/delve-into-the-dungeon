@@ -6,6 +6,7 @@ var path = "user://" + save_name;
 var file_path = path.plus_file("data.tres")
 
 var loading: = false
+var spd: = 1.0
 
 var game
 

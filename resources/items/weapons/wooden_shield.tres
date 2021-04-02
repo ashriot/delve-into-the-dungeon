@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Wooden Shield"
+desc = "Deal {potency} {dmg} damage to {target}."
+frame = 87
+max_uses = 50
+uses = 50
+item_type = 0
+target_type = 0
+damage_type = 0
+stat_used = 0
+stat_vs = 3
+multiplier = 2.5
+bonus_damage = 0
+hits = 1
+hit_chance = 0
+crit_chance = 0
+sound_fx = "bonk"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]

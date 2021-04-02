@@ -19,7 +19,10 @@ var hp_max: int
 var valid_target: bool
 var enabled: bool
 
+var hexes: Array
+
 func init(battle, _enemy: Enemy) -> void:
+	hexes = []
 	enabled = true
 	enemy = _enemy
 	sprite.frame = enemy.frame
@@ -39,6 +42,7 @@ func get_def(stat) -> int:
 	return -999
 
 func take_hit(hit: Hit, hit_stat: int) -> void:
+	var item = hit.item as Item
 	var hit_and_crit = get_hit_and_crit_chance(hit.hit_chance, hit.crit_chance, hit_stat)
 	var hit_chance = hit_and_crit[0]
 	var crit_chance = hit_and_crit[1]
@@ -47,8 +51,8 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	print("Hit Chance: ", hit_chance, "% -> Roll: ", (100 - hit_roll))
 	if hit_roll > hit_chance:
 		miss = true
-	var dmg = int((hit.item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
-	var def = get_def(hit.item.stat_vs)
+	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
+	var def = get_def(item.stat_vs)
 	var rel_def = (def - hit.atk) / hit.atk + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
 	var pos = rect_global_position
@@ -64,11 +68,22 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	else:
 		dmg_text = "MISS"
 	emit_signal("show_dmg", dmg_text, pos)
+	if item.inflict_hexes.size() > 0 and not miss:
+		for hex in item.inflict_hexes:
+			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			gain_hex(hex)
+			emit_signal("show_dmg", hex, pos)
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+
 
 func attack() -> void:
 	anim.play("Attack")
 	yield(anim, "animation_finished")
 	emit_signal("done")
+
+func gain_hex(hex_name: String) -> void:
+	hexes.append(hex_name)
+	if hex_name == "Slow": enemy.agility -= 10
 
 func targetable(value: bool, display = true):
 	if not enabled: return

@@ -17,4 +17,7 @@ export var hits:= 1
 export var hit_chance: int
 export var crit_chance: int
 export var sound_fx: String
-export var added_effect: Resource
+export(Array, String) var inflict_boons
+export(Array, String) var inflict_hexes
+export(Array, String) var gain_boons
+export(Array, String) var gain_hexes

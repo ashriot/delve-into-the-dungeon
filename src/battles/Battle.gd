@@ -109,6 +109,9 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
+	print(panel.enemy.name, "\nHP: ", panel.hp_cur, "/", panel.hp_max, \
+		"\nSTR: ", panel.enemy.strength, "\nAGI: ", panel.enemy.agility, \
+		"\nINT: ", panel.enemy.intellect, "\nDEF: ", panel.enemy.defense)
 	if not panel.valid_target: return
 	enemy_panels.hide_all_selectors()
 	if cur_btn == null: return

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://src/players/player.gd" type="Script" id=1]
+[ext_resource path="res://resources/items/weapons/wooden_sword.tres" type="Resource" id=2]
+[ext_resource path="res://resources/items/skills/blade_dance.tres" type="Resource" id=3]
+[ext_resource path="res://resources/items/weapons/snare_bow.tres" type="Resource" id=4]
+
+[resource]
+script = ExtResource( 1 )
+name = "Dancer"
+frame = 71
+hp_max = 50
+hp_cur = 50
+strength = 6
+agility = 9
+intellect = 7
+defense = 5
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+str_mod = 0
+agi_mod = 0
+int_mod = 0
+def_mod = 0
+items = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]

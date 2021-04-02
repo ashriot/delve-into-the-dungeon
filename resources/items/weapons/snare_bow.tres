@@ -4,19 +4,23 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Punch"
-desc = ""
-frame = 120
+name = "Snare Bow"
+desc = "Deal {potency} {dmg} damage to {target}."
+frame = 82
 max_uses = 30
 uses = 30
 item_type = 0
-target_type = 7
+target_type = 6
 damage_type = 0
-stat_used = 0
-stat_vs = 3
+stat_used = 1
+stat_vs = 1
 multiplier = 2.0
 bonus_damage = 0
-hits = 2
-hit_chance = 80
+hits = 1
+hit_chance = 90
 crit_chance = 0
-sound_fx = ""
+sound_fx = "bonk"
+inflict_boons = [  ]
+inflict_hexes = [ "Slow" ]
+gain_boons = [  ]
+gain_hexes = [  ]

@@ -2,21 +2,16 @@
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
 
+
 [resource]
 script = ExtResource( 1 )
-name = "Scorch"
-desc = ""
-frame = 121
-max_uses = 40
-uses = 40
-item_type = 0
-target_type = 6
-damage_type = 3
+name = "Heal"
+frame = 71
+max_uses = 30
+uses = 30
+item_type = 2
+target_type = 1
+damage_type = 6
 stat_used = 2
 stat_vs = 2
 multiplier = 3.0
-bonus_damage = 0
-hits = 1
-hit_chance = 0
-crit_chance = 0
-sound_fx = ""

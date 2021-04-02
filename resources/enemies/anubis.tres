@@ -1,6 +1,7 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://src/enemies/enemy.gd" type="Script" id=1]
+[ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
+
 
 [resource]
 script = ExtResource( 1 )
@@ -8,7 +9,7 @@ name = "Anubis"
 desc = "BOOGIE"
 level = 1
 gold = 25
-frame = 7
+frame = 6
 hp_max = 110
 strength = 8
 agility = 3

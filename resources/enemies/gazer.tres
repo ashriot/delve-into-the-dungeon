@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Gazer"
+frame = 0
+hp_max = 0
+hp_cur = 0
+strength = 0
+agility = 0
+intellect = 0
+defense = 0
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+str_mod = 0
+agi_mod = 0
+int_mod = 0
+def_mod = 0
+desc = "BOOGIE"
+level = 1
+gold = 25

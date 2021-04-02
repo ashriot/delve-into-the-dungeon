@@ -1,14 +1,12 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/players/player.gd" type="Script" id=1]
-[ext_resource path="res://items/tomes/scorch.tres" type="Resource" id=2]
+[ext_resource path="res://resources/items/tomes/scorch.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
 name = "Wizard"
-job = "Fighter"
 frame = 78
-slot = 0
 hp_max = 42
 hp_cur = 34
 strength = 3
