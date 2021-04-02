@@ -5,13 +5,13 @@
 [resource]
 script = ExtResource( 1 )
 name = "Necromancer"
-frame = 0
-hp_max = 0
+frame = 5
+hp_max = 45
 hp_cur = 0
-strength = 0
-agility = 0
-intellect = 0
-defense = 0
+strength = 3
+agility = 5
+intellect = 12
+defense = 10
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0

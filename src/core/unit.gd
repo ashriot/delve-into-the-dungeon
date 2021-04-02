@@ -23,16 +23,16 @@ export var int_mod: int
 export var def_mod: int
 
 func get_strength() -> int:
-	return (strength + str_bonus) * str_mod
+	return (strength + str_bonus) * (1 + str_mod)
 
 func get_agility() -> int:
-	return (agility + agi_bonus) * agi_mod
+	return (agility + agi_bonus) * (1 + agi_mod)
 
 func get_intellect() -> int:
-	return (intellect + int_bonus) * int_mod
+	return (intellect + int_bonus) * (1 + int_mod)
 
 func get_defense() -> int:
-	return (defense + def_bonus) * def_mod
+	return (defense + def_bonus) * (1 + def_mod)
 
 
 func get_stat(stat) -> int:

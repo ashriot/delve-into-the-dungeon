@@ -67,10 +67,10 @@ func _on_player_changed(player: Player):
 	new_player["hp_max"] = player.hp_max
 	new_player["hp_cur"] = player.hp_cur
 	new_player["frame"] = player.frame
-	new_player["str"] = player.strength
-	new_player["agi"] = player.agility
-	new_player["int"] = player.intellect
-	new_player["def"] = player.defense
+	new_player["str"] = player.base_str()
+	new_player["agi"] = player.base_agi()
+	new_player["int"] = player.base_int()
+	new_player["def"] = player.base_def()
 	new_player["items"] = items_to_array(player.items)
 	save_data.players[player.slot] = new_player
 	var error = ResourceSaver.save(file_path, save_data)

@@ -5,13 +5,13 @@
 [resource]
 script = ExtResource( 1 )
 name = "Death"
-frame = 0
-hp_max = 0
+frame = 4
+hp_max = 100
 hp_cur = 0
-strength = 0
-agility = 0
-intellect = 0
-defense = 0
+strength = 2
+agility = 6
+intellect = 12
+defense = 4
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0

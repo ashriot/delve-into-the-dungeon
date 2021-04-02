@@ -2,16 +2,24 @@
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
 
-
 [resource]
 script = ExtResource( 1 )
-name = "Death"
-desc = "BOOGIE"
-level = 1
-gold = 25
+name = "Mimic"
 frame = 2
 hp_max = 110
+hp_cur = 0
 strength = 8
 agility = 3
 intellect = 6
 defense = 4
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+str_mod = 0
+agi_mod = 0
+int_mod = 0
+def_mod = 0
+desc = "BOOGIE"
+level = 1
+gold = 25

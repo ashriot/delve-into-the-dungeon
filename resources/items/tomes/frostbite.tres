@@ -4,23 +4,23 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Wooden Shield"
-desc = "Deal {potency} {dmg} damage to {target}."
-frame = 87
-max_uses = 50
-uses = 50
-item_type = 0
-target_type = 0
-damage_type = 7
-stat_used = 0
-stat_vs = 3
-multiplier = 2.5
+name = "Frostbite"
+desc = ""
+frame = 71
+max_uses = 30
+uses = 30
+item_type = 2
+target_type = 6
+damage_type = 4
+stat_used = 2
+stat_vs = 2
+multiplier = 2.0
 bonus_damage = 0
 hits = 1
 hit_chance = 0
 crit_chance = 0
-sound_fx = "bonk"
+sound_fx = ""
 inflict_boons = [  ]
-inflict_hexes = [  ]
+inflict_hexes = [ "Slow" ]
 gain_boons = [  ]
 gain_hexes = [  ]

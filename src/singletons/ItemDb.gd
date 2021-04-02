@@ -4,7 +4,7 @@ extends Node
 var items: = Array()
 
 func _ready():
-	var files = get_dir_contents("res://items")
+	var files = get_dir_contents("res://resources/items")
 
 	for f in files:
 		items.append(load(f))

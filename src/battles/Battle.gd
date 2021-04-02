@@ -17,18 +17,12 @@ var cur_stat_type: int
 
 func init(game):
 	players = game.players
-	var i = 0
-	for panel in player_panels.get_children():
-		if i >= players.size(): panel.hide()
-		else: panel.init(self, players[i])
-		i += 1
+
+	player_panels.init(self)
 
 	for child in buttons.get_children():
 		child.init(self)
 	clear_buttons()
-
-	for panel in player_panels.get_children():
-		panel.ready = true
 
 	enemy_panels.init(self, enemies)
 
@@ -89,6 +83,7 @@ func show_dmg_text(text: String, pos: Vector2) -> void:
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
 	enemy_panels.hide_all_selectors()
+	player_panels.hide_all_selectors()
 	if button.selected:
 		button.selected = false
 		cur_btn = null
@@ -96,32 +91,39 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	if cur_btn != null: cur_btn.selected = false
 	cur_btn = button
 	cur_btn.selected = true
-	if button.item.damage_type == Enum.DamageType.MARTIAL:
-		cur_hit_chance = cur_btn.item.hit_chance \
-			+ (current_player.get_stat(Enum.StatType.AGI) * 5)
-		cur_stat_type = Enum.StatType.AGI
-		cur_crit_chance = cur_btn.item.crit_chance + ((cur_hit_chance - 60) /2)
+	if button.item.target_type >= Enum.TargetType.MYSELF \
+		and button.item.target_type <= Enum.TargetType.RANDOM_ALLY:
+		player_panels.show_selectors(current_player, button.item.target_type)
 	else:
-		cur_hit_chance = 100
-		cur_crit_chance = 0
-		cur_stat_type = Enum.StatType.NA
-	enemy_panels.update_item_stats(cur_hit_chance, cur_stat_type)
-	enemy_panels.show_selectors(cur_btn.item.target_type)
+		if button.item.damage_type == Enum.DamageType.MARTIAL:
+			cur_hit_chance = cur_btn.item.hit_chance \
+				+ (current_player.get_stat(Enum.StatType.AGI) * 5)
+			cur_stat_type = Enum.StatType.AGI
+			cur_crit_chance = cur_btn.item.crit_chance + ((cur_hit_chance - 60) /2)
+		else:
+			cur_hit_chance = 100
+			cur_crit_chance = 0
+			cur_stat_type = Enum.StatType.NA
+		enemy_panels.update_item_stats(cur_hit_chance, cur_stat_type)
+		enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	print(panel.enemy.name, "\nHP: ", panel.hp_cur, "/", panel.hp_max, \
 		"\nSTR: ", panel.enemy.strength, "\nAGI: ", panel.enemy.agility, \
 		"\nINT: ", panel.enemy.intellect, "\nDEF: ", panel.enemy.defense)
 	if not panel.valid_target: return
-	enemy_panels.hide_all_selectors()
-	if cur_btn == null: return
-	var targets = [panel]
-	cur_btn.uses_remain -= 1
+	execute_vs_enemy(panel)
+
+func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
+	if cur_btn and cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
+		if not panel.valid_target: return
+		execute_vs_player(panel)
+	else: select_player(panel)
+
+func execute_vs_enemy(panel) -> void:
+	clear_selections()
 	var item = cur_btn.item as Item
-	clear_buttons()
-	current_player.selected = false
-	current_player.ready = false
-	print("clicked ", cur_btn.item.name)
+	var targets = [panel]
 	if item.target_type >= Enum.TargetType.ANY_ROW \
 		and item.target_type <= Enum.TargetType.BACK_ROW:
 		targets = enemy_panels.get_row(panel)
@@ -137,5 +139,28 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	current_player.player.changed()
 	get_next_player()
 
-func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
-	select_player(panel)
+func execute_vs_player(panel) -> void:
+	clear_selections()
+	var item = cur_btn.item as Item
+	var targets = [panel]
+	if item.target_type == Enum.TargetType.ALL_ALLIES:
+		targets = player_panels.get_children()
+	for hit_num in item.hits:
+		for target in targets:
+			if not target.alive(): continue
+			var atk = current_player.get_stat(item.stat_used)
+			target.take_friendly_hit(current_player, item)
+			if hit_num < item.hits - 1:
+				yield(get_tree().create_timer(0.5), "timeout")
+	current_player.player.changed()
+	get_next_player()
+
+func clear_selections() -> void:
+	enemy_panels.hide_all_selectors()
+	player_panels.hide_all_selectors()
+	if cur_btn == null: return
+	cur_btn.uses_remain -= 1
+	clear_buttons()
+	current_player.selected = false
+	current_player.ready = false
+	print("clicked ", cur_btn.item.name)

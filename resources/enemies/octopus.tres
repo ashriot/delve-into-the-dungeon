@@ -5,13 +5,13 @@
 [resource]
 script = ExtResource( 1 )
 name = "Octopus"
-frame = 0
-hp_max = 0
+frame = 27
+hp_max = 65
 hp_cur = 0
-strength = 0
-agility = 0
-intellect = 0
-defense = 0
+strength = 4
+agility = 12
+intellect = 3
+defense = 5
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0

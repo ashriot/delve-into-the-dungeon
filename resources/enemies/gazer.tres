@@ -5,13 +5,13 @@
 [resource]
 script = ExtResource( 1 )
 name = "Gazer"
-frame = 0
-hp_max = 0
+frame = 3
+hp_max = 50
 hp_cur = 0
-strength = 0
-agility = 0
-intellect = 0
-defense = 0
+strength = 3
+agility = 7
+intellect = 9
+defense = 6
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
