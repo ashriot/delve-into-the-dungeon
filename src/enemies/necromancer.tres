@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Death"
+name = "Necromancer"
 desc = "BOOGIE"
 level = 1
 gold = 25
-frame = 4
+frame = 5
 hp_max = 110
 strength = 8
-agility = 5
+agility = 4
 intellect = 6
 defense = 4

@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Death"
+name = "Gazer"
 desc = "BOOGIE"
 level = 1
 gold = 25
-frame = 4
-hp_max = 110
+frame = 3
+hp_max = 50
 strength = 8
-agility = 5
+agility = 6
 intellect = 6
 defense = 4

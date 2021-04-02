@@ -11,6 +11,9 @@ export(Array, Resource) var enemies
 var players: Array
 var current_player = null
 var cur_btn = null
+var cur_hit_chance: int
+var cur_crit_chance: int
+var cur_stat_type: int
 
 func init(game):
 	players = game.players
@@ -24,20 +27,15 @@ func init(game):
 		child.init(self)
 	clear_buttons()
 
-	i = 0
-	for panel in enemy_panels.get_children():
-		if i >= enemies.size(): panel.hide()
-		else: panel.init(self, enemies[i])
-		i += 1
-
 	for panel in player_panels.get_children():
 		panel.ready = true
+
+	enemy_panels.init(self, enemies)
 
 	get_next_player()
 
 func setup_buttons() -> void:
 	var i = 0
-	for item in current_player.player.items: print(item)
 	for button in buttons.get_children():
 		if i < current_player.player.items.size():
 			var item = current_player.player.items[i]
@@ -57,12 +55,13 @@ func select_player(panel: PlayerPanel) -> void:
 	if current_player != null: current_player.selected = false
 	if cur_btn != null:
 		cur_btn.selected = false
-		get_tree().call_group("enemy_panels", "targetable", false)
+		enemy_panels.hide_all_selectors()
 	current_player = panel
 	panel.selected = true
 	setup_buttons()
 
 func get_next_player() -> void:
+	yield(get_tree().create_timer(0.5), "timeout")
 	for panel in player_panels.get_children():
 		if panel.enabled and panel.ready:
 			select_player(panel)
@@ -71,45 +70,67 @@ func get_next_player() -> void:
 
 func end_turn():
 	yield(get_tree().create_timer(0.8), "timeout")
-	var enemy = enemy_panels.get_child(0)
-	enemy.attack()
-	yield(get_tree().create_timer(0.8), "timeout")
+	enemy_turns()
+
+func enemy_turns():
+	for enemy in enemy_panels.get_children():
+		if enemy.enabled and enemy.alive():
+			enemy.attack()
+			yield(get_tree().create_timer(0.8), "timeout")
+	# ENEMY TURNS DONE
 	for panel in player_panels.get_children():
 		panel.ready = true
 	select_player(player_panels.get_child(0))
 
+func show_dmg_text(text: String, pos: Vector2) -> void:
+	var damage_text = DamageText.instance()
+	damage_text.rect_global_position = pos
+	damage_text.init(self, text)
+
 func _on_BattleButton_pressed(button: BattleButton) -> void:
+	enemy_panels.hide_all_selectors()
 	if button.selected:
 		button.selected = false
 		cur_btn = null
-		get_tree().call_group("enemy_panels", "targetable", false)
 		return
 	if cur_btn != null: cur_btn.selected = false
 	cur_btn = button
-	button.selected = true
-	get_tree().call_group("enemy_panels", "targetable", true)
+	cur_btn.selected = true
+	if button.item.damage_type == Enum.DamageType.MARTIAL:
+		cur_hit_chance = cur_btn.item.hit_chance \
+			+ (current_player.get_stat(Enum.StatType.AGI) * 5)
+		cur_stat_type = Enum.StatType.AGI
+		cur_crit_chance = cur_btn.item.crit_chance + ((cur_hit_chance - 60) /2)
+	else:
+		cur_hit_chance = 100
+		cur_crit_chance = 0
+		cur_stat_type = Enum.StatType.NA
+	enemy_panels.update_item_stats(cur_hit_chance, cur_stat_type)
+	enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
-	get_tree().call_group("enemy_panels", "targetable", false)
+	if not panel.valid_target: return
+	enemy_panels.hide_all_selectors()
 	if cur_btn == null: return
+	var targets = [panel]
+	cur_btn.uses_remain -= 1
+	var item = cur_btn.item as Item
 	clear_buttons()
 	current_player.selected = false
 	current_player.ready = false
-	cur_btn.uses_remain -= 1
 	print("clicked ", cur_btn.item.name)
-	var damage_text = DamageText.instance()
-	var pos = panel.rect_position
-	pos.x -= 1
-	pos.y += panel.rect_size.y / 2 + 4
-	damage_text.rect_global_position = pos
-	var item = cur_btn.item
-	var stat = current_player.player.strength if item.stat_used == Enum.StatType.STR else current_player.player.intellect
-	var def = panel.get_def(item.stat_vs)
-	var def_mod = def * 3
-	var dmg = int(stat * item.multiplier - def_mod)
-	damage_text.init(self, str(dmg))
-	panel.take_hit()
-	panel.hp_cur -= dmg
+	if item.target_type >= Enum.TargetType.ANY_ROW \
+		and item.target_type <= Enum.TargetType.BACK_ROW:
+		targets = enemy_panels.get_row(panel)
+	for hit_num in item.hits:
+		for target in targets:
+			if not target.alive(): continue
+			var atk = current_player.get_stat(item.stat_used)
+			var hit = Hit.new()
+			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
+			target.take_hit(hit, cur_stat_type)
+			if hit_num < item.hits - 1:
+				yield(get_tree().create_timer(0.5), "timeout")
 	current_player.player.changed()
 	get_next_player()
 

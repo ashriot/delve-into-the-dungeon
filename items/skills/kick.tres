@@ -4,19 +4,19 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Wooden Sword"
-desc = "Deal {potency} {dmg} damage to {target}."
-frame = 123
-max_uses = 50
-uses = 50
+name = "Flying Kick"
+desc = ""
+frame = 120
+max_uses = 20
+uses = 20
 item_type = 0
-target_type = 7
+target_type = 6
 damage_type = 0
-stat_used = 0
+stat_used = 1
 stat_vs = 3
-multiplier = 2.5
+multiplier = 3.0
 bonus_damage = 0
 hits = 1
-hit_chance = 90
+hit_chance = 70
 crit_chance = 0
-sound_fx = "bonk"
+sound_fx = ""

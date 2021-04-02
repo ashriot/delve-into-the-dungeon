@@ -1,10 +1,17 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/players/jobs/sorcerer.tres" type="Resource" id=3]
 [ext_resource path="res://src/players/jobs/fighter.tres" type="Resource" id=4]
 [ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=5]
+[ext_resource path="res://src/enemies/death.tres" type="Resource" id=6]
+[ext_resource path="res://src/enemies/gazer.tres" type="Resource" id=7]
+[ext_resource path="res://src/enemies/gargoyle.tres" type="Resource" id=8]
+[ext_resource path="res://src/enemies/necromancer.tres" type="Resource" id=9]
+[ext_resource path="res://src/enemies/octopus.tres" type="Resource" id=10]
+[ext_resource path="res://src/players/jobs/dancer.tres" type="Resource" id=11]
+[ext_resource path="res://src/players/jobs/monk.tres" type="Resource" id=12]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -53,9 +60,10 @@ __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
-players = [ ExtResource( 4 ), ExtResource( 3 ) ]
+players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
 
 [node name="Battle" parent="." instance=ExtResource( 2 )]
+enemies = [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 7 ), null ]
 
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false

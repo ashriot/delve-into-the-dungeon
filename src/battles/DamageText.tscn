@@ -32,8 +32,8 @@ tracks/1/keys = {
 }
 
 [node name="DamageText" type="Control"]
-margin_left = -12.0
-margin_right = 12.0
+margin_left = -14.0
+margin_right = 14.0
 margin_bottom = 7.0
 script = ExtResource( 1 )
 __meta__ = {

@@ -5,7 +5,8 @@ enum StatType {
 	STR,
 	AGI,
 	INT,
-	DEF
+	DEF,
+	NA
 }
 enum ItemType {
 	WEAPON,
@@ -16,13 +17,20 @@ enum ItemType {
 
 enum TargetType {
 	MYSELF,
-	ONE_ALLY,
-	OTHER_ALLIES,
-	HERO_PARTY,
+	ANY_ALLY,
+	OTHER_ALLY,
+	OTHER_ALLIES_ONLY,
+	ALL_ALLIES,
+	RANDOM_ALLY,
 	ONE_ENEMY,
-	ENEMY_ROW,
+	ONE_FRONT,
+	ONE_BACK,
+	ANY_ROW,
+	FRONT_ROW,
+	BACK_ROW,
 	ALL_ENEMIES,
-	RANDOM_ENEMY
+	RANDOM_ENEMY,
+	RANDOM_ANYONE
 }
 
 enum DamageType {

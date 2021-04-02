@@ -26,6 +26,9 @@ func init(battle, _player: Player):
 	HPPercent.value = hp_cur
 	button.connect("pressed", battle, "_on_PlayerPanel_pressed", [self])
 
+func get_stat(stat) -> int:
+	return player.get_stat(stat)
+
 func set_selected(value: bool):
 	if !ready: return
 	selected = value

@@ -30,3 +30,10 @@ export(Array, Resource) var items
 
 func changed():
 	emit_signal("player_changed", self)
+
+func get_stat(stat) -> int:
+	if stat == Enum.StatType.AGI: return agility
+	elif stat == Enum.StatType.DEF: return defense
+	elif stat == Enum.StatType.INT: return intellect
+	elif stat == Enum.StatType.STR: return strength
+	return -999

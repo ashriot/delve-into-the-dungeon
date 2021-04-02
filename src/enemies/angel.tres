@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Death"
+name = "Anubis"
 desc = "BOOGIE"
 level = 1
 gold = 25
-frame = 4
+frame = 7
 hp_max = 110
 strength = 8
-agility = 5
+agility = 3
 intellect = 6
 defense = 4

@@ -14,5 +14,7 @@ export(Enum.StatType) var stat_vs
 export var multiplier: float
 export var bonus_damage: int
 export var hits:= 1
+export var hit_chance: int
+export var crit_chance: int
 export var sound_fx: String
 export var added_effect: Resource
