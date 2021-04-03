@@ -100,13 +100,17 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_hit_chance = cur_btn.item.hit_chance \
 				+ (current_player.get_stat(Enum.StatType.AGI) * 5)
 			cur_stat_type = Enum.StatType.AGI
-			cur_crit_chance = cur_btn.item.crit_chance + ((cur_hit_chance - 60) /2)
+# warning-ignore:integer_division
+			cur_crit_chance = cur_btn.item.crit_chance + (cur_hit_chance - 60) / 2
 		else:
 			cur_hit_chance = 100
 			cur_crit_chance = 0
 			cur_stat_type = Enum.StatType.NA
 		enemy_panels.update_item_stats(cur_hit_chance, cur_stat_type)
-		enemy_panels.show_selectors(cur_btn.item.target_type)
+		var atk = current_player.get_stat(button.item.stat_used)
+		var hit = Hit.new()
+		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
+		enemy_panels.show_selectors(cur_btn.item.target_type, hit, atk)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	print(panel.enemy.name, "\nHP: ", panel.hp_cur, "/", panel.hp_max, \
@@ -150,7 +154,6 @@ func execute_vs_player(panel) -> void:
 	for hit_num in item.hits:
 		for target in targets:
 			if not target.alive(): continue
-			var atk = current_player.get_stat(item.stat_used)
 			target.take_friendly_hit(current_player, item)
 			if hit_num < item.hits - 1:
 				yield(get_tree().create_timer(0.5), "timeout")

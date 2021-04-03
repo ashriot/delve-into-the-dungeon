@@ -6,12 +6,12 @@
 script = ExtResource( 1 )
 name = "Gargoyle"
 frame = 1
-hp_max = 100
+hp_max = 125
 hp_cur = 0
 strength = 12
 agility = 3
-intellect = 2
-defense = 10
+intellect = 5
+defense = 15
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0

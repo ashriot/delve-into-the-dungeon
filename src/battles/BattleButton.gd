@@ -13,6 +13,7 @@ var uses_remain: int setget set_uses_remain
 var selected: bool setget set_selected
 
 func init(battle) -> void:
+# warning-ignore:return_value_discarded
 	connect("pressed", battle, "_on_BattleButton_pressed", [self])
 
 func setup(_item: Item) -> void:

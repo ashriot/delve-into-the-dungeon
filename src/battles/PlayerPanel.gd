@@ -19,7 +19,6 @@ var hp_max: int
 var hp_cur: int setget set_hp_cur
 var ready:= true setget set_ready
 var selected:= false setget set_selected
-var targetable: bool
 var enabled: bool
 var valid_target: bool
 var hexes: Array
@@ -38,6 +37,7 @@ func init(battle, _player: Player):
 	HPPercent.max_value = hp_max
 	HPPercent.value = hp_cur
 	button.connect("pressed", battle, "_on_PlayerPanel_pressed", [self])
+# warning-ignore:return_value_discarded
 	connect("show_dmg", battle, "show_dmg_text")
 
 func get_stat(stat) -> int:
@@ -60,6 +60,7 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var def = get_stat(item.stat_vs)
 	var rel_def = (def - hit.atk) / hit.atk + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
+	dmg = int(dmg * def)
 	var pos = rect_global_position
 	pos.x -= 6
 	pos.y += rect_size.y / 2
@@ -79,15 +80,15 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 
 func take_friendly_hit(user: PlayerPanel, item: Item) -> void:
-	var dmg = int(item.multiplier * get_stat(item.stat_used))
-	var def = get_stat(item.stat_vs)
+	var dmg = int(item.multiplier * user.get_stat(item.stat_used))
+	var def = int(get_stat(item.stat_vs) * item.multiplier)
 	var pos = rect_global_position
 	pos.x += 3
 	pos.y += rect_size.y / 2
 	var dmg_text = ""
 	print(item)
 	if item.damage_type == Enum.DamageType.HEAL:
-		self.hp_cur += dmg
+		self.hp_cur += dmg + def
 		dmg_text = str(dmg)
 #		anim.play("Hit")
 	elif "Shield" in item.name:
@@ -146,6 +147,6 @@ func targetable(value: bool, display = true):
 	else:
 		target.hide()
 
-func pad_int(num: int, digits: int) -> String:
+func pad_int(num: int, _digits: int) -> String:
 	var text = str(num)
 	return text

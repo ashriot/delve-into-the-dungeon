@@ -89,6 +89,7 @@ config/Version="0.1"
 
 ItemDb="*res://src/singletons/ItemDb.gd"
 GameManager="*res://src/singletons/GameManager.gd"
+Audio="*res://src/core/Audio.gd"
 
 [display]
 

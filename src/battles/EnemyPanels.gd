@@ -37,7 +37,7 @@ func front_row_dead() -> bool:
 		if child.alive(): return false
 	return true
 
-func show_selectors(target_type):
+func show_selectors(target_type, hit, atk):
 	if target_type == Enum.TargetType.ONE_ENEMY:
 		show_front_row_selectors()
 		show_back_row_selectors()

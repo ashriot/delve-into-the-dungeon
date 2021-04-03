@@ -74,7 +74,7 @@ func _on_player_changed(player: Player):
 	new_player["items"] = items_to_array(player.items)
 	save_data.players[player.slot] = new_player
 	var error = ResourceSaver.save(file_path, save_data)
-	check_error(file_path, error)
+	check_error(error)
 
 func initialize_inventory():
 	game.inventory.connect("inventory_changed", self, "_on_inventory_changed")
@@ -92,9 +92,9 @@ func _on_inventory_changed(inventory):
 	for i in item_list:
 		save_data.inventory.append(i)
 	var error = ResourceSaver.save(file_path, save_data)
-	check_error(file_path, error)
+	check_error(error)
 
 
-func check_error(file_path, error):
+func check_error(error):
 	if error != OK:
 		print("There was an error writing the save %s to %s -> %s" % [save_data.profile_name, file_path, error])
