@@ -11,6 +11,7 @@ onready var target: = $Target
 onready var anim: = $AnimationPlayer
 onready var hit_display: = $Hit
 onready var dmg_display: = $DmgDisplay
+onready var dmg_anim: = $DmgDisplay/AnimationPlayer
 
 var enemy: Enemy
 var hp_cur: int setget set_hp_cur
@@ -95,34 +96,31 @@ func targetable(value: bool, display = true):
 	if valid_target:
 		if display: target.show()
 		hit_display.show()
+		dmg_display.show()
 	else:
 		target.hide()
 		hit_display.hide()
+		dmg_display.hide()
 
-func update_dmg_display(hit: Hit, hit_stat: int):
+func update_dmg_display(hit: Hit):
 	var item = hit.item as Item
-	var hit_and_crit = get_hit_and_crit_chance(hit.hit_chance, hit.crit_chance, hit_stat)
-	var hit_chance = hit_and_crit[0]
-	var crit_chance = hit_and_crit[1]
-	var miss = false
-	var hit_roll = randi() % 100 + 1
-	print("Hit Chance: ", hit_chance, "% -> Roll: ", (100 - hit_roll))
-	if hit_roll > hit_chance:
-		miss = true
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
 	var rel_def = float(def - hit.atk) / hit.atk + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
-	dmg = int(dmg * def_mod)
-	dmg_display.max_value = enemy.hp_max
-	dmg_display.value = clamp(enemy.hp_cur - dmg, 0, enemy.hp_cur)
+	dmg = int(dmg * def_mod) * hit.item.hits
+	dmg_display.max_value = hp_max
+	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
+	print(hp_percent.texture_progress)
+	dmg_display.show()
 
-func update_hit_chance(hit_chance: int, stat) -> void:
+func update_hit_chance(hit: Hit, hit_stat: int) -> void:
 	if not (enabled or alive() or valid_target): return
 	var value = 100
-	if stat != Enum.StatType.NA:
-		value = get_hit_and_crit_chance(hit_chance, 0, stat)[0]
+	if hit.item.stat_vs != Enum.StatType.NA:
+		value = get_hit_and_crit_chance(hit.hit_chance, 0, hit_stat)[0]
 	hit_display.text = str(value) + "%"
+	update_dmg_display(hit)
 
 func get_hit_and_crit_chance(hit_chance: int, crit_chance: int, stat) -> Array:
 	var hit = 100

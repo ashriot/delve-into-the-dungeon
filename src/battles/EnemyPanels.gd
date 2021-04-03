@@ -5,8 +5,8 @@ onready var back_row = $BackRow
 onready var front_select = $FrontSelect
 onready var back_select = $BackSelect
 
-var item_hit_chance: int
-var item_target_stat = 0
+var projected_hit: Hit
+var hit_stat: int
 
 func init(battle, enemies: Array) -> void:
 	var i = 0
@@ -37,7 +37,7 @@ func front_row_dead() -> bool:
 		if child.alive(): return false
 	return true
 
-func show_selectors(target_type, hit, atk):
+func show_selectors(target_type):
 	if target_type == Enum.TargetType.ONE_ENEMY:
 		show_front_row_selectors()
 		show_back_row_selectors()
@@ -59,13 +59,13 @@ func show_front_row_selector():
 		return
 	front_select.show()
 	for child in front_row.get_children():
-		child.update_hit_chance(item_hit_chance, item_target_stat)
+		child.update_hit_chance(projected_hit, hit_stat)
 		child.targetable(true, false)
 
 func show_back_row_selector():
 	back_select.show()
 	for child in back_row.get_children():
-		child.update_hit_chance(item_hit_chance, item_target_stat)
+		child.update_hit_chance(projected_hit, hit_stat)
 		child.targetable(true, false)
 
 func show_front_row_selectors():
@@ -73,12 +73,12 @@ func show_front_row_selectors():
 		show_back_row_selectors()
 		return
 	for child in front_row.get_children():
-		child.update_hit_chance(item_hit_chance, item_target_stat)
+		child.update_hit_chance(projected_hit, hit_stat)
 		child.targetable(true)
 
 func show_back_row_selectors():
 	for child in back_row.get_children():
-		child.update_hit_chance(item_hit_chance, item_target_stat)
+		child.update_hit_chance(projected_hit, hit_stat)
 		child.targetable(true)
 
 func hide_all_selectors():
@@ -90,6 +90,6 @@ func hide_all_selectors():
 	for child in back_row.get_children():
 		child.targetable(false)
 
-func update_item_stats(hit_chance: int, target_stat) -> void:
-	item_hit_chance = hit_chance
-	item_target_stat = target_stat
+func update_item_stats(hit: Hit, stat: int) -> void:
+	projected_hit = hit
+	hit_stat = stat

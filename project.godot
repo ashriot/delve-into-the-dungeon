@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Unit",
 "class": "Player",
 "language": "GDScript",
-"path": "res://src/players/player.gd"
+"path": "res://src/core/player.gd"
 }, {
 "base": "Control",
 "class": "PlayerPanel",

@@ -116,7 +116,7 @@ mouse_filter = 2
 value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
-tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_under = Color( 0, 0, 0, 1 )
 tint_progress = Color( 0.533333, 0.721569, 0.498039, 1 )
 nine_patch_stretch = true
 __meta__ = {
@@ -173,6 +173,7 @@ __meta__ = {
 }
 
 [node name="DmgDisplay" type="TextureProgress" parent="."]
+modulate = Color( 1, 1, 1, 0 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0

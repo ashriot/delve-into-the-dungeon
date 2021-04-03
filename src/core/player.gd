@@ -7,6 +7,7 @@ var job: String
 var slot: int
 
 export(Array, Resource) var items
+export(Array, Resource) var talents
 
 func changed():
 	emit_signal("player_changed", self)

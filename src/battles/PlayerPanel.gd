@@ -4,8 +4,8 @@ class_name PlayerPanel
 signal show_dmg(text)
 
 onready var HPCur = $HPCur
-onready var HPPercent = $HPPercent
-onready var portrait = $Potrait
+onready var hp_percent = $TextureProgress
+onready var sprite = $Sprite
 onready var selector = $Selector
 onready var outline = $Outline
 onready var target = $Target
@@ -31,11 +31,11 @@ func init(battle, _player: Player):
 	hexes = []
 	show()
 	player = _player
-	portrait.frame = player.frame
+	sprite.frame = player.frame
 	self.hp_max = player.hp_max
 	self.hp_cur = player.hp_cur
-	HPPercent.max_value = hp_max
-	HPPercent.value = hp_cur
+	hp_percent.max_value = hp_max
+	hp_percent.value = hp_cur
 	button.connect("pressed", battle, "_on_PlayerPanel_pressed", [self])
 # warning-ignore:return_value_discarded
 	connect("show_dmg", battle, "show_dmg_text")
@@ -136,7 +136,7 @@ func set_hp_cur(value):
 	hp_cur = value
 	player.hp_cur = value
 	HPCur.text = pad_int(hp_cur, 3)
-	HPPercent.value = hp_cur
+	hp_percent.value = hp_cur
 
 func targetable(value: bool, display = true):
 	if not enabled: return

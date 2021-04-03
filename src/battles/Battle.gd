@@ -106,11 +106,11 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_hit_chance = 100
 			cur_crit_chance = 0
 			cur_stat_type = Enum.StatType.NA
-		enemy_panels.update_item_stats(cur_hit_chance, cur_stat_type)
 		var atk = current_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
-		enemy_panels.show_selectors(cur_btn.item.target_type, hit, atk)
+		enemy_panels.update_item_stats(hit, Enum.StatType.AGI)
+		enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	print(panel.enemy.name, "\nHP: ", panel.hp_cur, "/", panel.hp_max, \

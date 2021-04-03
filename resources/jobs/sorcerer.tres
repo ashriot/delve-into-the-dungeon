@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://src/players/player.gd" type="Script" id=1]
+[ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/tomes/scorch.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/tomes/frostbite.tres" type="Resource" id=3]
 
@@ -14,12 +14,12 @@ strength = 5
 agility = 12
 intellect = 15
 defense = 7
-str_bonus = 0
-agi_bonus = 0
-int_bonus = 0
-def_bonus = 0
-str_mod = 0
-agi_mod = 0
-int_mod = 0
-def_mod = 0
+str_bonus = null
+agi_bonus = null
+int_bonus = null
+def_bonus = null
+str_mod = null
+agi_mod = null
+int_mod = null
+def_mod = null
 items = [ ExtResource( 2 ), ExtResource( 3 ) ]
