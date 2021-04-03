@@ -37,6 +37,7 @@ func initialize_party():
 			new_player.intellect = player["int"]
 			new_player.defense = player["def"]
 			new_player.items = array_to_items(player["items"])
+			new_player.perks = array_to_perks(player["perks"])
 			players.insert(new_player.slot, new_player)
 		game.players = players
 	else: players = game.players
@@ -61,6 +62,19 @@ func array_to_items(array: Array) -> Array:
 		items.append(item)
 	return items
 
+func perks_to_array(perks: Array) -> Array:
+	var array = []
+	for perk in perks:
+		array.append(perk.name)
+	return array
+
+func array_to_perks(array: Array) -> Array:
+	var perks = []
+	for entry in array:
+		var perk = ItemDb.get_perk(entry)
+		perks.append(perk)
+	return perks
+
 func _on_player_changed(player: Player):
 	var new_player = {}
 	new_player["slot"] = player.slot
@@ -72,6 +86,7 @@ func _on_player_changed(player: Player):
 	new_player["int"] = player.base_int()
 	new_player["def"] = player.base_def()
 	new_player["items"] = items_to_array(player.items)
+	new_player["perks"] = perks_to_array(player.perks)
 	save_data.players[player.slot] = new_player
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)

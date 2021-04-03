@@ -3,6 +3,7 @@ class_name EnemyPanel
 
 signal done
 signal show_dmg(text)
+signal show_text(text)
 
 onready var button: = $Button
 onready var sprite: = $Sprite
@@ -26,6 +27,7 @@ func init(battle, _enemy: Enemy) -> void:
 	hexes = []
 	enabled = true
 	enemy = _enemy
+	level_up()
 	sprite.frame = enemy.frame
 	hp_max = enemy.hp_max
 	hp_percent.max_value = hp_max
@@ -35,7 +37,15 @@ func init(battle, _enemy: Enemy) -> void:
 	button.connect("pressed", battle, "_on_EnemyPanel_pressed", [self])
 # warning-ignore:return_value_discarded
 	connect("show_dmg", battle, "show_dmg_text")
+	connect("show_text", battle, "show_text")
 	add_to_group("enemy_panels")
+
+func level_up() -> void:
+	enemy.hp_growth = int((enemy.base_hp_max() * 0.5 + 5) * (enemy.level-1))
+	enemy.str_growth = int((enemy.base_str() * 0.08 + 0.5) * enemy.level)
+	enemy.agi_growth = int((enemy.base_agi() * 0.08 + 0.5) * enemy.level)
+	enemy.int_growth = int((enemy.base_int() * 0.08 + 0.5) * enemy.level)
+	enemy.def_growth = int((enemy.base_def() * 0.08 + 0.5) * enemy.level)
 
 func get_stat(stat) -> int:
 	if stat == Enum.StatType.AGI: return enemy.agility
@@ -51,7 +61,6 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var crit_chance = hit_and_crit[1]
 	var miss = false
 	var hit_roll = randi() % 100 + 1
-	print("Hit Chance: ", hit_chance, "% -> Roll: ", (100 - hit_roll))
 	if hit_roll > hit_chance:
 		miss = true
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
@@ -59,7 +68,6 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var rel_def = float(def - hit.atk) / hit.atk + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
 	dmg = int(dmg * def_mod)
-	print(enemy.name, " dmg: ", dmg, " | ", def)
 	var pos = rect_global_position
 	pos.x -= 6
 	pos.y += rect_size.y / 2
@@ -71,22 +79,26 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	else:
 		dmg_text = "MISS"
 	emit_signal("show_dmg", dmg_text, pos)
-	if item.inflict_hexes.size() > 0 and not miss:
+	if item.inflict_hexes.size() > 0 and not miss and alive():
 		for hex in item.inflict_hexes:
 			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-			var success = gain_hex(hex)
-			if success: emit_signal("show_dmg", hex, pos)
+			var success = gain_hex(hex[0], hex[1])
+			if success: emit_signal("show_text", hex[0].name, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 
 func attack() -> void:
+	var pos = rect_global_position
+	pos.x -= 6
+	pos.y += rect_size.y / 2
+	emit_signal("show_text", "Attack", pos)
 	anim.play("Attack")
 	yield(anim, "animation_finished")
 	emit_signal("done")
 
-func gain_hex(hex_name: String) -> bool:
-	if hexes.has(hex_name): return false
-	hexes.append(hex_name)
-	if hex_name == "Slow": enemy.agi_bonus -= 10
+func gain_hex(hex: Effect, duration: int) -> bool:
+	if hexes.has(hex.name): return false
+	hexes.append([hex, duration])
+	if hex.name == "Slow": enemy.agi_bonus -= 5
 	return true
 
 func targetable(value: bool, display = true):
@@ -111,7 +123,6 @@ func update_dmg_display(hit: Hit):
 	dmg = int(dmg * def_mod) * hit.item.hits
 	dmg_display.max_value = hp_max
 	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
-	print(hp_percent.texture_progress)
 	dmg_display.show()
 
 func update_hit_chance(hit: Hit, hit_stat: int) -> void:

@@ -82,7 +82,6 @@ func show_back_row_selectors():
 		child.targetable(true)
 
 func hide_all_selectors():
-	print("\n\nCalled hide_all_selectors")
 	front_select.hide()
 	back_select.hide()
 	for child in front_row.get_children():

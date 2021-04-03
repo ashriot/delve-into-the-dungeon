@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/slow.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,6 +11,7 @@ frame = 82
 max_uses = 30
 uses = 30
 item_type = 0
+sub_type = 2
 target_type = 6
 damage_type = 0
 stat_used = 1
@@ -21,6 +23,6 @@ hit_chance = 90
 crit_chance = 0
 sound_fx = "bonk"
 inflict_boons = [  ]
-inflict_hexes = [ "Slow" ]
+inflict_hexes = [ [ ExtResource( 2 ), 3 ] ]
 gain_boons = [  ]
 gain_hexes = [  ]

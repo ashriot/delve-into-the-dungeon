@@ -8,11 +8,38 @@ enum StatType {
 	DEF,
 	NA
 }
+
 enum ItemType {
 	WEAPON,
 	SKILL,
 	TOME,
 	TOOL
+}
+
+enum SubItemType {
+	AXE,
+	BOOMERANG,
+	BOW,
+	DAGGER,
+	GUN,
+	MACE,
+	SHIELD,
+	SPEAR,
+	SWORD,
+	WAND,
+	AIR,
+	ANCIENT,
+	EARTH,
+	FIRE,
+	HEALING,
+	WATER,
+	WITCHCRAFT,
+	CRAFT,
+	DANCE,
+	MARTIAL_ARTS,
+	SORCERY,
+	THIEVERY
+	NA
 }
 
 enum TargetType {
@@ -41,5 +68,5 @@ enum DamageType {
 	WATER,
 	PURE,
 	HEAL,
-	EFFECT
+	EFFECT_ONLY
 }

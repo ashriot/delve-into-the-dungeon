@@ -2,16 +2,24 @@ extends Node
 # ItemDb
 
 var items: = Array()
+var perks: = Array()
 
 func _ready():
-	var files = get_dir_contents("res://resources/items")
-
-	for f in files:
+	var item_files = get_dir_contents("res://resources/items")
+	for f in item_files:
 		items.append(load(f))
+	var perk_files = get_dir_contents("res://resources/perks")
+	for f in perk_files:
+		perks.append(load(f))
 
-func get_item(item_name) -> Item:
+func get_item(item_name: String) -> Item:
 	for item in items:
 		if item.name == item_name: return item
+	return null
+
+func get_perk(perk_name: String) -> Item:
+	for perk in perks:
+		if perk.name == perk_name: return perk
 	return null
 
 ## HELPER FUNCTIONS

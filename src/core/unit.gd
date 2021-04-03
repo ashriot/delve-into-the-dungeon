@@ -4,7 +4,7 @@ class_name Unit
 export var name: String
 export var frame: int
 
-export var hp_max: int
+export var hp_max: int setget, get_hp_max
 export var hp_cur: int
 
 export var strength: int setget, get_strength
@@ -34,6 +34,17 @@ func get_intellect() -> int:
 func get_defense() -> int:
 	return (defense + def_bonus) * (1 + def_mod)
 
+func base_str() -> int:
+	return strength
+
+func base_agi() -> int:
+	return agility
+
+func base_int() -> int:
+	return intellect
+
+func base_def() -> int:
+	return defense
 
 func get_stat(stat) -> int:
 	if stat == Enum.StatType.STR: return self.strength
@@ -41,3 +52,6 @@ func get_stat(stat) -> int:
 	elif stat == Enum.StatType.INT: return self.intellect
 	elif stat == Enum.StatType.DEF: return self.defense
 	else: return -999
+
+func get_hp_max() -> int:
+	return hp_max

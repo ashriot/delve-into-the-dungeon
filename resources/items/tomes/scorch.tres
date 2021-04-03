@@ -10,6 +10,7 @@ frame = 71
 max_uses = 40
 uses = 40
 item_type = 0
+sub_type = 13
 target_type = 6
 damage_type = 3
 stat_used = 2

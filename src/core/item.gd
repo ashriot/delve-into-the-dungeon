@@ -7,6 +7,7 @@ export var frame: int
 export var max_uses: int
 export var uses: int
 export(Enum.ItemType) var item_type
+export(Enum.SubItemType) var sub_type
 export(Enum.TargetType) var target_type
 export(Enum.DamageType) var damage_type
 export(Enum.StatType) var stat_used
@@ -17,7 +18,7 @@ export var hits:= 1
 export var hit_chance: int
 export var crit_chance: int
 export var sound_fx: String
-export(Array, String) var inflict_boons
-export(Array, String) var inflict_hexes
-export(Array, String) var gain_boons
-export(Array, String) var gain_hexes
+export(Array, Array) var inflict_boons
+export(Array, Array) var inflict_hexes
+export(Array, Array) var gain_boons
+export(Array, Array) var gain_hexes

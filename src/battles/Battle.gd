@@ -82,6 +82,11 @@ func show_dmg_text(text: String, pos: Vector2) -> void:
 	damage_text.rect_global_position = pos
 	damage_text.init(self, text)
 
+func show_text(text: String, pos: Vector2) -> void:
+	var damage_text = DamageText.instance()
+	damage_text.rect_global_position = pos
+	damage_text.text(self, text)
+
 func _on_BattleButton_pressed(button: BattleButton) -> void:
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
@@ -109,22 +114,24 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		var atk = current_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
-		enemy_panels.update_item_stats(hit, Enum.StatType.AGI)
+		var hit_type = Enum.StatType.AGI
+		if button.item.damage_type != Enum.DamageType.MARTIAL:
+			hit_type = Enum.StatType.NA
+		enemy_panels.update_item_stats(hit, hit_type)
 		enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
-	print(panel.enemy.name, "\nHP: ", panel.hp_cur, "/", panel.hp_max, \
-		"\nSTR: ", panel.enemy.strength, "\nAGI: ", panel.enemy.agility, \
-		"\nINT: ", panel.enemy.intellect, "\nDEF: ", panel.enemy.defense)
+	print("Lv. ", panel.enemy.level, " ", panel.enemy.name, "\tHP: ", panel.hp_cur, "/", panel.hp_max, \
+		"\tSTR: ", panel.enemy.strength, "\tAGI: ", panel.enemy.agility, \
+		"\tINT: ", panel.enemy.intellect, "\tDEF: ", panel.enemy.defense)
 	if not panel.valid_target: return
 	execute_vs_enemy(panel)
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
-	if cur_btn:
-		if cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
+	if cur_btn and cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
 			if not panel.valid_target: return
 			execute_vs_player(panel)
-	select_player(panel)
+	else: select_player(panel)
 
 func execute_vs_enemy(panel) -> void:
 	clear_selections()
@@ -146,8 +153,12 @@ func execute_vs_enemy(panel) -> void:
 	get_next_player()
 
 func execute_vs_player(panel) -> void:
-	clear_selections()
 	var item = cur_btn.item as Item
+	var turn_spent = true
+	if item.sub_type == Enum.SubItemType.SHIELD:
+		if current_player.has_perk("Quick Block"):
+			turn_spent = false
+	clear_selections(turn_spent)
 	var targets = [panel]
 	if item.target_type == Enum.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()
@@ -160,12 +171,13 @@ func execute_vs_player(panel) -> void:
 	current_player.player.changed()
 	get_next_player()
 
-func clear_selections() -> void:
+func clear_selections(spend_turn: = true) -> void:
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if cur_btn == null: return
 	cur_btn.uses_remain -= 1
 	clear_buttons()
 	current_player.selected = false
-	current_player.ready = false
-	print("clicked ", cur_btn.item.name)
+	if spend_turn:
+		current_player.ready = false
+		current_player.decrement_boons("End")
