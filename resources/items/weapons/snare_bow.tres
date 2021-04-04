@@ -23,6 +23,6 @@ hit_chance = 90
 crit_chance = 0
 sound_fx = "bonk"
 inflict_boons = [  ]
-inflict_hexes = [ [ ExtResource( 2 ), 3 ] ]
+inflict_hexes = [ [ ExtResource( 2 ), 3, 100 ] ]
 gain_boons = [  ]
 gain_hexes = [  ]

@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Fighter"
-frame = 73
+frame = 3
 hp_max = 80
 hp_cur = 80
 strength = 15

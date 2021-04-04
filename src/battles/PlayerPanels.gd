@@ -24,7 +24,7 @@ func show_selectors(player: PlayerPanel, target_type):
 	elif target_type == Enum.TargetType.OTHER_ALLY:
 		show_all_selectors()
 	elif target_type == Enum.TargetType.ALL_ALLIES:
-		show_all_selectors()
+		show_all_selector()
 	elif target_type == Enum.TargetType.RANDOM_ALLY:
 		show_all_selectors()
 
@@ -38,5 +38,6 @@ func show_all_selector():
 		child.targetable(true, false)
 
 func hide_all_selectors():
+	all_selector.hide()
 	for child in panels.get_children():
 		child.targetable(false)

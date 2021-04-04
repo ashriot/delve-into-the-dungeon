@@ -28,10 +28,12 @@ var hexes: Array
 var boons: Array
 var statuses: = []
 var delay: = 0
+var pos: Vector2
 var status_ptr: int
 var blocking: int setget set_blocking
 
 func init(battle, _player: Player):
+	anim.playback_speed = 1 / GameManager.spd
 	enabled = true
 	self.ready = true
 	hexes = []
@@ -42,16 +44,21 @@ func init(battle, _player: Player):
 	self.hp_cur = player.hp_cur
 	hp_percent.max_value = hp_max
 	hp_percent.value = hp_cur
+	pos = rect_global_position
+	pos.x -= 6
+	pos.y += rect_size.y / 2
 	button.connect("pressed", battle, "_on_PlayerPanel_pressed", [self])
 # warning-ignore:return_value_discarded
 	connect("show_dmg", battle, "show_dmg_text")
+# warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if statuses.size() == 0: return
 	if delay == 0:
 		status_ptr = (status_ptr + 1) % statuses.size()
 		status.frame = statuses[status_ptr][1]
+# warning-ignore:narrowing_conversion
 		delay = 60 * GameManager.spd
 	else: delay -= 1
 
@@ -75,10 +82,7 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var def = get_stat(item.stat_vs)
 	var rel_def = (def - hit.atk) / hit.atk + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
-	dmg = int(dmg * def)
-	var pos = rect_global_position
-	pos.x -= 6
-	pos.y += rect_size.y / 2
+	dmg = int(dmg * def_mod)
 	var dmg_text = ""
 	if not miss:
 		self.hp_cur -= dmg
@@ -97,9 +101,6 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 func take_friendly_hit(user: PlayerPanel, item: Item) -> void:
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used))
 	var def = int(get_stat(item.stat_vs) * item.multiplier)
-	var pos = rect_global_position
-	pos.x += 3
-	pos.y += rect_size.y / 2
 	var dmg_text = ""
 	if item.damage_type == Enum.DamageType.HEAL:
 		self.hp_cur += dmg + def
@@ -111,16 +112,19 @@ func take_friendly_hit(user: PlayerPanel, item: Item) -> void:
 	if dmg > 0: emit_signal("show_text", dmg_text, pos)
 	if item.inflict_hexes.size() > 0:
 		for hex in item.inflict_hexes:
-			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			if randi() % 100 + 1 > hex[2]: continue
 			var success = gain_hex(hex[0], hex[1])
-			if success: emit_signal("show_text", hex[0].name, pos)
-		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			if success: emit_signal("show_text", "+" + hex[0].name, pos)
+		yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	if item.inflict_boons.size() > 0:
 		for boon in item.inflict_boons:
+			if randi() % 100 + 1 > boon[2]: continue
 			var success = gain_boon(boon[0], boon[1])
-			if success: emit_signal("show_text", boon[0].name, pos)
-			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			if success: emit_signal("show_text", "+" + boon[0].name, pos)
+			if item.inflict_boons.find(boon) < item.inflict_boons.size() - 1:
+				yield(get_tree().create_timer(0.25 * GameManager.spd, false), "timeout")
+	yield(get_tree().create_timer(0.25 * GameManager.spd, false), "timeout")
+	emit_signal("done")
 
 func set_blocking(value: int) -> void:
 	print("Blocking: ", value, " martial damage.")
@@ -130,7 +134,7 @@ func set_blocking(value: int) -> void:
 
 func gain_hex(hex: Effect, duration: int) -> bool:
 	if hexes.has(hex.name): return false
-	hexes.append(hex.name)
+	hexes.append([hex.name, duration])
 	statuses.append([hex.name, hex.frame])
 	if hex.name == "Slow": player.agi_bonus -= 5
 	return true
@@ -139,11 +143,16 @@ func gain_boon(boon: Effect, duration: int) -> bool:
 	var found = false
 	for b in boons: if b[0].name == boon.name:
 		found = true
-		b[1] = duration
+		if b[1] < duration:
+			b[1] = duration
+		else: return false
 	if not found:
 		boons.append([boon, duration])
 		statuses.append([boon.name, boon.frame])
-		if boon.name == "Fast": player.agi_bonus += 5
+		if boon.name == "Bold": player.str_bonus += 5
+		elif boon.name == "Fast": player.agi_bonus += 5
+		elif boon.name == "Safe": player.def_bonus += 5
+		elif boon.name == "Wise": player.int_bonus += 5
 	return true
 
 func remove_boon(find: Effect) -> void:
@@ -156,7 +165,10 @@ func remove_boon(find: Effect) -> void:
 		if s[0] == find.name:
 			remove_status(find.name)
 			break
-	if find.name == "Fast": player.agi_bonus += 5
+	if find.name == "Bold": player.str_bonus -= 5
+	elif find.name == "Fast": player.agi_bonus -= 5
+	elif find.name == "Safe": player.def_bonus -= 5
+	elif find.name == "Wise": player.int_bonus -= 5
 
 func decrement_boons(timing: String) -> void:
 	for boon in boons:
@@ -166,7 +178,6 @@ func decrement_boons(timing: String) -> void:
 				boon[1] -= 1
 				if boon[1] == 0:
 					remove_boon(boon[0])
-
 
 func get_hit_and_crit_chance(hit_chance: int, crit_chance: int, stat) -> Array:
 	var hit = 100
@@ -185,10 +196,15 @@ func set_selected(value: bool):
 func set_ready(value: bool):
 	ready = value
 	if ready:
+		if sprite.frame > 10:
+			sprite.frame -= 10
 		outline.modulate.a = 1
 		if blocking > 0: self.blocking = 0
 		decrement_boons("Start")
-	else: outline.modulate.a = 0.15
+	else:
+		if sprite.frame < 10:
+			sprite.frame += 10
+		outline.modulate.a = 0.15
 
 func set_hp_cur(value):
 	hp_cur = value
@@ -216,6 +232,7 @@ func remove_status(value: String) -> void:
 	for s in statuses:
 		if s[0] == value:
 			statuses.remove(statuses.find(s))
+			emit_signal("show_text", "-" + value, pos)
 			break
 	update_status()
 

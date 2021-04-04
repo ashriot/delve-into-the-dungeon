@@ -5,6 +5,7 @@ var DamageText = preload("res://src/battles/DamageText.tscn")
 onready var player_panels = $PlayerPanels
 onready var enemy_panels = $EnemyPanels
 onready var buttons = $Buttons
+onready var battleMenu = $BattleMenu
 
 export(Array, Resource) var enemies
 
@@ -16,16 +17,17 @@ var cur_crit_chance: int
 var cur_stat_type: int
 
 func init(game):
+	AudioController.play_bgm("battle")
 	players = game.players
-
+	battleMenu.hide()
 	player_panels.init(self)
-
 	for child in buttons.get_children():
 		child.init(self)
 	clear_buttons()
-
+	var flee = load("res://resources/items/battleCommands/flee.tres")
+	battleMenu.get_child(0).init(self)
+	battleMenu.get_child(0).setup(flee, false)
 	enemy_panels.init(self, enemies)
-
 	get_next_player()
 
 func setup_buttons() -> void:
@@ -44,19 +46,31 @@ func clear_buttons() -> void:
 		child.hide()
 
 func select_player(panel: PlayerPanel) -> void:
+	print("Selecting: ", panel.player.name)
 	if panel == null: return
 	if !panel.ready: return
+	if current_player == panel:
+		current_player.selected = false
+		current_player = null
+		buttons.hide()
+		battleMenu.show()
+		AudioController.back()
+		return
 	if current_player != null: current_player.selected = false
 	if cur_btn != null:
 		cur_btn.selected = false
 		enemy_panels.hide_all_selectors()
+	AudioController.select()
+	battleMenu.hide()
+	buttons.show()
 	current_player = panel
 	panel.selected = true
 	setup_buttons()
 
 func get_next_player() -> void:
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	cur_btn = null
+	current_player = null
 	for panel in player_panels.get_children():
 		if panel.enabled and panel.ready:
 			select_player(panel)
@@ -64,14 +78,14 @@ func get_next_player() -> void:
 	end_turn()
 
 func end_turn():
-	yield(get_tree().create_timer(0.8), "timeout")
+	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	enemy_turns()
 
 func enemy_turns():
 	for enemy in enemy_panels.get_children():
 		if enemy.enabled and enemy.alive():
 			enemy.attack()
-			yield(get_tree().create_timer(0.8), "timeout")
+			yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	# ENEMY TURNS DONE
 	for panel in player_panels.get_children():
 		panel.ready = true
@@ -91,10 +105,12 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if button.selected:
+		AudioController.back()
 		button.selected = false
 		cur_btn = null
 		return
 	if cur_btn != null: cur_btn.selected = false
+	AudioController.click()
 	cur_btn = button
 	cur_btn.selected = true
 	if button.item.target_type >= Enum.TargetType.MYSELF \
@@ -134,42 +150,52 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 	else: select_player(panel)
 
 func execute_vs_enemy(panel) -> void:
-	clear_selections()
+	AudioController.confirm()
+	var user = current_player
 	var item = cur_btn.item as Item
+	clear_selections()
+	show_text(item.name, user.pos)
+	get_next_player()
+	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = [panel]
 	if item.target_type >= Enum.TargetType.ANY_ROW \
 		and item.target_type <= Enum.TargetType.BACK_ROW:
 		targets = enemy_panels.get_row(panel)
+	if item.target_type == Enum.TargetType.ALL_ENEMIES:
+		targets = enemy_panels.get_all()
 	for hit_num in item.hits:
 		for target in targets:
 			if not target.alive(): continue
-			var atk = current_player.get_stat(item.stat_used)
+			var atk = user.get_stat(item.stat_used)
 			var hit = Hit.new()
 			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
 			target.take_hit(hit, cur_stat_type)
-			if hit_num < item.hits - 1:
-				yield(get_tree().create_timer(0.5), "timeout")
-	current_player.player.changed()
-	get_next_player()
+		if hit_num < item.hits - 1:
+			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
+	user.player.changed()
 
 func execute_vs_player(panel) -> void:
+	AudioController.confirm()
+	var user = current_player
 	var item = cur_btn.item as Item
 	var turn_spent = true
 	if item.sub_type == Enum.SubItemType.SHIELD:
-		if current_player.has_perk("Quick Block"):
+		if user.has_perk("Quick Block"):
 			turn_spent = false
 	clear_selections(turn_spent)
+	show_text(item.name, user.pos)
+	get_next_player()
+	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	var targets = [panel]
 	if item.target_type == Enum.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()
 	for hit_num in item.hits:
 		for target in targets:
 			if not target.alive(): continue
-			target.take_friendly_hit(current_player, item)
-			if hit_num < item.hits - 1:
-				yield(get_tree().create_timer(0.5), "timeout")
-	current_player.player.changed()
-	get_next_player()
+			target.take_friendly_hit(user, item)
+		if hit_num > item.hits - 1:
+			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
+	user.player.changed()
 
 func clear_selections(spend_turn: = true) -> void:
 	enemy_panels.hide_all_selectors()

@@ -9,8 +9,8 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Sorcerer"
-frame = 6
+name = "Wizard"
+frame = 8
 hp_max = 50
 hp_cur = 50
 strength = 5

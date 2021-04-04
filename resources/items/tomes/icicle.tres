@@ -1,19 +1,19 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/fast.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/slow.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Tailwind"
+name = "Icicle"
 desc = ""
 frame = 71
-max_uses = 30
-uses = 30
+max_uses = 40
+uses = 40
 item_type = 2
-sub_type = 10
-target_type = 1
-damage_type = 7
+sub_type = 15
+target_type = 6
+damage_type = 4
 stat_used = 2
 stat_vs = 2
 multiplier = 3.0
@@ -22,7 +22,7 @@ hits = 1
 hit_chance = 0
 crit_chance = 0
 sound_fx = ""
-inflict_boons = [ [ ExtResource( 2 ), 5, 100 ] ]
-inflict_hexes = [  ]
+inflict_boons = [  ]
+inflict_hexes = [ [ ExtResource( 2 ), 3, 50 ] ]
 gain_boons = [  ]
 gain_hexes = [  ]

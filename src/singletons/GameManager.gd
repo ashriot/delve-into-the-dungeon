@@ -6,7 +6,7 @@ var path = "user://" + save_name;
 var file_path = path.plus_file("data.tres")
 
 var loading: = false
-var spd: = 1.0
+var spd: = 1.0 setget, get_spd
 
 var game
 
@@ -26,21 +26,21 @@ func initialize_party():
 	var players = []
 	if loading:
 		print("LOADING DATA")
-		for player in save_data.players.values():
-			var new_player = Player.new()
-			new_player.slot = player["slot"]
-			new_player.frame = player["frame"]
-			new_player.hp_max = player["hp_max"]
-			new_player.hp_cur = player["hp_cur"]
-			new_player.strength = player["str"]
-			new_player.agility = player["agi"]
-			new_player.intellect = player["int"]
-			new_player.defense = player["def"]
-			new_player.items = array_to_items(player["items"])
-			new_player.perks = array_to_perks(player["perks"])
-			players.insert(new_player.slot, new_player)
-		game.players = players
-	else: players = game.players
+#		for player in save_data.players.values():
+#			var new_player = Player.new()
+#			new_player.slot = player["slot"]
+#			new_player.frame = player["frame"]
+#			new_player.hp_max = player["hp_max"]
+#			new_player.hp_cur = player["hp_cur"]
+#			new_player.strength = player["str"]
+#			new_player.agility = player["agi"]
+#			new_player.intellect = player["int"]
+#			new_player.defense = player["def"]
+#			new_player.items = array_to_items(player["items"])
+#			new_player.perks = array_to_perks(player["perks"])
+#			players.insert(new_player.slot, new_player)
+#		game.players = players
+	players = game.players
 	var i = 0
 	for player in players:
 		player.slot = i
@@ -113,3 +113,6 @@ func _on_inventory_changed(inventory):
 func check_error(error):
 	if error != OK:
 		print("There was an error writing the save %s to %s -> %s" % [save_data.profile_name, file_path, error])
+
+func get_spd() -> float:
+	return 1 / spd

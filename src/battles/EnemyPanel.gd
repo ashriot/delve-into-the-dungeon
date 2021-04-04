@@ -20,10 +20,13 @@ var hp_max: int
 var valid_target: bool
 var enabled: bool
 var potential_dmg: int
+var pos: Vector2
 
 var hexes: Array
 
 func init(battle, _enemy: Enemy) -> void:
+	anim.playback_speed = 1 / GameManager.spd
+	dmg_anim.playback_speed = 1 / GameManager.spd
 	hexes = []
 	enabled = true
 	enemy = _enemy
@@ -33,12 +36,15 @@ func init(battle, _enemy: Enemy) -> void:
 	hp_percent.max_value = hp_max
 	self.hp_cur = hp_max
 	targetable(false)
+	pos = rect_global_position
+	pos.x -= 6
+	pos.y += rect_size.y / 2
 # warning-ignore:return_value_discarded
 	button.connect("pressed", battle, "_on_EnemyPanel_pressed", [self])
 # warning-ignore:return_value_discarded
 	connect("show_dmg", battle, "show_dmg_text")
+# warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
-	add_to_group("enemy_panels")
 
 func level_up() -> void:
 	enemy.hp_growth = int((enemy.base_hp_max() * 0.5 + 5) * (enemy.level-1))
@@ -68,9 +74,6 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var rel_def = float(def - hit.atk) / hit.atk + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
 	dmg = int(dmg * def_mod)
-	var pos = rect_global_position
-	pos.x -= 6
-	pos.y += rect_size.y / 2
 	var dmg_text = ""
 	if not miss:
 		self.hp_cur -= dmg
@@ -81,15 +84,13 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	emit_signal("show_dmg", dmg_text, pos)
 	if item.inflict_hexes.size() > 0 and not miss and alive():
 		for hex in item.inflict_hexes:
+			if randi() % 100 + 1 > hex[2]: continue
 			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_hex(hex[0], hex[1])
-			if success: emit_signal("show_text", hex[0].name, pos)
+			if success: emit_signal("show_text", "+" + hex[0].name, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 
 func attack() -> void:
-	var pos = rect_global_position
-	pos.x -= 6
-	pos.y += rect_size.y / 2
 	emit_signal("show_text", "Attack", pos)
 	anim.play("Attack")
 	yield(anim, "animation_finished")

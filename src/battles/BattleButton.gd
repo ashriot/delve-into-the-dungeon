@@ -16,12 +16,15 @@ func init(battle) -> void:
 # warning-ignore:return_value_discarded
 	connect("pressed", battle, "_on_BattleButton_pressed", [self])
 
-func setup(_item: Item) -> void:
+func setup(_item: Item, limited = true) -> void:
 	item = _item
 	sprite.frame = item.frame
 	title.text = item.name
 	title2.text = item.name
-	self.uses_remain = item.uses
+	if limited: self.uses_remain = item.uses
+	else:
+		uses.hide()
+		uses2.hide()
 	self.selected = false
 
 func set_uses_remain(value):

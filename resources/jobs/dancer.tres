@@ -1,14 +1,16 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/weapons/wooden_sword.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/skills/blade_dance.tres" type="Resource" id=3]
 [ext_resource path="res://resources/items/weapons/snare_bow.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/skills/wind_waltz.tres" type="Resource" id=5]
+[ext_resource path="res://resources/items/skills/battle_bolero.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
 name = "Dancer"
-frame = 71
+frame = 1
 hp_max = 60
 hp_cur = 60
 strength = 8
@@ -23,5 +25,5 @@ str_mod = 0
 agi_mod = 0
 int_mod = 0
 def_mod = 0
-items = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
+items = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
 perks = [  ]
