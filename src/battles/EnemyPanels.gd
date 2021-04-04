@@ -14,7 +14,8 @@ func init(battle, enemies: Array) -> void:
 	for panel in front_row.get_children():
 		if i >= enemies.size(): panel.hide()
 		elif enemies[i] == null: panel.hide()
-		else: panel.init(battle, enemies[i])
+		else:
+			panel.init(battle, enemies[i])
 		i += 1
 	i = 3
 	for panel in back_row.get_children():

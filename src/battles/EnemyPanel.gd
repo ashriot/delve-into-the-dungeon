@@ -3,7 +3,7 @@ class_name EnemyPanel
 
 signal done
 signal show_dmg(text)
-signal show_text(text)
+signal show_text(text, pos)
 
 onready var button: = $Button
 onready var sprite: = $Sprite
@@ -45,6 +45,7 @@ func init(battle, _enemy: Enemy) -> void:
 	connect("show_dmg", battle, "show_dmg_text")
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
+	emit_signal("show_text", "Lv. " + str(enemy.level), pos)
 
 func level_up() -> void:
 	enemy.hp_growth = int((enemy.base_hp_max() * 0.5 + 5) * (enemy.level-1))

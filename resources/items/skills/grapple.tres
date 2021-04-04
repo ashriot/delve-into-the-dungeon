@@ -4,21 +4,21 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Flying Kick"
+name = "Grapple"
 desc = ""
 frame = 70
-max_uses = 20
-uses = 20
+max_uses = 15
+uses = 15
 item_type = 1
 sub_type = 19
-target_type = 6
+target_type = 7
 damage_type = 0
-stat_used = 1
-stat_vs = 3
-multiplier = 3.0
+stat_used = 0
+stat_vs = 0
+multiplier = 4.0
 bonus_damage = 0
 hits = 1
-hit_chance = 70
+hit_chance = 80
 crit_chance = 0
 sound_fx = ""
 inflict_boons = [  ]

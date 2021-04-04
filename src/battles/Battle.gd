@@ -16,6 +16,8 @@ var cur_hit_chance: int
 var cur_crit_chance: int
 var cur_stat_type: int
 
+var chose_next: bool
+
 func init(game):
 	AudioController.play_bgm("battle")
 	players = game.players
@@ -28,6 +30,7 @@ func init(game):
 	battleMenu.get_child(0).init(self)
 	battleMenu.get_child(0).setup(flee, false)
 	enemy_panels.init(self, enemies)
+	chose_next = false
 	get_next_player()
 
 func setup_buttons() -> void:
@@ -45,8 +48,7 @@ func clear_buttons() -> void:
 	for child in buttons.get_children():
 		child.hide()
 
-func select_player(panel: PlayerPanel) -> void:
-	print("Selecting: ", panel.player.name)
+func select_player(panel: PlayerPanel, beep = false) -> void:
 	if panel == null: return
 	if !panel.ready: return
 	if current_player == panel:
@@ -60,7 +62,7 @@ func select_player(panel: PlayerPanel) -> void:
 	if cur_btn != null:
 		cur_btn.selected = false
 		enemy_panels.hide_all_selectors()
-	AudioController.select()
+	if beep: AudioController.select()
 	battleMenu.hide()
 	buttons.show()
 	current_player = panel
@@ -68,6 +70,7 @@ func select_player(panel: PlayerPanel) -> void:
 	setup_buttons()
 
 func get_next_player() -> void:
+	if chose_next: return
 	yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	cur_btn = null
 	current_player = null
@@ -89,7 +92,7 @@ func enemy_turns():
 	# ENEMY TURNS DONE
 	for panel in player_panels.get_children():
 		panel.ready = true
-	select_player(player_panels.get_children()[0])
+	select_player(player_panels.get_children()[0], true)
 
 func show_dmg_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
@@ -147,12 +150,15 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 	if cur_btn and cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
 			if not panel.valid_target: return
 			execute_vs_player(panel)
-	else: select_player(panel)
+	else:
+		chose_next = true
+		select_player(panel, true)
 
 func execute_vs_enemy(panel) -> void:
-	AudioController.confirm()
-	var user = current_player
 	var item = cur_btn.item as Item
+	var user = current_player
+	if item.damage_type > Enum.DamageType.AIR:
+		AudioController.play_sfx("cast")
 	clear_selections()
 	show_text(item.name, user.pos)
 	get_next_player()
@@ -198,6 +204,7 @@ func execute_vs_player(panel) -> void:
 	user.player.changed()
 
 func clear_selections(spend_turn: = true) -> void:
+	chose_next = false
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if cur_btn == null: return
