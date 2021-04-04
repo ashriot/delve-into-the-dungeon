@@ -167,7 +167,7 @@ margin_right = 16.0
 margin_bottom = 2.0
 custom_styles/normal = SubResource( 4 )
 text = "99%"
-align = 2
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

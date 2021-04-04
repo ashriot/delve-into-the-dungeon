@@ -26,9 +26,9 @@ __meta__ = {
 [node name="HPCur" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -13.0
+margin_left = -14.0
 margin_top = 2.0
-margin_right = -1.0
+margin_right = -2.0
 margin_bottom = 8.0
 text = "023"
 align = 2

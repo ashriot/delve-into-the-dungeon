@@ -157,8 +157,11 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 func execute_vs_enemy(panel) -> void:
 	var item = cur_btn.item as Item
 	var user = current_player
-	if item.damage_type > Enum.DamageType.AIR:
+	if item.sub_type > Enum.SubItemType.AIR \
+		and item.sub_type < Enum.SubItemType.WITCHCRAFT:
 		AudioController.play_sfx("cast")
+	else:
+		AudioController.confirm()
 	clear_selections()
 	show_text(item.name, user.pos)
 	get_next_player()
