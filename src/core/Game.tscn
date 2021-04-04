@@ -60,6 +60,7 @@ __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+mute = true
 players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
 
 [node name="Battle" parent="." instance=ExtResource( 2 )]

@@ -31,6 +31,7 @@ func init(game):
 	battleMenu.get_child(0).setup(flee, false)
 	enemy_panels.init(self, enemies)
 	chose_next = false
+	AudioController.play_sfx("player_turn")
 	get_next_player()
 
 func setup_buttons() -> void:
@@ -92,17 +93,19 @@ func enemy_turns():
 	# ENEMY TURNS DONE
 	for panel in player_panels.get_children():
 		panel.ready = true
-	select_player(player_panels.get_children()[0], true)
+	AudioController.play_sfx("player_turn")
+	select_player(player_panels.get_children()[0], false)
 
 func show_dmg_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
 	damage_text.rect_global_position = pos
 	damage_text.init(self, text)
 
-func show_text(text: String, pos: Vector2) -> void:
+func show_text(text: String, pos: Vector2, display = false) -> void:
 	var damage_text = DamageText.instance()
 	damage_text.rect_global_position = pos
-	damage_text.text(self, text)
+	if display: damage_text.display(self, text)
+	else: damage_text.text(self, text)
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
 	enemy_panels.hide_all_selectors()
@@ -157,11 +160,7 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 func execute_vs_enemy(panel) -> void:
 	var item = cur_btn.item as Item
 	var user = current_player
-	if item.sub_type > Enum.SubItemType.AIR \
-		and item.sub_type < Enum.SubItemType.WITCHCRAFT:
-		AudioController.play_sfx("cast")
-	else:
-		AudioController.confirm()
+	AudioController.play_sfx(item.use_fx)
 	clear_selections()
 	show_text(item.name, user.pos)
 	get_next_player()
@@ -179,14 +178,17 @@ func execute_vs_enemy(panel) -> void:
 			var hit = Hit.new()
 			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
 			target.take_hit(hit, cur_stat_type)
+		if item.target_type >= Enum.TargetType.ANY_ROW:
+			print("playing sfx")
+			AudioController.play_sfx(item.sound_fx)
 		if hit_num < item.hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	user.player.changed()
 
 func execute_vs_player(panel) -> void:
-	AudioController.confirm()
 	var user = current_player
 	var item = cur_btn.item as Item
+	AudioController.play_sfx(item.use_fx)
 	var turn_spent = true
 	if item.sub_type == Enum.SubItemType.SHIELD:
 		if user.has_perk("Quick Block"):
@@ -195,6 +197,7 @@ func execute_vs_player(panel) -> void:
 	show_text(item.name, user.pos)
 	get_next_player()
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
+	AudioController.play_sfx(item.sound_fx)
 	var targets = [panel]
 	if item.target_type == Enum.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()

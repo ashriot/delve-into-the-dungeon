@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/icicle.wav-477b6ebfcecaa2d282537e35d9b124f6.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/icicle.wav"
+dest_files=[ "res://.import/icicle.wav-477b6ebfcecaa2d282537e35d9b124f6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

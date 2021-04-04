@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Flying Kick"
+desc = ""
+frame = 70
+max_uses = 20
+uses = 20
+item_type = 1
+sub_type = 19
+target_type = 6
+damage_type = 0
+stat_used = 1
+stat_vs = 3
+multiplier = 3.0
+bonus_damage = 0
+hits = 1
+hit_chance = 70
+crit_chance = 0
+sound_fx = "smack"
+use_fx = "jump"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]

@@ -21,6 +21,7 @@ hits = 1
 hit_chance = 70
 crit_chance = 15
 sound_fx = ""
+use_fx = "melee"
 inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]

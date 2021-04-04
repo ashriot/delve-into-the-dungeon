@@ -3,9 +3,9 @@
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/tomes/blizzard.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/tomes/frostbite.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/tomes/clarity.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/tomes/bold.tres" type="Resource" id=4]
 [ext_resource path="res://resources/items/tomes/sleet.tres" type="Resource" id=5]
-[ext_resource path="res://resources/items/tomes/icicle.tres" type="Resource" id=6]
+[ext_resource path="res://resources/items/tomes/inferno.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )

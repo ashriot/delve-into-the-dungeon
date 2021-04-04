@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ice_hit.wav-30aef57c4de832738816747a12845e2d.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/ice_hit.wav"
+dest_files=[ "res://.import/ice_hit.wav-30aef57c4de832738816747a12845e2d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

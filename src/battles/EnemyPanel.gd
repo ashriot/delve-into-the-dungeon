@@ -3,7 +3,7 @@ class_name EnemyPanel
 
 signal done
 signal show_dmg(text)
-signal show_text(text, pos)
+signal show_text(text, pos, display)
 
 onready var button: = $Button
 onready var sprite: = $Sprite
@@ -45,7 +45,7 @@ func init(battle, _enemy: Enemy) -> void:
 	connect("show_dmg", battle, "show_dmg_text")
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
-	emit_signal("show_text", "Lv. " + str(enemy.level), pos)
+	emit_signal("show_text", "Lv. " + str(enemy.level), pos, true)
 
 func level_up() -> void:
 	enemy.hp_growth = int((enemy.base_hp_max() * 0.5 + 5) * (enemy.level-1))
@@ -63,6 +63,7 @@ func get_stat(stat) -> int:
 
 func take_hit(hit: Hit, hit_stat: int) -> void:
 	var item = hit.item as Item
+	var fx = item.sound_fx
 	var hit_and_crit = get_hit_and_crit_chance(hit.hit_chance, hit.crit_chance, hit_stat)
 	var hit_chance = hit_and_crit[0]
 	var crit_chance = hit_and_crit[1]
@@ -70,6 +71,7 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var hit_roll = randi() % 100 + 1
 	if hit_roll > hit_chance:
 		miss = true
+		fx = "miss"
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
 	var rel_def = float(def - hit.atk) / hit.atk + 0.5
@@ -82,6 +84,10 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 		anim.play("Hit")
 	else:
 		dmg_text = "MISS"
+	if item.target_type >= Enum.TargetType.ONE_ENEMY \
+		and item.target_type <= Enum.TargetType.ONE_BACK:
+		print("playing sfx")
+		AudioController.play_sfx(fx)
 	emit_signal("show_dmg", dmg_text, pos)
 	if item.inflict_hexes.size() > 0 and not miss and alive():
 		for hex in item.inflict_hexes:

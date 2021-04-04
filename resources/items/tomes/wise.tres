@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Clarity"
+name = "Wise"
 desc = ""
 frame = 71
 max_uses = 20
@@ -21,8 +21,9 @@ bonus_damage = 0
 hits = 1
 hit_chance = 0
 crit_chance = 0
-sound_fx = ""
+sound_fx = "wise"
+use_fx = "cast"
 inflict_boons = [  ]
-inflict_hexes = [ [ ExtResource( 2 ), 3, 100 ] ]
+inflict_hexes = [ [ ExtResource( 2 ), 5, 100 ] ]
 gain_boons = [  ]
 gain_hexes = [  ]

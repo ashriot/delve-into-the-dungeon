@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/dance.wav-bfdb1924c24b7d0d4554de975cb268cf.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/dance.wav"
+dest_files=[ "res://.import/dance.wav-bfdb1924c24b7d0d4554de975cb268cf.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

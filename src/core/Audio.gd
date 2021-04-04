@@ -17,6 +17,7 @@ func _ready() -> void:
 
 func play_bgm(name: String) -> void:
 	if mute: return
+	if name == "": return
 	bgm.volume_db = -10
 	bgm.pitch_scale = 0.8
 	bgm.stream = load("res://assets/audio/bgm/" + name + ".ogg")
@@ -26,6 +27,7 @@ func stop_bgm() -> void:
 	bgm.stop()
 
 func play_sfx(name: String) -> void:
+	if name == "": return
 	if (!sfx1.playing):
 		sfx1.stream = load("res://assets/audio/sfx/" + name + ".wav")
 		sfx1.play()

@@ -4,23 +4,24 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Flying Kick"
+name = "Inferno"
 desc = ""
-frame = 70
+frame = 71
 max_uses = 20
 uses = 20
-item_type = 1
-sub_type = 19
-target_type = 6
-damage_type = 0
-stat_used = 1
-stat_vs = 3
-multiplier = 3.0
+item_type = 0
+sub_type = 13
+target_type = 12
+damage_type = 3
+stat_used = 2
+stat_vs = 2
+multiplier = 4.0
 bonus_damage = 0
 hits = 1
-hit_chance = 70
+hit_chance = 0
 crit_chance = 0
-sound_fx = ""
+sound_fx = "fire"
+use_fx = "cast"
 inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]

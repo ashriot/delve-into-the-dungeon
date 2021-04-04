@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/glimmer.wav-a7a080bedbeeae06cbde899f92c828dd.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/glimmer.wav"
+dest_files=[ "res://.import/glimmer.wav-a7a080bedbeeae06cbde899f92c828dd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

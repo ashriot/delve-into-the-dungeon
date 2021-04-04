@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/bold.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Bold"
+desc = ""
+frame = 71
+max_uses = 20
+uses = 20
+item_type = 2
+sub_type = 13
+target_type = 1
+damage_type = 7
+stat_used = 4
+stat_vs = 4
+multiplier = 0.0
+bonus_damage = 0
+hits = 1
+hit_chance = 0
+crit_chance = 0
+sound_fx = "bold"
+use_fx = "cast"
+inflict_boons = [  ]
+inflict_hexes = [ [ ExtResource( 2 ), 5, 100 ] ]
+gain_boons = [  ]
+gain_hexes = [  ]

@@ -21,6 +21,7 @@ hits = 1
 hit_chance = 0
 crit_chance = 0
 sound_fx = ""
+use_fx = "cast"
 inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]
