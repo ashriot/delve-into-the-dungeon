@@ -1,6 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
+[ext_resource path="res://resources/enemy actions/scratch.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemy actions/wind_gust.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemy actions/stoneskin.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -8,7 +11,7 @@ name = "Gargoyle"
 frame = 1
 hp_max = 60
 hp_cur = 0
-strength = 12
+strength = 8
 agility = 3
 intellect = 5
 defense = 15
@@ -23,3 +26,4 @@ def_mod = 0
 desc = "BOOGIE"
 level = 2
 gold = 25
+actions = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]

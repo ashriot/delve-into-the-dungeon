@@ -12,6 +12,7 @@ var game
 
 func initialize_game_data(_game):
 	game = _game
+	spd = game.spd
 	var dir = Directory.new();
 	if dir.file_exists(file_path):
 		save_data = load(file_path)

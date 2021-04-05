@@ -20,7 +20,8 @@ func execute(parent, text) -> void:
 	$Text/Text.text = text
 	parent.add_child(self)
 	rect_global_position.x = clamp(rect_global_position.x, 1, \
-		get_viewport_rect().size.x - rect_size.x)
+		get_viewport_rect().size.x - rect_size.x - 1)
+	print(get_viewport_rect().size.x - rect_size.x - 1)
 
 func animate(dir: String, duration = 1.0) -> void:
 	var anim = $AnimationPlayer

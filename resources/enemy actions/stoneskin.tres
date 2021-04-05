@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/core/enemy_action.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/safe.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Stoneskin"
+desc = ""
+target_type = 0
+damage_type = 7
+stat_used = 4
+stat_vs = 4
+stat_hit = 4
+multiplier = 0.0
+bonus_damage = 0
+hits = 1
+hit_chance = 0
+crit_chance = 0
+sound_fx = "safe"
+use_fx = "skill"
+inflict_boons = [ [ ExtResource( 2 ), 5, 100 ] ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+cooldown = 5
+starting_cd = 0
+starting_min = 0

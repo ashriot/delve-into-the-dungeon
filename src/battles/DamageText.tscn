@@ -44,7 +44,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -8 ) ]
+"values": [ Vector2( 0, -12 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Text:modulate")
@@ -89,8 +89,8 @@ tracks/1/keys = {
 }
 
 [node name="DamageText" type="Control"]
-margin_left = -14.0
-margin_right = 14.0
+margin_left = -19.0
+margin_right = 19.0
 margin_bottom = 7.0
 mouse_filter = 2
 script = ExtResource( 1 )
@@ -99,11 +99,8 @@ __meta__ = {
 }
 
 [node name="Text" type="Control" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -8.0
-margin_bottom = -8.0
 rect_pivot_offset = Vector2( 7, 3.5 )
 mouse_filter = 2
 __meta__ = {
@@ -117,7 +114,7 @@ margin_left = -1.0
 margin_right = -1.0
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "999!"
+text = "Wind Gust"
 align = 1
 valign = 1
 __meta__ = {
@@ -131,7 +128,7 @@ margin_left = 1.0
 margin_right = 1.0
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "999!"
+text = "Wind Gust"
 align = 1
 valign = 1
 __meta__ = {
@@ -145,7 +142,7 @@ margin_top = -1.0
 margin_bottom = -1.0
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "999!"
+text = "Wind Gust"
 align = 1
 valign = 1
 __meta__ = {
@@ -159,7 +156,7 @@ margin_top = 1.0
 margin_bottom = 1.0
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "999!"
+text = "Wind Gust"
 align = 1
 valign = 1
 __meta__ = {
@@ -172,7 +169,7 @@ anchor_bottom = 1.0
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
 custom_constants/shadow_as_outline = 1
-text = "999!"
+text = "Wind Gust"
 align = 1
 valign = 1
 

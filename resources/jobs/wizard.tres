@@ -1,11 +1,37 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/tomes/blizzard.tres" type="Resource" id=2]
-[ext_resource path="res://resources/items/tomes/frostbite.tres" type="Resource" id=3]
+[ext_resource path="res://src/core/item.gd" type="Script" id=3]
 [ext_resource path="res://resources/items/tomes/bold.tres" type="Resource" id=4]
-[ext_resource path="res://resources/items/tomes/sleet.tres" type="Resource" id=5]
-[ext_resource path="res://resources/items/tomes/inferno.tres" type="Resource" id=6]
+[ext_resource path="res://resources/items/tomes/inferno.tres" type="Resource" id=5]
+[ext_resource path="res://resources/items/tomes/char.tres" type="Resource" id=6]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+name = "Fireball"
+desc = ""
+target_type = 6
+damage_type = 3
+stat_used = 2
+stat_vs = 2
+stat_hit = 4
+multiplier = 6.0
+bonus_damage = 0
+hits = 1
+hit_chance = 0
+crit_chance = 0
+sound_fx = "fireball"
+use_fx = "cast"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+frame = 71
+max_uses = 20
+uses = 20
+item_type = 0
+sub_type = 0
 
 [resource]
 script = ExtResource( 1 )
@@ -25,5 +51,5 @@ str_mod = 0
 agi_mod = 0
 int_mod = 0
 def_mod = 0
-items = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
+items = [ ExtResource( 5 ), SubResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ) ]
 perks = [  ]

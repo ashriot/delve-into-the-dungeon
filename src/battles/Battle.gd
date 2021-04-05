@@ -2,6 +2,8 @@ extends Control
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
 
+signal enemy_done
+
 onready var player_panels = $PlayerPanels
 onready var enemy_panels = $EnemyPanels
 onready var buttons = $Buttons
@@ -15,6 +17,7 @@ var cur_btn = null
 var cur_hit_chance: int
 var cur_crit_chance: int
 var cur_stat_type: int
+var player_targets: = [false, false, false, false]
 
 var chose_next: bool
 
@@ -23,12 +26,19 @@ func init(game):
 	players = game.players
 	battleMenu.hide()
 	player_panels.init(self)
+	var i = 0
+	for panel in player_panels.get_children():
+		if panel.initialized: player_targets[i] = true
+		i += 1
 	for child in buttons.get_children():
 		child.init(self)
 	clear_buttons()
 	var flee = load("res://resources/items/battleCommands/flee.tres")
+	var end_turn = load("res://resources/items/battleCommands/end_turn.tres")
 	battleMenu.get_child(0).init(self)
 	battleMenu.get_child(0).setup(flee, false)
+	battleMenu.get_child(1).init(self)
+	battleMenu.get_child(1).setup(end_turn, false)
 	enemy_panels.init(self, enemies)
 	chose_next = false
 	AudioController.play_sfx("player_turn")
@@ -46,6 +56,7 @@ func setup_buttons() -> void:
 			button.hide()
 
 func clear_buttons() -> void:
+	battleMenu.hide()
 	for child in buttons.get_children():
 		child.hide()
 
@@ -70,9 +81,9 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 	panel.selected = true
 	setup_buttons()
 
-func get_next_player() -> void:
+func get_next_player(delay: = true) -> void:
 	if chose_next: return
-	yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+	if delay: yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	cur_btn = null
 	current_player = null
 	for panel in player_panels.get_children():
@@ -82,19 +93,67 @@ func get_next_player() -> void:
 	end_turn()
 
 func end_turn():
+	chose_next = false
 	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	enemy_turns()
 
 func enemy_turns():
+	print("Enemy Turns")
 	for enemy in enemy_panels.get_children():
 		if enemy.enabled and enemy.alive():
-			enemy.attack()
-			yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
-	# ENEMY TURNS DONE
+			enemy_take_action(enemy)
+			yield(self, "enemy_done")
+			print("Enemy Done!")
+	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	for panel in player_panels.get_children():
-		panel.ready = true
+		if panel.alive(): panel.ready = true
 	AudioController.play_sfx("player_turn")
-	select_player(player_panels.get_children()[0], false)
+	get_next_player(false)
+
+func enemy_take_action(panel: EnemyPanel):
+	if panel.enemy.actions.size() == 0:
+		yield(get_tree().create_timer(0.25 * GameManager.spd, true), "timeout")
+		emit_signal("enemy_done")
+		return
+	var text = "Attack"
+	var action = panel.get_action()
+	text = action.name
+	AudioController.play_sfx(action.use_fx)
+	show_text(text, panel.pos)
+	panel.anim.play("Hit")
+	yield(get_tree().create_timer(0.475 * GameManager.spd, true), "timeout")
+	var targets = get_enemy_targets(panel, action)
+	for target in targets:
+		var hit = Hit.new()
+		# item, _hit_chance, _crit_chance, _bonus_dmg, _dmg_mod, _atk
+		hit.init(action, action.hit_chance, action.crit_chance, 0, 0, panel.get_stat(action.stat_used))
+		if action.target_type < Enum.TargetType.ONE_ENEMY:
+			pass
+#			target.take_friendly_hit(hit)
+		else: target.take_hit(hit)
+	print("emitting enemy done signal")
+	emit_signal("enemy_done")
+
+func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
+	var targets = []
+	var choices = []
+	var choice = 0
+	if action.target_type == Enum.TargetType.MYSELF:
+		return [panel]
+	if action.target_type == Enum.TargetType.ONE_FRONT:
+		for i in range(2):
+			if player_targets[i]: choices.append(i)
+		if choices.size() == 2: choice = choices[0] if roll() < 51 else choices[1]
+		else: choice = choices[0]
+		targets.append(player_panels.get_child(choice))
+
+	if action.target_type == Enum.TargetType.FRONT_ROW:
+		if player_targets[0] or player_targets[1]:
+			for i in range(2): if player_targets[i]: choices.append(i)
+		else: for i in range(2, 4): if player_targets[i]: choices.append(i)
+		for target in choices: targets.append(player_panels.get_child(target))
+
+	return targets
 
 func show_dmg_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
@@ -108,6 +167,12 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	else: damage_text.text(self, text)
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
+	if button.item.name == "End Turn":
+		AudioController.confirm()
+		for panel in player_panels.get_children(): panel.ready = false
+		clear_buttons()
+		end_turn()
+		return
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if button.selected:
@@ -136,10 +201,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		var atk = current_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
-		var hit_type = Enum.StatType.AGI
-		if button.item.damage_type != Enum.DamageType.MARTIAL:
-			hit_type = Enum.StatType.NA
-		enemy_panels.update_item_stats(hit, hit_type)
+		enemy_panels.update_item_stats(hit)
 		enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
@@ -220,3 +282,6 @@ func clear_selections(spend_turn: = true) -> void:
 	if spend_turn:
 		current_player.ready = false
 		current_player.decrement_boons("End")
+
+func roll() -> int:
+	return randi() % 100 + 1

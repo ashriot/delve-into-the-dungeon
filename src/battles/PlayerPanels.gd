@@ -14,6 +14,9 @@ func init(battle) -> void:
 func get_children():
 	return panels.get_children()
 
+func get_child(index: int):
+	return panels.get_child(index)
+
 func show_selectors(player: PlayerPanel, target_type):
 	if target_type == Enum.TargetType.MYSELF:
 		player.targetable(true, true)

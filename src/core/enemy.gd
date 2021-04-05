@@ -4,6 +4,7 @@ class_name Enemy
 export(String, MULTILINE) var desc
 export var level:= 1
 export var gold: int
+export(Array, Resource) var actions
 
 var hp_growth: int
 var str_growth: int

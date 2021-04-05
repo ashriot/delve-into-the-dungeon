@@ -4,6 +4,7 @@ extends Control
 onready var battle = $Battle
 
 export var mute: bool
+export var spd: = 1.0
 export(Array, Resource) var players
 
 var _Inventory = load("res://src/core/inventory.gd")

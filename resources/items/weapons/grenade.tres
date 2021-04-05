@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Grenade"
+desc = "Deal {potency} {dmg} damage to {target}."
+target_type = 9
+damage_type = 0
+stat_used = 4
+stat_vs = 1
+stat_hit = 1
+multiplier = 0.0
+bonus_damage = 40
+hits = 1
+hit_chance = 80
+crit_chance = 10
+sound_fx = "grenade"
+use_fx = "toss"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+frame = 84
+max_uses = 20
+uses = 20
+item_type = 0
+sub_type = 0

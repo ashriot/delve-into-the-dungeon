@@ -71,13 +71,13 @@ func show_front_row_selector():
 		return
 	front_select.show()
 	for child in front_row.get_children():
-		child.update_hit_chance(projected_hit, hit_stat)
+		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
 
 func show_back_row_selector():
 	back_select.show()
 	for child in back_row.get_children():
-		child.update_hit_chance(projected_hit, hit_stat)
+		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
 
 func show_front_row_selectors():
@@ -85,21 +85,21 @@ func show_front_row_selectors():
 		show_back_row_selectors()
 		return
 	for child in front_row.get_children():
-		child.update_hit_chance(projected_hit, hit_stat)
+		child.update_hit_chance(projected_hit)
 		child.targetable(true)
 
 func show_back_row_selectors():
 	for child in back_row.get_children():
-		child.update_hit_chance(projected_hit, hit_stat)
+		child.update_hit_chance(projected_hit)
 		child.targetable(true)
 
 func show_all_selector():
 	all_select.show()
 	for child in front_row.get_children():
-		child.update_hit_chance(projected_hit, hit_stat)
+		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
 	for child in back_row.get_children():
-		child.update_hit_chance(projected_hit, hit_stat)
+		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
 
 func hide_all_selectors():
@@ -111,6 +111,6 @@ func hide_all_selectors():
 	for child in back_row.get_children():
 		child.targetable(false)
 
-func update_item_stats(hit: Hit, stat: int) -> void:
+func update_item_stats(hit: Hit) -> void:
 	projected_hit = hit
-	hit_stat = stat
+	hit_stat = hit.item.stat_hit

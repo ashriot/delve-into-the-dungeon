@@ -49,7 +49,7 @@ func _add_dir_contents(dir: Directory, files: Array, directories: Array):
 			directories.append(path)
 			_add_dir_contents(subDir, files, directories)
 		else:
-			print("Found file: %s" % path)
+#			print("Found file: %s" % path)
 			files.append(path)
 		file_name = dir.get_next()
 	dir.list_dir_end()

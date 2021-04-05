@@ -1,10 +1,12 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/weapons/wooden_sword.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/weapons/wooden_shield.tres" type="Resource" id=3]
 [ext_resource path="res://resources/perks/quick_block.tres" type="Resource" id=4]
-[ext_resource path="res://resources/items/weapons/flame_edge.tres" type="Resource" id=5]
+[ext_resource path="res://resources/items/tomes/heal.tres" type="Resource" id=5]
+[ext_resource path="res://resources/items/weapons/pistol.tres" type="Resource" id=6]
+[ext_resource path="res://resources/items/weapons/grenade.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -15,7 +17,7 @@ hp_cur = 80
 strength = 15
 agility = 7
 intellect = 5
-defense = 9
+defense = 12
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
@@ -24,5 +26,5 @@ str_mod = 0
 agi_mod = 0
 int_mod = 0
 def_mod = 0
-items = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 3 ) ]
+items = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 7 ) ]
 perks = [ ExtResource( 4 ) ]

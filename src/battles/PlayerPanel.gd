@@ -32,7 +32,10 @@ var pos: Vector2
 var status_ptr: int
 var blocking: int setget set_blocking
 
+var initialized: = false
+
 func init(battle, _player: Player):
+	initialized = true
 	anim.playback_speed = 1 / GameManager.spd
 	enabled = true
 	self.ready = true
@@ -68,20 +71,22 @@ func get_stat(stat) -> int:
 func alive() -> bool:
 	return hp_cur > 0
 
-func take_hit(hit: Hit, hit_stat: int) -> void:
-	var item = hit.item as Item
-	var hit_and_crit = get_hit_and_crit_chance(hit.hit_chance, hit.crit_chance, hit_stat)
+func take_hit(hit: Hit) -> void:
+	var item = hit.item as Action
+	var fx = item.sound_fx
+	var hit_and_crit = get_hit_and_crit_chance(hit.hit_chance, hit.crit_chance, hit.stat_hit)
 	var hit_chance = hit_and_crit[0]
 	var crit_chance = hit_and_crit[1]
 	var miss = false
 	var hit_roll = randi() % 100 + 1
-	print("Hit Chance: ", hit_chance, "% -> Roll: ", (100 - hit_roll))
+	print(hit.item.name, ": ", hit_roll, " < ", hit_chance, "?")
 	if hit_roll > hit_chance:
 		miss = true
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
-	var rel_def = (def - hit.atk) / hit.atk + 0.5
+	var rel_def = float(def - hit.atk) / float(hit.atk) + 0.5
 	var def_mod = pow(0.95, 27 * rel_def)
+	print(player.name, " DEF: ", player.defense, " Rel_Def: ", rel_def, " dmg: ", dmg)
 	dmg = int(dmg * def_mod)
 	var dmg_text = ""
 	if not miss:
@@ -89,8 +94,10 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 		dmg_text = str(dmg)
 		anim.play("Hit")
 	else:
+		fx = "miss"
 		dmg_text = "MISS"
 	emit_signal("show_dmg", dmg_text, pos)
+	AudioController.play_sfx(fx)
 	if item.inflict_hexes.size() > 0 and not miss:
 		for hex in item.inflict_hexes:
 			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
@@ -102,14 +109,15 @@ func take_friendly_hit(user: PlayerPanel, item: Item) -> void:
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used))
 	var def = int(get_stat(item.stat_vs) * item.multiplier)
 	var dmg_text = ""
+	AudioController.play_sfx(item.sound_fx)
 	if item.damage_type == Enum.DamageType.HEAL:
-		self.hp_cur += dmg + def
+		dmg += def
+		self.hp_cur += dmg
 		dmg_text = str(dmg)
-#		anim.play("Hit")
 	elif item.sub_type == Enum.SubItemType.SHIELD:
 		dmg_text = "Block:" + str(dmg)
 		self.blocking += dmg
-	if dmg > 0: emit_signal("show_text", dmg_text, pos)
+	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
 	if item.inflict_hexes.size() > 0:
 		for hex in item.inflict_hexes:
 			if randi() % 100 + 1 > hex[2]: continue
@@ -207,7 +215,7 @@ func set_ready(value: bool):
 		outline.modulate.a = 0.15
 
 func set_hp_cur(value):
-	hp_cur = value
+	hp_cur = clamp(value, 0, hp_max)
 	player.hp_cur = value
 	HPCur.text = str(hp_cur)
 	hp_percent.value = hp_cur

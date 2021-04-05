@@ -51,6 +51,7 @@ func get_stat(stat) -> int:
 	elif stat == Enum.StatType.AGI: return self.agility
 	elif stat == Enum.StatType.INT: return self.intellect
 	elif stat == Enum.StatType.DEF: return self.defense
+	elif stat == Enum.StatType.NA: return 0
 	else: return -999
 
 func get_hp_max() -> int:

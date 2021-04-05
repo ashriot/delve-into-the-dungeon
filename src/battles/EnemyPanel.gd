@@ -21,6 +21,8 @@ var valid_target: bool
 var enabled: bool
 var potential_dmg: int
 var pos: Vector2
+var cooldowns: = []
+var actions: = []
 
 var hexes: Array
 
@@ -30,6 +32,7 @@ func init(battle, _enemy: Enemy) -> void:
 	hexes = []
 	enabled = true
 	enemy = _enemy
+	actions = enemy.actions
 	level_up()
 	sprite.frame = enemy.frame
 	hp_max = enemy.hp_max
@@ -39,6 +42,13 @@ func init(battle, _enemy: Enemy) -> void:
 	pos = rect_global_position
 	pos.x -= 6
 	pos.y += rect_size.y / 2
+	for i in range(actions.size()):
+		var act = actions[i]
+		var cd = 0
+		if act.starting_cd > 0:
+			cd = randi() % (1 + act.starting_cd - act.starting_min) + act.starting_min
+		cooldowns.append(cd)
+	print(enemy.name, " -> ", cooldowns)
 # warning-ignore:return_value_discarded
 	button.connect("pressed", battle, "_on_EnemyPanel_pressed", [self])
 # warning-ignore:return_value_discarded
@@ -55,11 +65,7 @@ func level_up() -> void:
 	enemy.def_growth = int((enemy.base_def() * 0.08 + 0.5) * enemy.level)
 
 func get_stat(stat) -> int:
-	if stat == Enum.StatType.AGI: return enemy.agility
-	elif stat == Enum.StatType.DEF: return enemy.defense
-	elif stat == Enum.StatType.INT: return enemy.intellect
-	elif stat == Enum.StatType.STR: return enemy.strength
-	return -999
+	return enemy.get_stat(stat)
 
 func take_hit(hit: Hit, hit_stat: int) -> void:
 	var item = hit.item as Item
@@ -69,13 +75,14 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	var crit_chance = hit_and_crit[1]
 	var miss = false
 	var hit_roll = randi() % 100 + 1
+	print(enemy.name, " -> ", hit_roll, "/", hit_chance)
 	if hit_roll > hit_chance:
 		miss = true
 		fx = "miss"
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def - hit.atk) / hit.atk + 0.5
-	var def_mod = pow(0.95, 27 * rel_def)
+	var rel_def = float(def - hit.atk) / float(hit.atk) + 0.5 if float(hit.atk) > 0 else 0
+	var def_mod = pow(0.95, 27 * rel_def) if def > 0 else 1
 	dmg = int(dmg * def_mod)
 	var dmg_text = ""
 	if not miss:
@@ -86,7 +93,6 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 		dmg_text = "MISS"
 	if item.target_type >= Enum.TargetType.ONE_ENEMY \
 		and item.target_type <= Enum.TargetType.ONE_BACK:
-		print("playing sfx")
 		AudioController.play_sfx(fx)
 	emit_signal("show_dmg", dmg_text, pos)
 	if item.inflict_hexes.size() > 0 and not miss and alive():
@@ -97,11 +103,17 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 			if success: emit_signal("show_text", "+" + hex[0].name, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 
-func attack() -> void:
-	emit_signal("show_text", "Attack", pos)
-	anim.play("Attack")
-	yield(anim, "animation_finished")
-	emit_signal("done")
+func get_action() -> Action:
+	var action = null
+	for i in range(actions.size()):
+		if actions[i].cooldown > 0:
+			if cooldowns[i] < actions[i].cooldown: cooldowns[i] += 1
+			elif action == null:
+				cooldowns[i] = 0
+				action = actions[i]
+		else: continue
+	if action == null: action = actions[0]
+	return action
 
 func gain_hex(hex: Effect, duration: int) -> bool:
 	if hexes.has(hex.name): return false
@@ -126,18 +138,18 @@ func update_dmg_display(hit: Hit):
 	var item = hit.item as Item
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def - hit.atk) / hit.atk + 0.5
-	var def_mod = pow(0.95, 27 * rel_def)
+	var rel_def = float(def - hit.atk) / hit.atk + 0.5 if hit.atk > 0 else 0
+	var def_mod = pow(0.95, 27 * rel_def) if def > 0 else 1
 	dmg = int(dmg * def_mod) * hit.item.hits
 	dmg_display.max_value = hp_max
 	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
 	dmg_display.show()
 
-func update_hit_chance(hit: Hit, hit_stat: int) -> void:
+func update_hit_chance(hit: Hit) -> void:
 	if not (enabled or alive() or valid_target): return
 	var value = 100
-	if hit.item.stat_vs != Enum.StatType.NA:
-		value = get_hit_and_crit_chance(hit.hit_chance, 0, hit_stat)[0]
+	if hit.stat_hit != Enum.StatType.NA:
+		value = get_hit_and_crit_chance(hit.hit_chance, 0, hit.stat_hit)[0]
 	hit_display.text = str(value) + "%"
 	update_dmg_display(hit)
 
