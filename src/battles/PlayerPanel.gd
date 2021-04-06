@@ -48,7 +48,7 @@ func init(battle, _player: Player):
 	hp_percent.max_value = hp_max
 	hp_percent.value = hp_cur
 	pos = rect_global_position
-	pos.x -= 6
+	pos.x -= 16
 	pos.y += rect_size.y / 2
 	button.connect("pressed", battle, "_on_PlayerPanel_pressed", [self])
 # warning-ignore:return_value_discarded

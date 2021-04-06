@@ -1,5 +1,7 @@
 extends Control
 
+onready var txt = $Text/Text
+
 func init(parent, text) -> void:
 	execute(parent, text)
 	animate("Bounce")
@@ -19,9 +21,10 @@ func execute(parent, text) -> void:
 	$Text/TextD.text = text
 	$Text/Text.text = text
 	parent.add_child(self)
-	rect_global_position.x = clamp(rect_global_position.x, 1, \
-		get_viewport_rect().size.x - rect_size.x - 1)
-	print(get_viewport_rect().size.x - rect_size.x - 1)
+	var size = txt.rect_size.x
+	rect_global_position.x = clamp(rect_global_position.x, \
+		-31 + size / 2, get_viewport_rect().size.x - size / 2 - 2) - 1
+	print(text, " -> x: ", rect_global_position.x, " size: ", size)
 
 func animate(dir: String, duration = 1.0) -> void:
 	var anim = $AnimationPlayer

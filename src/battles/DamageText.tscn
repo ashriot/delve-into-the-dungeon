@@ -25,13 +25,13 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.2, 0.35, 0.45, 0.55 ),
-"transitions": PoolRealArray( 0.5, 2, 2, 2, 2 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.35, 0.45, 0.55 ),
+"transitions": PoolRealArray( 0.5, 0.5, 2, 2, 2, 2 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 0 ), Vector2( 0, -5 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 0 ), Vector2( 0, -5 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Display"
 length = 1.2
 tracks/0/type = "value"
@@ -59,8 +59,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Up"
+[sub_resource type="Animation" id=3]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -89,8 +88,8 @@ tracks/1/keys = {
 }
 
 [node name="DamageText" type="Control"]
-margin_left = -19.0
-margin_right = 19.0
+margin_left = -32.0
+margin_right = 32.0
 margin_bottom = 7.0
 mouse_filter = 2
 script = ExtResource( 1 )
@@ -101,20 +100,25 @@ __meta__ = {
 [node name="Text" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 7, 3.5 )
+grow_horizontal = 2
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextL" type="Label" parent="Text"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1.0
-margin_right = -1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -18.0
+margin_top = -2.5
+margin_right = 16.0
+margin_bottom = 2.5
+grow_horizontal = 2
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Wind Gust"
+text = "9"
 align = 1
 valign = 1
 __meta__ = {
@@ -122,13 +126,18 @@ __meta__ = {
 }
 
 [node name="TextR" type="Label" parent="Text"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_right = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -2.5
+margin_right = 18.0
+margin_bottom = 2.5
+grow_horizontal = 2
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Wind Gust"
+text = "9"
 align = 1
 valign = 1
 __meta__ = {
@@ -136,13 +145,18 @@ __meta__ = {
 }
 
 [node name="TextU" type="Label" parent="Text"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -1.0
-margin_bottom = -1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -17.0
+margin_top = -3.5
+margin_right = 17.0
+margin_bottom = 1.5
+grow_horizontal = 2
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Wind Gust"
+text = "9"
 align = 1
 valign = 1
 __meta__ = {
@@ -150,13 +164,18 @@ __meta__ = {
 }
 
 [node name="TextD" type="Label" parent="Text"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 1.0
-margin_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -17.0
+margin_top = -1.5
+margin_right = 17.0
+margin_bottom = 3.5
+grow_horizontal = 2
 rect_pivot_offset = Vector2( 7, 3.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Wind Gust"
+text = "9"
 align = 1
 valign = 1
 __meta__ = {
@@ -164,16 +183,26 @@ __meta__ = {
 }
 
 [node name="Text" type="Label" parent="Text"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -2.5
+margin_right = 2.0
+margin_bottom = 2.5
+grow_horizontal = 2
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
 custom_constants/shadow_as_outline = 1
-text = "Wind Gust"
+text = "9"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Bounce = SubResource( 1 )
-anims/Display = SubResource( 3 )
-anims/Up = SubResource( 2 )
+anims/Display = SubResource( 2 )
+anims/Up = SubResource( 3 )

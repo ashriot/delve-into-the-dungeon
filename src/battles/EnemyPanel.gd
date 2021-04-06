@@ -40,7 +40,7 @@ func init(battle, _enemy: Enemy) -> void:
 	self.hp_cur = hp_max
 	targetable(false)
 	pos = rect_global_position
-	pos.x -= 6
+	pos.x -= 23
 	pos.y += rect_size.y / 2
 	for i in range(actions.size()):
 		var act = actions[i]
@@ -48,14 +48,13 @@ func init(battle, _enemy: Enemy) -> void:
 		if act.starting_cd > 0:
 			cd = randi() % (1 + act.starting_cd - act.starting_min) + act.starting_min
 		cooldowns.append(cd)
-	print(enemy.name, " -> ", cooldowns)
 # warning-ignore:return_value_discarded
 	button.connect("pressed", battle, "_on_EnemyPanel_pressed", [self])
 # warning-ignore:return_value_discarded
 	connect("show_dmg", battle, "show_dmg_text")
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
-	emit_signal("show_text", "Lv. " + str(enemy.level), pos, true)
+	emit_signal("show_text", "Lv." + str(enemy.level), pos, true)
 
 func level_up() -> void:
 	enemy.hp_growth = int((enemy.base_hp_max() * 0.5 + 5) * (enemy.level-1))
