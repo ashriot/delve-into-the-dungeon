@@ -15,6 +15,7 @@ const MIN_ROOM_DIMENSION = 5
 const MAX_ROOM_DIMENSION = 8
 
 onready var tile_map = $TileMap
+onready var visibility_map = $VisibilityMap
 onready var player = $Player
 onready var level = $CanvasLayer/HUD/Level
 
@@ -59,7 +60,7 @@ func try_move(dx, dy):
 			else:
 				$CanvasLayer/Win.show()
 
-	update_visuals()
+	call_deferred("update_visuals")
 
 func build_level():
 	rooms.clear()
@@ -72,6 +73,7 @@ func build_level():
 		for y in range(level_size.y):
 			map[x].append(Tile.Stone)
 			tile_map.set_cell(x, y, Tile.Stone)
+			visibility_map.set_cell(x, y, 0)
 
 	var free_regions = [Rect2(Vector2(2, 2), level_size - Vector2(4, 4))]
 	var num_rooms = LEVEL_ROOM_COUNTS[level_num]
@@ -88,7 +90,8 @@ func build_level():
 	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
 	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
-
+	yield(get_tree().create_timer(.2), "timeout")
+	call_deferred("update_visuals")
 	# Place End Ladder
 
 	var end_room = rooms.back()
@@ -96,10 +99,25 @@ func build_level():
 	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
-	update_visuals()
 
 func update_visuals():
 	player.position = player_tile * TILE_SIZE
+	yield(get_tree().create_timer(.05), "timeout")
+	var player_center = tile_to_pixel_center(player_tile.x, player_tile.y)
+	var space_state = get_world_2d().direct_space_state
+	for x in range(level_size.x):
+		for y in range(level_size.y):
+			if visibility_map.get_cell(x, y) == 0:
+				var x_dir = 1 if x < player_tile.x else -1
+				var y_dir = 1 if y < player_tile.y else -1
+				var test_point = tile_to_pixel_center(x, y) + Vector2(x_dir, y_dir) * TILE_SIZE / 2
+
+				var occlusion = space_state.intersect_ray(player_center, test_point)
+				if !occlusion or (occlusion.position - test_point).length() < 1:
+					visibility_map.set_cell(x, y, -1)
+
+func tile_to_pixel_center(x, y):
+	return Vector2((x + 0.5) * TILE_SIZE, (y + 0.5) * TILE_SIZE)
 
 func connect_rooms():
 	var stone_graph = AStar.new()
