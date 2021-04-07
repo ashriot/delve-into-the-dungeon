@@ -1,7 +1,7 @@
-extends Control
+extends Node2D
 # GAME.gd
 
-onready var battle = $Battle
+onready var battle = $CanvasLayer/Battle
 
 export var mute: bool
 export var spd: = 1.0
@@ -15,4 +15,4 @@ func _ready():
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
 	AudioController.mute = mute
-	battle.init(self)
+#	battle.init(self)
