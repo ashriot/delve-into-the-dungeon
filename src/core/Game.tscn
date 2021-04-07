@@ -13,25 +13,25 @@
 [ext_resource path="res://resources/jobs/dancer.tres" type="Resource" id=11]
 [ext_resource path="res://resources/jobs/monk.tres" type="Resource" id=12]
 
-[sub_resource type="OccluderPolygon2D" id=12]
-polygon = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
-
-[sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
-
-[sub_resource type="OccluderPolygon2D" id=13]
+[sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 
-[sub_resource type="OccluderPolygon2D" id=14]
+[sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 
-[sub_resource type="TileSet" id=6]
+[sub_resource type="OccluderPolygon2D" id=5]
+polygon = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
+
+[sub_resource type="TileSet" id=7]
 0/name = "tileset.png 0"
 0/texture = ExtResource( 6 )
 0/tex_offset = Vector2( 0, 0 )
@@ -53,18 +53,18 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 1/region = Rect2( 8, 0, 8, 8 )
 1/tile_mode = 0
 1/occluder_offset = Vector2( 0, 0 )
-1/occluder = SubResource( 12 )
+1/occluder = SubResource( 1 )
 1/navigation_offset = Vector2( 0, 0 )
 1/shape_offset = Vector2( 0, 0 )
 1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape = SubResource( 1 )
+1/shape = SubResource( 2 )
 1/shape_one_way = false
 1/shape_one_way_margin = 1.0
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 1 ),
+"shape": SubResource( 2 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 1/z_index = 0
@@ -75,18 +75,18 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 2/region = Rect2( 16, 0, 8, 8 )
 2/tile_mode = 0
 2/occluder_offset = Vector2( 0, 0 )
-2/occluder = SubResource( 13 )
+2/occluder = SubResource( 3 )
 2/navigation_offset = Vector2( 0, 0 )
 2/shape_offset = Vector2( 0, 0 )
 2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-2/shape = SubResource( 2 )
+2/shape = SubResource( 4 )
 2/shape_one_way = false
 2/shape_one_way_margin = 1.0
 2/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 2 ),
+"shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 2/z_index = 0
@@ -97,18 +97,18 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 3/region = Rect2( 24, 0, 8, 8 )
 3/tile_mode = 0
 3/occluder_offset = Vector2( 0, 0 )
-3/occluder = SubResource( 14 )
+3/occluder = SubResource( 5 )
 3/navigation_offset = Vector2( 0, 0 )
 3/shape_offset = Vector2( 0, 0 )
 3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-3/shape = SubResource( 3 )
+3/shape = SubResource( 6 )
 3/shape_one_way = false
 3/shape_one_way_margin = 1.0
 3/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 3 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 3/z_index = 0
@@ -141,7 +141,7 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 5/shapes = [  ]
 5/z_index = 0
 
-[sub_resource type="TileSet" id=7]
+[sub_resource type="TileSet" id=8]
 0/name = "black_tile.png 0"
 0/texture = ExtResource( 7 )
 0/tex_offset = Vector2( 0, 0 )
@@ -157,7 +157,7 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 0/shapes = [  ]
 0/z_index = 0
 
-[sub_resource type="Shader" id=8]
+[sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -171,10 +171,10 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 9 )
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=11]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -193,27 +193,27 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=11]
-shader = SubResource( 10 )
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-mute = true
 players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
+enemies = [ null, ExtResource( 8 ), null, null, null, null ]
 
 [node name="Dungeon" type="Node2D" parent="."]
 script = ExtResource( 10 )
 
 [node name="TileMap" type="TileMap" parent="Dungeon"]
-tile_set = SubResource( 6 )
+tile_set = SubResource( 7 )
 cell_size = Vector2( 8, 8 )
 format = 1
 
 [node name="VisibilityMap" type="TileMap" parent="Dungeon"]
-tile_set = SubResource( 7 )
+tile_set = SubResource( 8 )
 cell_size = Vector2( 8, 8 )
 format = 1
 
@@ -239,6 +239,7 @@ drag_margin_bottom = 0.0
 [node name="CanvasLayer" type="CanvasLayer" parent="Dungeon"]
 
 [node name="HUD" type="ColorRect" parent="Dungeon/CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 121.0
@@ -323,11 +324,10 @@ __meta__ = {
 
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
-enemies = [ ExtResource( 8 ), ExtResource( 8 ), ExtResource( 8 ), ExtResource( 8 ), ExtResource( 8 ), null, null ]
 
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false
-material = SubResource( 9 )
+material = SubResource( 10 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -336,7 +336,7 @@ __meta__ = {
 
 [node name="SepiaShader" type="ColorRect" parent="."]
 visible = false
-material = SubResource( 11 )
+material = SubResource( 12 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2

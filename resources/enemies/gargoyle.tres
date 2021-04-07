@@ -24,6 +24,6 @@ agi_mod = 0
 int_mod = 0
 def_mod = 0
 desc = "BOOGIE"
-level = 2
+level = 1
 gold = 25
 actions = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]

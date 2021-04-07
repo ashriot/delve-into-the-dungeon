@@ -215,6 +215,7 @@ func set_ready(value: bool):
 		outline.modulate.a = 0.15
 
 func set_hp_cur(value):
+# warning-ignore:narrowing_conversion
 	hp_cur = clamp(value, 0, hp_max)
 	player.hp_cur = value
 	HPCur.text = str(hp_cur)

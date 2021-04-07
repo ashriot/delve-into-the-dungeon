@@ -9,9 +9,9 @@ onready var enemy_panels = $EnemyPanels
 onready var buttons = $Buttons
 onready var battleMenu = $BattleMenu
 
-export(Array, Resource) var enemies
 
 var players: Array
+var enemies: Array
 var current_player = null
 var cur_btn = null
 var cur_hit_chance: int
@@ -24,6 +24,7 @@ var chose_next: bool
 func init(game):
 	AudioController.play_bgm("battle")
 	players = game.players
+	enemies = game.enemies
 	battleMenu.hide()
 	player_panels.init(self)
 	var i = 0
@@ -32,7 +33,6 @@ func init(game):
 		i += 1
 	for child in buttons.get_children():
 		child.init(self)
-	clear_buttons()
 	var flee = load("res://resources/items/battleCommands/flee.tres")
 	var end_turn = load("res://resources/items/battleCommands/end_turn.tres")
 	battleMenu.get_child(0).init(self)
@@ -41,8 +41,14 @@ func init(game):
 	battleMenu.get_child(1).setup(end_turn, false)
 	enemy_panels.init(self, enemies)
 	chose_next = false
+	show()
 	AudioController.play_sfx("player_turn")
 	get_next_player()
+
+func battle_start(_enemies) -> void:
+	enemies = _enemies
+	clear_buttons()
+
 
 func setup_buttons() -> void:
 	var i = 0
@@ -101,9 +107,8 @@ func enemy_turns():
 	print("Enemy Turns")
 	for enemy in enemy_panels.get_children():
 		if enemy.enabled and enemy.alive():
-			enemy_take_action(enemy)
-			yield(self, "enemy_done")
-			print("Enemy Done!")
+				enemy_take_action(enemy)
+				yield(self, "enemy_done")
 	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	for panel in player_panels.get_children():
 		if panel.alive(): panel.ready = true
@@ -285,3 +290,16 @@ func clear_selections(spend_turn: = true) -> void:
 
 func roll() -> int:
 	return randi() % 100 + 1
+
+func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
+	print(panel.enemy.name, " DIED!")
+	panel.enabled = false
+	print(enemies)
+	var done = true
+	for enemy in enemy_panels.get_children():
+		if enemy.enabled and enemy.alive(): done = false
+	if done:
+		print("Battle done!")
+		yield(get_tree().create_timer(1, true), "timeout")
+		AudioController.stop_bgm()
+		hide()

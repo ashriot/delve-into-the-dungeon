@@ -1,5 +1,34 @@
 extends Node2D
 
+const EnemyScene = preload("res://src/dungeon/EnemyNode.tscn")
+
+## ENEMY CLASS
+class EnemyNode extends Reference:
+	var sprite
+	var tile
+	var dead = false
+	var dungeon
+
+	func _init(_dungeon, enemy_type, enemy_level, x, y):
+		dungeon = _dungeon
+		tile = Vector2(x, y)
+		sprite = EnemyScene.instance()
+		sprite.frame = enemy_type + 30
+		sprite.position = tile * TILE_SIZE
+		dungeon.add_child(sprite)
+
+	func remove():
+		sprite.queue_free()
+
+	func collide():
+		print("Collided!")
+		dungeon.battle_start()
+		if dead: return
+		else:
+			dead = true
+			self.remove()
+
+################################################
 const TILE_SIZE = 8
 
 const LEVEL_SIZES = [
@@ -11,6 +40,7 @@ const LEVEL_SIZES = [
 ]
 
 const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
+const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
 const MIN_ROOM_DIMENSION = 5
 const MAX_ROOM_DIMENSION = 8
 
@@ -18,6 +48,7 @@ onready var tile_map = $TileMap
 onready var visibility_map = $VisibilityMap
 onready var player = $Player
 onready var level = $CanvasLayer/HUD/Level
+onready var hud = $CanvasLayer/HUD
 
 enum Tile {Floor, Stone, Wall, Door, StairsDown, StairsUp}
 
@@ -25,12 +56,17 @@ var level_num = 0 setget set_level_num
 var map = []
 var rooms = []
 var level_size: Vector2
+var enemies = []
 
 var player_tile
+var game
 
 func _ready() -> void:
 	self.level_num = 1
 	build_level()
+
+func init(_game):
+	game = _game
 
 func _input(event):
 	if !event.is_pressed(): return
@@ -50,7 +86,15 @@ func try_move(dx, dy):
 
 	match tile_type:
 		Tile.Floor:
-			player_tile = Vector2(x, y)
+			var blocked = false
+			for enemy in enemies:
+				if enemy.tile.x == x and enemy.tile.y == y:
+					enemy.collide()
+					enemies.erase(enemy)
+					blocked = true
+					break
+			if !blocked:
+				player_tile = Vector2(x, y)
 		Tile.Door:
 			set_tile(x, y, Tile.Floor)
 		Tile.StairsDown:
@@ -67,6 +111,10 @@ func build_level():
 	map.clear()
 	tile_map.clear()
 
+	for enemy in enemies:
+		enemy.remove()
+	enemies.clear()
+
 	level_size = LEVEL_SIZES[level_num]
 	for x in range(level_size.x):
 		map.append([])
@@ -77,7 +125,7 @@ func build_level():
 
 	var free_regions = [Rect2(Vector2(2, 2), level_size - Vector2(4, 4))]
 	var num_rooms = LEVEL_ROOM_COUNTS[level_num]
-	for i in range(num_rooms):
+	for _i in range(num_rooms):
 		add_room(free_regions)
 		if free_regions.empty():
 			break
@@ -91,7 +139,25 @@ func build_level():
 	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
 	yield(get_tree().create_timer(.2), "timeout")
-	call_deferred("update_visuals")
+
+	# Place Enemies
+
+	var num_enemies = LEVEL_ENEMY_COUNTS[level_num]
+	for _i in range(num_enemies):
+		var room = rooms[1 + randi() % (rooms.size() - 1)]
+		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
+		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+
+		var blocked = false
+		for enemy in enemies:
+			if enemy.tile.x == x and enemy.tile.y == y:
+				blocked = true
+				break
+
+		if !blocked:
+			var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
+			enemies.append(enemy)
+
 	# Place End Ladder
 
 	var end_room = rooms.back()
@@ -99,6 +165,7 @@ func build_level():
 	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
+	call_deferred("update_visuals")
 
 func update_visuals():
 	player.position = player_tile * TILE_SIZE
@@ -299,6 +366,10 @@ func cut_regions(free_regions, region_to_remove):
 func set_tile(x, y, type):
 	map[x][y] = type
 	tile_map.set_cell(x, y, type)
+
+func battle_start():
+	hud.hide()
+	game.battle_start()
 
 func _on_Button_pressed() -> void:
 	self.level_num = 0

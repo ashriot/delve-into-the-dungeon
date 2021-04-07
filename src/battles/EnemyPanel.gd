@@ -2,6 +2,7 @@ extends Control
 class_name EnemyPanel
 
 signal done
+signal died(panel)
 signal show_dmg(text)
 signal show_text(text, pos, display)
 
@@ -54,6 +55,8 @@ func init(battle, _enemy: Enemy) -> void:
 	connect("show_dmg", battle, "show_dmg_text")
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
+# warning-ignore:return_value_discarded
+	connect("died", battle, "_on_EnemyPanel_died", [self])
 	emit_signal("show_text", "Lv." + str(enemy.level), pos, true)
 
 func level_up() -> void:
@@ -87,6 +90,7 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 	if not miss:
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
+
 		anim.play("Hit")
 	else:
 		dmg_text = "MISS"
@@ -101,6 +105,8 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 			var success = gain_hex(hex[0], hex[1])
 			if success: emit_signal("show_text", "+" + hex[0].name, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	if hp_cur <= 0:
+		die()
 
 func get_action() -> Action:
 	var action = null
@@ -162,6 +168,10 @@ func get_hit_and_crit_chance(hit_chance: int, crit_chance: int, stat) -> Array:
 
 func alive() -> bool:
 	return hp_cur > 0
+
+func die():
+	emit_signal("died")
+	hide()
 
 func set_hp_cur(value: int):
 	hp_cur = int(clamp(value, 0, hp_max))
