@@ -75,10 +75,23 @@ func init(_game):
 func _input(event):
 	if !active or !event.is_pressed(): return
 
-	if event.is_action("Up"): try_move(0, -1)
-	elif event.is_action("Down"): try_move(0, 1)
-	elif event.is_action("Left"): try_move(-1, 0)
-	elif event.is_action("Right"): try_move(1, 0)
+	var dir = null
+	if event is InputEventMouseButton:
+		var pos = player.get_local_mouse_position()
+		if pos.x < 0.0 and abs(pos.x) > abs(pos.y):
+			dir = "Left"
+		elif pos.x > 0.0 and abs(pos.x) > abs(pos.y):
+			dir = "Right"
+		elif pos.y < 0.0:
+			dir = "Up"
+		else:
+			dir = "Down"
+		print(pos)
+
+	if event.is_action("Up") or dir == "Up": try_move(0, -1)
+	elif event.is_action("Down") or dir == "Down": try_move(0, 1)
+	elif event.is_action("Left") or dir == "Left": try_move(-1, 0)
+	elif event.is_action("Right") or dir == "Right": try_move(1, 0)
 
 func try_move(dx, dy):
 	var x = player_tile.x + dx
