@@ -104,7 +104,8 @@ func _input(event):
 	var dir = null
 	if event is InputEventMouseButton:
 		var pos = player.get_local_mouse_position()
-		if pos.x < 0.0 and abs(pos.x) > abs(pos.y):
+		var y = pos.y if pos.y > 0.0 or pos.y < 7.0 else 0
+		if pos.x < 0.0 and abs(pos.x) > abs(y):
 			dir = "Left"
 		elif pos.x > 5.0 and abs(pos.x) > abs(pos.y):
 			dir = "Right"
@@ -113,6 +114,7 @@ func _input(event):
 		elif pos.y > 7.0:
 			dir = "Down"
 		else: dir = "Stay"
+		print(pos)
 
 	if event.is_action("Up") or dir == "Up": try_move(0, -1)
 	elif event.is_action("Down") or dir == "Down": try_move(0, 1)
