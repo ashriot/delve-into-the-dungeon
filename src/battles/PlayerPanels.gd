@@ -4,11 +4,8 @@ onready var panels = $Panels
 onready var all_selector = $AllSelector
 
 func init(battle) -> void:
-	var i = 0
 	for panel in panels.get_children():
-		if i >= battle.players.size(): panel.hide()
-		else: panel.init(battle)
-		i += 1
+		panel.init(battle)
 	hide_all_selectors()
 
 func setup(players) -> void:

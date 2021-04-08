@@ -37,8 +37,6 @@ var initialized: = false
 func init(battle):
 	initialized = true
 	anim.playback_speed = 1 / GameManager.spd
-	self.ready = true
-	hexes = []
 	pos = rect_global_position
 	pos.x -= 16
 	pos.y += rect_size.y / 2
@@ -62,6 +60,11 @@ func setup(_player: Player):
 	self.selected = false
 	self.ready = true
 	enabled = true
+	hexes = []
+	statuses = []
+	hexes.clear()
+	boons.clear()
+	update_status()
 	show()
 
 func clear():
@@ -91,13 +94,14 @@ func take_hit(hit: Hit) -> void:
 	var crit_chance = hit_and_crit[1]
 	var miss = false
 	var hit_roll = randi() % 100 + 1
-	print(hit.item.name, ": ", hit_roll, " < ", hit_chance, "?")
 	if hit_roll > hit_chance:
 		miss = true
+	print(hit.item.name, ": ", 100 - hit_roll, " < ", hit_chance, "%? = ", miss)
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def - hit.atk) / float(hit.atk) + 0.5
-	var def_mod = pow(0.95, 27 * rel_def)
+	var rel_def = float(def * 1.2) / float(hit.level + 10 + def)
+	var def_mod = 1.0 - rel_def
+	dmg = int(dmg * def_mod)
 	print(player.name, " DEF: ", player.defense, " Rel_Def: ", rel_def, " dmg: ", dmg)
 	dmg = int(dmg * def_mod)
 	var dmg_text = ""
@@ -203,7 +207,7 @@ func get_hit_and_crit_chance(hit_chance: int, crit_chance: int, stat) -> Array:
 	var hit = 100
 	var crit = 0
 	if stat != Enum.StatType.NA:
-		hit = clamp(hit_chance - (get_stat(stat) * 5), 0, 100)
+		hit = clamp(hit_chance - (get_stat(stat) * 3), 0, 100)
 		crit = crit_chance
 	return [hit, crit]
 

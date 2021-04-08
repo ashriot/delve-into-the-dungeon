@@ -4,14 +4,14 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Scratch"
+name = "Claw"
 desc = ""
 target_type = 7
 damage_type = 0
 stat_used = 0
 stat_vs = 3
 stat_hit = 1
-multiplier = 2.0
+multiplier = 3.0
 bonus_damage = 0
 hits = 1
 hit_chance = 130

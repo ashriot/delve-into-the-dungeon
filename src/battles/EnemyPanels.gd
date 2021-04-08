@@ -16,18 +16,16 @@ func init(battle) -> void:
 		panel.init(battle)
 	hide_all_selectors()
 
-func setup(enemies) -> void:
+func setup(enemies: Dictionary) -> void:
 	var i = 0
 	for panel in front_row.get_children():
-		if i >= enemies.size(): panel.clear()
-		elif enemies[i] == null: panel.clear()
+		if enemies[i] == null: panel.clear()
 		else:
 			panel.setup(enemies[i])
 		i += 1
 	i = 3
 	for panel in back_row.get_children():
-		if i >= enemies.size(): panel.clear()
-		elif enemies[i] == null: panel.clear()
+		if enemies.get(i) == null: panel.clear()
 		else: panel.setup(enemies[i])
 		i += 1
 
@@ -56,7 +54,7 @@ func front_row_dead() -> bool:
 func back_row_active() -> bool:
 	for child in back_row.get_children():
 		if child.alive() or child.enabled:
-			if !front_row_dead(): return true
+			return true
 	return false
 
 func show_selectors(target_type):

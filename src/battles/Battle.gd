@@ -10,9 +10,6 @@ onready var enemy_panels = $EnemyPanels
 onready var buttons = $Buttons
 onready var battleMenu = $BattleMenu
 
-
-var players: Array
-var enemies: Array
 var current_player = null
 var cur_btn = null
 var cur_hit_chance: int
@@ -24,7 +21,6 @@ var chose_next: bool
 var battle_active: bool
 
 func init(game):
-	players = game.players
 	battle_active = false
 	battleMenu.hide()
 #	for child in buttons.get_children():
@@ -41,10 +37,17 @@ func init(game):
 		button.init(self)
 	hide()
 
-func start(_players, _enemies) -> void:
+var gargoyle = preload("res://resources/enemies/gargoyle.tres")
+var mermaid = preload("res://resources/enemies/mermaid.tres")
+
+func start(players: Array, enemies: Dictionary) -> void:
+	enemies = {
+		0: [mermaid, 2],
+		1: [gargoyle, 3],
+		2: [mermaid, 1],
+		4: [mermaid, 5],
+	}
 	$Victory.hide()
-	players = _players
-	enemies = _enemies
 	player_panels.setup(players)
 	enemy_panels.setup(enemies)
 	clear_buttons()
@@ -120,8 +123,9 @@ func enemy_turns():
 	print("Enemy Turns")
 	for enemy in enemy_panels.get_children():
 		if enemy.enabled and enemy.alive():
-				enemy_take_action(enemy)
-				yield(self, "enemy_done")
+			enemy_take_action(enemy)
+			yield(self, "enemy_done")
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	for panel in player_panels.get_children():
 		if panel.alive(): panel.ready = true
@@ -143,7 +147,7 @@ func enemy_take_action(panel: EnemyPanel):
 	for target in targets:
 		var hit = Hit.new()
 		# item, _hit_chance, _crit_chance, _bonus_dmg, _dmg_mod, _atk
-		hit.init(action, action.hit_chance, action.crit_chance, 0, 0, panel.get_stat(action.stat_used))
+		hit.init(action, action.hit_chance, action.crit_chance, 0, 0, panel.get_stat(action.stat_used), panel.enemy.level)
 		if action.target_type < Enum.TargetType.ONE_ENEMY:
 			pass
 #			target.take_friendly_hit(hit)
@@ -157,6 +161,11 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 	var choice = 0
 	if action.target_type == Enum.TargetType.MYSELF:
 		return [panel]
+	if action.target_type == Enum.TargetType.ONE_ENEMY:
+		for i in range(4):
+			if player_targets[i]: choices.append(i)
+		choice = randi() % 4
+		targets.append(player_panels.get_child(choice))
 	if action.target_type == Enum.TargetType.ONE_FRONT:
 		for i in range(2):
 			if player_targets[i]: choices.append(i)
@@ -218,7 +227,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_stat_type = Enum.StatType.NA
 		var atk = current_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
-		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
+		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk, -1)
 		enemy_panels.update_item_stats(hit)
 		enemy_panels.show_selectors(cur_btn.item.target_type)
 
@@ -257,7 +266,7 @@ func execute_vs_enemy(panel) -> void:
 			if not target.alive(): continue
 			var atk = user.get_stat(item.stat_used)
 			var hit = Hit.new()
-			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk)
+			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel.enemy.level)
 			target.take_hit(hit, cur_stat_type)
 		if item.target_type >= Enum.TargetType.ANY_ROW:
 			print("playing sfx")

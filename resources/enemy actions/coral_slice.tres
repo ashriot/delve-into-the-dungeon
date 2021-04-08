@@ -1,12 +1,12 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://src/core/enemy_action.gd" type="Script" id=1]
 
 [resource]
 script = ExtResource( 1 )
-name = "Flying Kick"
+name = "Coral Slice"
 desc = ""
-target_type = 6
+target_type = 7
 damage_type = 0
 stat_used = 1
 stat_vs = 3
@@ -14,16 +14,14 @@ stat_hit = 1
 multiplier = 3.5
 bonus_damage = 0
 hits = 1
-hit_chance = 70
+hit_chance = 110
 crit_chance = 0
-sound_fx = "smack"
-use_fx = "jump"
+sound_fx = "sword1"
+use_fx = "melee"
 inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]
 gain_hexes = [  ]
-frame = 70
-max_uses = 20
-uses = 20
-item_type = 0
-sub_type = 0
+cooldown = 2
+starting_cd = 2
+starting_min = 1

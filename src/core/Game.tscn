@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=5]
 [ext_resource path="res://assets/images/sheets/tileset.png" type="Texture" id=6]
 [ext_resource path="res://assets/images/sheets/black_tile.png" type="Texture" id=7]
-[ext_resource path="res://resources/enemies/gargoyle.tres" type="Resource" id=8]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=9]
 [ext_resource path="res://src/core/Dungeon.gd" type="Script" id=10]
 [ext_resource path="res://resources/jobs/dancer.tres" type="Resource" id=11]
@@ -219,8 +218,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+mute = true
 players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
-enemies = [ null, ExtResource( 8 ), null, null, null, null ]
 
 [node name="Dungeon" type="Node2D" parent="."]
 script = ExtResource( 10 )

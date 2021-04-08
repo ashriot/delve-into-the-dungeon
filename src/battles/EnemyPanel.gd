@@ -42,9 +42,10 @@ func init(battle) -> void:
 # warning-ignore:return_value_discarded
 	connect("died", battle, "_on_EnemyPanel_died", [self])
 
-func setup(_enemy: Enemy):
+func setup(_enemy: Array):
 	enabled = true
-	enemy = _enemy
+	enemy = _enemy[0].duplicate()
+	enemy.level = _enemy[1]
 	actions = enemy.actions
 	level_up()
 	targetable(false)
@@ -62,7 +63,7 @@ func setup(_enemy: Enemy):
 		cooldowns.append(cd)
 	show()
 	emit_signal("show_text", "Lv." + str(enemy.level), pos, true)
-	print(_enemy.name, " is enabled and is set up!: ", enabled)
+	print(enemy.name, " is enabled and is set up!: ", enabled)
 
 func clear():
 	enabled = false
@@ -92,8 +93,8 @@ func take_hit(hit: Hit, hit_stat: int) -> void:
 		fx = "miss"
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def - hit.atk) / float(hit.atk) + 0.5 if float(hit.atk) > 0 else 0
-	var def_mod = pow(0.95, 27 * rel_def) if def > 0 else 1
+	var rel_def = float(def * 1.2) / float(hit.level + 10 + def)
+	var def_mod = 1.0 - rel_def
 	dmg = int(dmg * def_mod)
 	var dmg_text = ""
 	if not miss:
@@ -154,8 +155,8 @@ func update_dmg_display(hit: Hit):
 	var item = hit.item as Item
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def - hit.atk) / hit.atk + 0.5 if hit.atk > 0 else 0
-	var def_mod = pow(0.95, 27 * rel_def) if def > 0 else 1
+	var rel_def = float(def * 1.2) / float(enemy.level + 10 + def)
+	var def_mod = 1.0 - rel_def
 	dmg = int(dmg * def_mod) * hit.item.hits
 	dmg_display.max_value = hp_max
 	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
@@ -173,7 +174,7 @@ func get_hit_and_crit_chance(hit_chance: int, crit_chance: int, stat) -> Array:
 	var hit = 100
 	var crit = 0
 	if stat != Enum.StatType.NA:
-		hit = clamp(hit_chance - (get_stat(stat) * 5), 0, 100)
+		hit = clamp(hit_chance - (get_stat(stat) * 3), 0, 100)
 		crit = crit_chance
 	return [hit, crit]
 

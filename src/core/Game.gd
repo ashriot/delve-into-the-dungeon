@@ -8,7 +8,7 @@ onready var fade = $Dungeon/CanvasLayer/Fade
 export var mute: bool
 export var spd: = 1.0
 export(Array, Resource) var players
-export(Array, Resource) var enemies
+export(Dictionary) var enemies
 
 var _Inventory = load("res://src/core/inventory.gd")
 var inventory = _Inventory.new()
