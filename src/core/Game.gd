@@ -5,6 +5,8 @@ onready var battle = $CanvasLayer/Battle
 onready var dungeon = $Dungeon
 onready var fade = $Dungeon/CanvasLayer/Fade
 
+signal done_fading
+
 export var mute: bool
 export var spd: = 1.0
 export(Array, Resource) var players
@@ -22,8 +24,6 @@ func _ready():
 	battle.init(self)
 	dungeon.init(self)
 	AudioController.play_bgm("dungeon")
-	yield(get_tree().create_timer(0.25), "timeout")
-	fade.fade_from_black()
 
 func battle_start():
 	dungeon.active = false
@@ -45,3 +45,15 @@ func battle_start():
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
 	dungeon.active = true
+
+func _on_FadeOut() -> void:
+	print("Fading out")
+	fade.fade_to_black()
+	yield(fade, "done")
+	emit_signal("done_fading")
+
+func _on_FadeIn() -> void:
+	print("Fading in")
+	fade.fade_from_black()
+	yield(fade, "done")
+	emit_signal("done_fading")

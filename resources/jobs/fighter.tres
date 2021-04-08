@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/weapons/wooden_sword.tres" type="Resource" id=2]
-[ext_resource path="res://resources/items/weapons/wooden_shield.tres" type="Resource" id=3]
+[ext_resource path="res://resources/items/weapons/flame_edge.tres" type="Resource" id=3]
 [ext_resource path="res://resources/perks/quick_block.tres" type="Resource" id=4]
 [ext_resource path="res://resources/items/tomes/heal.tres" type="Resource" id=5]
 [ext_resource path="res://resources/items/weapons/pistol.tres" type="Resource" id=6]
@@ -14,10 +14,10 @@ name = "Fighter"
 frame = 3
 hp_max = 70
 hp_cur = 70
-strength = 20
-agility = 9
-intellect = 6
-defense = 15
+strength = 15
+agility = 7
+intellect = 3
+defense = 12
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0

@@ -42,10 +42,7 @@ var mermaid = preload("res://resources/enemies/mermaid.tres")
 
 func start(players: Array, enemies: Dictionary) -> void:
 	enemies = {
-		0: [mermaid, 2],
-		1: [gargoyle, 3],
-		2: [mermaid, 1],
-		4: [mermaid, 5],
+		1: [gargoyle, 1],
 	}
 	$Victory.hide()
 	player_panels.setup(players)

@@ -19,7 +19,7 @@ func init(battle) -> void:
 func setup(enemies: Dictionary) -> void:
 	var i = 0
 	for panel in front_row.get_children():
-		if enemies[i] == null: panel.clear()
+		if enemies.get(i) == null: panel.clear()
 		else:
 			panel.setup(enemies[i])
 		i += 1

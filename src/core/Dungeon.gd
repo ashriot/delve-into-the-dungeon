@@ -2,6 +2,9 @@ extends Node2D
 
 const EnemyScene = preload("res://src/dungeon/EnemyNode.tscn")
 
+signal fade_out
+signal fade_in
+
 ## ENEMY CLASS
 class EnemyNode extends Reference:
 	var sprite
@@ -22,13 +25,35 @@ class EnemyNode extends Reference:
 
 	func collide():
 		print("Collided!")
-		dungeon.battle_start()
+#		dungeon.battle_start()
 		if dead: return
 		else:
 			dead = true
-			self.remove()
+
+	func act(game):
+		if !sprite.visible: return
+
+		var point = game.enemy_pathfinding.get_closest_point(Vector3(tile.x, tile.y, 0))
+		var player_point = game.enemy_pathfinding.get_closest_point(Vector3(game.player_tile.x, game.player_tile.y, 0))
+		var path = game.enemy_pathfinding.get_point_path(point, player_point)
+		if path:
+#			assert(path.size() > 1)
+			var move_tile = Vector2(path[1].x, path[1].y)
+
+			if move_tile == game.player_tile:
+				collide()
+			else:
+				var blocked = false
+				for enemy in game.enemies:
+					if enemy.tile == move_tile:
+						blocked = true
+						break
+
+				if !blocked:
+					tile = move_tile
 
 ################################################
+
 const TILE_SIZE = 8
 
 const LEVEL_SIZES = [
@@ -64,13 +89,14 @@ var enemy_pathfinding
 var active = false
 
 func _ready() -> void:
-	active = true
 	hud.show()
 	self.level_num = 1
 	build_level()
 
 func init(_game):
 	game = _game
+	connect("fade_out", game, "_on_FadeOut")
+	connect("fade_in", game, "_on_FadeIn")
 
 func _input(event):
 	if !active or !event.is_pressed(): return
@@ -80,18 +106,19 @@ func _input(event):
 		var pos = player.get_local_mouse_position()
 		if pos.x < 0.0 and abs(pos.x) > abs(pos.y):
 			dir = "Left"
-		elif pos.x > 0.0 and abs(pos.x) > abs(pos.y):
+		elif pos.x > 5.0 and abs(pos.x) > abs(pos.y):
 			dir = "Right"
 		elif pos.y < 0.0:
 			dir = "Up"
-		else:
+		elif pos.y > 7.0:
 			dir = "Down"
-		print(pos)
+		else: dir = "Stay"
 
 	if event.is_action("Up") or dir == "Up": try_move(0, -1)
 	elif event.is_action("Down") or dir == "Down": try_move(0, 1)
 	elif event.is_action("Left") or dir == "Left": try_move(-1, 0)
 	elif event.is_action("Right") or dir == "Right": try_move(1, 0)
+	else: try_move(0, 0)
 
 func try_move(dx, dy):
 	var x = player_tile.x + dx
@@ -109,13 +136,15 @@ func try_move(dx, dy):
 			for enemy in enemies:
 				if enemy.tile.x == x and enemy.tile.y == y:
 					enemy.collide()
-					enemies.erase(enemy)
 					blocked = true
 					break
 		Tile.Door:
 			blocked = true
 			set_tile(x, y, Tile.Floor)
 		Tile.StairsDown:
+			active = false
+			emit_signal("fade_out")
+			yield(game, "done_fading")
 			self.level_num += 1
 			if level_num < LEVEL_SIZES.size():
 				build_level()
@@ -125,6 +154,13 @@ func try_move(dx, dy):
 	if !blocked:
 		$Player/Sprite/AnimationPlayer.play("Hop")
 		player_tile = Vector2(x, y)
+
+	for enemy in enemies:
+		enemy.act(self)
+		if enemy.dead:
+			enemy.remove()
+			enemies.erase(enemy)
+
 	call_deferred("update_visuals")
 
 func build_level():
@@ -157,11 +193,13 @@ func build_level():
 
 	# Place Player
 
+	yield(get_tree().create_timer(0.1, true), "timeout")
+
+	print("Placing Player")
 	var start_room = rooms.front()
 	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
 	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
-	yield(get_tree().create_timer(.2), "timeout")
 
 	# Place Enemies
 
@@ -189,6 +227,27 @@ func build_level():
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
 	call_deferred("update_visuals")
+	yield(get_tree().create_timer(0.1), "timeout")
+	emit_signal("fade_in")
+	yield(game, "done_fading")
+	active = true
+
+func clear_path(tile):
+	var new_point = enemy_pathfinding.get_available_point_id()
+	enemy_pathfinding.add_point(new_point, Vector3(tile.x, tile.y, 0))
+	var points_to_connect = []
+
+	if tile.x > 0 and map[tile.x - 1][tile.y] == Tile.Floor:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector3(tile.x - 1, tile.y, 0)))
+	if tile.y > 0 and map[tile.x][tile.y - 1] == Tile.Floor:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector3(tile.x, tile.y - 1, 0)))
+	if tile.x < level_size.x - 1 and map[tile.x + 1][tile.y] == Tile.Floor:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector3(tile.x + 1, tile.y, 0)))
+	if tile.y < level_size.y - 1 and map[tile.x][tile.y + 1] == Tile.Floor:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector3(tile.x, tile.y + 1, 0)))
+
+	for point in points_to_connect:
+		enemy_pathfinding.connect_points(point, new_point)
 
 func update_visuals():
 	player.position = player_tile * TILE_SIZE
@@ -205,6 +264,14 @@ func update_visuals():
 				var occlusion = space_state.intersect_ray(player_center, test_point)
 				if !occlusion or (occlusion.position - test_point).length() < 1:
 					visibility_map.set_cell(x, y, -1)
+
+	for enemy in enemies:
+		enemy.sprite.position = enemy.tile * TILE_SIZE
+		if !enemy.sprite.visible:
+			var enemy_center = tile_to_pixel_center(enemy.tile.x, enemy.tile.y)
+			var occlusion = space_state.intersect_ray(player_center, enemy_center)
+			if !occlusion:
+				enemy.sprite.visible = true
 
 func tile_to_pixel_center(x, y):
 	return Vector2((x + 0.5) * TILE_SIZE, (y + 0.5) * TILE_SIZE)
@@ -389,6 +456,9 @@ func cut_regions(free_regions, region_to_remove):
 func set_tile(x, y, type):
 	map[x][y] = type
 	tile_map.set_cell(x, y, type)
+
+	if type == Tile.Floor:
+		clear_path(Vector2(x, y))
 
 func battle_start():
 	hud.hide()
