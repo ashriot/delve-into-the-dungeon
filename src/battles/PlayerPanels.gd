@@ -7,9 +7,16 @@ func init(battle) -> void:
 	var i = 0
 	for panel in panels.get_children():
 		if i >= battle.players.size(): panel.hide()
-		else: panel.init(battle, battle.players[i])
+		else: panel.init(battle)
 		i += 1
 	hide_all_selectors()
+
+func setup(players) -> void:
+	var i = 0
+	for panel in panels.get_children():
+		if i >= players.size(): panel.clear()
+		else: panel.setup(players[i])
+		i += 1
 
 func get_children():
 	return panels.get_children()

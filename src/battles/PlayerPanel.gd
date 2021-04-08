@@ -21,7 +21,6 @@ var hp_max: int
 var hp_cur: int setget set_hp_cur
 var ready:= true setget set_ready
 var selected:= false setget set_selected
-var enabled: bool
 var valid_target: bool
 
 var hexes: Array
@@ -32,21 +31,14 @@ var pos: Vector2
 var status_ptr: int
 var blocking: int setget set_blocking
 
+var enabled: bool
 var initialized: = false
 
-func init(battle, _player: Player):
+func init(battle):
 	initialized = true
 	anim.playback_speed = 1 / GameManager.spd
-	enabled = true
 	self.ready = true
 	hexes = []
-	show()
-	player = _player
-	sprite.frame = player.frame
-	self.hp_max = player.hp_max
-	self.hp_cur = player.hp_cur
-	hp_percent.max_value = hp_max
-	hp_percent.value = hp_cur
 	pos = rect_global_position
 	pos.x -= 16
 	pos.y += rect_size.y / 2
@@ -55,6 +47,26 @@ func init(battle, _player: Player):
 	connect("show_dmg", battle, "show_dmg_text")
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
+
+func setup(_player: Player):
+	anim.stop()
+	sprite.position.y = 2
+	sprite.visible = true
+	player = _player
+	sprite.frame = player.frame
+	self.hp_max = player.hp_max
+	self.hp_cur = player.hp_cur
+	hp_percent.max_value = hp_max
+	hp_percent.value = hp_cur
+	blocking = 0
+	self.selected = false
+	self.ready = true
+	enabled = true
+	show()
+
+func clear():
+	enabled = false
+	hide()
 
 func _physics_process(_delta: float) -> void:
 	if statuses.size() == 0: return
@@ -250,3 +262,7 @@ func update_status() -> void:
 		status.frame = 90
 	status_ptr = 0
 	delay = 0
+
+func victory() -> void:
+	if !ready: self.ready = true
+	anim.play("Victory")

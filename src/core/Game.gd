@@ -3,6 +3,7 @@ extends Node2D
 
 onready var battle = $CanvasLayer/Battle
 onready var dungeon = $Dungeon
+onready var fade = $Dungeon/CanvasLayer/Fade
 
 export var mute: bool
 export var spd: = 1.0
@@ -13,11 +14,34 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory = _Inventory.new()
 
 func _ready():
+	fade.instant_show()
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
 	AudioController.mute = mute
+	battle.init(self)
 	dungeon.init(self)
+	AudioController.play_bgm("dungeon")
+	yield(get_tree().create_timer(0.25), "timeout")
+	fade.fade_from_black()
 
 func battle_start():
-	battle.init(self)
+	dungeon.active = false
+	AudioController.play_bgm("battle")
+	fade.fade_to_black()
+	yield(fade, "done")
+	dungeon.hud.hide()
+	yield(get_tree().create_timer(1), "timeout")
+	battle.start(players, enemies)
+	fade.fade_from_black()
+	yield(fade, "done")
+	yield(battle, "battle_done")
+	print("OK DONE!")
+	fade.fade_to_black()
+	yield(fade, "done")
+	battle.hide()
+	dungeon.hud.show()
+	yield(get_tree().create_timer(1.5), "timeout")
+	AudioController.play_bgm("dungeon")
+	fade.fade_from_black()
+	dungeon.active = true

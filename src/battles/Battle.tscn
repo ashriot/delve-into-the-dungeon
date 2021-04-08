@@ -189,6 +189,7 @@ margin_right = 28.0
 margin_bottom = -14.0
 
 [node name="AllSelector" type="NinePatchRect" parent="PlayerPanels"]
+visible = false
 margin_left = -2.0
 margin_top = -2.0
 margin_right = 70.0
@@ -251,72 +252,106 @@ margin_bottom = 9.0
 
 [node name="BattleButton2" parent="BattleMenu" instance=ExtResource( 7 )]
 
-[node name="InfoPanel" type="Panel" parent="."]
-visible = false
-margin_left = 1.0
-margin_top = 75.0
-margin_right = 63.0
-margin_bottom = 113.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Text" type="RichTextLabel" parent="InfoPanel"]
-margin_left = 2.0
-margin_top = 1.0
-margin_right = 61.0
-margin_bottom = 38.0
-custom_constants/line_separation = 0
-bbcode_enabled = true
-bbcode_text = "Orfus casts Blizzard!"
-text = "Orfus casts Blizzard!"
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tooltip" type="Panel" parent="."]
+[node name="TopPanel" type="ColorRect" parent="."]
 visible = false
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 63.0
-margin_bottom = 61.0
+margin_right = 71.0
+margin_bottom = 48.0
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Tooltip"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 61.0
-margin_bottom = 9.0
+[node name="Tooltip" type="Panel" parent="TopPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Name" type="Label" parent="Tooltip"]
+[node name="ColorRect" type="ColorRect" parent="TopPanel/Tooltip"]
+anchor_right = 1.0
+margin_bottom = 7.0
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="TopPanel/Tooltip"]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 2.0
+margin_left = 1.0
 margin_top = 1.0
-margin_right = 42.0
+margin_right = 41.0
 margin_bottom = 8.0
 text = "Blizzard"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Uses" type="Label" parent="Tooltip"]
+[node name="Uses" type="Label" parent="TopPanel/Tooltip"]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 33.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -28.0
 margin_top = 1.0
-margin_right = 61.0
 margin_bottom = 8.0
 text = "x17"
 align = 2
 
-[node name="Label" type="Label" parent="Tooltip"]
+[node name="Label" type="Label" parent="TopPanel/Tooltip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 2.0
-margin_top = 9.0
-margin_right = 61.0
-margin_bottom = 59.0
-text = "Deal INTx8 WTR dmg. to all foes.
-
-50% chance to add SLOW."
+margin_top = 8.0
+text = "Deal INTx8 Water damage to each foe. 50% chance to SLOW."
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomPanel" type="ColorRect" parent="."]
+visible = false
+margin_left = 1.0
+margin_top = 77.0
+margin_right = 71.0
+margin_bottom = 127.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="BottomPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="BottomPanel/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_bottom = -6.0
+text = "Asher gains:
++10 HP
++1 STR
++1 AGI
++1 INT
++1 DEF"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Victory" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_top = 21.0
+margin_right = 20.0
+margin_bottom = 28.0
+text = "VICTORY!"
+align = 1

@@ -3,6 +3,7 @@ extends Control
 var DamageText = preload("res://src/battles/DamageText.tscn")
 
 signal enemy_done
+signal battle_done
 
 onready var player_panels = $PlayerPanels
 onready var enemy_panels = $EnemyPanels
@@ -20,35 +21,42 @@ var cur_stat_type: int
 var player_targets: = [false, false, false, false]
 
 var chose_next: bool
+var battle_active: bool
 
 func init(game):
-	AudioController.play_bgm("battle")
 	players = game.players
-	enemies = game.enemies
+	battle_active = false
 	battleMenu.hide()
-	player_panels.init(self)
-	var i = 0
-	for panel in player_panels.get_children():
-		if panel.initialized: player_targets[i] = true
-		i += 1
-	for child in buttons.get_children():
-		child.init(self)
+#	for child in buttons.get_children():
+#		child.init(self)
 	var flee = load("res://resources/items/battleCommands/flee.tres")
 	var end_turn = load("res://resources/items/battleCommands/end_turn.tres")
 	battleMenu.get_child(0).init(self)
 	battleMenu.get_child(0).setup(flee, false)
 	battleMenu.get_child(1).init(self)
 	battleMenu.get_child(1).setup(end_turn, false)
-	enemy_panels.init(self, enemies)
+	player_panels.init(self)
+	enemy_panels.init(self)
+	for button in buttons.get_children():
+		button.init(self)
+	hide()
+
+func start(_players, _enemies) -> void:
+	$Victory.hide()
+	players = _players
+	enemies = _enemies
+	player_panels.setup(players)
+	enemy_panels.setup(enemies)
+	clear_buttons()
+	var i = 0
+	for panel in player_panels.get_children():
+		if panel.enabled: player_targets[i] = true
+		i += 1
 	chose_next = false
 	show()
-	AudioController.play_sfx("player_turn")
-	get_next_player()
-
-func battle_start(_enemies) -> void:
-	enemies = _enemies
-	clear_buttons()
-
+	battle_active = true
+	yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+	start_players_turns()
 
 func setup_buttons() -> void:
 	var i = 0
@@ -87,7 +95,12 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 	panel.selected = true
 	setup_buttons()
 
+func start_players_turns() -> void:
+	AudioController.play_sfx("player_turn")
+	get_next_player(false)
+
 func get_next_player(delay: = true) -> void:
+	if !battle_active: return
 	if chose_next: return
 	if delay: yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	cur_btn = null
@@ -112,8 +125,7 @@ func enemy_turns():
 	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	for panel in player_panels.get_children():
 		if panel.alive(): panel.ready = true
-	AudioController.play_sfx("player_turn")
-	get_next_player(false)
+	start_players_turns()
 
 func enemy_take_action(panel: EnemyPanel):
 	if panel.enemy.actions.size() == 0:
@@ -172,6 +184,7 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	else: damage_text.text(self, text)
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
+	if !battle_active: return
 	if button.item.name == "End Turn":
 		AudioController.confirm()
 		for panel in player_panels.get_children(): panel.ready = false
@@ -210,6 +223,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		enemy_panels.show_selectors(cur_btn.item.target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
+	if !battle_active: return
 	print("Lv. ", panel.enemy.level, " ", panel.enemy.name, "\tHP: ", panel.hp_cur, "/", panel.hp_max, \
 		"\tSTR: ", panel.enemy.strength, "\tAGI: ", panel.enemy.agility, \
 		"\tINT: ", panel.enemy.intellect, "\tDEF: ", panel.enemy.defense)
@@ -217,6 +231,7 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	execute_vs_enemy(panel)
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
+	if !battle_active: return
 	if cur_btn and cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
 			if not panel.valid_target: return
 			execute_vs_player(panel)
@@ -230,7 +245,6 @@ func execute_vs_enemy(panel) -> void:
 	AudioController.play_sfx(item.use_fx)
 	clear_selections()
 	show_text(item.name, user.pos)
-	get_next_player()
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = [panel]
 	if item.target_type >= Enum.TargetType.ANY_ROW \
@@ -251,6 +265,7 @@ func execute_vs_enemy(panel) -> void:
 		if hit_num < item.hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	user.player.changed()
+	get_next_player()
 
 func execute_vs_player(panel) -> void:
 	var user = current_player
@@ -262,7 +277,6 @@ func execute_vs_player(panel) -> void:
 			turn_spent = false
 	clear_selections(turn_spent)
 	show_text(item.name, user.pos)
-	get_next_player()
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	AudioController.play_sfx(item.sound_fx)
 	var targets = [panel]
@@ -275,6 +289,7 @@ func execute_vs_player(panel) -> void:
 		if hit_num > item.hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
 	user.player.changed()
+	get_next_player()
 
 func clear_selections(spend_turn: = true) -> void:
 	chose_next = false
@@ -292,14 +307,27 @@ func roll() -> int:
 	return randi() % 100 + 1
 
 func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
-	print(panel.enemy.name, " DIED!")
 	panel.enabled = false
-	print(enemies)
 	var done = true
 	for enemy in enemy_panels.get_children():
-		if enemy.enabled and enemy.alive(): done = false
+		if enemy.enabled and enemy.alive():
+			done = false
 	if done:
-		print("Battle done!")
-		yield(get_tree().create_timer(1, true), "timeout")
-		AudioController.stop_bgm()
-		hide()
+		victory()
+
+func victory() -> void:
+	AudioController.bgm.stop()
+	battle_active = false
+	clear_selections(false)
+	if current_player != null:
+		current_player.selected = false
+		current_player = null
+	if cur_btn != null: cur_btn = null
+	clear_buttons()
+	yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
+	$Victory.show()
+	AudioController.play_bgm("victory")
+	for panel in player_panels.get_children():
+		panel.victory()
+	yield(get_tree().create_timer(2 * GameManager.spd, true), "timeout")
+	emit_signal("battle_done")

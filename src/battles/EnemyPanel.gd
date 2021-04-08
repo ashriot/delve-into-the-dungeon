@@ -19,36 +19,20 @@ var enemy: Enemy
 var hp_cur: int setget set_hp_cur
 var hp_max: int
 var valid_target: bool
-var enabled: bool
 var potential_dmg: int
 var pos: Vector2
 var cooldowns: = []
 var actions: = []
 
 var hexes: Array
+var enabled: bool
 
-func init(battle, _enemy: Enemy) -> void:
+func init(battle) -> void:
 	anim.playback_speed = 1 / GameManager.spd
 	dmg_anim.playback_speed = 1 / GameManager.spd
-	hexes = []
-	enabled = true
-	enemy = _enemy
-	actions = enemy.actions
-	level_up()
-	sprite.frame = enemy.frame
-	hp_max = enemy.hp_max
-	hp_percent.max_value = hp_max
-	self.hp_cur = hp_max
-	targetable(false)
 	pos = rect_global_position
 	pos.x -= 23
 	pos.y += rect_size.y / 2
-	for i in range(actions.size()):
-		var act = actions[i]
-		var cd = 0
-		if act.starting_cd > 0:
-			cd = randi() % (1 + act.starting_cd - act.starting_min) + act.starting_min
-		cooldowns.append(cd)
 # warning-ignore:return_value_discarded
 	button.connect("pressed", battle, "_on_EnemyPanel_pressed", [self])
 # warning-ignore:return_value_discarded
@@ -57,7 +41,32 @@ func init(battle, _enemy: Enemy) -> void:
 	connect("show_text", battle, "show_text")
 # warning-ignore:return_value_discarded
 	connect("died", battle, "_on_EnemyPanel_died", [self])
+
+func setup(_enemy: Enemy):
+	enabled = true
+	enemy = _enemy
+	actions = enemy.actions
+	level_up()
+	targetable(false)
+	sprite.frame = enemy.frame
+	self.hp_max = enemy.hp_max
+	self.hp_cur = enemy.hp_max
+	hp_percent.max_value = hp_max
+	hp_percent.value = hp_max
+	hexes = []
+	for i in range(actions.size()):
+		var act = actions[i]
+		var cd = 0
+		if act.starting_cd > 0:
+			cd = randi() % (1 + act.starting_cd - act.starting_min) + act.starting_min
+		cooldowns.append(cd)
+	show()
 	emit_signal("show_text", "Lv." + str(enemy.level), pos, true)
+	print(_enemy.name, " is enabled and is set up!: ", enabled)
+
+func clear():
+	enabled = false
+	hide()
 
 func level_up() -> void:
 	enemy.hp_growth = int((enemy.base_hp_max() * 0.5 + 5) * (enemy.level-1))
@@ -133,10 +142,12 @@ func targetable(value: bool, display = true):
 	if valid_target:
 		if display: target.show()
 		hit_display.show()
+		$HitBG.show()
 		dmg_display.show()
 	else:
 		target.hide()
 		hit_display.hide()
+		$HitBG.hide()
 		dmg_display.hide()
 
 func update_dmg_display(hit: Hit):

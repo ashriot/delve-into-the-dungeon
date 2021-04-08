@@ -58,10 +58,14 @@ var rooms = []
 var level_size: Vector2
 var enemies = []
 
-var player_tile
 var game
+var player_tile
+var enemy_pathfinding
+var active = false
 
 func _ready() -> void:
+	active = true
+	hud.show()
 	self.level_num = 1
 	build_level()
 
@@ -69,7 +73,7 @@ func init(_game):
 	game = _game
 
 func _input(event):
-	if !event.is_pressed(): return
+	if !active or !event.is_pressed(): return
 
 	if event.is_action("Up"): try_move(0, -1)
 	elif event.is_action("Down"): try_move(0, 1)
@@ -84,18 +88,19 @@ func try_move(dx, dy):
 	if x >= 0 and x < level_size.x and y >= 0 and y < level_size.y:
 		tile_type = map[x][y]
 
+	var blocked = false
 	match tile_type:
+		Tile.Wall: blocked = false
+		Tile.Stone: blocked = false
 		Tile.Floor:
-			var blocked = false
 			for enemy in enemies:
 				if enemy.tile.x == x and enemy.tile.y == y:
 					enemy.collide()
 					enemies.erase(enemy)
 					blocked = true
 					break
-			if !blocked:
-				player_tile = Vector2(x, y)
 		Tile.Door:
+			blocked = true
 			set_tile(x, y, Tile.Floor)
 		Tile.StairsDown:
 			self.level_num += 1
@@ -104,6 +109,9 @@ func try_move(dx, dy):
 			else:
 				$CanvasLayer/Win.show()
 
+	if !blocked:
+		$Player/Sprite/AnimationPlayer.play("Hop")
+		player_tile = Vector2(x, y)
 	call_deferred("update_visuals")
 
 func build_level():
@@ -114,6 +122,8 @@ func build_level():
 	for enemy in enemies:
 		enemy.remove()
 	enemies.clear()
+
+	enemy_pathfinding = AStar.new()
 
 	level_size = LEVEL_SIZES[level_num]
 	for x in range(level_size.x):

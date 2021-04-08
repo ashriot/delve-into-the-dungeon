@@ -9,21 +9,27 @@ onready var back_select = $BackSelect
 var projected_hit: Hit
 var hit_stat: int
 
-func init(battle, enemies: Array) -> void:
+func init(battle) -> void:
+	for panel in front_row.get_children():
+		panel.init(battle)
+	for panel in back_row.get_children():
+		panel.init(battle)
+	hide_all_selectors()
+
+func setup(enemies) -> void:
 	var i = 0
 	for panel in front_row.get_children():
-		if i >= enemies.size(): panel.hide()
-		elif enemies[i] == null: panel.hide()
+		if i >= enemies.size(): panel.clear()
+		elif enemies[i] == null: panel.clear()
 		else:
-			panel.init(battle, enemies[i])
+			panel.setup(enemies[i])
 		i += 1
 	i = 3
 	for panel in back_row.get_children():
-		if i >= enemies.size(): panel.hide()
-		elif enemies[i] == null: panel.hide()
-		else: panel.init(battle, enemies[i])
+		if i >= enemies.size(): panel.clear()
+		elif enemies[i] == null: panel.clear()
+		else: panel.setup(enemies[i])
 		i += 1
-	hide_all_selectors()
 
 func get_row(panel: EnemyPanel) -> Array:
 	var row = []
@@ -46,6 +52,12 @@ func front_row_dead() -> bool:
 	for child in front_row.get_children():
 		if child.alive(): return false
 	return true
+
+func back_row_active() -> bool:
+	for child in back_row.get_children():
+		if child.alive() or child.enabled:
+			if !front_row_dead(): return true
+	return false
 
 func show_selectors(target_type):
 	if target_type == Enum.TargetType.ONE_ENEMY:
@@ -75,6 +87,7 @@ func show_front_row_selector():
 		child.targetable(true, false)
 
 func show_back_row_selector():
+	if !back_row_active(): return
 	back_select.show()
 	for child in back_row.get_children():
 		child.update_hit_chance(projected_hit)
@@ -89,6 +102,7 @@ func show_front_row_selectors():
 		child.targetable(true)
 
 func show_back_row_selectors():
+	if !back_row_active(): return
 	for child in back_row.get_children():
 		child.update_hit_chance(projected_hit)
 		child.targetable(true)
@@ -98,6 +112,7 @@ func show_all_selector():
 	for child in front_row.get_children():
 		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
+	if !back_row_active(): return
 	for child in back_row.get_children():
 		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
