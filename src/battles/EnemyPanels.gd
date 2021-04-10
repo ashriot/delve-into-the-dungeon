@@ -21,6 +21,7 @@ func setup(enemies: Dictionary) -> void:
 	for panel in front_row.get_children():
 		if enemies.get(i) == null: panel.clear()
 		else:
+			print(enemies[i][0].strength)
 			panel.setup(enemies[i])
 		i += 1
 	i = 3
@@ -32,15 +33,15 @@ func setup(enemies: Dictionary) -> void:
 func get_row(panel: EnemyPanel) -> Array:
 	var row = []
 	for enemy in panel.get_parent().get_children():
-		if enemy.enabled and enemy.alive(): row.append(enemy)
+		if enemy.enabled and enemy.alive: row.append(enemy)
 	return row
 
 func get_all() -> Array:
 	var all = []
 	for enemy in front_row.get_children():
-		if enemy.enabled and enemy.alive(): all.append(enemy)
+		if enemy.enabled and enemy.alive: all.append(enemy)
 	for enemy in back_row.get_children():
-		if enemy.enabled and enemy.alive(): all.append(enemy)
+		if enemy.enabled and enemy.alive: all.append(enemy)
 	return all
 
 func get_children():
@@ -48,12 +49,12 @@ func get_children():
 
 func front_row_dead() -> bool:
 	for child in front_row.get_children():
-		if child.alive(): return false
+		if child.alive: return false
 	return true
 
 func back_row_active() -> bool:
 	for child in back_row.get_children():
-		if child.alive() or child.enabled:
+		if child.alive or child.enabled:
 			return true
 	return false
 

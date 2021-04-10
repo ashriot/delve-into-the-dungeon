@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/down1.wav-fd4df4c5c0c307f9d003d35a75d530ee.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/down1.wav"
+dest_files=[ "res://.import/down1.wav-fd4df4c5c0c307f9d003d35a75d530ee.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

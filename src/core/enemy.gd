@@ -12,21 +12,33 @@ var agi_growth: int
 var int_growth: int
 var def_growth: int
 
-func base_hp_max() -> int:
-	return hp_max
-
 func get_strength() -> int:
-	return (strength + str_bonus + str_growth) * (1 + str_mod)
+	var str_mod = 1.0
+	for mod in str_mods:
+		str_mod *= mod
+	return (strength + str_bonus + str_growth) * (str_mod)
+	print(name, " STR mod: ", str_mod)
 
 func get_agility() -> int:
-	return (agility + agi_bonus + agi_growth) * (1 + agi_mod)
+	var agi_mod = 1.0
+	for mod in agi_mods:
+		agi_mod *= mod
+	return (agility + agi_bonus + agi_growth) * (agi_mod)
+	print(name, " AGI mod: ", agi_mod)
 
 func get_intellect() -> int:
-	return (intellect + int_bonus + int_growth) * (1 + int_mod)
+	var int_mod = 1.0
+	for mod in int_mods:
+		int_mod *= mod
+	return (intellect + int_bonus + int_growth) * (int_mod)
+	print(name, " INT mod: ", int_mod)
 
 func get_defense() -> int:
-	return (defense + def_bonus + def_growth) * (1 + def_mod)
-
+	var def_mod = 1.0
+	for mod in def_mods:
+		def_mod *= mod
+	return (defense + def_bonus + def_growth) * (def_mod)
+	print(name, " DEF mod: ", def_mod)
 
 func get_hp_max() -> int:
 	return hp_max + hp_growth

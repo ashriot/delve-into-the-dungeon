@@ -18,9 +18,7 @@ func _ready() -> void:
 func play_bgm(name: String) -> void:
 	if mute: return
 	if name == "": return
-	bgm.volume_db = -10
-	if name == "battle": bgm.pitch_scale = 0.9
-	else: bgm.pitch_scale = 1.0
+	bgm.volume_db = -5
 	bgm.stream = load("res://assets/audio/bgm/" + name + ".ogg")
 	bgm.play()
 

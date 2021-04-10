@@ -16,7 +16,7 @@ class EnemyNode extends Reference:
 		dungeon = _dungeon
 		tile = Vector2(x, y)
 		sprite = EnemyScene.instance()
-		sprite.frame = enemy_type + 30
+		sprite.frame = enemy_type + 40
 		sprite.position = tile * TILE_SIZE
 		dungeon.add_child(sprite)
 
@@ -25,7 +25,7 @@ class EnemyNode extends Reference:
 
 	func collide():
 		print("Collided!")
-#		dungeon.battle_start()
+		dungeon.battle_start()
 		if dead: return
 		else:
 			dead = true
@@ -74,6 +74,7 @@ onready var visibility_map = $VisibilityMap
 onready var player = $Player
 onready var level = $CanvasLayer/HUD/Level
 onready var hud = $CanvasLayer/HUD
+onready var hud_hp = $CanvasLayer/Faces
 
 enum Tile {Floor, Stone, Wall, Door, StairsDown, StairsUp}
 
@@ -87,20 +88,37 @@ var game
 var player_tile
 var enemy_pathfinding
 var active = false
+var hud_timer: = 0.0
 
 func _ready() -> void:
 	hud.show()
+	hud_timer = 3
+	hud_hp.show()
 	self.level_num = 1
 	build_level()
 
 func init(_game):
 	game = _game
+	update_hud_hp()
+# warning-ignore:return_value_discarded
 	connect("fade_out", game, "_on_FadeOut")
+# warning-ignore:return_value_discarded
 	connect("fade_in", game, "_on_FadeIn")
+
+func _physics_process(delta: float) -> void:
+	if !active: return
+
+	if hud_timer > 2 and !hud_hp.visible:
+		hud_hp.show()
+	elif hud_timer < 2 and hud_hp.visible:
+		hud_hp.hide()
+	elif hud_timer < 2:
+		hud_timer += 1 * delta
 
 func _input(event):
 	if !active or !event.is_pressed(): return
 
+	hud_timer = 0.0
 	var dir = null
 	if event is InputEventMouseButton:
 		var pos = player.get_local_mouse_position()
@@ -114,7 +132,6 @@ func _input(event):
 		elif pos.y > 7.0:
 			dir = "Down"
 		else: dir = "Stay"
-		print(pos)
 
 	if event.is_action("Up") or dir == "Up": try_move(0, -1)
 	elif event.is_action("Down") or dir == "Down": try_move(0, 1)
@@ -463,8 +480,18 @@ func set_tile(x, y, type):
 		clear_path(Vector2(x, y))
 
 func battle_start():
+	hud_hp.hide()
 	hud.hide()
 	game.battle_start()
+
+func update_hud_hp():
+	hud_hp.show()
+	hud_timer = 2.1
+	var i = 0
+	for child in hud_hp.get_children():
+		child.frame = game.players[i].frame + 20
+		child.get_child(0).text = str(game.players[i].hp_cur)
+		i += 1
 
 func _on_Button_pressed() -> void:
 	self.level_num = 0

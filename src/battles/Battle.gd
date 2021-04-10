@@ -20,7 +20,7 @@ var player_targets: = [false, false, false, false]
 var chose_next: bool
 var battle_active: bool
 
-func init(game):
+func init():
 	battle_active = false
 	battleMenu.hide()
 #	for child in buttons.get_children():
@@ -37,12 +37,17 @@ func init(game):
 		button.init(self)
 	hide()
 
+var goblin = preload("res://resources/enemies/goblin.tres")
 var gargoyle = preload("res://resources/enemies/gargoyle.tres")
 var mermaid = preload("res://resources/enemies/mermaid.tres")
+var pixie = preload("res://resources/enemies/pixie.tres")
 
 func start(players: Array, enemies: Dictionary) -> void:
 	enemies = {
+		0: [goblin, 1],
 		1: [gargoyle, 1],
+		2: [goblin, 1],
+		4: [pixie, 1],
 	}
 	$Victory.hide()
 	player_panels.setup(players)
@@ -61,8 +66,8 @@ func start(players: Array, enemies: Dictionary) -> void:
 func setup_buttons() -> void:
 	var i = 0
 	for button in buttons.get_children():
-		if i < current_player.player.items.size():
-			var item = current_player.player.items[i]
+		if i < current_player.unit.items.size():
+			var item = current_player.unit.items[i]
 			button.setup(item)
 			button.show()
 			i += 1
@@ -119,37 +124,37 @@ func end_turn():
 func enemy_turns():
 	print("Enemy Turns")
 	for enemy in enemy_panels.get_children():
-		if enemy.enabled and enemy.alive():
+		if enemy.enabled and enemy.alive:
 			enemy_take_action(enemy)
 			yield(self, "enemy_done")
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
 	for panel in player_panels.get_children():
-		if panel.alive(): panel.ready = true
+		if panel.alive: panel.ready = true
 	start_players_turns()
 
 func enemy_take_action(panel: EnemyPanel):
-	if panel.enemy.actions.size() == 0:
-		yield(get_tree().create_timer(0.25 * GameManager.spd, true), "timeout")
-		emit_signal("enemy_done")
-		return
 	var text = "Attack"
 	var action = panel.get_action()
 	text = action.name
 	AudioController.play_sfx(action.use_fx)
-	show_text(text, panel.pos)
+	show_text(action.name, panel.pos)
 	panel.anim.play("Hit")
-	yield(get_tree().create_timer(0.475 * GameManager.spd, true), "timeout")
+	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = get_enemy_targets(panel, action)
-	for target in targets:
-		var hit = Hit.new()
-		# item, _hit_chance, _crit_chance, _bonus_dmg, _dmg_mod, _atk
-		hit.init(action, action.hit_chance, action.crit_chance, 0, 0, panel.get_stat(action.stat_used), panel.enemy.level)
-		if action.target_type < Enum.TargetType.ONE_ENEMY:
-			pass
-#			target.take_friendly_hit(hit)
-		else: target.take_hit(hit)
-	print("emitting enemy done signal")
+	for hit_num in action.hits:
+		for target in targets:
+			if not target.alive: continue
+			var atk = panel.get_stat(action.stat_used)
+			var hit = Hit.new()
+			hit.init(action, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel.unit.level)
+			if action.target_type < Enum.TargetType.ONE_ENEMY:
+				target.take_friendly_hit(hit)
+			else: target.take_hit(hit)
+		if action.target_type >= Enum.TargetType.ANY_ROW:
+			AudioController.play_sfx(action.sound_fx)
+		if hit_num < action.hits - 1:
+			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	emit_signal("enemy_done")
 
 func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
@@ -159,9 +164,9 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 	if action.target_type == Enum.TargetType.MYSELF:
 		return [panel]
 	if action.target_type == Enum.TargetType.ONE_ENEMY:
-		for i in range(4):
+		for i in range(player_targets.size()):
 			if player_targets[i]: choices.append(i)
-		choice = randi() % 4
+		choice = randi() % player_targets.size()
 		targets.append(player_panels.get_child(choice))
 	if action.target_type == Enum.TargetType.ONE_FRONT:
 		for i in range(2):
@@ -169,9 +174,14 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 		if choices.size() == 2: choice = choices[0] if roll() < 51 else choices[1]
 		else: choice = choices[0]
 		targets.append(player_panels.get_child(choice))
-
 	if action.target_type == Enum.TargetType.FRONT_ROW:
 		if player_targets[0] or player_targets[1]:
+			for i in range(2): if player_targets[i]: choices.append(i)
+		else: for i in range(2, 4): if player_targets[i]: choices.append(i)
+		for target in choices: targets.append(player_panels.get_child(target))
+	if action.target_type == Enum.TargetType.ANY_ROW:
+		var roll = randi() % 2
+		if player_targets[0] or player_targets[1] and roll == 0:
 			for i in range(2): if player_targets[i]: choices.append(i)
 		else: for i in range(2, 4): if player_targets[i]: choices.append(i)
 		for target in choices: targets.append(player_panels.get_child(target))
@@ -230,9 +240,9 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	if !battle_active: return
-	print("Lv. ", panel.enemy.level, " ", panel.enemy.name, "\tHP: ", panel.hp_cur, "/", panel.hp_max, \
-		"\tSTR: ", panel.enemy.strength, "\tAGI: ", panel.enemy.agility, \
-		"\tINT: ", panel.enemy.intellect, "\tDEF: ", panel.enemy.defense)
+	print("Lv. ", panel.unit.level, " ", panel.unit.name, "\tHP: ", panel.hp_cur, "/", panel.hp_max, \
+		"\tSTR: ", panel.unit.strength, "\tAGI: ", panel.unit.agility, \
+		"\tINT: ", panel.unit.intellect, "\tDEF: ", panel.unit.defense)
 	if not panel.valid_target: return
 	execute_vs_enemy(panel)
 
@@ -260,17 +270,16 @@ func execute_vs_enemy(panel) -> void:
 		targets = enemy_panels.get_all()
 	for hit_num in item.hits:
 		for target in targets:
-			if not target.alive(): continue
+			if not target.alive: continue
 			var atk = user.get_stat(item.stat_used)
 			var hit = Hit.new()
-			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel.enemy.level)
-			target.take_hit(hit, cur_stat_type)
+			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel.unit.level)
+			target.take_hit(hit)
 		if item.target_type >= Enum.TargetType.ANY_ROW:
-			print("playing sfx")
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < item.hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
-	user.player.changed()
+	user.unit.changed()
 	get_next_player()
 
 func execute_vs_player(panel) -> void:
@@ -290,11 +299,11 @@ func execute_vs_player(panel) -> void:
 		targets = player_panels.get_children()
 	for hit_num in item.hits:
 		for target in targets:
-			if not target.alive(): continue
+			if not target.alive: continue
 			target.take_friendly_hit(user, item)
 		if hit_num > item.hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
-	user.player.changed()
+	user.unit.changed()
 	get_next_player()
 
 func clear_selections(spend_turn: = true) -> void:
@@ -316,10 +325,13 @@ func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
 	panel.enabled = false
 	var done = true
 	for enemy in enemy_panels.get_children():
-		if enemy.enabled and enemy.alive():
+		if enemy.enabled and enemy.alive:
 			done = false
 	if done:
 		victory()
+
+func _on_PlayerPanel_died(panel: PlayerPanel) -> void:
+	pass
 
 func victory() -> void:
 	AudioController.bgm.stop()

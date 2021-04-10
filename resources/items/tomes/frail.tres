@@ -1,29 +1,30 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/frail.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Char"
+name = "Frail"
 desc = ""
 target_type = 6
-damage_type = 3
+damage_type = 5
 stat_used = 2
 stat_vs = 2
 stat_hit = 4
-multiplier = 3.0
+multiplier = 1.0
 bonus_damage = 0
 hits = 1
 hit_chance = 0
 crit_chance = 0
-sound_fx = "fire"
+sound_fx = "down1"
 use_fx = "cast"
 inflict_boons = [  ]
-inflict_hexes = [  ]
+inflict_hexes = [ [ ExtResource( 2 ), 5, 100 ] ]
 gain_boons = [  ]
 gain_hexes = [  ]
 frame = 71
-max_uses = 40
-uses = 40
-item_type = 0
-sub_type = 0
+max_uses = 30
+uses = 30
+item_type = 2
+sub_type = 16

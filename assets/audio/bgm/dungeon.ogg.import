@@ -12,4 +12,4 @@ dest_files=[ "res://.import/dungeon.ogg-46ec19f27a7e2d4979bc417c41bbdb0e.oggstr"
 [params]
 
 loop=true
-loop_offset=0
+loop_offset=19.4

@@ -260,8 +260,88 @@ anims/Hop = SubResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Dungeon"]
 
+[node name="Faces" type="Control" parent="Dungeon/CanvasLayer"]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+position = Vector2( -1, 0 )
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 23
+
+[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite"]
+margin_left = 1.0
+margin_right = 21.0
+margin_bottom = 7.0
+text = "65"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite2" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+position = Vector2( -1, 6 )
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 24
+
+[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite2"]
+margin_left = 1.0
+margin_right = 21.0
+margin_bottom = 7.0
+text = "65"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite3" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+position = Vector2( -1, 12 )
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 21
+
+[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite3"]
+margin_left = 1.0
+margin_right = 21.0
+margin_bottom = 7.0
+text = "65"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite4" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+position = Vector2( -1, 18 )
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 28
+
+[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite4"]
+margin_left = 1.0
+margin_right = 21.0
+margin_bottom = 7.0
+text = "65"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HUD" type="ColorRect" parent="Dungeon/CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 121.0
@@ -335,8 +415,8 @@ margin_bottom = 68.0
 text = "Restart Game"
 
 [node name="Fade" parent="Dungeon/CanvasLayer" instance=ExtResource( 13 )]
+visible = false
 mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

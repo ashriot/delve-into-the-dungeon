@@ -1,30 +1,28 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/slow.tres" type="Resource" id=2]
+[ext_resource path="res://src/core/enemy_action.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/frail.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Icicle"
+name = "Faerie Fire"
 desc = ""
 target_type = 6
-damage_type = 4
+damage_type = 5
 stat_used = 2
 stat_vs = 2
 stat_hit = 4
-multiplier = 2.5
+multiplier = 3.5
 bonus_damage = 0
 hits = 1
 hit_chance = 0
 crit_chance = 0
-sound_fx = "ice_hit"
+sound_fx = "down1"
 use_fx = "cast"
 inflict_boons = [  ]
 inflict_hexes = [ [ ExtResource( 2 ), 3, 50 ] ]
 gain_boons = [  ]
 gain_hexes = [  ]
-frame = 71
-max_uses = 40
-uses = 40
-item_type = 0
-sub_type = 0
+cooldown = 2
+starting_cd = 2
+starting_min = 1

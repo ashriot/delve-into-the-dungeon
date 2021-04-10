@@ -17,22 +17,44 @@ export var agi_bonus: int
 export var int_bonus: int
 export var def_bonus: int
 
-export var str_mod: int
-export var agi_mod: int
-export var int_mod: int
-export var def_mod: int
+export(Array, float) var str_mods
+export(Array, float) var agi_mods
+export(Array, float) var int_mods
+export(Array, float) var def_mods
+
+export(Array, Resource) var perks
 
 func get_strength() -> int:
-	return (strength + str_bonus) * (1 + str_mod)
+	var str_mod = 1.0
+	for mod in str_mods:
+		str_mod *= mod
+	return (strength + str_bonus) * (str_mod)
+	print(name, " STR mod: ", str_mod)
 
 func get_agility() -> int:
-	return (agility + agi_bonus) * (1 + agi_mod)
+	var agi_mod = 1.0
+	for mod in agi_mods:
+		agi_mod *= mod
+	return (agility + agi_bonus) * (agi_mod)
+	print(name, " AGI mod: ", agi_mod)
 
 func get_intellect() -> int:
-	return (intellect + int_bonus) * (1 + int_mod)
+	var int_mod = 1.0
+	for mod in int_mods:
+		int_mod *= mod
+	return (intellect + int_bonus) * (int_mod)
+	print(name, " INT mod: ", int_mod)
 
 func get_defense() -> int:
-	return (defense + def_bonus) * (1 + def_mod)
+	var def_mod = 1.0
+	for mod in def_mods:
+		def_mod *= mod
+	return (defense + def_bonus) * (def_mod)
+	print(name, " DEF mod: ", def_mod)
+
+
+func base_hp_max() -> int:
+	return hp_max
 
 func base_str() -> int:
 	return strength
@@ -56,3 +78,9 @@ func get_stat(stat) -> int:
 
 func get_hp_max() -> int:
 	return hp_max
+
+func has_perk(perk_name) -> bool:
+	for perk in perks:
+		if perk.name == perk_name:
+			return true
+	return false

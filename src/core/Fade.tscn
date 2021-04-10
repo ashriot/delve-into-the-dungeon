@@ -6,11 +6,11 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/cutoff = 0.4
+shader_param/cutoff = 0.0
 shader_param/smooth_size = 0.1
 shader_param/mask = ExtResource( 1 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "FadeFromBlack"
 length = 0.3
 tracks/0/type = "value"
@@ -45,12 +45,12 @@ tracks/0/keys = {
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.552941, 0.101961, 0.101961, 1 )
+color = Color( 0, 0, 0, 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/FadeFromBlack = SubResource( 4 )
+anims/FadeFromBlack = SubResource( 2 )
 anims/FadeToBlack = SubResource( 3 )

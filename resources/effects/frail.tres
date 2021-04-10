@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Slow"
-desc = ""
-frame = 103
+name = "Frail"
+desc = "Reduces DEF by 5."
+frame = 107
 permanent = false
 turn_start = false
 turn_end = true

@@ -16,12 +16,12 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory = _Inventory.new()
 
 func _ready():
-	fade.instant_show()
+	fade.show()
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
 	AudioController.mute = mute
-	battle.init(self)
+	battle.init()
 	dungeon.init(self)
 	AudioController.play_bgm("dungeon")
 
@@ -31,7 +31,7 @@ func battle_start():
 	fade.fade_to_black()
 	yield(fade, "done")
 	dungeon.hud.hide()
-	yield(get_tree().create_timer(1), "timeout")
+	yield(get_tree().create_timer(0.25), "timeout")
 	battle.start(players, enemies)
 	fade.fade_from_black()
 	yield(fade, "done")
@@ -45,6 +45,7 @@ func battle_start():
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
 	dungeon.active = true
+	dungeon.update_hud_hp()
 
 func _on_FadeOut() -> void:
 	print("Fading out")

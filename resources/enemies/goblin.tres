@@ -1,19 +1,19 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
-[ext_resource path="res://resources/enemy actions/water_jet.tres" type="Resource" id=2]
-[ext_resource path="res://resources/enemy actions/coral_slice.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemy actions/gob_bow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemy actions/gob_shiv.tres" type="Resource" id=3]
 
 [resource]
 script = ExtResource( 1 )
-name = "Mermaid"
-frame = 0
+name = "Goblin"
+frame = 8
 hp_max = 40
 hp_cur = 0
-strength = 6
-agility = 15
-intellect = 11
-defense = 6
+strength = 8
+agility = 11
+intellect = 4
+defense = 7
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
@@ -26,4 +26,4 @@ perks = [  ]
 desc = "BOOGIE"
 level = 1
 gold = 25
-actions = [ ExtResource( 2 ), ExtResource( 3 ) ]
+actions = [ ExtResource( 3 ), ExtResource( 2 ) ]
