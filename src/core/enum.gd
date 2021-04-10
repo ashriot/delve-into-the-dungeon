@@ -2,6 +2,7 @@ extends Node
 class_name Enum
 
 enum StatType {
+	HP,
 	STR,
 	AGI,
 	INT,

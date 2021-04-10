@@ -6,11 +6,12 @@
 script = ExtResource( 1 )
 name = "Gob Shiv"
 desc = ""
+item_type = 0
 target_type = 7
 damage_type = 0
-stat_used = 0
-stat_vs = 3
-stat_hit = 1
+stat_used = 1
+stat_vs = 4
+stat_hit = 2
 multiplier = 2.5
 bonus_damage = 0
 hits = 1

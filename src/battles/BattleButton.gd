@@ -11,12 +11,14 @@ onready var selector = $Selected
 var item: Item
 var uses_remain: int setget set_uses_remain
 var selected: bool setget set_selected
+var enabled: = false
 
 func init(battle) -> void:
 # warning-ignore:return_value_discarded
 	connect("pressed", battle, "_on_BattleButton_pressed", [self])
 
 func setup(_item: Item, limited = true) -> void:
+	enabled = true
 	item = _item
 	var frame = 70
 	match item.item_type:
@@ -55,6 +57,14 @@ func setup(_item: Item, limited = true) -> void:
 		uses.hide()
 		uses2.hide()
 	self.selected = false
+
+func toggle(value) -> void:
+	if value and enabled: show()
+	else: hide()
+
+func clear() -> void:
+	enabled = false
+	hide()
 
 func set_uses_remain(value):
 	uses_remain = value

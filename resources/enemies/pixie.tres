@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
-[ext_resource path="res://resources/enemy actions/faerie_fire.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemy actions/mind_dust.tres" type="Resource" id=2]
 [ext_resource path="res://resources/enemy actions/pixie_bolt.tres" type="Resource" id=3]
-[ext_resource path="res://resources/enemy actions/mind_dust.tres" type="Resource" id=4]
+[ext_resource path="res://resources/enemy actions/faerie_fire.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -12,7 +12,7 @@ frame = 15
 hp_max = 40
 hp_cur = 0
 strength = 3
-agility = 9
+agility = 10
 intellect = 12
 defense = 6
 str_bonus = 0
@@ -23,8 +23,16 @@ str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
-perks = [  ]
+perks = {
+
+}
 desc = "BOOGIE"
 level = 1
 gold = 25
-actions = [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ]
+actions = {
+0: ExtResource( 3 ),
+1: ExtResource( 4 ),
+2: ExtResource( 2 ),
+3: null,
+4: null
+}

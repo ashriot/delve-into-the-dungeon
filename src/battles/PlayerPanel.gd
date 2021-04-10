@@ -5,6 +5,8 @@ onready var hp_cur_display = $HPCur
 onready var selector = $Selector
 onready var outline = $Outline
 
+var tab: int setget set_tab, get_tab
+
 var ready:= true setget set_ready
 var selected:= false setget set_selected
 
@@ -59,3 +61,9 @@ func die() -> void:
 func victory() -> void:
 	if !ready: self.ready = true
 	anim.play("Victory")
+
+func set_tab(value) -> void:
+	unit.tab = value
+
+func get_tab() -> int:
+	return unit.tab

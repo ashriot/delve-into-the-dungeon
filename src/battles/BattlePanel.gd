@@ -70,7 +70,8 @@ func get_stat(stat) -> int:
 	return unit.get_stat(stat)
 
 func take_hit(hit: Hit) -> void:
-	var item = hit.item
+	var item = hit.item as Action
+	var effect_only = item.damage_type == Enum.DamageType.EFFECT_ONLY
 	var fx = item.sound_fx
 	var hit_and_crit = get_hit_and_crit_chance(hit)
 	var hit_chance = hit_and_crit[0]
@@ -78,7 +79,7 @@ func take_hit(hit: Hit) -> void:
 	var lifesteal = hit.item.lifesteal
 	var miss = false
 	var hit_roll = randi() % 100 + 1
-	print(unit.name, " uses ", hit.item.name, ": ", 100 - hit_roll, " < ", hit_chance, "%? = ", miss)
+#	print(hit.unit.name, " uses ", hit.item.name, ": ", 100 - hit_roll, " < ", hit_chance, "%? = ", miss)
 	if hit_roll > hit_chance: miss = true
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
@@ -87,12 +88,12 @@ func take_hit(hit: Hit) -> void:
 	dmg = int(dmg * def_mod)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	var dmg_text = ""
-	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)
-	if not miss:
+#	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)
+	if not miss and !effect_only:
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
 		anim.play("Hit")
-	else:
+	elif miss:
 		dmg_text = "MISS"
 		fx = "miss"
 	emit_signal("show_dmg", dmg_text, pos)
@@ -105,14 +106,23 @@ func take_hit(hit: Hit) -> void:
 	if item.inflict_hexes.size() > 0 and not miss and self.alive:
 		for hex in item.inflict_hexes:
 			if randi() % 100 + 1 > hex[2]: continue
-			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_hex(hex[0], hex[1])
 			if success: emit_signal("show_text", "+" + hex[0].name, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	if item.gain_boons.size() > 0 and not miss:
+		for boon in item.gain_boons:
+			if randi() % 100 + 1 > boon[2]: continue
+			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			var success = hit.user.gain_boon(boon[0], boon[1])
+			if success: emit_signal("show_text", "+" + boon[0].name, hit.user_pos)
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 
 func take_friendly_hit(user: BattlePanel, item: Item) -> void:
-	var dmg = int(item.multiplier * user.get_stat(item.stat_used))
-	var def = int(get_stat(item.stat_vs) * item.multiplier)
+	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)
+	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enum.StatType.NA else 0
+	if item.name == "Ki Heal":
+		def = int(float(hp_max - hp_cur) * 0.33)
 	var dmg_text = ""
 	AudioController.play_sfx(item.sound_fx)
 	if item.damage_type == Enum.DamageType.HEAL:
@@ -152,6 +162,9 @@ func gain_hex(hex: Effect, duration: int) -> bool:
 	elif hex.name == "Slow": unit.agi_mods.append(0.75)
 	elif hex.name == "Weak": unit.str_mods.append(0.75)
 	return true
+
+func has_hex(hex_name: String) -> bool:
+	return hexes.has(hex_name)
 
 func gain_boon(boon: Effect, duration: int) -> bool:
 	var found = false
@@ -227,12 +240,13 @@ func targetable(value: bool, display = true):
 func get_hit_and_crit_chance(hit: Hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
-	if hit.atk != Enum.StatType.NA:
-		hit_roll = clamp(hit.hit_chance - (get_stat(hit.atk) * 3), 0, 100)
+	if hit.stat_hit != Enum.StatType.NA:
+		hit_roll = clamp(hit.hit_chance - (get_stat(hit.stat_hit) * 3), 0, 100)
 		crit_roll = hit.crit_chance
 	return [hit_roll, crit_roll]
 
 func die():
+	enabled = false
 	emit_signal("died")
 
 func set_hp_cur(value: int):

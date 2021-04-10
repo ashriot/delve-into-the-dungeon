@@ -1,9 +1,8 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/weapons/iron_knife.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/skills/blade_dance.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/weapons/short_bow.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -23,5 +22,22 @@ str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
-perks = [  ]
-items = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
+perks = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null
+}
+job = "Dancer"
+job_tab = "Dances"
+items = {
+0: ExtResource( 2 ),
+1: null,
+2: null,
+3: null,
+4: ExtResource( 3 ),
+5: null,
+6: null,
+7: null
+}

@@ -4,13 +4,14 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Wind Gust"
+name = "Wing Flap"
 desc = ""
+item_type = 2
 target_type = 10
 damage_type = 1
-stat_used = 0
-stat_vs = 3
-stat_hit = 1
+stat_used = 1
+stat_vs = 4
+stat_hit = 2
 multiplier = 2.5
 bonus_damage = 0
 hits = 1

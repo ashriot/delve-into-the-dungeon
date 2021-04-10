@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/weapons/wooden_sword.tres" type="Resource" id=2]
-[ext_resource path="res://resources/items/weapons/iron_axe.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/weapons/wooden_shield.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/weapons/wooden_shield.tres" type="Resource" id=3]
+[ext_resource path="res://resources/items/weapons/iron_axe.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/tools/cure_potion.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -12,7 +13,7 @@ frame = 3
 hp_max = 70
 hp_cur = 70
 strength = 15
-agility = 7
+agility = 6
 intellect = 3
 defense = 12
 str_bonus = 0
@@ -23,5 +24,22 @@ str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
-perks = [  ]
-items = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
+perks = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null
+}
+job = "Fighter"
+job_tab = "Weapons"
+items = {
+0: ExtResource( 2 ),
+1: ExtResource( 3 ),
+2: ExtResource( 4 ),
+3: ExtResource( 5 ),
+4: null,
+5: null,
+6: null,
+7: null
+}

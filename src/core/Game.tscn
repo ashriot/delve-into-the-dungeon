@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
-[ext_resource path="res://resources/jobs/wizard.tres" type="Resource" id=3]
+[ext_resource path="res://resources/jobs/sorcerer.tres" type="Resource" id=3]
 [ext_resource path="res://resources/jobs/fighter.tres" type="Resource" id=4]
 [ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=5]
 [ext_resource path="res://assets/images/sheets/tileset.png" type="Texture" id=6]
@@ -271,7 +271,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
-position = Vector2( -1, 0 )
+position = Vector2( 59, 0 )
 texture = ExtResource( 9 )
 centered = false
 vframes = 20
@@ -279,8 +279,7 @@ hframes = 10
 frame = 23
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite"]
-margin_left = 3.0
-margin_right = 23.0
+margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
 align = 2
@@ -303,7 +302,7 @@ __meta__ = {
 }
 
 [node name="Sprite2" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
-position = Vector2( -1, 6 )
+position = Vector2( 59, 6 )
 texture = ExtResource( 9 )
 centered = false
 vframes = 20
@@ -311,8 +310,7 @@ hframes = 10
 frame = 24
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite2"]
-margin_left = 3.0
-margin_right = 23.0
+margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
 align = 2
@@ -335,7 +333,7 @@ __meta__ = {
 }
 
 [node name="Sprite3" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
-position = Vector2( -1, 12 )
+position = Vector2( 59, 12 )
 texture = ExtResource( 9 )
 centered = false
 vframes = 20
@@ -343,8 +341,7 @@ hframes = 10
 frame = 21
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite3"]
-margin_left = 3.0
-margin_right = 23.0
+margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
 align = 2
@@ -367,7 +364,7 @@ __meta__ = {
 }
 
 [node name="Sprite4" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
-position = Vector2( -1, 18 )
+position = Vector2( 59, 18 )
 texture = ExtResource( 9 )
 centered = false
 vframes = 20
@@ -375,8 +372,7 @@ hframes = 10
 frame = 28
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite4"]
-margin_left = 3.0
-margin_right = 23.0
+margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
 align = 2
@@ -487,6 +483,14 @@ __meta__ = {
 
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
+
+[node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false

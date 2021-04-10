@@ -22,5 +22,6 @@ func init(_item, _hit_chance, _crit_chance, _bonus_dmg, _dmg_mod, _atk, _user):
 	atk = _atk
 	stat_hit = item.stat_hit
 	user = _user
+	user_pos = user.pos
 	if user.unit is Enemy: level = user.unit.level
 	else: level = 0

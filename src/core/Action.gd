@@ -3,6 +3,7 @@ class_name Action
 
 export var name: String
 export(String, MULTILINE) var desc
+export(Enum.ItemType) var item_type
 export(Enum.TargetType) var target_type
 export(Enum.DamageType) var damage_type
 export(Enum.StatType) var stat_used

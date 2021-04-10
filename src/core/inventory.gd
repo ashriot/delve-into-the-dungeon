@@ -8,7 +8,7 @@ export var _items = Array() setget set_items, get_items
 func set_items(new_items: Array) -> void:
 	for item in new_items:
 		var item_resource = ItemDb.get_item(item[0])
-		if not item:
+		if not item_resource:
 			print("ERROR: Could not find an item called: ", item[0])
 			return
 		item_resource.uses = item[1]

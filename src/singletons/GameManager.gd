@@ -25,23 +25,24 @@ func initialize_game_data(_game):
 
 func initialize_party():
 	var players = []
+	loading = false
 	if loading:
 		print("LOADING DATA")
-#		for player in save_data.players.values():
-#			var new_player = Player.new()
-#			new_player.slot = player["slot"]
-#			new_player.frame = player["frame"]
-#			new_player.hp_max = player["hp_max"]
-#			new_player.hp_cur = player["hp_cur"]
-#			new_player.strength = player["str"]
-#			new_player.agility = player["agi"]
-#			new_player.intellect = player["int"]
-#			new_player.defense = player["def"]
-#			new_player.items = array_to_items(player["items"])
-#			new_player.perks = array_to_perks(player["perks"])
-#			players.insert(new_player.slot, new_player)
-#		game.players = players
-	players = game.players
+		for player in save_data.players.values():
+			var new_player = Player.new()
+			new_player.slot = player["slot"]
+			new_player.frame = player["frame"]
+			new_player.hp_max = player["hp_max"]
+			new_player.hp_cur = player["hp_cur"]
+			new_player.strength = player["str"]
+			new_player.agility = player["agi"]
+			new_player.intellect = player["int"]
+			new_player.defense = player["def"]
+			new_player.items = dict_to_items(player["items"])
+			new_player.perks = dict_to_perks(player["perks"])
+			players.insert(new_player.slot, new_player)
+		game.players = players
+	else: players = game.players
 	var i = 0
 	for player in players:
 		player.slot = i
@@ -49,30 +50,35 @@ func initialize_party():
 		player.changed()
 		i += 1
 
-func items_to_array(items: Array) -> Array:
-	var array = []
-	for item in items:
-		array.append([item.name, item.uses])
-	return array
+func items_to_dict(items: Dictionary) -> Dictionary:
+	var dict = {}
+	for i in range(8):
+		if items[i] == null: continue
+		var item = ItemDb.get_item(items[i].name)
+		dict[i] = [item.name, item.uses]
+	return dict
 
-func array_to_items(array: Array) -> Array:
-	var items = []
-	for entry in array:
-		var item = ItemDb.get_item(entry[0])
-		item.uses = entry[1]
+func dict_to_items(dict: Dictionary) -> Dictionary:
+	var items = {}
+	for i in range(8):
+		if dict[i] == null: continue
+		var item = ItemDb.get_item(dict[i][0])
+		item.uses = dict[i][1]
 		items.append(item)
 	return items
 
-func perks_to_array(perks: Array) -> Array:
-	var array = []
-	for perk in perks:
-		array.append(perk.name)
-	return array
+func perks_to_dict(perks: Dictionary) -> Dictionary:
+	var dict = {}
+	for i in range(5):
+		if perks[i] == null: continue
+		dict[i] = (perks[i].name)
+	return dict
 
-func array_to_perks(array: Array) -> Array:
-	var perks = []
-	for entry in array:
-		var perk = ItemDb.get_perk(entry)
+func dict_to_perks(dict: Dictionary) -> Dictionary:
+	var perks = {}
+	for i in range(8):
+		if dict[i] == null: continue
+		var perk = ItemDb.get_perk(dict[i])
 		perks.append(perk)
 	return perks
 
@@ -86,8 +92,8 @@ func _on_player_changed(player: Player):
 	new_player["agi"] = player.base_agi()
 	new_player["int"] = player.base_int()
 	new_player["def"] = player.base_def()
-	new_player["items"] = items_to_array(player.items)
-	new_player["perks"] = perks_to_array(player.perks)
+	new_player["items"] = items_to_dict(player.items)
+	new_player["perks"] = perks_to_dict(player.perks)
 	save_data.players[player.slot] = new_player
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)

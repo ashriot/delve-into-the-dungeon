@@ -114,7 +114,7 @@ mouse_filter = 2
 value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
-tint_under = Color( 0, 0, 0, 1 )
+tint_under = Color( 0.145098, 0.145098, 0.164706, 1 )
 tint_progress = Color( 0.312404, 0.759766, 0.228523, 1 )
 nine_patch_stretch = true
 __meta__ = {
@@ -133,13 +133,24 @@ anims/Attack = SubResource( 1 )
 anims/Hit = SubResource( 2 )
 "anims/Hit (copy)" = SubResource( 3 )
 
+[node name="StatusBG" type="ColorRect" parent="."]
+margin_left = 11.0
+margin_top = 8.0
+margin_right = 20.0
+margin_bottom = 17.0
+mouse_filter = 2
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Status" type="Sprite" parent="."]
-position = Vector2( 13, 9 )
+position = Vector2( 12, 9 )
 texture = ExtResource( 5 )
 centered = false
 vframes = 20
 hframes = 10
-frame = 90
+frame = 107
 
 [node name="Button" type="Button" parent="."]
 modulate = Color( 0.647059, 0.215686, 0.215686, 0 )
@@ -155,7 +166,7 @@ __meta__ = {
 
 [node name="Target" type="NinePatchRect" parent="."]
 margin_left = -2.0
-margin_top = -2.0
+margin_top = -3.0
 margin_right = 18.0
 margin_bottom = 20.0
 texture = ExtResource( 4 )
@@ -168,20 +179,20 @@ __meta__ = {
 }
 
 [node name="HitBG" type="ColorRect" parent="."]
-margin_top = -3.0
+margin_top = -4.0
 margin_right = 16.0
-margin_bottom = 3.0
+margin_bottom = 2.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Hit" type="Label" parent="."]
-margin_top = -3.0
+margin_top = -4.0
 margin_right = 16.0
-margin_bottom = 4.0
-text = "99%"
+margin_bottom = 3.0
+text = "100%"
 align = 1
 valign = 2
 __meta__ = {
@@ -198,7 +209,7 @@ mouse_filter = 2
 value = 90.0
 texture_progress = ExtResource( 2 )
 fill_mode = 1
-tint_progress = Color( 0, 0, 0, 1 )
+tint_progress = Color( 0.145098, 0.145098, 0.164706, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false

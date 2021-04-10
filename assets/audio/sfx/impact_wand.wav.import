@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/impact_wand.wav-b625ef0aed643035b5367c1a0433b2c2.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/impact_wand.wav"
+dest_files=[ "res://.import/impact_wand.wav-b625ef0aed643035b5367c1a0433b2c2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -22,8 +22,16 @@ str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
-perks = [  ]
+perks = {
+
+}
 desc = "BOOGIE"
 level = 1
 gold = 25
-actions = [ ExtResource( 2 ), ExtResource( 3 ) ]
+actions = {
+0: ExtResource( 2 ),
+1: ExtResource( 3 ),
+2: null,
+3: null,
+4: null
+}

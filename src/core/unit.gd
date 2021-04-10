@@ -22,36 +22,31 @@ export(Array, float) var agi_mods
 export(Array, float) var int_mods
 export(Array, float) var def_mods
 
-export(Array, Resource) var perks
+export(Dictionary) var perks
 
 func get_strength() -> int:
 	var str_mod = 1.0
 	for mod in str_mods:
 		str_mod *= mod
 	return (strength + str_bonus) * (str_mod)
-	print(name, " STR mod: ", str_mod)
 
 func get_agility() -> int:
 	var agi_mod = 1.0
 	for mod in agi_mods:
 		agi_mod *= mod
 	return (agility + agi_bonus) * (agi_mod)
-	print(name, " AGI mod: ", agi_mod)
 
 func get_intellect() -> int:
 	var int_mod = 1.0
 	for mod in int_mods:
 		int_mod *= mod
 	return (intellect + int_bonus) * (int_mod)
-	print(name, " INT mod: ", int_mod)
 
 func get_defense() -> int:
 	var def_mod = 1.0
 	for mod in def_mods:
 		def_mod *= mod
 	return (defense + def_bonus) * (def_mod)
-	print(name, " DEF mod: ", def_mod)
-
 
 func base_hp_max() -> int:
 	return hp_max
@@ -69,7 +64,8 @@ func base_def() -> int:
 	return defense
 
 func get_stat(stat) -> int:
-	if stat == Enum.StatType.STR: return self.strength
+	if stat == Enum.StatType.HP: return self.hp_cur
+	elif stat == Enum.StatType.STR: return self.strength
 	elif stat == Enum.StatType.AGI: return self.agility
 	elif stat == Enum.StatType.INT: return self.intellect
 	elif stat == Enum.StatType.DEF: return self.defense
@@ -81,6 +77,7 @@ func get_hp_max() -> int:
 
 func has_perk(perk_name) -> bool:
 	for perk in perks:
+		if perk == null: continue
 		if perk.name == perk_name:
 			return true
 	return false

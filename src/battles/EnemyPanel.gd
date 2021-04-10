@@ -6,8 +6,8 @@ onready var dmg_display: = $DmgDisplay
 onready var dmg_anim: = $DmgDisplay/AnimationPlayer
 
 var potential_dmg: int
-var cooldowns: = []
-var actions: = []
+var cooldowns: = {}
+var actions: = {}
 
 func init(battle) -> void:
 	.init(battle)
@@ -25,11 +25,12 @@ func setup(_unit):
 	actions = unit.actions
 	targetable(false)
 	for i in range(actions.size()):
-		var act = actions[i]
+		if actions[i] == null: continue
+		var action = actions[i]
 		var cd = 0
-		if act.starting_cd > 0:
-			cd = randi() % (1 + act.starting_cd - act.starting_min) + act.starting_min
-		cooldowns.append(cd)
+		if action.starting_cd > 0:
+			cd = randi() % (1 + action.starting_cd - action.starting_min) + action.starting_min
+		cooldowns[i] = cd
 	emit_signal("show_text", "Lv." + str(unit.level), pos, true)
 	show()
 
@@ -43,6 +44,7 @@ func level_up() -> void:
 func get_action() -> Action:
 	var action = null
 	for i in range(actions.size()):
+		if actions[i] == null: continue
 		if actions[i].cooldown > 0:
 			if cooldowns[i] < actions[i].cooldown: cooldowns[i] += 1
 			elif action == null:
@@ -84,9 +86,12 @@ func update_hit_chance(hit: Hit) -> void:
 
 func update_status() -> void:
 	.update_status()
-	if statuses.size() == 0: status.hide()
-	else: status.show()
+	if statuses.size() == 0:
+		status.hide()
+		$StatusBG.hide()
+	else:
+		status.show()
+		$StatusBG.show()
 
 func die():
 	.die()
-	hide()

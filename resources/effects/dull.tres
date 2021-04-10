@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Dull"
 desc = ""
-frame = 96
+frame = 105
 permanent = false
 turn_start = false
 turn_end = true

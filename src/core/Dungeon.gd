@@ -24,7 +24,7 @@ class EnemyNode extends Reference:
 		sprite.queue_free()
 
 	func collide():
-		print("Collided!")
+		AudioController.play_sfx("battle_start")
 		dungeon.battle_start()
 		if dead: return
 		else:
@@ -171,6 +171,7 @@ func try_move(dx, dy):
 				$CanvasLayer/Win.show()
 
 	if !blocked:
+		AudioController.play_sfx("melee_step")
 		$Player/Sprite/AnimationPlayer.play("Hop")
 		player_tile = Vector2(x, y)
 
@@ -489,11 +490,11 @@ func update_hud_hp():
 	hud_timer = 2.1
 	var i = 0
 	for child in hud_hp.get_children():
-		var player = game.players[i]
-		child.frame = player.frame + 20
-		child.get_child(0).text = str(player.hp_cur)
-		child.get_child(1).max_value = player.hp_max
-		child.get_child(1).value = player.hp_cur
+		var p = game.players[i]
+		child.frame = p.frame + 20
+		child.get_child(0).text = str(p.hp_cur)
+		child.get_child(1).max_value = p.hp_max
+		child.get_child(1).value = p.hp_cur
 		i += 1
 
 func _on_Button_pressed() -> void:

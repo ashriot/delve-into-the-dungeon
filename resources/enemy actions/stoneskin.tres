@@ -7,11 +7,12 @@
 script = ExtResource( 1 )
 name = "Stoneskin"
 desc = ""
+item_type = 2
 target_type = 0
 damage_type = 7
-stat_used = 4
-stat_vs = 4
-stat_hit = 4
+stat_used = 5
+stat_vs = 5
+stat_hit = 5
 multiplier = 0.0
 bonus_damage = 0
 hits = 1
