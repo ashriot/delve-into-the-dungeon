@@ -11,7 +11,8 @@ enum StatType {
 
 enum ItemType {
 	WEAPON,
-	SKILL,
+	MARTIAL_SKILL,
+	SPECIAL_SKILL,
 	TOME,
 	TOOL
 }
@@ -29,6 +30,7 @@ enum SubItemType {
 	WAND,
 	AIR,
 	ANCIENT,
+	ARCANE,
 	EARTH,
 	FIRE,
 	HEALING,

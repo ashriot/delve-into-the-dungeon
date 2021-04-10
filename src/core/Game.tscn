@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=5]
 [ext_resource path="res://assets/images/sheets/tileset.png" type="Texture" id=6]
 [ext_resource path="res://assets/images/sheets/black_tile.png" type="Texture" id=7]
+[ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=8]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=9]
 [ext_resource path="res://src/core/Dungeon.gd" type="Script" id=10]
 [ext_resource path="res://resources/jobs/dancer.tres" type="Resource" id=11]
@@ -278,11 +279,25 @@ hframes = 10
 frame = 23
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite"]
-margin_left = 1.0
-margin_right = 21.0
+margin_left = 3.0
+margin_right = 23.0
 margin_bottom = 7.0
-text = "65"
+text = "999"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite"]
+margin_left = 9.0
+margin_right = 10.0
+margin_bottom = 5.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -296,11 +311,25 @@ hframes = 10
 frame = 24
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite2"]
-margin_left = 1.0
-margin_right = 21.0
+margin_left = 3.0
+margin_right = 23.0
 margin_bottom = 7.0
-text = "65"
+text = "999"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress2" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite2"]
+margin_left = 9.0
+margin_right = 10.0
+margin_bottom = 5.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -314,11 +343,25 @@ hframes = 10
 frame = 21
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite3"]
-margin_left = 1.0
-margin_right = 21.0
+margin_left = 3.0
+margin_right = 23.0
 margin_bottom = 7.0
-text = "65"
+text = "999"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress3" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite3"]
+margin_left = 9.0
+margin_right = 10.0
+margin_bottom = 5.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -332,11 +375,25 @@ hframes = 10
 frame = 28
 
 [node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite4"]
-margin_left = 1.0
-margin_right = 21.0
+margin_left = 3.0
+margin_right = 23.0
 margin_bottom = 7.0
-text = "65"
+text = "999"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress4" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite4"]
+margin_left = 9.0
+margin_right = 10.0
+margin_bottom = 5.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

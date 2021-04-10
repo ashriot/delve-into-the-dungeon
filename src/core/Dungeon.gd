@@ -489,8 +489,11 @@ func update_hud_hp():
 	hud_timer = 2.1
 	var i = 0
 	for child in hud_hp.get_children():
-		child.frame = game.players[i].frame + 20
-		child.get_child(0).text = str(game.players[i].hp_cur)
+		var player = game.players[i]
+		child.frame = player.frame + 20
+		child.get_child(0).text = str(player.hp_cur)
+		child.get_child(1).max_value = player.hp_max
+		child.get_child(1).value = player.hp_cur
 		i += 1
 
 func _on_Button_pressed() -> void:

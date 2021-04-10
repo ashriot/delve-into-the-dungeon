@@ -14,6 +14,7 @@ stat_hit = 1
 multiplier = 3.0
 bonus_damage = 0
 hits = 1
+lifesteal = 0.0
 hit_chance = 130
 crit_chance = 0
 sound_fx = "impact"

@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/skills/punch.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/skills/flying_kick.tres" type="Resource" id=3]
 [ext_resource path="res://resources/items/skills/roundhouse.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/tomes/drain_life.tres" type="Resource" id=5]
 [ext_resource path="res://resources/items/skills/grapple.tres" type="Resource" id=6]
 
 [resource]
@@ -25,4 +26,4 @@ agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
 perks = [  ]
-items = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ) ]
+items = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ]

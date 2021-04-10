@@ -75,6 +75,7 @@ func take_hit(hit: Hit) -> void:
 	var hit_and_crit = get_hit_and_crit_chance(hit)
 	var hit_chance = hit_and_crit[0]
 	var crit_chance = hit_and_crit[1]
+	var lifesteal = hit.item.lifesteal
 	var miss = false
 	var hit_roll = randi() % 100 + 1
 	print(unit.name, " uses ", hit.item.name, ": ", 100 - hit_roll, " < ", hit_chance, "%? = ", miss)
@@ -84,6 +85,7 @@ func take_hit(hit: Hit) -> void:
 	var rel_def = float(def * 1.2) / float(hit.level + 10 + def)
 	var def_mod = 1.0 - rel_def
 	dmg = int(dmg * def_mod)
+	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	var dmg_text = ""
 	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)
 	if not miss:
@@ -94,6 +96,9 @@ func take_hit(hit: Hit) -> void:
 		dmg_text = "MISS"
 		fx = "miss"
 	emit_signal("show_dmg", dmg_text, pos)
+	if lifesteal_heal > 0:
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+		hit.user.take_healing(lifesteal_heal)
 	if item.target_type >= Enum.TargetType.ONE_ENEMY \
 		and item.target_type <= Enum.TargetType.ONE_BACK:
 		AudioController.play_sfx(fx)
@@ -133,6 +138,10 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 				yield(get_tree().create_timer(0.25 * GameManager.spd, false), "timeout")
 	yield(get_tree().create_timer(0.25 * GameManager.spd, false), "timeout")
 	emit_signal("done")
+
+func take_healing(amt: int) -> void:
+	self.hp_cur += amt
+	if amt > 0: emit_signal("show_text", "+" + str(amt), pos)
 
 func gain_hex(hex: Effect, duration: int) -> bool:
 	if hexes.has(hex.name): return false

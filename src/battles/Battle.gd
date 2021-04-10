@@ -147,7 +147,7 @@ func enemy_take_action(panel: EnemyPanel):
 			if not target.alive: continue
 			var atk = panel.get_stat(action.stat_used)
 			var hit = Hit.new()
-			hit.init(action, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel.unit.level)
+			hit.init(action, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel)
 			if action.target_type < Enum.TargetType.ONE_ENEMY:
 				target.take_friendly_hit(hit)
 			else: target.take_hit(hit)
@@ -234,7 +234,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_stat_type = Enum.StatType.NA
 		var atk = current_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
-		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk, -1)
+		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk, current_player)
 		enemy_panels.update_item_stats(hit)
 		enemy_panels.show_selectors(cur_btn.item.target_type)
 
@@ -273,7 +273,7 @@ func execute_vs_enemy(panel) -> void:
 			if not target.alive: continue
 			var atk = user.get_stat(item.stat_used)
 			var hit = Hit.new()
-			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk, panel.unit.level)
+			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk, current_player)
 			target.take_hit(hit)
 		if item.target_type >= Enum.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
