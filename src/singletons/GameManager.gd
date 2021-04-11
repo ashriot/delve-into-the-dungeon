@@ -31,6 +31,7 @@ func initialize_party():
 		for player in save_data.players.values():
 			var new_player = Player.new()
 			new_player.slot = player["slot"]
+			new_player.tab = player["tab"]
 			new_player.frame = player["frame"]
 			new_player.hp_max = player["hp_max"]
 			new_player.hp_cur = player["hp_cur"]
@@ -85,6 +86,7 @@ func dict_to_perks(dict: Dictionary) -> Dictionary:
 func _on_player_changed(player: Player):
 	var new_player = {}
 	new_player["slot"] = player.slot
+	new_player["tab"] = player.tab
 	new_player["hp_max"] = player.hp_max
 	new_player["hp_cur"] = player.hp_cur
 	new_player["frame"] = player.frame

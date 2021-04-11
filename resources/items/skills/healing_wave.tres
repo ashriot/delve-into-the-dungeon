@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Healing Wave"
-desc = ""
+description = "Heal {tgt} for {potency}."
 item_type = 2
 sub_type = 21
 target_type = 4

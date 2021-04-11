@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Wooden Shield"
-desc = "Deal {potency} {dmg} damage to {target}."
+description = "Block up to {potency} Martial damage until your next turn."
 item_type = 0
 sub_type = 6
 target_type = 0

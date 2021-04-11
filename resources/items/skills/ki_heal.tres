@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Ki Heal"
-desc = ""
+description = "Heal {tgt} for {potency} (+ 33% of their missing HP.)"
 item_type = 2
 sub_type = 20
 target_type = 1

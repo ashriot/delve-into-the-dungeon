@@ -79,6 +79,7 @@ func battle_start():
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
 	dungeon.active = true
+	update_hud()
 	menu_button.show()
 
 func _on_FadeOut() -> void:
@@ -100,7 +101,7 @@ func set_level_num(value) -> void:
 func _on_MenuButton_pressed() -> void:
 	dungeon.active = false
 	AudioController.click()
-	party_menu.show()
+	party_menu.open_menu()
 
 func close_menu() -> void:
 	party_menu.hide()

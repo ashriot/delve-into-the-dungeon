@@ -29,12 +29,15 @@ func init():
 	battleMenu.hide()
 #	for child in buttons.get_children():
 #		child.init(self)
-	var flee = load("res://resources/items/battleCommands/flee.tres")
+	var inspect = load("res://resources/items/battleCommands/inspect.tres")
 	var end_turn = load("res://resources/items/battleCommands/end_turn.tres")
+	var flee = load("res://resources/items/battleCommands/flee.tres")
 	battleMenu.get_child(0).init(self)
-	battleMenu.get_child(0).setup(flee, false)
+	battleMenu.get_child(0).setup(inspect, false)
 	battleMenu.get_child(1).init(self)
 	battleMenu.get_child(1).setup(end_turn, false)
+	battleMenu.get_child(2).init(self)
+	battleMenu.get_child(2).setup(flee, false)
 	player_panels.init(self)
 	enemy_panels.init(self)
 	for button in buttons.get_children():
@@ -251,6 +254,11 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		for panel in player_panels.get_children(): panel.ready = false
 		clear_buttons()
 		end_turn()
+		return
+	if button.item.name == "Inspect":
+		AudioController.confirm()
+		enemy_panels.show_selectors(Enum.TargetType.ONE_ENEMY)
+		player_panels.show_selectors(null, Enum.TargetType.ANY_ALLY)
 		return
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()

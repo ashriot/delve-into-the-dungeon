@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Fan of Flames"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt}."
 item_type = 2
 sub_type = 21
 target_type = 9

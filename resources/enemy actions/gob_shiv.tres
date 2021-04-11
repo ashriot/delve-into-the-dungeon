@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Gob Shiv"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt}."
 item_type = 0
 sub_type = 0
 target_type = 7

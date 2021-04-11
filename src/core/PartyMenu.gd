@@ -3,6 +3,7 @@ extends Control
 
 onready var tooltip = $Tooltip
 onready var player_panels = $PlayerPanels
+onready var main_menu = $MainMenu
 onready var stats_panel = $Stats
 onready var items_panel = $Items
 onready var tab1 = $Items/BG/HBoxContainer/Tab1
@@ -24,12 +25,14 @@ func init(_game) -> void:
 	game = _game
 	players = game.players
 	update_menu_data()
-	for child in item_buttons.get_children():
-		child.init(self)
+	for child in player_panels.get_children(): child.init(self)
+	for child in item_buttons.get_children(): child.init(self)
 
 func open_menu() -> void:
 	current_menu = null
+	main_menu.show()
 	update_menu_data()
+	show()
 
 func _on_CloseButton_pressed() -> void:
 	AudioController.back()
@@ -37,13 +40,14 @@ func _on_CloseButton_pressed() -> void:
 		stats_panel.hide()
 		current_menu.hide()
 		current_menu = null
+		main_menu.show()
 	else: game.close_menu()
 
 func update_menu_data() -> void:
 	var i = 0
 	for child in player_panels.get_children():
 		if players[i] == null: continue
-		child.setup(self, players[i])
+		child.setup(players[i])
 		if current_player == null:
 			current_player = child
 			current_player.select(true)
@@ -93,6 +97,7 @@ func set_current_tab(value) -> void:
 func _on_Items_pressed() -> void:
 	AudioController.click()
 	current_menu = items_panel
+	main_menu.hide()
 	update_stat_data()
 	update_item_data()
 	items_panel_popup.hide()
@@ -108,8 +113,11 @@ func _on_PlayerMenuPanel_pressed(panel) -> void:
 	if current_menu == items_panel: update_item_data()
 
 func _on_ItemButton_pressed(button) -> void:
+	AudioController.select()
 	if button.equippable: print("Empty slot")
-	else: print("clicked ", button.item.name)
+	else:
+		print("clicked ", button.item.name)
+		tooltip.setup(button.item.name, button.item.desc)
 
 func _on_InfoButton_pressed() -> void:
 	pass # Replace with function body.

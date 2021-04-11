@@ -73,3 +73,36 @@ enum DamageType {
 	HEAL,
 	EFFECT_ONLY
 }
+
+static func get_stat_name(stat) -> String:
+	match stat:
+		StatType.HP: return "HP"
+		StatType.STR: return "STR"
+		StatType.AGI: return "AGI"
+		StatType.INT: return "INT"
+		StatType.DEF: return "DEF"
+	return ""
+
+static func get_damage_name(damage) -> String:
+	match damage:
+		DamageType.MARTIAL: return "Martial"
+		DamageType.AIR: return "Air"
+		DamageType.EARTH: return "Earth"
+		DamageType.FIRE: return "Fire"
+		DamageType.WATER: return "Water"
+		DamageType.PURE: return "Pure"
+	return ""
+
+static func get_target_name(target) -> String:
+	match target:
+		TargetType.ALL_ALLIES: return "the party"
+		TargetType.ALL_ENEMIES: return "the enemy party"
+		TargetType.ANY_ALLY: return "an ally"
+		TargetType.ANY_ROW: return "an enemy row"
+		TargetType.BACK_ROW: return "the back enemy row"
+		TargetType.FRONT_ROW: return "the front enemy row"
+		TargetType.MYSELF: return "Self-only"
+		TargetType.ONE_BACK: return "a back row enemy"
+		TargetType.ONE_ENEMY: return "an enemy"
+		TargetType.ONE_FRONT: return "a front row enemy"
+	return ""

@@ -66,6 +66,7 @@ func targetable(value: bool, display = true):
 		dmg_display.hide()
 
 func update_dmg_display(hit: Hit):
+	if hit == null: return
 	var item = hit.item as Item
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
 	var def = get_stat(item.stat_vs)
@@ -77,6 +78,7 @@ func update_dmg_display(hit: Hit):
 	dmg_display.show()
 
 func update_hit_chance(hit: Hit) -> void:
+	if hit == null: return
 	if not (enabled or self.alive or valid_target): return
 	var value = 100
 	if hit.stat_hit != Enum.StatType.NA:

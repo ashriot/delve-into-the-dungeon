@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Iron Knife"
-desc = "Deal {potency} {dmg} damage to {target}."
+description = "Deal {potency} {dmg} damage to {tgt}."
 item_type = 0
 sub_type = 3
 target_type = 7

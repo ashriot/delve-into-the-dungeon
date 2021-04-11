@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Frail"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt} and inflict FRAIL for 5 turns."
 item_type = 3
 sub_type = 17
 target_type = 6

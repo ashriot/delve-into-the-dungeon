@@ -2,7 +2,7 @@ extends Resource
 class_name Action
 
 export var name: String
-export(String, MULTILINE) var desc
+export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}."
 export(Enum.ItemType) var item_type
 export(Enum.SubItemType) var sub_type
 export(Enum.TargetType) var target_type
@@ -24,6 +24,7 @@ export(Array, Array) var gain_boons
 export(Array, Array) var gain_hexes
 
 var frame setget , get_frame
+var desc setget , get_desc
 
 func get_frame() -> int:
 	var id = 70
@@ -55,3 +56,28 @@ func get_frame() -> int:
 		Enum.ItemType.TOOL:
 			id -= 10
 	return id
+
+func get_desc() -> String:
+	var sub = description as String
+	var dmg = Enum.get_stat_name(stat_used) + "x" + str(multiplier)
+	dmg += ("(x" + str(hits) + ")") if hits > 1 else ""
+	dmg = colorize(stat_used, dmg)
+	sub = sub.replace("{potency}", dmg)
+	sub = sub.replace("{dmg}", Enum.get_damage_name(damage_type))
+	sub = sub.replace("{tgt}", Enum.get_target_name(target_type))
+	return sub
+
+func colorize(stat, text) -> String:
+	var color = ""
+	match stat:
+		Enum.StatType.HP:
+			color = "[color=#ff50c23a]"
+		Enum.StatType.STR:
+			color = "[color=#ffcc6056]"
+		Enum.StatType.AGI:
+			color = "[color=#ffdbb642]"
+		Enum.StatType.INT:
+			color = "[color=#ff61c4da]"
+		Enum.StatType.DEF:
+			color = "[color=#ffb4b4ae]"
+	return color + text + "[/color]"

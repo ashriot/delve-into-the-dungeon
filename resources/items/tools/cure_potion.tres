@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Cure Potion"
-desc = ""
+description = "Heal {tgt} for 50."
 item_type = 4
 sub_type = 23
 target_type = 1
