@@ -1,0 +1,734 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
+[ext_resource path="res://src/core/PartyMenu.gd" type="Script" id=3]
+[ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=4]
+[ext_resource path="res://src/menu/ItemButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/themes/ui/x_button.png" type="Texture" id=6]
+
+[node name="PartyMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerPanels" type="Control" parent="."]
+anchor_right = 1.0
+margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerMenuPanel" parent="PlayerPanels" instance=ExtResource( 1 )]
+
+[node name="PlayerMenuPanel2" parent="PlayerPanels" instance=ExtResource( 1 )]
+margin_left = 37.0
+margin_right = 70.0
+
+[node name="PlayerMenuPanel3" parent="PlayerPanels" instance=ExtResource( 1 )]
+margin_top = 16.0
+margin_bottom = 28.0
+
+[node name="PlayerMenuPanel4" parent="PlayerPanels" instance=ExtResource( 1 )]
+margin_left = 37.0
+margin_top = 16.0
+margin_right = 70.0
+margin_bottom = 28.0
+
+[node name="InventoryMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseButton" type="Button" parent="."]
+margin_top = 121.0
+margin_right = 72.0
+margin_bottom = 130.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CloseButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+
+[node name="Label" type="Label" parent="CloseButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "CLOSE MENU"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CloseButton"]
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 140
+
+[node name="MenuButtons" type="VBoxContainer" parent="."]
+margin_left = 2.0
+margin_top = 30.0
+margin_right = 70.0
+margin_bottom = 121.0
+custom_constants/separation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Items" type="Button" parent="MenuButtons"]
+margin_right = 68.0
+margin_bottom = 9.0
+
+[node name="Label" type="Label" parent="MenuButtons/Items"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Items & Skills"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MenuButtons/Items"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MenuButtons/Items"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Equipment" type="Button" parent="MenuButtons"]
+margin_top = 11.0
+margin_right = 68.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="MenuButtons/Equipment"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Equipment"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MenuButtons/Equipment"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MenuButtons/Equipment"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Inventory" type="Button" parent="MenuButtons"]
+margin_top = 22.0
+margin_right = 68.0
+margin_bottom = 31.0
+
+[node name="Label" type="Label" parent="MenuButtons/Inventory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Inventory"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MenuButtons/Inventory"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MenuButtons/Inventory"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Materials" type="Button" parent="MenuButtons"]
+margin_top = 33.0
+margin_right = 68.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="MenuButtons/Materials"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Materials"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MenuButtons/Materials"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MenuButtons/Materials"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Options" type="Button" parent="MenuButtons"]
+margin_top = 44.0
+margin_right = 68.0
+margin_bottom = 53.0
+
+[node name="Label" type="Label" parent="MenuButtons/Options"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MenuButtons/Options"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MenuButtons/Options"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Stats" type="Panel" parent="."]
+margin_top = 30.0
+margin_right = 72.0
+margin_bottom = 69.0
+
+[node name="Sprite" type="Sprite" parent="Stats"]
+position = Vector2( 3, 3 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 20
+
+[node name="Name" type="Label" parent="Stats"]
+margin_left = 13.0
+margin_top = 3.0
+margin_right = 72.0
+margin_bottom = 10.0
+text = "Alzahar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Job" type="Label" parent="Stats"]
+margin_left = 3.0
+margin_top = 10.0
+margin_right = 43.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0.486275, 0.490196, 0.501961, 1 )
+text = "Artificer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stats" type="Panel" parent="Stats"]
+margin_left = 5.0
+margin_top = 19.0
+margin_right = 67.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="STR" type="Label" parent="Stats/Stats"]
+margin_left = 3.0
+margin_top = 2.0
+margin_right = 15.0
+margin_bottom = 9.0
+custom_colors/font_color = Color( 0.8, 0.376471, 0.337255, 1 )
+text = "STR"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Stats/Stats/STR"]
+margin_left = -1.0
+margin_top = 6.0
+margin_right = 12.0
+margin_bottom = 13.0
+color = Color( 0.8, 0.376471, 0.337255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Label" parent="Stats/Stats/STR"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "999"
+align = 1
+valign = 1
+
+[node name="AGI" type="Label" parent="Stats/Stats"]
+margin_left = 18.0
+margin_top = 2.0
+margin_right = 30.0
+margin_bottom = 9.0
+custom_colors/font_color = Color( 0.858824, 0.713726, 0.258824, 1 )
+text = "AGI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Stats/Stats/AGI"]
+margin_left = -1.0
+margin_top = 6.0
+margin_right = 12.0
+margin_bottom = 13.0
+color = Color( 0.858824, 0.713726, 0.258824, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Label" parent="Stats/Stats/AGI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "999"
+align = 1
+valign = 1
+
+[node name="INT" type="Label" parent="Stats/Stats"]
+margin_left = 33.0
+margin_top = 2.0
+margin_right = 45.0
+margin_bottom = 9.0
+custom_colors/font_color = Color( 0.380392, 0.768627, 0.854902, 1 )
+text = "INT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Stats/Stats/INT"]
+margin_left = -1.0
+margin_top = 6.0
+margin_right = 12.0
+margin_bottom = 13.0
+color = Color( 0.380392, 0.768627, 0.854902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Label" parent="Stats/Stats/INT"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "999"
+align = 1
+valign = 1
+
+[node name="DEF" type="Label" parent="Stats/Stats"]
+margin_left = 48.0
+margin_top = 2.0
+margin_right = 60.0
+margin_bottom = 9.0
+custom_colors/font_color = Color( 0.705882, 0.705882, 0.682353, 1 )
+text = "DEF"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Stats/Stats/DEF"]
+margin_left = -1.0
+margin_top = 6.0
+margin_right = 12.0
+margin_bottom = 13.0
+color = Color( 0.705882, 0.705882, 0.682353, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Label" parent="Stats/Stats/DEF"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "999"
+align = 1
+valign = 1
+
+[node name="HP" type="Label" parent="Stats"]
+margin_left = 53.0
+margin_top = 3.0
+margin_right = 70.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
+text = "250
+/250"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPLabel" type="ColorRect" parent="Stats"]
+margin_left = 48.0
+margin_top = 2.0
+margin_right = 57.0
+margin_bottom = 9.0
+color = Color( 0.313726, 0.760784, 0.227451, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Stats/HPLabel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 1.0
+margin_bottom = 1.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "HP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Items" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 30.0
+margin_bottom = -59.0
+
+[node name="BG" type="ColorRect" parent="Items"]
+margin_top = 39.0
+margin_right = 72.0
+margin_bottom = 91.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Items" type="VBoxContainer" parent="Items/BG"]
+margin_top = 1.0
+margin_right = 72.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemButton" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+
+[node name="ItemButton2" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 10.0
+margin_bottom = 19.0
+
+[node name="ItemButton3" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 20.0
+margin_bottom = 29.0
+
+[node name="ItemButton4" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 30.0
+margin_bottom = 39.0
+
+[node name="ItemButton5" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 40.0
+margin_bottom = 49.0
+
+[node name="ItemButton6" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 50.0
+margin_bottom = 59.0
+
+[node name="ItemButton7" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 60.0
+margin_bottom = 69.0
+
+[node name="ItemButton8" parent="Items/BG/Items" instance=ExtResource( 5 )]
+visible = false
+margin_top = 70.0
+margin_bottom = 79.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Items/BG"]
+margin_top = 41.0
+margin_right = 72.0
+margin_bottom = 50.0
+custom_constants/separation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tab1" type="Button" parent="Items/BG/HBoxContainer"]
+margin_right = 35.0
+margin_bottom = 9.0
+rect_min_size = Vector2( 35, 9 )
+
+[node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+text = "Items"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Items/BG/HBoxContainer/Tab1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab1/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "Items"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tab2" type="Button" parent="Items/BG/HBoxContainer"]
+margin_left = 37.0
+margin_right = 72.0
+margin_bottom = 9.0
+rect_min_size = Vector2( 35, 9 )
+
+[node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+text = "Class"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Items/BG/HBoxContainer/Tab2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab2/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "Tab2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="ColorRect" parent="Items/BG"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Items/BG/Button"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 62.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "ITEMS & SKILLS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="ColorRect" parent="Items"]
+visible = false
+margin_left = 10.0
+margin_top = 7.0
+margin_right = 62.0
+margin_bottom = 39.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Items/PopupMenu"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 51.0
+margin_bottom = 31.0
+
+[node name="Button" type="Button" parent="Items/PopupMenu/Panel"]
+anchor_right = 1.0
+margin_left = 3.0
+margin_top = 3.0
+margin_right = -3.0
+margin_bottom = 14.0
+text = "Info"
+
+[node name="Button2" type="Button" parent="Items/PopupMenu/Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = -14.0
+margin_right = -3.0
+margin_bottom = -3.0
+text = "Remove"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoButton" type="Button" parent="Items"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 46.0
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip" type="ColorRect" parent="."]
+visible = false
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 72.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Tooltip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tooltip/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 1.0
+margin_bottom = -2.0
+text = "DANCER
+Able to use Dances and weapons."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseTooltip" type="TextureButton" parent="Tooltip"]
+margin_left = 61.0
+margin_top = 2.0
+margin_right = 68.0
+margin_bottom = 9.0
+texture_normal = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="MenuButtons/Items" to="." method="_on_Items_pressed"]
+[connection signal="pressed" from="Items/BG/HBoxContainer/Tab1" to="." method="_on_Tab1_pressed"]
+[connection signal="pressed" from="Items/BG/HBoxContainer/Tab2" to="." method="_on_Tab2_pressed"]
+[connection signal="pressed" from="Items/InfoButton" to="." method="_on_InfoButton_pressed"]

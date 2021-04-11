@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Wizard"
+name = "Orfus"
 frame = 8
 hp_max = 50
 hp_cur = 50

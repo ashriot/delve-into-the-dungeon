@@ -7,6 +7,7 @@ script = ExtResource( 1 )
 name = "Claw"
 desc = ""
 item_type = 1
+sub_type = 0
 target_type = 7
 damage_type = 0
 stat_used = 1

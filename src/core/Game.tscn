@@ -4,7 +4,7 @@
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/jobs/sorcerer.tres" type="Resource" id=3]
 [ext_resource path="res://resources/jobs/fighter.tres" type="Resource" id=4]
-[ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=5]
+[ext_resource path="res://src/menu/PartyMenu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/images/sheets/tileset.png" type="Texture" id=6]
 [ext_resource path="res://assets/images/sheets/black_tile.png" type="Texture" id=7]
 [ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=8]
@@ -236,6 +236,7 @@ cell_size = Vector2( 8, 8 )
 format = 1
 
 [node name="Player" type="Node2D" parent="Dungeon"]
+visible = false
 position = Vector2( 32, 56 )
 __meta__ = {
 "_edit_group_": true
@@ -259,18 +260,28 @@ frame = 4
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Dungeon/Player/Sprite"]
 anims/Hop = SubResource( 9 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Dungeon"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Faces" type="Control" parent="Dungeon/CanvasLayer"]
-margin_left = 2.0
-margin_top = 1.0
-margin_right = 71.0
-margin_bottom = 25.0
+[node name="DungeonHUD" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -7.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+[node name="Faces" type="Control" parent="CanvasLayer/DungeonHUD"]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 25.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
 position = Vector2( 59, 0 )
 texture = ExtResource( 9 )
 centered = false
@@ -278,7 +289,7 @@ vframes = 20
 hframes = 10
 frame = 23
 
-[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite"]
+[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite"]
 margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
@@ -287,7 +298,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite"]
+[node name="TextureProgress" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite"]
 margin_left = 9.0
 margin_right = 10.0
 margin_bottom = 5.0
@@ -301,7 +312,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite2" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+[node name="Sprite2" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
 position = Vector2( 59, 6 )
 texture = ExtResource( 9 )
 centered = false
@@ -309,7 +320,7 @@ vframes = 20
 hframes = 10
 frame = 24
 
-[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite2"]
+[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite2"]
 margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
@@ -318,7 +329,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress2" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite2"]
+[node name="TextureProgress2" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite2"]
 margin_left = 9.0
 margin_right = 10.0
 margin_bottom = 5.0
@@ -332,7 +343,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite3" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+[node name="Sprite3" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
 position = Vector2( 59, 12 )
 texture = ExtResource( 9 )
 centered = false
@@ -340,7 +351,7 @@ vframes = 20
 hframes = 10
 frame = 21
 
-[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite3"]
+[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite3"]
 margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
@@ -349,7 +360,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress3" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite3"]
+[node name="TextureProgress3" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite3"]
 margin_left = 9.0
 margin_right = 10.0
 margin_bottom = 5.0
@@ -363,7 +374,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite4" type="Sprite" parent="Dungeon/CanvasLayer/Faces"]
+[node name="Sprite4" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
 position = Vector2( 59, 18 )
 texture = ExtResource( 9 )
 centered = false
@@ -371,7 +382,7 @@ vframes = 20
 hframes = 10
 frame = 28
 
-[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Faces/Sprite4"]
+[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite4"]
 margin_left = -20.0
 margin_bottom = 7.0
 text = "999"
@@ -380,7 +391,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress4" type="TextureProgress" parent="Dungeon/CanvasLayer/Faces/Sprite4"]
+[node name="TextureProgress4" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite4"]
 margin_left = 9.0
 margin_right = 10.0
 margin_bottom = 5.0
@@ -394,84 +405,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HUD" type="ColorRect" parent="Dungeon/CanvasLayer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 121.0
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Menu Label" type="Label" parent="Dungeon/CanvasLayer/HUD"]
-modulate = Color( 0, 0, 0, 1 )
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 39.0
-margin_bottom = 6.0
-text = "Open Menu"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Level" type="Label" parent="Dungeon/CanvasLayer/HUD"]
-modulate = Color( 0, 0, 0, 1 )
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -30.0
-margin_top = -2.5
-margin_right = -1.0
-margin_bottom = 2.5
-text = "Lv. 999"
+[node name="Gold" type="Label" parent="CanvasLayer/DungeonHUD"]
+margin_left = 29.0
+margin_top = 106.0
+margin_right = 65.0
+margin_bottom = 113.0
+text = "99,999"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PartyMenu" type="Control" parent="Dungeon/CanvasLayer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Gold"]
+position = Vector2( 34, -1 )
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 130
 
-[node name="InventoryMenu" type="Control" parent="Dungeon/CanvasLayer/PartyMenu"]
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 5 )
+[node name="Level" type="Label" parent="CanvasLayer/DungeonHUD"]
+margin_left = 38.0
+margin_top = 114.0
+margin_right = 65.0
+margin_bottom = 121.0
+text = "1"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Win" type="ColorRect" parent="Dungeon/CanvasLayer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Dungeon/CanvasLayer/Win"]
-margin_left = 16.0
-margin_top = 40.0
-margin_right = 56.0
-margin_bottom = 45.0
-text = "YOU WIN!"
-align = 1
-
-[node name="Button" type="Button" parent="Dungeon/CanvasLayer/Win"]
-margin_left = 4.0
-margin_top = 56.0
-margin_right = 68.0
-margin_bottom = 68.0
-text = "Restart Game"
-
-[node name="Fade" parent="Dungeon/CanvasLayer" instance=ExtResource( 13 )]
-visible = false
-mouse_filter = 2
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Level"]
+position = Vector2( 25, -1 )
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 131
 
 [node name="TownMenu" type="Control" parent="CanvasLayer"]
 visible = false
@@ -492,6 +462,44 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MenuButton" type="Button" parent="CanvasLayer"]
+margin_top = 121.0
+margin_right = 72.0
+margin_bottom = 130.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MenuButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+
+[node name="Label" type="Label" parent="CanvasLayer/MenuButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "OPEN MENU"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/MenuButton"]
+texture = ExtResource( 9 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 141
+
+[node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
+
+[node name="Fade" parent="CanvasLayer" instance=ExtResource( 13 )]
+visible = false
+mouse_filter = 2
+
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false
 material = SubResource( 11 )
@@ -510,4 +518,4 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Dungeon/CanvasLayer/Win/Button" to="Dungeon" method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]

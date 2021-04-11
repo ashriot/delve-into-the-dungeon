@@ -8,6 +8,7 @@ script = ExtResource( 1 )
 name = "Mind Dust"
 desc = ""
 item_type = 2
+sub_type = 0
 target_type = 9
 damage_type = 5
 stat_used = 3

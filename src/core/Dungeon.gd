@@ -72,13 +72,9 @@ const MAX_ROOM_DIMENSION = 8
 onready var tile_map = $TileMap
 onready var visibility_map = $VisibilityMap
 onready var player = $Player
-onready var level = $CanvasLayer/HUD/Level
-onready var hud = $CanvasLayer/HUD
-onready var hud_hp = $CanvasLayer/Faces
 
 enum Tile {Floor, Stone, Wall, Door, StairsDown, StairsUp}
 
-var level_num = 0 setget set_level_num
 var map = []
 var rooms = []
 var level_size: Vector2
@@ -88,37 +84,23 @@ var game
 var player_tile
 var enemy_pathfinding
 var active = false
-var hud_timer: = 0.0
-
-func _ready() -> void:
-	hud.show()
-	hud_timer = 3
-	hud_hp.show()
-	self.level_num = 1
-	build_level()
 
 func init(_game):
 	game = _game
-	update_hud_hp()
+	game.level_num = 1
+	build_level()
+	player.show()
 # warning-ignore:return_value_discarded
 	connect("fade_out", game, "_on_FadeOut")
 # warning-ignore:return_value_discarded
 	connect("fade_in", game, "_on_FadeIn")
 
-func _physics_process(delta: float) -> void:
-	if !active: return
-
-	if hud_timer > 2 and !hud_hp.visible:
-		hud_hp.show()
-	elif hud_timer < 2 and hud_hp.visible:
-		hud_hp.hide()
-	elif hud_timer < 2:
-		hud_timer += 1 * delta
-
-func _input(event):
+func _unhandled_input(event):
 	if !active or !event.is_pressed(): return
 
-	hud_timer = 0.0
+	print(event)
+
+	game.hud_timer = 0.0
 	var dir = null
 	if event is InputEventMouseButton:
 		var pos = player.get_local_mouse_position()
@@ -165,7 +147,7 @@ func try_move(dx, dy):
 			emit_signal("fade_out")
 			yield(game, "done_fading")
 			self.level_num += 1
-			if level_num < LEVEL_SIZES.size():
+			if game.level_num < LEVEL_SIZES.size():
 				build_level()
 			else:
 				$CanvasLayer/Win.show()
@@ -194,7 +176,7 @@ func build_level():
 
 	enemy_pathfinding = AStar.new()
 
-	level_size = LEVEL_SIZES[level_num]
+	level_size = LEVEL_SIZES[game.level_num]
 	for x in range(level_size.x):
 		map.append([])
 		for y in range(level_size.y):
@@ -203,7 +185,7 @@ func build_level():
 			visibility_map.set_cell(x, y, 0)
 
 	var free_regions = [Rect2(Vector2(2, 2), level_size - Vector2(4, 4))]
-	var num_rooms = LEVEL_ROOM_COUNTS[level_num]
+	var num_rooms = LEVEL_ROOM_COUNTS[game.level_num]
 	for _i in range(num_rooms):
 		add_room(free_regions)
 		if free_regions.empty():
@@ -223,7 +205,7 @@ func build_level():
 
 	# Place Enemies
 
-	var num_enemies = LEVEL_ENEMY_COUNTS[level_num]
+	var num_enemies = LEVEL_ENEMY_COUNTS[game.level_num]
 	for _i in range(num_enemies):
 		var room = rooms[1 + randi() % (rooms.size() - 1)]
 		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
@@ -236,7 +218,7 @@ func build_level():
 				break
 
 		if !blocked:
-			var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
+			var enemy = EnemyNode.new(self, randi() % 4, game.level_num, x, y)
 			enemies.append(enemy)
 
 	# Place End Ladder
@@ -481,27 +463,9 @@ func set_tile(x, y, type):
 		clear_path(Vector2(x, y))
 
 func battle_start():
-	hud_hp.hide()
-	hud.hide()
 	game.battle_start()
-
-func update_hud_hp():
-	hud_hp.show()
-	hud_timer = 2.1
-	var i = 0
-	for child in hud_hp.get_children():
-		var p = game.players[i]
-		child.frame = p.frame + 20
-		child.get_child(0).text = str(p.hp_cur)
-		child.get_child(1).max_value = p.hp_max
-		child.get_child(1).value = p.hp_cur
-		i += 1
 
 func _on_Button_pressed() -> void:
 	self.level_num = 0
 	build_level()
 	$CanvasLayer/Win.hide()
-
-func set_level_num(value):
-	level_num = value
-	$CanvasLayer/HUD/Level.text = "Lv. " + str(value)

@@ -9,7 +9,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Monk"
+name = "Koh"
 frame = 4
 hp_max = 60
 hp_cur = 60

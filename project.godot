@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/player.gd"
 }, {
+"base": "Control",
+"class": "PlayerMenuPanel",
+"language": "GDScript",
+"path": "res://src/menu/PlayerMenuPanel.gd"
+}, {
 "base": "BattlePanel",
 "class": "PlayerPanel",
 "language": "GDScript",
@@ -103,6 +108,7 @@ _global_script_class_icons={
 "Item": "",
 "Perk": "",
 "Player": "",
+"PlayerMenuPanel": "",
 "PlayerPanel": "",
 "SaveData": "",
 "Unit": ""

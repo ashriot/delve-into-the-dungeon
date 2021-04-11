@@ -6,7 +6,8 @@
 script = ExtResource( 1 )
 name = "Heal"
 desc = ""
-item_type = 0
+item_type = 3
+sub_type = 15
 target_type = 1
 damage_type = 6
 stat_used = 3
@@ -26,4 +27,3 @@ gain_boons = [  ]
 gain_hexes = [  ]
 max_uses = 30
 uses = 30
-sub_type = 15

@@ -6,7 +6,8 @@
 script = ExtResource( 1 )
 name = "Drain Life"
 desc = ""
-item_type = 0
+item_type = 3
+sub_type = 17
 target_type = 6
 damage_type = 5
 stat_used = 3
@@ -26,4 +27,3 @@ gain_boons = [  ]
 gain_hexes = [  ]
 max_uses = 20
 uses = 20
-sub_type = 17

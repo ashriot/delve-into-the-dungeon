@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Dancer"
+name = "Zorah"
 frame = 1
 hp_max = 55
 hp_cur = 55

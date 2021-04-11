@@ -7,6 +7,7 @@ script = ExtResource( 1 )
 name = "Coral Slice"
 desc = ""
 item_type = 0
+sub_type = 0
 target_type = 7
 damage_type = 0
 stat_used = 2
