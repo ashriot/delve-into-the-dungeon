@@ -8,6 +8,7 @@ name = "Healing Wave"
 description = "Heal {tgt} for {potency}."
 item_type = 2
 sub_type = 21
+melee = false
 target_type = 4
 damage_type = 6
 stat_used = 3

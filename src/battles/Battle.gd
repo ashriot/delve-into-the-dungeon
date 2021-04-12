@@ -12,7 +12,7 @@ onready var tab1 = $Tabs/Tab1
 onready var tab2 = $Tabs/Tab2
 onready var battleMenu = $BattleMenu
 
-var current_player = null
+var cur_player = null
 var cur_btn = null
 var cur_hit_chance: int
 var cur_crit_chance: int
@@ -73,11 +73,11 @@ func start(players: Array, enemies: Dictionary) -> void:
 	start_players_turns()
 
 func setup_buttons() -> void:
-	cur_tab = current_player.tab
+	cur_tab = cur_player.tab
 	var i = 0
 	for button in buttons.get_children():
-		if i < current_player.unit.items.size():
-			var item = current_player.unit.items[i]
+		if i < cur_player.unit.items.size():
+			var item = cur_player.unit.items[i]
 			i += 1
 			if item == null:
 				button.clear()
@@ -86,8 +86,8 @@ func setup_buttons() -> void:
 			button.toggle(true)
 	$Tabs/Tab1/Label.text = "Actions"
 	$Tabs/Tab1/ColorRect/Label.text = "Actions"
-	$Tabs/Tab2/Label.text = current_player.unit.job_tab
-	$Tabs/Tab2/ColorRect/Label.text = current_player.unit.job_tab
+	$Tabs/Tab2/Label.text = cur_player.unit.job_tab
+	$Tabs/Tab2/ColorRect/Label.text = cur_player.unit.job_tab
 	display_tabs()
 
 func display_tabs() -> void:
@@ -112,7 +112,7 @@ func toggle_tabs(value) -> void:
 		enemy_panels.hide_all_selectors()
 		player_panels.hide_all_selectors()
 	cur_tab = value
-	current_player.tab = value
+	cur_player.tab = value
 	display_tabs()
 
 func clear_buttons() -> void:
@@ -125,23 +125,23 @@ func clear_buttons() -> void:
 func select_player(panel: PlayerPanel, beep = false) -> void:
 	if panel == null: return
 	if !panel.ready: return
-	if current_player == panel:
-		current_player.selected = false
-		current_player = null
+	if cur_player == panel:
+		cur_player.selected = false
+		cur_player = null
 		buttons.hide()
 		tab1.hide()
 		tab2.hide()
 		battleMenu.show()
 		AudioController.back()
 		return
-	if current_player != null: current_player.selected = false
+	if cur_player != null: cur_player.selected = false
 	if cur_btn != null:
 		cur_btn.selected = false
 		enemy_panels.hide_all_selectors()
 	if beep: AudioController.select()
 	battleMenu.hide()
 	buttons.show()
-	current_player = panel
+	cur_player = panel
 	panel.selected = true
 	setup_buttons()
 
@@ -154,7 +154,7 @@ func get_next_player(delay: = true) -> void:
 	if chose_next: return
 	if delay: yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	cur_btn = null
-	current_player = null
+	cur_player = null
 	for panel in player_panels.get_children():
 		if panel.enabled and panel.ready:
 			select_player(panel)
@@ -189,13 +189,15 @@ func enemy_take_action(panel: EnemyPanel):
 		for target in targets:
 			if not target.alive: continue
 			var atk = panel.get_stat(action.stat_used)
+			var dmg_mod = 0
+			if action.melee and panel.melee_penalty: dmg_mod -= 0.50
 			var hit = Hit.new()
 			var hit_chance = 100
 			if action.item_type == Enum.ItemType.MARTIAL_SKILL or \
 				action.item_type == Enum.ItemType.WEAPON:
 				hit_chance = action.hit_chance + panel.get_stat(Enum.StatType.AGI) * 3
 			if panel.has_hex("Blind"): hit_chance /= 2
-			hit.init(action, hit_chance, action.crit_chance, 0, 0, atk, panel)
+			hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
 			if action.target_type < Enum.TargetType.ONE_ENEMY:
 				target.take_friendly_hit(hit)
 			else: target.take_hit(hit)
@@ -273,21 +275,24 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	cur_btn.selected = true
 	if button.item.target_type >= Enum.TargetType.MYSELF \
 		and button.item.target_type <= Enum.TargetType.RANDOM_ALLY:
-		player_panels.show_selectors(current_player, button.item.target_type)
+		player_panels.show_selectors(cur_player, button.item.target_type)
 	else:
 		if button.item.damage_type == Enum.DamageType.MARTIAL:
-			cur_hit_chance = cur_btn.item.hit_chance \
-				+ (current_player.get_stat(Enum.StatType.AGI) * 3)
+			cur_hit_chance = int(cur_btn.item.hit_chance \
+				+ (cur_player.get_stat(Enum.StatType.AGI) * 3))
 			cur_stat_type = Enum.StatType.AGI
 # warning-ignore:integer_division
-			cur_crit_chance = cur_btn.item.crit_chance + (cur_hit_chance - 60) / 2
+			cur_crit_chance = int(cur_btn.item.crit_chance + (cur_hit_chance - 60) / 2)
 		else:
 			cur_hit_chance = 100
 			cur_crit_chance = 0
 			cur_stat_type = Enum.StatType.NA
-		var atk = current_player.get_stat(button.item.stat_used)
+		var dmg_mod = 0
+		if button.item.melee and cur_player.melee_penalty: dmg_mod -= 0.50
+
+		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
-		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, 0, atk, current_player)
+		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
 		enemy_panels.update_item_stats(hit)
 		enemy_panels.show_selectors(cur_btn.item.target_type)
 
@@ -309,8 +314,10 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 		select_player(panel, true)
 
 func execute_vs_enemy(panel) -> void:
+	var reach = false
+	var melee_penalty = cur_player.get_index() > 1
 	var item = cur_btn.item as Item
-	var user = current_player
+	var user = cur_player
 	AudioController.play_sfx(item.use_fx)
 	clear_selections()
 	show_text(item.name, user.pos)
@@ -324,9 +331,11 @@ func execute_vs_enemy(panel) -> void:
 	for hit_num in item.hits:
 		for target in targets:
 			if not target.alive: continue
+			var dmg_mod = 0.0
+			if item.melee and cur_player.melee_penalty: dmg_mod -= 0.50
 			var atk = user.get_stat(item.stat_used)
 			var hit = Hit.new()
-			hit.init(item, cur_hit_chance, cur_crit_chance, 0, 0, atk, current_player)
+			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
 			target.take_hit(hit)
 		if item.target_type >= Enum.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
@@ -336,7 +345,7 @@ func execute_vs_enemy(panel) -> void:
 	get_next_player()
 
 func execute_vs_player(panel) -> void:
-	var user = current_player
+	var user = cur_player
 	var item = cur_btn.item as Item
 	AudioController.play_sfx(item.use_fx)
 	var turn_spent = true
@@ -366,10 +375,10 @@ func clear_selections(spend_turn: = true) -> void:
 	if cur_btn == null: return
 	cur_btn.uses_remain -= 1
 	clear_buttons()
-	current_player.selected = false
+	cur_player.selected = false
 	if spend_turn:
-		current_player.ready = false
-		current_player.decrement_boons("End")
+		cur_player.ready = false
+		cur_player.decrement_boons("End")
 
 func roll() -> int:
 	return randi() % 100 + 1
@@ -391,9 +400,9 @@ func _on_PlayerPanel_died(panel: PlayerPanel) -> void:
 func victory() -> void:
 	AudioController.bgm.stop()
 	clear_selections(false)
-	if current_player != null:
-		current_player.selected = false
-		current_player = null
+	if cur_player != null:
+		cur_player.selected = false
+		cur_player = null
 	if cur_btn != null: cur_btn = null
 	clear_buttons()
 	yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")

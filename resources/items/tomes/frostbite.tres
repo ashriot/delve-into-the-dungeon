@@ -6,9 +6,10 @@
 [resource]
 script = ExtResource( 1 )
 name = "Frostbite"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt}."
 item_type = 3
 sub_type = 16
+melee = false
 target_type = 6
 damage_type = 4
 stat_used = 3

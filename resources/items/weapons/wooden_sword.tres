@@ -9,6 +9,7 @@ description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 item_type = 0
 sub_type = 8
+melee = true
 target_type = 7
 damage_type = 0
 stat_used = 1

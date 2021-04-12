@@ -879,7 +879,6 @@ margin_top = 90.0
 margin_bottom = 99.0
 
 [node name="Pages" type="Control" parent="Inventory/BG"]
-visible = false
 margin_top = 112.0
 margin_right = 72.0
 margin_bottom = 121.0
@@ -999,7 +998,6 @@ custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "CANCEL"
 
 [node name="Tooltip" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 1.0
@@ -1009,9 +1007,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="Tooltip"]
+margin_top = 120.0
+margin_right = 72.0
+margin_bottom = 127.0
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tooltip/ColorRect"]
+margin_left = 8.0
+margin_top = 1.0
+margin_right = 48.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "CLOSE"
+
+[node name="CloseTooltip" type="TextureButton" parent="Tooltip"]
+margin_top = 120.0
+margin_right = 72.0
+margin_bottom = 127.0
+texture_normal = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Container" type="VBoxContainer" parent="Tooltip"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_bottom = -7.0
 custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1052,16 +1077,6 @@ margin_right = 64.0
 margin_bottom = 9.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "Uninitialized"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CloseTooltip" type="TextureButton" parent="Tooltip/Container/Panel"]
-margin_left = 64.0
-margin_top = 1.0
-margin_right = 71.0
-margin_bottom = 8.0
-texture_normal = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1115,4 +1130,4 @@ __meta__ = {
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab2" to="." method="_on_Tab2_pressed"]
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Use" to="." method="_on_Swap_pressed"]
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
-[connection signal="pressed" from="Tooltip/Container/Panel/CloseTooltip" to="Tooltip" method="_on_CloseTooltip_pressed"]
+[connection signal="pressed" from="Tooltip/CloseTooltip" to="Tooltip" method="_on_CloseTooltip_pressed"]

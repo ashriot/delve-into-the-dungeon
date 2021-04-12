@@ -8,6 +8,7 @@ name = "Wooden Shield"
 description = "Block up to {potency} Martial damage until your next turn."
 item_type = 0
 sub_type = 6
+melee = false
 target_type = 0
 damage_type = 7
 stat_used = 1

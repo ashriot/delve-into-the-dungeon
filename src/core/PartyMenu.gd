@@ -17,6 +17,7 @@ onready var inv_preview = $Inventory/PreviewBtn
 #onready var inv_popup = $Inventory/PopupMenu
 onready var inv_filters = $Inventory/BG/Filters
 onready var inv_buttons = $Inventory/BG/Items
+onready var page_label = $Inventory/BG/Pages/Label
 
 var game
 var players
@@ -196,17 +197,25 @@ func _on_Inventory_pressed() -> void:
 	inv_panel.show()
 
 func update_inv_data():
-	var items = game.inventory.items.slice(cur_page, cur_page * 10)
-	var i = 0
+	var size = game.inventory.items.size()
+	var lo = cur_page * 10
+	var hi = min((cur_page * 10) + 9, size)
+	var total_pages = max(ceil(size / 10.0), 1)
+	var items = game.inventory.items.slice(lo, hi)
+	var i = cur_page
 	for child in inv_buttons.get_children():
 		if i < game.inventory.items.size():
 			var item = game.inventory.items[i]
 			child.setup(item)
 		else: child.setup(null)
 		i += 1
-	self.cur_tab = cur_player.tab
-	$Items/BG/HBoxContainer/Tab2/Label.text = cur_player.unit.job_tab
-	$Items/BG/HBoxContainer/Tab2/ColorRect/Label.text = cur_player.unit.job_tab
+	page_label.text = str(cur_page + 1) + "/" + str(total_pages)
+	if total_pages > 1:
+		$Inventory/BG/Pages/Left.modulate.a = 1.0
+		$Inventory/BG/Pages/Right.modulate.a = 1.0
+	else:
+		$Inventory/BG/Pages/Left.modulate.a = 0.3
+		$Inventory/BG/Pages/Right.modulate.a = 0.3
 
 func _on_InvButton_remove_item(item: Item) -> void:
 	game.inventory.remove_item(item)

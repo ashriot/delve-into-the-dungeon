@@ -76,8 +76,8 @@ func get_hp_max() -> int:
 	return hp_max
 
 func has_perk(perk_name) -> bool:
-	for perk in perks:
-		if perk == null: continue
-		if perk.name == perk_name:
+	for i in perks.size():
+		if perks[i] == null: continue
+		if perks[i].name == perk_name:
 			return true
 	return false

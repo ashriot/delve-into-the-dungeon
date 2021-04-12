@@ -8,6 +8,7 @@ name = "Cure Potion"
 description = "Heal {tgt} for 50."
 item_type = 4
 sub_type = 23
+melee = false
 target_type = 1
 damage_type = 6
 stat_used = 5

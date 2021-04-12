@@ -53,7 +53,12 @@ func set_ready(value: bool):
 func set_hp_cur(value):
 	.set_hp_cur(value)
 	unit.hp_cur = value
-	hp_cur_display.text = str(hp_cur)
+	if blocking > 0:
+		hp_cur_display.modulate = Color.slategray
+		hp_cur_display.text = str(blocking)
+	else:
+		hp_cur_display.modulate = Color.white
+		hp_cur_display.text = str(hp_cur)
 
 func die() -> void:
 	.die()
@@ -67,3 +72,6 @@ func set_tab(value) -> void:
 
 func get_tab() -> int:
 	return unit.tab
+
+func get_melee_penalty() -> bool:
+	return get_index() > 1

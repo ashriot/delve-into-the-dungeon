@@ -8,6 +8,7 @@ name = "Ki Heal"
 description = "Heal {tgt} for {potency} (+ 33% of their missing HP.)"
 item_type = 2
 sub_type = 20
+melee = false
 target_type = 1
 damage_type = 6
 stat_used = 3

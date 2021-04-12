@@ -10,12 +10,13 @@ description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 item_type = 2
 sub_type = 0
+melee = false
 target_type = 9
 damage_type = 5
 stat_used = 3
 stat_vs = 3
 stat_hit = 5
-multiplier = 3.0
+multiplier = 2.0
 bonus_damage = 0
 hits = 1
 lifesteal = 0.0

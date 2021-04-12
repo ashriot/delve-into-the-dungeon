@@ -14,13 +14,15 @@ func display(parent, text) -> void:
 	execute(parent, text)
 	animate("Display")
 
-func execute(parent, text) -> void:
+func execute(parent, text: String) -> void:
 	$Text/TextL.text = text
 	$Text/TextR.text = text
 	$Text/TextU.text = text
 	$Text/TextD.text = text
 	$Text/Text.text = text
 	parent.add_child(self)
+	if text.begins_with("+"): txt.modulate = Color.turquoise
+	elif text.begins_with("-"): txt.modulate = Color.orangered
 	var size = txt.rect_size.x
 	rect_global_position.x = clamp(rect_global_position.x, \
 		-31 + size / 2, (get_viewport_rect().size.x - size) / 2 + 3)

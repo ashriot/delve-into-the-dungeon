@@ -5,6 +5,7 @@ export var name: String
 export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}.\n{aim}"
 export(Enum.ItemType) var item_type
 export(Enum.SubItemType) var sub_type
+export var melee: bool
 export(Enum.TargetType) var target_type
 export(Enum.DamageType) var damage_type
 export(Enum.StatType) var stat_used

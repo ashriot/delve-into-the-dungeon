@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 name = "Inferno"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt}."
 item_type = 3
 sub_type = 14
+melee = false
 target_type = 12
 damage_type = 3
 stat_used = 3

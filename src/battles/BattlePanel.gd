@@ -20,6 +20,7 @@ var unit = null
 var hp_cur: int setget set_hp_cur
 var hp_max: int
 var valid_target: bool
+var melee_penalty: bool setget, get_melee_penalty
 var pos: Vector2
 
 var hexes: Array
@@ -84,11 +85,18 @@ func take_hit(hit: Hit) -> void:
 	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
 	var def_mod = float(def / 2) * item.multiplier
-	dmg = int(dmg - def_mod) * (1 + hit.dmg_mod)
+	dmg = int((dmg - def_mod) * (1 + hit.dmg_mod))
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	var dmg_text = ""
 #	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)
 	if not miss and !effect_only:
+		if hit.item.damage_type == Enum.DamageType.MARTIAL and blocking > 0:
+			if blocking >= dmg:
+				blocking -= dmg
+				dmg = 0
+			else:
+				dmg -= blocking
+				blocking = 0
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
 		anim.play("Hit")
@@ -256,11 +264,16 @@ func set_hp_cur(value: int):
 func set_blocking(value: int) -> void:
 	print("Blocking: ", value, " martial damage.")
 	blocking = value
-	if blocking > 0: add_status(["Block", 79])
+	if blocking > 0:
+		add_status(["Block", 129])
 	else: remove_status("Block")
+	self.hp_cur = hp_cur
 
 func get_alive() -> bool:
 	return hp_cur > 0
+
+func get_melee_penalty() -> bool:
+	return true
 
 func has_perk(perk_name: String) -> bool:
 	return unit.has_perk(perk_name)

@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 name = "Drain Life"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt} and heal for half the damage dealt."
 item_type = 3
 sub_type = 17
+melee = false
 target_type = 6
 damage_type = 5
 stat_used = 3

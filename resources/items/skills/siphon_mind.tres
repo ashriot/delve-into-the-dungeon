@@ -10,6 +10,7 @@ name = "Siphon Mind"
 description = "Inflict DULL and gain WISE."
 item_type = 2
 sub_type = 21
+melee = false
 target_type = 6
 damage_type = 7
 stat_used = 5

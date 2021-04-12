@@ -96,3 +96,6 @@ func update_status() -> void:
 
 func die():
 	.die()
+
+func get_melee_penalty() -> bool:
+	return get_index() > 2

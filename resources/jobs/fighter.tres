@@ -10,8 +10,8 @@
 script = ExtResource( 1 )
 name = "Bastien"
 frame = 3
-hp_max = 70
-hp_cur = 70
+hp_max = 80
+hp_cur = 80
 strength = 15
 agility = 6
 intellect = 3

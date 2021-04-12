@@ -9,6 +9,7 @@ name = "Snare Bow"
 description = "Deal {potency} {dmg} damage to {tgt}."
 item_type = 0
 sub_type = 2
+melee = false
 target_type = 6
 damage_type = 0
 stat_used = 2

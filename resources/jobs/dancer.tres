@@ -9,8 +9,8 @@
 script = ExtResource( 1 )
 name = "Zorah"
 frame = 1
-hp_max = 55
-hp_cur = 55
+hp_max = 65
+hp_cur = 65
 strength = 8
 agility = 15
 intellect = 10

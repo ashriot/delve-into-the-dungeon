@@ -8,6 +8,7 @@ name = "Grenade"
 description = "Deal 50 Piercing damage to {tgt}."
 item_type = 0
 sub_type = 4
+melee = false
 target_type = 9
 damage_type = 0
 stat_used = 5
