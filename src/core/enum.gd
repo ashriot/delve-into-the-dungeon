@@ -71,7 +71,8 @@ enum DamageType {
 	WATER,
 	PURE,
 	HEAL,
-	EFFECT_ONLY
+	EFFECT_ONLY,
+	BLOCK
 }
 
 static func get_stat_name(stat) -> String:

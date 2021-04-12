@@ -130,13 +130,15 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enum.StatType.NA else 0
 	if item.name == "Ki Heal":
 		def = int(float(hp_max - hp_cur) * 0.33)
+	elif item.name == "Healing Haka":
+		def = int(float(hp_max - hp_cur) * 0.33)
 	var dmg_text = ""
 	AudioController.play_sfx(item.sound_fx)
 	if item.damage_type == Enum.DamageType.HEAL:
 		dmg += def
 		self.hp_cur += dmg
 		dmg_text = str(dmg)
-	elif item.sub_type == Enum.SubItemType.SHIELD:
+	elif item.damage_type == Enum.DamageType.BLOCK:
 		dmg_text = "Block:" + str(dmg)
 		self.blocking += dmg
 	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)

@@ -3,7 +3,7 @@
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/items/weapons/wooden_sword.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/weapons/wooden_shield.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/weapons/iron_axe.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/weapons/hatchet.tres" type="Resource" id=4]
 [ext_resource path="res://resources/items/tools/cure_potion.tres" type="Resource" id=5]
 
 [resource]

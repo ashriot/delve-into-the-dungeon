@@ -74,4 +74,4 @@ func get_tab() -> int:
 	return unit.tab
 
 func get_melee_penalty() -> bool:
-	return get_index() > 1
+	return get_index() > 1 and !unit.has_perk("Reach")

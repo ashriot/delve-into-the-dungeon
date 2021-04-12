@@ -289,7 +289,6 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_stat_type = Enum.StatType.NA
 		var dmg_mod = 0
 		if button.item.melee and cur_player.melee_penalty: dmg_mod -= 0.50
-
 		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
