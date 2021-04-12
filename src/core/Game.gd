@@ -100,7 +100,7 @@ func set_level_num(value) -> void:
 
 func _on_MenuButton_pressed() -> void:
 	dungeon.active = false
-	AudioController.click()
+	AudioController.select()
 	party_menu.open_menu()
 
 func close_menu() -> void:

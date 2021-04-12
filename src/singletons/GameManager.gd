@@ -30,6 +30,8 @@ func initialize_party():
 		print("LOADING DATA")
 		for player in save_data.players.values():
 			var new_player = Player.new()
+			new_player.name = player["name"]
+			new_player.job = player["job"]
 			new_player.slot = player["slot"]
 			new_player.tab = player["tab"]
 			new_player.frame = player["frame"]
@@ -85,6 +87,8 @@ func dict_to_perks(dict: Dictionary) -> Dictionary:
 
 func _on_player_changed(player: Player):
 	var new_player = {}
+	new_player["name"] = player.name
+	new_player["job"] = player.job
 	new_player["slot"] = player.slot
 	new_player["tab"] = player.tab
 	new_player["hp_max"] = player.hp_max
@@ -113,8 +117,7 @@ func _on_inventory_changed(inventory):
 	var item_list = []
 	for item in inventory.get_items():
 		item_list.append([item.name, item.uses])
-	for i in item_list:
-		save_data.inventory.append(i)
+	save_data.inventory = item_list
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)
 

@@ -81,11 +81,10 @@ func take_hit(hit: Hit) -> void:
 	var hit_roll = randi() % 100 + 1
 #	print(hit.unit.name, " uses ", hit.item.name, ": ", 100 - hit_roll, " < ", hit_chance, "%? = ", miss)
 	if hit_roll > hit_chance: miss = true
-	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
+	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def * 1.2) / float(hit.level + 10 + def)
-	var def_mod = 1.0 - rel_def
-	dmg = int(dmg * def_mod)
+	var def_mod = float(def / 2) * item.multiplier
+	dmg = int(dmg - def_mod) * (1 + hit.dmg_mod)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	var dmg_text = ""
 #	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)

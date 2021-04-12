@@ -84,8 +84,8 @@ func setup_buttons() -> void:
 				continue
 			button.setup(item)
 			button.toggle(true)
-	$Tabs/Tab1/Label.text = "Items"
-	$Tabs/Tab1/ColorRect/Label.text = "Items"
+	$Tabs/Tab1/Label.text = "Actions"
+	$Tabs/Tab1/ColorRect/Label.text = "Actions"
 	$Tabs/Tab2/Label.text = current_player.unit.job_tab
 	$Tabs/Tab2/ColorRect/Label.text = current_player.unit.job_tab
 	display_tabs()
@@ -195,7 +195,7 @@ func enemy_take_action(panel: EnemyPanel):
 				action.item_type == Enum.ItemType.WEAPON:
 				hit_chance = action.hit_chance + panel.get_stat(Enum.StatType.AGI) * 3
 			if panel.has_hex("Blind"): hit_chance /= 2
-			hit.init(action, action.hit_chance, action.crit_chance, 0, 0, atk, panel)
+			hit.init(action, hit_chance, action.crit_chance, 0, 0, atk, panel)
 			if action.target_type < Enum.TargetType.ONE_ENEMY:
 				target.take_friendly_hit(hit)
 			else: target.take_hit(hit)

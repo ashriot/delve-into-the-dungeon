@@ -68,11 +68,10 @@ func targetable(value: bool, display = true):
 func update_dmg_display(hit: Hit):
 	if hit == null: return
 	var item = hit.item as Item
-	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg) * (1 + hit.dmg_mod)
+	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
-	var rel_def = float(def * 1.2) / float(unit.level + 10 + def)
-	var def_mod = 1.0 - rel_def
-	dmg = int(dmg * def_mod) * hit.item.hits
+	var def_mod = int(float(def / 2) * item.multiplier)
+	dmg = int(dmg - def_mod) * (1 + hit.dmg_mod) * hit.item.hits
 	dmg_display.max_value = hp_max
 	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
 	dmg_display.show()

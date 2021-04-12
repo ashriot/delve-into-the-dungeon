@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Wooden Wand"
-description = "Deal {potency} {dmg} damage to {tgt}."
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
 item_type = 0
 sub_type = 9
 target_type = 6

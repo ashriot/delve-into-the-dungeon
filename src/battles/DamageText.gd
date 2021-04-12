@@ -24,8 +24,6 @@ func execute(parent, text) -> void:
 	var size = txt.rect_size.x
 	rect_global_position.x = clamp(rect_global_position.x, \
 		-31 + size / 2, (get_viewport_rect().size.x - size) / 2 + 3)
-	print("viewport max: ", get_viewport_rect().size.x)
-	print("x pos: ", rect_global_position.x, " size: ", size)
 
 func animate(dir: String, duration = 1.0) -> void:
 	var anim = $AnimationPlayer

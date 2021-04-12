@@ -2,7 +2,7 @@ extends Resource
 class_name Action
 
 export var name: String
-export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}."
+export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}.\n{aim}"
 export(Enum.ItemType) var item_type
 export(Enum.SubItemType) var sub_type
 export(Enum.TargetType) var target_type
@@ -65,6 +65,8 @@ func get_desc() -> String:
 	sub = sub.replace("{potency}", dmg)
 	sub = sub.replace("{dmg}", Enum.get_damage_name(damage_type))
 	sub = sub.replace("{tgt}", Enum.get_target_name(target_type))
+	sub = sub.replace("{aim}", "Hit: " + str(hit_chance) + "% | Crit: " + str(crit_chance) + "%" )
+	sub = sub.replace("{vs}", "vs. " + Enum.get_stat_name(stat_vs) )
 	return sub
 
 func colorize(stat, text) -> String:

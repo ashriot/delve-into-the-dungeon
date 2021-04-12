@@ -21,7 +21,6 @@ func setup(player: Player) -> void:
 	HPCur.text = str(player.hp_cur)
 	HPPercent.max_value = player.hp_max
 	HPPercent.value = player.hp_cur
-	print(unit.name, " HP:", player.hp_cur)
 
 func select(value) -> void:
 	if value: selector.show()

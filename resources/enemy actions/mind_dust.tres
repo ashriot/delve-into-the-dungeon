@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Mind Dust"
-description = "Deal {potency} {dmg} damage to {tgt}."
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
 item_type = 2
 sub_type = 0
 target_type = 9

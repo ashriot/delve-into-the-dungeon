@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Blade Dance"
-description = "Deal {potency} {dmg} damage to {tgt}."
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
 item_type = 1
 sub_type = 19
 target_type = 10

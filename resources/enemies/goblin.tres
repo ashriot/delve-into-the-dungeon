@@ -8,12 +8,12 @@
 script = ExtResource( 1 )
 name = "Goblin"
 frame = 8
-hp_max = 40
+hp_max = 60
 hp_cur = 0
-strength = 8
-agility = 12
+strength = 7
+agility = 10
 intellect = 4
-defense = 7
+defense = 10
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0

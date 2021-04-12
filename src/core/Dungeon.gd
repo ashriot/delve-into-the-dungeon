@@ -98,7 +98,9 @@ func init(_game):
 func _unhandled_input(event):
 	if !active or !event.is_pressed(): return
 
-	print(event)
+	if event.is_action("ui_accept"):
+		AudioController.confirm()
+		game.inventory.add_item("Short Bow")
 
 	game.hud_timer = 0.0
 	var dir = null
@@ -113,7 +115,13 @@ func _unhandled_input(event):
 			dir = "Up"
 		elif pos.y > 7.0:
 			dir = "Down"
-		else: dir = "Stay"
+		else:
+			dir = "Stay"
+			AudioController.confirm()
+			game.inventory.add_item("Short Bow")
+			game.inventory.add_item("Grenade")
+			game.inventory.add_item("Char")
+			game.inventory.add_item("Icicle")
 
 	if event.is_action("Up") or dir == "Up": try_move(0, -1)
 	elif event.is_action("Down") or dir == "Down": try_move(0, 1)

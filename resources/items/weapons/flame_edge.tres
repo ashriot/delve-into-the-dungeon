@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Flame Edge"
-desc = "Deal {potency} {dmg} damage to {target}."
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
 item_type = 0
 sub_type = 8
 target_type = 7

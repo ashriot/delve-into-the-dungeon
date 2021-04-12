@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Heal"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
 item_type = 3
 sub_type = 15
 target_type = 1

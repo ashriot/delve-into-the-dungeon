@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
 [ext_resource path="res://src/core/PartyMenu.gd" type="Script" id=3]
-[ext_resource path="res://src/core/InventoryMenu.gd" type="Script" id=4]
 [ext_resource path="res://src/menu/ItemButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/themes/ui/x_button.png" type="Texture" id=6]
 [ext_resource path="res://src/menu/Tooltip.gd" type="Script" id=7]
+[ext_resource path="res://assets/themes/ui/left_arrow.png" type="Texture" id=8]
+[ext_resource path="res://assets/themes/ui/right_arrow.png" type="Texture" id=9]
+[ext_resource path="res://src/menu/InvButton.tscn" type="PackedScene" id=10]
 
 [node name="PartyMenu" type="Control"]
 anchor_right = 1.0
@@ -46,15 +48,6 @@ margin_left = 37.0
 margin_top = 16.0
 margin_right = 70.0
 margin_bottom = 28.0
-
-[node name="InventoryMenu" type="Control" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="CloseButton" type="Button" parent="."]
 margin_top = 121.0
@@ -304,6 +297,189 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MainMenu" type="ColorRect" parent="."]
+margin_top = 30.0
+margin_right = 72.0
+margin_bottom = 121.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButtons" type="VBoxContainer" parent="MainMenu"]
+margin_left = 2.0
+margin_top = 18.0
+margin_right = 70.0
+margin_bottom = 72.0
+custom_constants/separation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Actions" type="Button" parent="MainMenu/MenuButtons"]
+margin_right = 68.0
+margin_bottom = 9.0
+
+[node name="Label" type="Label" parent="MainMenu/MenuButtons/Actions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Actions"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Actions"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Actions"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Traits" type="Button" parent="MainMenu/MenuButtons"]
+margin_top = 11.0
+margin_right = 68.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="MainMenu/MenuButtons/Traits"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Traits"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Traits"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Traits"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Equipment" type="Button" parent="MainMenu/MenuButtons"]
+margin_top = 22.0
+margin_right = 68.0
+margin_bottom = 31.0
+
+[node name="Label" type="Label" parent="MainMenu/MenuButtons/Equipment"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Equipment"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Equipment"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Equipment"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Inventory" type="Button" parent="MainMenu/MenuButtons"]
+margin_top = 33.0
+margin_right = 68.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="MainMenu/MenuButtons/Inventory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Inventory"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Inventory"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Inventory"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
+[node name="Options" type="Button" parent="MainMenu/MenuButtons"]
+margin_top = 44.0
+margin_right = 68.0
+margin_bottom = 53.0
+
+[node name="Label" type="Label" parent="MainMenu/MenuButtons/Options"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 2.0
+margin_right = -2.0
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Options"]
+margin_right = 8.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Options"]
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+frame = 142
+
 [node name="Items" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
@@ -470,259 +646,390 @@ margin_top = 1.0
 margin_right = 62.0
 margin_bottom = 8.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "ITEMS & SKILLS"
+text = "ACTIONS"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PopupMenu" type="ColorRect" parent="Items"]
-visible = false
-margin_left = 10.0
-margin_top = 7.0
-margin_right = 62.0
-margin_bottom = 39.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Items/PopupMenu"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 51.0
-margin_bottom = 31.0
-
-[node name="Button" type="Button" parent="Items/PopupMenu/Panel"]
-anchor_right = 1.0
-margin_left = 3.0
-margin_top = 3.0
-margin_right = -3.0
-margin_bottom = 14.0
-text = "Info"
-
-[node name="Button2" type="Button" parent="Items/PopupMenu/Panel"]
-anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = -14.0
-margin_right = -3.0
-margin_bottom = -3.0
-text = "Remove"
+margin_left = 1.0
+margin_top = -8.0
+margin_right = -1.0
+margin_bottom = -48.0
+color = Color( 1, 1, 0.921569, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MainMenu" type="ColorRect" parent="."]
-margin_top = 30.0
-margin_right = 72.0
-margin_bottom = 121.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Items/PopupMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+custom_constants/separation = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Use" type="Button" parent="Items/PopupMenu/HBoxContainer"]
+margin_right = 34.0
+margin_bottom = 9.0
+rect_min_size = Vector2( 34, 9 )
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Use"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -1.0
+text = "USE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Remove" type="Button" parent="Items/PopupMenu/HBoxContainer"]
+margin_left = 34.0
+margin_right = 68.0
+margin_bottom = 9.0
+rect_min_size = Vector2( 34, 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Remove"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -1.0
+text = "REMOVE"
+align = 1
+valign = 1
+
+[node name="Inventory" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="ColorRect" parent="Inventory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MenuButtons" type="VBoxContainer" parent="MainMenu"]
-margin_left = 2.0
-margin_top = 18.0
-margin_right = 70.0
-margin_bottom = 72.0
+[node name="Filters" type="VBoxContainer" parent="Inventory/BG"]
+visible = false
+margin_top = 67.0
+margin_right = 72.0
+margin_bottom = 120.0
 custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Items" type="Button" parent="MainMenu/MenuButtons"]
-margin_right = 68.0
+[node name="Button" type="Button" parent="Inventory/BG/Filters"]
+margin_right = 72.0
 margin_bottom = 9.0
+rect_min_size = Vector2( 0, 9 )
 
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Items"]
+[node name="Label" type="Label" parent="Inventory/BG/Filters/Button"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 9.0
+margin_left = 2.0
 margin_top = 2.0
-margin_right = -2.0
-text = "Items & Skills"
+text = "Weapons"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Items"]
-margin_right = 8.0
-margin_bottom = 9.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Items"]
-position = Vector2( 0, 1 )
-texture = ExtResource( 2 )
-centered = false
-vframes = 20
-hframes = 10
-frame = 142
-
-[node name="Equipment" type="Button" parent="MainMenu/MenuButtons"]
+[node name="Button2" type="Button" parent="Inventory/BG/Filters"]
 margin_top = 11.0
-margin_right = 68.0
+margin_right = 72.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 0, 9 )
 
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Equipment"]
+[node name="Label" type="Label" parent="Inventory/BG/Filters/Button2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 9.0
+margin_left = 2.0
 margin_top = 2.0
-margin_right = -2.0
-text = "Equipment"
+text = "Tomes"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Equipment"]
-margin_right = 8.0
-margin_bottom = 9.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Equipment"]
-position = Vector2( 0, 1 )
-texture = ExtResource( 2 )
-centered = false
-vframes = 20
-hframes = 10
-frame = 142
-
-[node name="Inventory" type="Button" parent="MainMenu/MenuButtons"]
+[node name="Button3" type="Button" parent="Inventory/BG/Filters"]
 margin_top = 22.0
-margin_right = 68.0
+margin_right = 72.0
 margin_bottom = 31.0
+rect_min_size = Vector2( 0, 9 )
 
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Inventory"]
+[node name="Label" type="Label" parent="Inventory/BG/Filters/Button3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 9.0
+margin_left = 2.0
 margin_top = 2.0
-margin_right = -2.0
-text = "Inventory"
+text = "Tools"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Inventory"]
-margin_right = 8.0
-margin_bottom = 9.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Inventory"]
-position = Vector2( 0, 1 )
-texture = ExtResource( 2 )
-centered = false
-vframes = 20
-hframes = 10
-frame = 142
-
-[node name="Materials" type="Button" parent="MainMenu/MenuButtons"]
+[node name="Button4" type="Button" parent="Inventory/BG/Filters"]
 margin_top = 33.0
-margin_right = 68.0
+margin_right = 72.0
 margin_bottom = 42.0
+rect_min_size = Vector2( 0, 9 )
 
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Materials"]
+[node name="Label" type="Label" parent="Inventory/BG/Filters/Button4"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 9.0
+margin_left = 2.0
 margin_top = 2.0
-margin_right = -2.0
-text = "Materials"
+text = "Equipment"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Materials"]
-margin_right = 8.0
-margin_bottom = 9.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Materials"]
-position = Vector2( 0, 1 )
-texture = ExtResource( 2 )
-centered = false
-vframes = 20
-hframes = 10
-frame = 142
-
-[node name="Options" type="Button" parent="MainMenu/MenuButtons"]
+[node name="Button5" type="Button" parent="Inventory/BG/Filters"]
 margin_top = 44.0
-margin_right = 68.0
+margin_right = 72.0
 margin_bottom = 53.0
+rect_min_size = Vector2( 0, 9 )
 
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Options"]
+[node name="Label" type="Label" parent="Inventory/BG/Filters/Button5"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 9.0
+margin_left = 2.0
 margin_top = 2.0
-margin_right = -2.0
-text = "Options"
+text = "Materials"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Options"]
-margin_right = 8.0
-margin_bottom = 9.0
+[node name="Items" type="VBoxContainer" parent="Inventory/BG"]
+margin_top = 13.0
+margin_right = 72.0
+margin_bottom = 112.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InvButton" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+
+[node name="InvButton2" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 10.0
+margin_bottom = 19.0
+
+[node name="InvButton3" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 20.0
+margin_bottom = 29.0
+
+[node name="InvButton4" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 30.0
+margin_bottom = 39.0
+
+[node name="InvButton5" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 40.0
+margin_bottom = 49.0
+
+[node name="InvButton6" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 50.0
+margin_bottom = 59.0
+
+[node name="InvButton7" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 60.0
+margin_bottom = 69.0
+
+[node name="InvButton8" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 70.0
+margin_bottom = 79.0
+
+[node name="InvButton9" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 80.0
+margin_bottom = 89.0
+
+[node name="InvButton10" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
+margin_top = 90.0
+margin_bottom = 99.0
+
+[node name="Pages" type="Control" parent="Inventory/BG"]
+visible = false
+margin_top = 112.0
+margin_right = 72.0
+margin_bottom = 121.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="TextureButton" parent="Inventory/BG/Pages"]
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 9.0
+margin_bottom = -1.0
+texture_normal = ExtResource( 8 )
+
+[node name="Right" type="TextureButton" parent="Inventory/BG/Pages"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -9.0
+margin_top = -3.5
+margin_right = -2.0
+margin_bottom = 3.5
+texture_normal = ExtResource( 9 )
+
+[node name="Label" type="Label" parent="Inventory/BG/Pages"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -13.0
+margin_top = -2.5
+margin_right = 13.0
+margin_bottom = 4.5
+text = "1/9"
+align = 1
+valign = 1
+
+[node name="Back" type="ColorRect" parent="Inventory/BG"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 1.0
+margin_bottom = 10.0
 mouse_filter = 2
 color = Color( 1, 1, 0.921569, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="MainMenu/MenuButtons/Options"]
-position = Vector2( 0, 1 )
-texture = ExtResource( 2 )
-centered = false
-vframes = 20
-hframes = 10
-frame = 142
+[node name="Label" type="Label" parent="Inventory/BG/Back"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 62.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "INVENTORY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FilterBack" type="ColorRect" parent="Inventory/BG"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 1.0
+margin_bottom = 10.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Inventory/BG/FilterBack"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 62.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "INVENTORY"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Inventory/BG"]
+anchor_right = 1.0
+margin_top = 1.0
+margin_bottom = 14.0
+text = "INVENTORY"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PreviewBtn" parent="Inventory" instance=ExtResource( 5 )]
+margin_top = 2.0
+margin_bottom = 11.0
+
+[node name="ColorRect" type="ColorRect" parent="Inventory/PreviewBtn"]
+margin_left = 10.0
+margin_top = 119.0
+margin_right = 72.0
+margin_bottom = 128.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+
+[node name="Label" type="Label" parent="Inventory/PreviewBtn/ColorRect"]
+margin_top = 1.0
+margin_right = 40.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "CANCEL"
 
 [node name="Tooltip" type="ColorRect" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 1.0
 color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="Tooltip"]
+[node name="Container" type="VBoxContainer" parent="Tooltip"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 1.0
-margin_right = -1.0
-margin_bottom = -78.0
+custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Tooltip/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Panel" type="Panel" parent="Tooltip/Container"]
+margin_right = 72.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 72, 60 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Tooltip/Container/Panel"]
 margin_left = 2.0
 margin_top = 10.0
-margin_right = 1.0
-margin_bottom = 6.0
+margin_right = 71.0
+margin_bottom = 59.0
 bbcode_enabled = true
 bbcode_text = "Uninitialized."
 text = "Uninitialized."
@@ -730,16 +1037,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Tooltip/Panel"]
-anchor_right = 1.0
-margin_right = -8.0
+[node name="ColorRect" type="ColorRect" parent="Tooltip/Container/Panel"]
+margin_right = 71.0
 margin_bottom = 8.0
 color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Title" type="Label" parent="Tooltip/Panel"]
+[node name="Title" type="Label" parent="Tooltip/Container/Panel"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 61.0
+margin_right = 64.0
 margin_bottom = 9.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "Uninitialized"
@@ -747,40 +1056,63 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SubPanel" type="Panel" parent="Tooltip/Panel"]
-visible = false
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -35.0
+[node name="CloseTooltip" type="TextureButton" parent="Tooltip/Container/Panel"]
+margin_left = 64.0
 margin_top = 1.0
-margin_right = 35.0
-margin_bottom = 31.0
+margin_right = 71.0
+margin_bottom = 8.0
+texture_normal = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Tooltip/Panel/SubPanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Blind" type="Panel" parent="Tooltip/Container"]
+visible = false
+margin_top = 62.0
+margin_right = 72.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 72, 30 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Title" type="Label" parent="Tooltip/Container/Blind"]
 margin_left = 2.0
 margin_top = 2.0
-text = "BLIND. Reduces Hit chance by half and attacks cannot crit."
+margin_right = 72.0
+margin_bottom = 19.0
+text = "BLIND. Reduces hit chance by half. Unable to crit."
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="CloseTooltip" type="TextureButton" parent="Tooltip"]
-margin_left = 63.0
+[node name="Poison" type="Panel" parent="Tooltip/Container"]
+visible = false
+margin_top = 62.0
+margin_right = 72.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 72, 30 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Title" type="Label" parent="Tooltip/Container/Poison"]
+margin_left = 2.0
 margin_top = 2.0
-margin_right = 70.0
-margin_bottom = 9.0
-texture_normal = ExtResource( 6 )
+margin_right = 72.0
+margin_bottom = 19.0
+text = "POISON. Lose 10% HP per turn."
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Stats/InfoButton" to="." method="_on_InfoButton_pressed"]
+[connection signal="pressed" from="MainMenu/MenuButtons/Actions" to="." method="_on_Items_pressed"]
+[connection signal="pressed" from="MainMenu/MenuButtons/Inventory" to="." method="_on_Inventory_pressed"]
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab1" to="." method="_on_Tab1_pressed"]
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab2" to="." method="_on_Tab2_pressed"]
-[connection signal="pressed" from="MainMenu/MenuButtons/Items" to="." method="_on_Items_pressed"]
-[connection signal="pressed" from="Tooltip/CloseTooltip" to="Tooltip" method="_on_CloseTooltip_pressed"]
+[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Use" to="." method="_on_Swap_pressed"]
+[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="pressed" from="Tooltip/Container/Panel/CloseTooltip" to="Tooltip" method="_on_CloseTooltip_pressed"]
