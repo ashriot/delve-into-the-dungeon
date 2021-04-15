@@ -6,7 +6,7 @@ onready var all_select = $AllSelect
 onready var front_select = $FrontSelect
 onready var back_select = $BackSelect
 
-var projected_hit: Hit
+var projected_hit = null
 var hit_stat: int
 
 func init(battle) -> void:
@@ -125,6 +125,6 @@ func hide_all_selectors():
 	for child in back_row.get_children():
 		child.targetable(false)
 
-func update_item_stats(hit: Hit) -> void:
+func update_item_stats(hit) -> void:
 	projected_hit = hit
 	hit_stat = hit.item.stat_hit

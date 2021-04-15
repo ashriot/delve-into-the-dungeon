@@ -67,10 +67,13 @@ func _physics_process(delta: float) -> void:
 		delay = float(1 * GameManager.spd)
 	else: delay -= 1.0 * delta
 
+func _exit_tree() -> void:
+	queue_free()
+
 func get_stat(stat) -> int:
 	return unit.get_stat(stat)
 
-func take_hit(hit: Hit) -> void:
+func take_hit(hit) -> void:
 	var item = hit.item as Action
 	var effect_only = item.damage_type == Enum.DamageType.EFFECT_ONLY
 	var fx = item.sound_fx
@@ -246,7 +249,7 @@ func targetable(value: bool, display = true):
 		if display: target.show()
 	else: target.hide()
 
-func get_hit_and_crit_chance(hit: Hit) -> Array:
+func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
 	if hit.stat_hit != Enum.StatType.NA:

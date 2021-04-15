@@ -718,6 +718,7 @@ align = 1
 valign = 1
 
 [node name="Inventory" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -8.0
@@ -998,6 +999,7 @@ custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "CANCEL"
 
 [node name="Tooltip" type="ColorRect" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 1.0

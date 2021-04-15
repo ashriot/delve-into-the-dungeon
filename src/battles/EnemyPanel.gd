@@ -65,7 +65,7 @@ func targetable(value: bool, display = true):
 		$HitBG.hide()
 		dmg_display.hide()
 
-func update_dmg_display(hit: Hit):
+func update_dmg_display(hit):
 	if hit == null: return
 	var item = hit.item as Item
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg)
@@ -76,7 +76,7 @@ func update_dmg_display(hit: Hit):
 	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
 	dmg_display.show()
 
-func update_hit_chance(hit: Hit) -> void:
+func update_hit_chance(hit) -> void:
 	if hit == null: return
 	if not (enabled or self.alive or valid_target): return
 	var value = 100

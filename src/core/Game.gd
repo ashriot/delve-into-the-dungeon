@@ -44,6 +44,9 @@ func _physics_process(delta: float) -> void:
 	elif hud_timer < 2 and hud.visible: hud.hide()
 	elif hud_timer < 2: hud_timer += 1 * delta
 
+func _exit_tree() -> void:
+	pass
+
 func update_hud():
 	var i = 0
 	for child in faces.get_children():
