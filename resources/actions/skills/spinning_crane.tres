@@ -1,0 +1,30 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Spinning Crane"
+description = "Deal {potency} {dmg} damage to {tgt}."
+item_type = 1
+sub_type = 20
+melee = true
+target_type = 12
+damage_type = 0
+stat_used = 3
+stat_vs = 5
+stat_hit = 3
+multiplier = 3.0
+bonus_damage = 0
+hits = 1
+lifesteal = 0.0
+hit_chance = 70
+crit_chance = 15
+sound_fx = ""
+use_fx = "melee"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+max_uses = 10
+uses = 10

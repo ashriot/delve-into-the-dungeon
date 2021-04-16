@@ -12,17 +12,28 @@ export var agility: int setget, get_agility
 export var intellect: int setget, get_intellect
 export var defense: int setget, get_defense
 
+export var hp_bonus: int
 export var str_bonus: int
 export var agi_bonus: int
 export var int_bonus: int
 export var def_bonus: int
 
+export(Array, float) var hp_mods
 export(Array, float) var str_mods
 export(Array, float) var agi_mods
 export(Array, float) var int_mods
 export(Array, float) var def_mods
 
 export(Dictionary) var perks
+
+func heal(amt: = 9999) -> void:
+	hp_cur = clamp(amt, 0, self.hp_max)
+
+func get_hp_max() -> int:
+	var hp_mod = 1.0
+	for mod in hp_mods:
+		hp_mod *= mod
+	return (hp_max + hp_bonus) * (hp_mod)
 
 func get_strength() -> int:
 	var str_mod = 1.0
@@ -64,16 +75,14 @@ func base_def() -> int:
 	return defense
 
 func get_stat(stat) -> int:
-	if stat == Enum.StatType.HP: return self.hp_cur
+	if stat == Enum.StatType.CurHP: return self.hp_cur
+	elif stat == Enum.StatType.MaxHP: return self.hp_max
 	elif stat == Enum.StatType.STR: return self.strength
 	elif stat == Enum.StatType.AGI: return self.agility
 	elif stat == Enum.StatType.INT: return self.intellect
 	elif stat == Enum.StatType.DEF: return self.defense
 	elif stat == Enum.StatType.NA: return 0
 	else: return -999
-
-func get_hp_max() -> int:
-	return hp_max
 
 func has_perk(perk_name) -> bool:
 	for i in perks.size():

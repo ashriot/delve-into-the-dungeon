@@ -73,7 +73,9 @@ func get_desc() -> String:
 func colorize(stat, text) -> String:
 	var color = ""
 	match stat:
-		Enum.StatType.HP:
+		Enum.StatType.CurHP:
+			color = "[color=#ff50c23a]"
+		Enum.StatType.MaxHP:
 			color = "[color=#ff50c23a]"
 		Enum.StatType.STR:
 			color = "[color=#ffcc6056]"

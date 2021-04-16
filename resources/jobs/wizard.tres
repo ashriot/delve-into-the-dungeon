@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/items/tomes/icicle.tres" type="Resource" id=2]
-[ext_resource path="res://resources/items/tomes/heal.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/tomes/char.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/tomes/icicle.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/tomes/heal.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/tomes/char.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -15,10 +15,12 @@ strength = 3
 agility = 10
 intellect = 15
 defense = 5
+hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
 def_bonus = 0
+hp_mods = [  ]
 str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]

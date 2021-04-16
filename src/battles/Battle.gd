@@ -29,9 +29,9 @@ func init():
 	battleMenu.hide()
 #	for child in buttons.get_children():
 #		child.init(self)
-	var inspect = load("res://resources/items/battleCommands/inspect.tres")
-	var end_turn = load("res://resources/items/battleCommands/end_turn.tres")
-	var flee = load("res://resources/items/battleCommands/flee.tres")
+	var inspect = load("res://resources/actions/battleCommands/inspect.tres")
+	var end_turn = load("res://resources/actions/battleCommands/end_turn.tres")
+	var flee = load("res://resources/actions/battleCommands/flee.tres")
 	battleMenu.get_child(0).init(self)
 	battleMenu.get_child(0).setup(inspect, false)
 	battleMenu.get_child(1).init(self)
@@ -54,9 +54,9 @@ var pixie = preload("res://resources/enemies/pixie.tres")
 func start(players: Array, enemies: Dictionary) -> void:
 	enemies = {
 		0: [goblin, 1],
-		1: [gargoyle, 1],
-		2: [goblin, 1],
-		4: [pixie, 1],
+#		1: [gargoyle, 50],
+#		2: [goblin, 50],
+#		4: [pixie, 50],
 	}
 	$Victory.hide()
 	player_panels.setup(players)
@@ -192,10 +192,10 @@ func enemy_take_action(panel: EnemyPanel):
 			var dmg_mod = 0
 			if action.melee and panel.melee_penalty: dmg_mod -= 0.50
 			var hit = Hit.new()
-			var hit_chance = 100
+			var hit_chance = 100 if !panel.has_perk("Precise") else 160
 			if action.item_type == Enum.ItemType.MARTIAL_SKILL or \
 				action.item_type == Enum.ItemType.WEAPON:
-				hit_chance = action.hit_chance + panel.get_stat(Enum.StatType.AGI) * 3
+				hit_chance = action.hit_chance * panel.get_stat(Enum.StatType.AGI)
 			if panel.has_hex("Blind"): hit_chance /= 2
 			hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
 			if action.target_type < Enum.TargetType.ONE_ENEMY:
@@ -277,9 +277,10 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		and button.item.target_type <= Enum.TargetType.RANDOM_ALLY:
 		player_panels.show_selectors(cur_player, button.item.target_type)
 	else:
-		if button.item.damage_type == Enum.DamageType.MARTIAL:
+		if button.item.stat_hit == Enum.StatType.AGI:
 			cur_hit_chance = int(cur_btn.item.hit_chance \
-				+ (cur_player.get_stat(Enum.StatType.AGI) * 3))
+				* cur_player.get_stat(Enum.StatType.AGI)) \
+				 + (60 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enum.StatType.AGI
 # warning-ignore:integer_division
 			cur_crit_chance = int(cur_btn.item.crit_chance + (cur_hit_chance - 60) / 2)
@@ -327,7 +328,9 @@ func execute_vs_enemy(panel) -> void:
 		targets = enemy_panels.get_row(panel)
 	if item.target_type == Enum.TargetType.ALL_ENEMIES:
 		targets = enemy_panels.get_all()
-	for hit_num in item.hits:
+	var hits = item.hits
+	if item.name == "Pummel": hits = randi() % 3 + 3
+	for hit_num in hits:
 		for target in targets:
 			if not target.alive: continue
 			var dmg_mod = 0.0
@@ -338,7 +341,7 @@ func execute_vs_enemy(panel) -> void:
 			target.take_hit(hit)
 		if item.target_type >= Enum.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
-		if hit_num < item.hits - 1:
+		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	user.unit.changed()
 	get_next_player()

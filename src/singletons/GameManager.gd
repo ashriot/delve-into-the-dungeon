@@ -45,7 +45,10 @@ func initialize_party():
 			new_player.perks = dict_to_perks(player["perks"])
 			players.insert(new_player.slot, new_player)
 		game.players = players
-	else: players = game.players
+	else:
+		players = game.players
+		for player in players:
+			player.heal()
 	var i = 0
 	for player in players:
 		player.slot = i

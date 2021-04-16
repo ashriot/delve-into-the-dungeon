@@ -5,7 +5,7 @@ var items: = Array()
 var perks: = Array()
 
 func _ready():
-	var item_files = get_dir_contents("res://resources/items")
+	var item_files = get_dir_contents("res://resources/actions")
 	for f in item_files:
 		items.append(load(f))
 	var perk_files = get_dir_contents("res://resources/perks")

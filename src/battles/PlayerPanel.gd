@@ -28,8 +28,8 @@ func setup(_unit):
 	self.ready = true
 
 func update_status() -> void:
-	.update_status()
 	if statuses.size() == 0: status.frame = 90
+	.update_status()
 
 func set_selected(value: bool):
 	if !ready: return

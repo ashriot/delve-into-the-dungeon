@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/items/weapons/wooden_wand.tres" type="Resource" id=2]
-[ext_resource path="res://resources/items/skills/undertow.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/skills/healing_wave.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/skills/undertow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/weapons/wooden_wand.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/tomes/blizzard.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/skills/healing_wave.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -15,10 +16,12 @@ strength = 5
 agility = 11
 intellect = 13
 defense = 6
+hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
 def_bonus = 0
+hp_mods = [  ]
 str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]
@@ -33,12 +36,12 @@ perks = {
 job = "Sorcerer"
 job_tab = "Sorcery"
 items = {
-0: ExtResource( 2 ),
-1: null,
+0: ExtResource( 3 ),
+1: ExtResource( 4 ),
 2: null,
 3: null,
-4: ExtResource( 3 ),
-5: ExtResource( 4 ),
+4: ExtResource( 2 ),
+5: ExtResource( 5 ),
 6: null,
 7: null
 }

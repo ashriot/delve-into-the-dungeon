@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
-[ext_resource path="res://resources/enemy actions/gob_shiv.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemy actions/gobsmack.tres" type="Resource" id=2]
 [ext_resource path="res://resources/enemy actions/gob_bow.tres" type="Resource" id=3]
 
 [resource]
@@ -14,10 +14,12 @@ strength = 7
 agility = 10
 intellect = 4
 defense = 10
+hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
 def_bonus = 0
+hp_mods = [  ]
 str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]

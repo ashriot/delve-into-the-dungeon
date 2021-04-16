@@ -1,6 +1,7 @@
 extends Node2D
 
 const EnemyScene = preload("res://src/dungeon/EnemyNode.tscn")
+const ChestScene = preload("res://src/dungeon/Chest.tscn")
 
 signal fade_out
 signal fade_in
@@ -66,6 +67,7 @@ const LEVEL_SIZES = [
 
 const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
 const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
+const LEVEL_CHEST_COUNTS = [2, 4, 6, 8, 10]
 const MIN_ROOM_DIMENSION = 5
 const MAX_ROOM_DIMENSION = 8
 
@@ -75,10 +77,13 @@ onready var player = $Player
 
 enum Tile {Floor, Stone, Wall, Door, StairsDown, StairsUp}
 
+var level_num
 var map = []
 var rooms = []
+var rooms_content = []
 var level_size: Vector2
 var enemies = []
+var chests = []
 
 var game
 var player_tile
@@ -87,7 +92,8 @@ var active = false
 
 func init(_game):
 	game = _game
-	game.level_num = 1
+	game.level_num = 4
+	level_num = game.level_num
 	build_level()
 	player.show()
 # warning-ignore:return_value_discarded
@@ -154,7 +160,7 @@ func try_move(dx, dy):
 			active = false
 			emit_signal("fade_out")
 			yield(game, "done_fading")
-			self.level_num += 1
+			game.level_num += 1
 			if game.level_num < LEVEL_SIZES.size():
 				build_level()
 			else:
@@ -175,6 +181,7 @@ func try_move(dx, dy):
 
 func build_level():
 	rooms.clear()
+	rooms_content.clear()
 	map.clear()
 	tile_map.clear()
 
@@ -184,7 +191,7 @@ func build_level():
 
 	enemy_pathfinding = AStar.new()
 
-	level_size = LEVEL_SIZES[game.level_num]
+	level_size = LEVEL_SIZES[level_num]
 	for x in range(level_size.x):
 		map.append([])
 		for y in range(level_size.y):
@@ -193,7 +200,7 @@ func build_level():
 			visibility_map.set_cell(x, y, 0)
 
 	var free_regions = [Rect2(Vector2(2, 2), level_size - Vector2(4, 4))]
-	var num_rooms = LEVEL_ROOM_COUNTS[game.level_num]
+	var num_rooms = LEVEL_ROOM_COUNTS[level_num]
 	for _i in range(num_rooms):
 		add_room(free_regions)
 		if free_regions.empty():
@@ -213,9 +220,10 @@ func build_level():
 
 	# Place Enemies
 
-	var num_enemies = LEVEL_ENEMY_COUNTS[game.level_num]
+	var num_enemies = LEVEL_ENEMY_COUNTS[level_num]
 	for _i in range(num_enemies):
-		var room = rooms[1 + randi() % (rooms.size() - 1)]
+		
+		var room = get_room(1)
 		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
 		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
 
@@ -226,9 +234,18 @@ func build_level():
 				break
 
 		if !blocked:
-			var enemy = EnemyNode.new(self, randi() % 4, game.level_num, x, y)
+			var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
 			enemies.append(enemy)
 
+	# Place Chests
+	var num_chests = LEVEL_CHEST_COUNTS[level_num]
+	for i in range(num_chests):
+		var room = get_room(0)
+		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
+		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+		var chest = ChestScene.instance()
+		chests.append(chest.init(self, x, y))
+	
 	# Place End Ladder
 
 	var end_room = rooms.back()
@@ -241,6 +258,13 @@ func build_level():
 	emit_signal("fade_in")
 	yield(game, "done_fading")
 	active = true
+
+func get_room(offset):
+	var room_num = offset + randi() % (rooms.size() - 1)
+	while rooms_content[room_num] > 2:
+		room_num = offset + randi() % (rooms.size() - 1)
+	rooms_content[room_num] += 1
+	return rooms[room_num]
 
 func clear_path(tile):
 	var new_point = enemy_pathfinding.get_available_point_id()
@@ -282,6 +306,14 @@ func update_visuals():
 			var occlusion = space_state.intersect_ray(player_center, enemy_center)
 			if !occlusion:
 				enemy.sprite.visible = true
+
+	for chest in chests:
+		chest.position = chest.tile * TILE_SIZE
+		if !chest.visible:
+			var enemy_center = tile_to_pixel_center(chest.tile.x, chest.tile.y)
+			var occlusion = space_state.intersect_ray(player_center, enemy_center)
+			if !occlusion:
+				chest.visible = true
 
 func tile_to_pixel_center(x, y):
 	return Vector2((x + 0.5) * TILE_SIZE, (y + 0.5) * TILE_SIZE)
@@ -421,6 +453,7 @@ func add_room(free_regions):
 
 	var room = Rect2(start_x, start_y, size_x, size_y)
 	rooms.append(room)
+	rooms_content.append(0)
 
 	for x in range(start_x, start_x + size_x):
 		set_tile(x, start_y, Tile.Wall)

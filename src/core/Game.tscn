@@ -263,6 +263,7 @@ anims/Hop = SubResource( 9 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DungeonHUD" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -495,6 +496,7 @@ hframes = 10
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
+visible = false
 
 [node name="Fade" parent="CanvasLayer" instance=ExtResource( 13 )]
 visible = false

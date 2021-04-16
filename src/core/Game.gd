@@ -78,7 +78,7 @@ func battle_start():
 	yield(fade, "done")
 	battle.hide()
 	hud.show()
-	yield(get_tree().create_timer(1.5), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
 	dungeon.active = true

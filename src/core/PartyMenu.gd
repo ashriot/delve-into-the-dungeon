@@ -25,6 +25,7 @@ var cur_player: PlayerMenuPanel
 var cur_menu: Control
 
 var cur_page: int
+var total_pages: int
 var cur_tab: int setget set_cur_tab
 var cur_btn: Button setget set_cur_btn
 
@@ -37,6 +38,7 @@ func init(_game) -> void:
 	game = _game
 	players = game.players
 	inv_preview.hide()
+	main_menu.show()
 	for child in player_panels.get_children(): child.init(self)
 	for child in item_buttons.get_children(): child.init(self)
 	for child in inv_buttons.get_children(): child.init(self)
@@ -128,7 +130,7 @@ func set_cur_btn(value) -> void:
 	if cur_btn != null: cur_btn.selected = false
 	cur_btn = value
 	cur_btn.selected = true
-	popup.rect_global_position = cur_btn.rect_global_position - Vector2(0, popup.rect_size.y * 1)
+	popup.rect_global_position = cur_btn.rect_global_position - Vector2(-1, popup.rect_size.y * 1)
 	popup.show()
 
 func _on_Items_pressed() -> void:
@@ -150,8 +152,8 @@ func _on_PlayerMenuPanel_pressed(panel) -> void:
 	if cur_menu == items_panel: update_item_data()
 
 func _on_ItemButton_clicked(button) -> void:
-	AudioController.click()
 	if button.empty:
+		AudioController.select()
 		equip_item(button)
 	else:
 		self.cur_btn = button
@@ -181,12 +183,10 @@ func _on_Tab2_pressed() -> void:
 	self.cur_tab = 1
 
 func _on_Swap_pressed() -> void:
-	print("Equipping a new action")
-
-func _on_Remove_pressed() -> void:
 	AudioController.confirm()
-	cur_btn.empty = true
-	self.cur_btn = null
+	inv_preview.setup(cur_player, cur_btn.item)
+	inv_preview.show()
+	inv_panel.show()
 
 #### INVENTORY ####
 
@@ -197,12 +197,12 @@ func _on_Inventory_pressed() -> void:
 	inv_panel.show()
 
 func update_inv_data():
+	update_page_data()
 	var size = game.inventory.items.size()
 	var lo = cur_page * 10
 	var hi = min((cur_page * 10) + 9, size)
-	var total_pages = max(ceil(size / 10.0), 1)
 	var items = game.inventory.items.slice(lo, hi)
-	var i = cur_page
+	var i = cur_page * 10
 	for child in inv_buttons.get_children():
 		if i < game.inventory.items.size():
 			var item = game.inventory.items[i]
@@ -224,11 +224,33 @@ func _on_InvButton_clicked(button) -> void:
 	if inv_preview.visible:
 		AudioController.click()
 		var item = button.item
-		button.setup(cur_btn.item)
-		cur_btn.setup(cur_player.unit, item)
+		game.inventory.remove_item(item)
 		cur_player.unit.add_item(item, cur_btn.get_index())
+		if !cur_btn.empty: game.inventory.add_item(cur_btn.item.name)
+		cur_btn.setup(cur_player.unit, item)
+		cur_btn.selected = false
+		cur_btn = null
+		popup.hide()
 		inv_preview.hide()
 		inv_panel.hide()
 		update_inv_data()
 	else:
 		self.cur_btn = button
+
+func update_page_data():
+	var size = game.inventory.items.size()
+	total_pages = max(ceil(size / 10.0), 1)
+	if cur_page < 0: cur_page = total_pages - 1
+	elif cur_page >= total_pages: cur_page = 0
+
+func _on_Left_pressed():
+	if total_pages == 1: return 
+	AudioController.click()
+	cur_page -= 1
+	update_inv_data()
+	
+func _on_Right_pressed():
+	if total_pages == 1: return
+	AudioController.click()
+	cur_page += 1
+	update_inv_data()

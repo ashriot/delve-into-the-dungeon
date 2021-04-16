@@ -35,11 +35,11 @@ func setup(_unit):
 	show()
 
 func level_up() -> void:
-	unit.hp_growth = int((unit.base_hp_max() * 0.5 + 5) * (unit.level - 1))
-	unit.str_growth = int((unit.base_str() * 0.08 + 0.5) * unit.level - 1)
-	unit.agi_growth = int((unit.base_agi() * 0.08 + 0.5) * unit.level - 1)
-	unit.int_growth = int((unit.base_int() * 0.08 + 0.5) * unit.level - 1)
-	unit.def_growth = int((unit.base_def() * 0.08 + 0.5) * unit.level - 1)
+	unit.hp_growth = int((unit.base_hp_max() * 0.2 + 2) * (unit.level - 1))
+	unit.str_growth = int((unit.base_str() * 0.05 + 0.8) * unit.level - 1)
+	unit.agi_growth = int((unit.base_agi() * 0.05 + 0.8) * unit.level - 1)
+	unit.int_growth = int((unit.base_int() * 0.05 + 0.8) * unit.level - 1)
+	unit.def_growth = int((unit.base_def() * 0.05 + 0.8) * unit.level - 1)
 
 func get_action() -> Action:
 	var action = null
@@ -82,7 +82,7 @@ func update_hit_chance(hit) -> void:
 	var value = 100
 	if hit.stat_hit != Enum.StatType.NA:
 		value = get_hit_and_crit_chance(hit)[0]
-	hit_display.text = str(value) + "%"
+	hit_display.text = str(int(value)) + "%"
 	update_dmg_display(hit)
 
 func update_status() -> void:

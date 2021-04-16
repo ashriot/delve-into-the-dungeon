@@ -1,11 +1,12 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/items/skills/punch.tres" type="Resource" id=2]
-[ext_resource path="res://resources/items/skills/flying_kick.tres" type="Resource" id=3]
-[ext_resource path="res://resources/items/weapons/wooden_knife.tres" type="Resource" id=4]
-[ext_resource path="res://resources/items/weapons/short_bow.tres" type="Resource" id=5]
-[ext_resource path="res://resources/items/skills/ki_shield.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/skills/ki_shield.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/skills/ki_wave.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/wooden_knife.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/skills/spinning_crane.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/weapons/short_bow.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/skills/pummel.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -13,14 +14,16 @@ name = "Koh"
 frame = 4
 hp_max = 70
 hp_cur = 70
-strength = 12
-agility = 12
-intellect = 12
+strength = 13
+agility = 13
+intellect = 9
 defense = 8
+hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
 def_bonus = 0
+hp_mods = [  ]
 str_mods = [  ]
 agi_mods = [  ]
 int_mods = [  ]
@@ -36,11 +39,11 @@ job = "Monk"
 job_tab = "M. Arts"
 items = {
 0: ExtResource( 4 ),
-1: ExtResource( 5 ),
+1: ExtResource( 6 ),
 2: null,
 3: null,
-4: ExtResource( 2 ),
+4: ExtResource( 7 ),
 5: ExtResource( 3 ),
-6: ExtResource( 6 ),
-7: null
+6: ExtResource( 2 ),
+7: ExtResource( 5 )
 }

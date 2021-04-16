@@ -2,7 +2,8 @@ extends Resource
 class_name Enum
 
 enum StatType {
-	HP,
+	CurHP,
+	MaxHP,
 	STR,
 	AGI,
 	INT,
@@ -77,7 +78,8 @@ enum DamageType {
 
 static func get_stat_name(stat) -> String:
 	match stat:
-		StatType.HP: return "HP"
+		StatType.CurHP: return "Current HP"
+		StatType.MaxHP: return "Max HP"
 		StatType.STR: return "STR"
 		StatType.AGI: return "AGI"
 		StatType.INT: return "INT"

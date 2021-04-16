@@ -46,7 +46,7 @@ func setup(_unit):
 	enabled = true
 	sprite.frame = unit.frame
 	self.hp_max = unit.hp_max
-	self.hp_cur = unit.hp_max
+	self.hp_cur = hp_max
 	hp_percent.max_value = hp_max
 	hp_percent.value = hp_max
 	blocking = 0
@@ -83,7 +83,7 @@ func take_hit(hit) -> void:
 	var lifesteal = hit.item.lifesteal
 	var miss = false
 	var hit_roll = randi() % 100 + 1
-#	print(hit.unit.name, " uses ", hit.item.name, ": ", 100 - hit_roll, " < ", hit_chance, "%? = ", miss)
+#	print(hit.user.name, " uses ", hit.item.name, ": ", 101 - hit_roll, " >= ", hit_chance, "%? = ", miss)
 	if hit_roll > hit_chance: miss = true
 	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
@@ -99,7 +99,7 @@ func take_hit(hit) -> void:
 				dmg = 0
 			else:
 				dmg -= blocking
-				blocking = 0
+				self.blocking = 0
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
 		anim.play("Hit")
@@ -131,9 +131,7 @@ func take_hit(hit) -> void:
 func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)
 	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enum.StatType.NA else 0
-	if item.name == "Ki Heal":
-		def = int(float(hp_max - hp_cur) * 0.33)
-	elif item.name == "Healing Haka":
+	if item.name == "Healing Haka":
 		def = int(float(hp_max - hp_cur) * 0.33)
 	var dmg_text = ""
 	AudioController.play_sfx(item.sound_fx)
@@ -253,7 +251,8 @@ func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
 	if hit.stat_hit != Enum.StatType.NA:
-		hit_roll = clamp(hit.hit_chance - (get_stat(hit.stat_hit) * 3), 0, 100)
+#		hit_roll = clamp(hit.hit_chance - (get_stat(hit.stat_hit) * 3), 0, 100)
+		hit_roll = clamp(hit.hit_chance / (get_stat(hit.stat_hit)), 0, 100)
 		crit_roll = hit.crit_chance
 	return [hit_roll, crit_roll]
 
@@ -267,7 +266,6 @@ func set_hp_cur(value: int):
 	if hp_cur <= 0: die()
 
 func set_blocking(value: int) -> void:
-	print("Blocking: ", value, " martial damage.")
 	blocking = value
 	if blocking > 0:
 		add_status(["Block", 129])

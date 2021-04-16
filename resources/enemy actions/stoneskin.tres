@@ -6,13 +6,16 @@
 [resource]
 script = ExtResource( 1 )
 name = "Stoneskin"
-desc = ""
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
 item_type = 2
+sub_type = 0
+melee = false
 target_type = 0
 damage_type = 7
-stat_used = 5
-stat_vs = 5
-stat_hit = 5
+stat_used = 6
+stat_vs = 6
+stat_hit = 6
 multiplier = 0.0
 bonus_damage = 0
 hits = 1
