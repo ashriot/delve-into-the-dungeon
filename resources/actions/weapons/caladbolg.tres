@@ -7,6 +7,7 @@ script = ExtResource( 1 )
 name = "Caladbolg"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
+tier = 6
 item_type = 0
 sub_type = 8
 melee = true

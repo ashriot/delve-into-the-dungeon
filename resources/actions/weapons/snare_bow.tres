@@ -7,6 +7,7 @@
 script = ExtResource( 1 )
 name = "Snare Bow"
 description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 3
 item_type = 0
 sub_type = 2
 melee = false

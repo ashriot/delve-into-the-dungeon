@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 name = "Inferno"
 description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 4
 item_type = 3
 sub_type = 14
 melee = false
@@ -14,7 +15,7 @@ damage_type = 3
 stat_used = 4
 stat_vs = 4
 stat_hit = 6
-multiplier = 4.0
+multiplier = 2.0
 bonus_damage = 0
 hits = 1
 lifesteal = 0.0

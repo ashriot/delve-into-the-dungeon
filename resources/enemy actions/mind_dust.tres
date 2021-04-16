@@ -8,6 +8,7 @@ script = ExtResource( 1 )
 name = "Mind Dust"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
+tier = 1
 item_type = 2
 sub_type = 0
 melee = false

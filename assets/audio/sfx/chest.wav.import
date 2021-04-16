@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/chest.wav-16dc29c4a26b61581907d6170b515203.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/chest.wav"
+dest_files=[ "res://.import/chest.wav-16dc29c4a26b61581907d6170b515203.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

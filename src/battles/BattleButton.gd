@@ -23,7 +23,9 @@ func setup(_item: Item, limited = true) -> void:
 	sprite.frame = item.frame
 	title.text = item.name
 	title2.text = item.name
-	if limited: self.uses_remain = item.uses
+	if limited:
+		self.uses_remain = item.uses
+		if uses_remain < 1: disabled = true
 	else:
 		uses.hide()
 		uses2.hide()

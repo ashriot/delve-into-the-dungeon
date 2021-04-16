@@ -115,7 +115,6 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-visible = false
 position = Vector2( 2, 2 )
 texture = ExtResource( 5 )
 centered = false

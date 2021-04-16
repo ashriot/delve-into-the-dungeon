@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 name = "Healing Haka"
 description = "Heal the party for 33% of their missing HP."
+tier = 1
 item_type = 2
 sub_type = 19
 melee = false

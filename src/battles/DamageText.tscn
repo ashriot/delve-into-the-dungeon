@@ -202,6 +202,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Found" type="Label" parent="Text"]
+visible = false
+margin_left = 12.0
+margin_top = -6.0
+margin_right = 52.0
+margin_bottom = 1.0
+custom_colors/font_color = Color( 0.486275, 0.490196, 0.501961, 1 )
+custom_colors/font_color_shadow = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+text = "Found"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Bounce = SubResource( 1 )
 anims/Display = SubResource( 2 )

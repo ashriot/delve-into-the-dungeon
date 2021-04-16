@@ -7,6 +7,7 @@
 script = ExtResource( 1 )
 name = "Blind"
 description = "Deal {potency} {dmg} damage to {tgt} and inflict BLIND for 5 turns."
+tier = 3
 item_type = 3
 sub_type = 17
 melee = false

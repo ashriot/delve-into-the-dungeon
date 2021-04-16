@@ -1,6 +1,13 @@
 extends Node2D
 # GAME.gd
 
+var DamageText = preload("res://src/battles/DamageText.tscn")
+
+var goblin = preload("res://resources/enemies/goblin.tres")
+var gargoyle = preload("res://resources/enemies/gargoyle.tres")
+var mermaid = preload("res://resources/enemies/mermaid.tres")
+var pixie = preload("res://resources/enemies/pixie.tres")
+
 onready var battle = $CanvasLayer/Battle
 onready var dungeon = $Dungeon
 onready var menu_button = $CanvasLayer/MenuButton
@@ -17,7 +24,6 @@ signal done_fading
 export var mute: bool
 export var spd: = 1.0
 export(Array, Resource) var players
-export(Dictionary) var enemies
 
 var hud_timer: = 0.0
 var level_num: = 1 setget set_level_num
@@ -68,6 +74,7 @@ func battle_start():
 	fade.fade_to_black()
 	yield(fade, "done")
 	hud.hide()
+	var enemies = get_enemies()
 	yield(get_tree().create_timer(0.25), "timeout")
 	battle.start(players, enemies)
 	fade.fade_from_black()
@@ -84,6 +91,28 @@ func battle_start():
 	dungeon.active = true
 	update_hud()
 	menu_button.show()
+
+func get_enemies() -> Dictionary:
+	var lv = int(level_num  / 3) + 1
+	return {
+		0: [goblin, randi() % 2 + lv],
+		2: [goblin, randi() % 2 + lv],
+#		4: [pixie, 50],
+	}
+
+func _on_Chest_opened() -> void:
+	var item = ItemDb.get_random_item(level_num + 1)
+	var text = item.name
+	if item.item_type == Enum.ItemType.TOME: text = text.insert(0,"Tome of ")
+	found(text)
+	inventory.add_item(item.name)
+
+func found(text: String) -> void:
+	var damage_text = DamageText.instance()
+	add_child(damage_text)
+	damage_text.rect_position = dungeon.player_pos
+	damage_text.rect_position.x -= damage_text.rect_size.x / 2 - 4
+	damage_text.found(text)
 
 func _on_FadeOut() -> void:
 	print("Fading out")

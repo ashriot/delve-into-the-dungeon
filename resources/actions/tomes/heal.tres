@@ -5,16 +5,17 @@
 [resource]
 script = ExtResource( 1 )
 name = "Heal"
-description = "Heal {tgt} for {potency} + their INTx3."
+description = "Heal {tgt} for {potency} + their INTx2."
+tier = 2
 item_type = 3
 sub_type = 15
 melee = false
 target_type = 1
 damage_type = 6
-stat_used = 3
-stat_vs = 4
+stat_used = 6
+stat_vs = 6
 stat_hit = 6
-multiplier = 3.0
+multiplier = 2.0
 bonus_damage = 0
 hits = 1
 lifesteal = 0.0

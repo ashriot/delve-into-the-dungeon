@@ -16,7 +16,7 @@ func initialize_game_data(_game):
 	var dir = Directory.new();
 	if dir.file_exists(file_path):
 		save_data = load(file_path)
-		loading = true
+		loading = false # TRUE
 	else:
 		dir.make_dir_recursive(path)
 		save_data = SaveData.new()
@@ -25,7 +25,6 @@ func initialize_game_data(_game):
 
 func initialize_party():
 	var players = []
-	loading = false
 	if loading:
 		print("LOADING DATA")
 		for player in save_data.players.values():
@@ -112,8 +111,6 @@ func initialize_inventory():
 	if loading:
 		var existing_inventory = save_data.inventory.duplicate()
 		game.inventory.set_items(existing_inventory)
-	else:
-		game.inventory.add_item("Wooden Sword")
 
 func _on_inventory_changed(inventory):
 	print("Inventory Changed")

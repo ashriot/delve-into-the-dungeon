@@ -46,18 +46,7 @@ func init():
 	tab2.connect("pressed", self, "_on_Tab_Pressed", [tab2])
 	hide()
 
-var goblin = preload("res://resources/enemies/goblin.tres")
-var gargoyle = preload("res://resources/enemies/gargoyle.tres")
-var mermaid = preload("res://resources/enemies/mermaid.tres")
-var pixie = preload("res://resources/enemies/pixie.tres")
-
 func start(players: Array, enemies: Dictionary) -> void:
-	enemies = {
-		0: [goblin, 1],
-#		1: [gargoyle, 50],
-#		2: [goblin, 50],
-#		4: [pixie, 50],
-	}
 	$Victory.hide()
 	player_panels.setup(players)
 	enemy_panels.setup(enemies)
@@ -240,7 +229,7 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 
 func show_dmg_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
-	damage_text.rect_global_position = pos
+	damage_text.rect_position = pos
 	damage_text.init(self, text)
 
 func show_text(text: String, pos: Vector2, display = false) -> void:
@@ -319,7 +308,7 @@ func execute_vs_enemy(panel) -> void:
 	var item = cur_btn.item as Item
 	var user = cur_player
 	AudioController.play_sfx(item.use_fx)
-	clear_selections()
+	finish_action()
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = [panel]
@@ -354,7 +343,7 @@ func execute_vs_player(panel) -> void:
 	if item.sub_type == Enum.SubItemType.SHIELD:
 		if user.has_perk("Quick Block"):
 			turn_spent = false
-	clear_selections(turn_spent)
+	finish_action(turn_spent)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	AudioController.play_sfx(item.sound_fx)
@@ -370,17 +359,26 @@ func execute_vs_player(panel) -> void:
 	user.unit.changed()
 	get_next_player()
 
-func clear_selections(spend_turn: = true) -> void:
+func finish_action(spend_turn: = true) -> void:
 	chose_next = false
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if cur_btn == null: return
 	cur_btn.uses_remain -= 1
+	print(cur_btn.item.name, " -> ", cur_btn.uses_remain)
 	clear_buttons()
 	cur_player.selected = false
 	if spend_turn:
 		cur_player.ready = false
 		cur_player.decrement_boons("End")
+
+func clear_selections() -> void:
+	enemy_panels.hide_all_selectors()
+	player_panels.hide_all_selectors()
+	cur_player.selected = false
+	if cur_btn != null:
+		cur_btn.selected = false
+		cur_btn = null
 
 func roll() -> int:
 	return randi() % 100 + 1
@@ -401,7 +399,7 @@ func _on_PlayerPanel_died(panel: PlayerPanel) -> void:
 
 func victory() -> void:
 	AudioController.bgm.stop()
-	clear_selections(false)
+	clear_selections()
 	if cur_player != null:
 		cur_player.selected = false
 		cur_player = null

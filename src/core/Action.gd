@@ -3,6 +3,7 @@ class_name Action
 
 export var name: String
 export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}.\n{aim}"
+export var tier: = 1
 export(Enum.ItemType) var item_type
 export(Enum.SubItemType) var sub_type
 export var melee: bool

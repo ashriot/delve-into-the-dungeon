@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 name = "Bandage"
 description = "Heal {tgt} for 50."
+tier = 1
 item_type = 4
 sub_type = 23
 melee = false

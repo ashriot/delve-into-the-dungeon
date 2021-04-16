@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 name = "Fireball"
 description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 5
 item_type = 3
 sub_type = 14
 melee = false

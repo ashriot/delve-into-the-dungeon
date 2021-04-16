@@ -7,6 +7,7 @@ script = ExtResource( 1 )
 name = "Golden Axe"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
+tier = 5
 item_type = 0
 sub_type = 0
 melee = true

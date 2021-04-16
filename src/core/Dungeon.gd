@@ -31,27 +31,36 @@ class EnemyNode extends Reference:
 		else:
 			dead = true
 
-	func act(game):
-		if !sprite.visible: return
+	func act(game, collided) -> bool:
+		if !sprite.visible: return false
 
 		var point = game.enemy_pathfinding.get_closest_point(Vector3(tile.x, tile.y, 0))
 		var player_point = game.enemy_pathfinding.get_closest_point(Vector3(game.player_tile.x, game.player_tile.y, 0))
 		var path = game.enemy_pathfinding.get_point_path(point, player_point)
 		if path:
-#			assert(path.size() > 1)
+			var blocked = false
+			assert(path.size() > 1)
 			var move_tile = Vector2(path[1].x, path[1].y)
-
+			
 			if move_tile == game.player_tile:
-				collide()
+				blocked = true
+				if !collided:
+					collided = true
+					collide()
 			else:
-				var blocked = false
+				var tile_type = game.map[move_tile.x][move_tile.y]
+				if tile_type == Tile.Floor:
+					for chest in game.chests:
+						if chest.tile.x == move_tile.x and chest.tile.y == move_tile.y:
+							blocked = true
 				for enemy in game.enemies:
 					if enemy.tile == move_tile:
 						blocked = true
 						break
 
-				if !blocked:
-					tile = move_tile
+			if !blocked:
+				tile = move_tile
+		return collided
 
 ################################################
 
@@ -65,11 +74,14 @@ const LEVEL_SIZES = [
 	Vector2(50, 50),
 ]
 
-const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
-const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
-const LEVEL_CHEST_COUNTS = [2, 4, 6, 8, 10]
+const LEVEL_ROOM_COUNTS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+const LEVEL_ENEMY_COUNTS = [6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20]
+const LEVEL_CHEST_COUNTS = [2, 2, 3, 3, 4, 4, 5, 6, 7, 8, 9, 10]
+#const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
+#const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
+#const LEVEL_CHEST_COUNTS = [2, 4, 6, 8, 10]
 const MIN_ROOM_DIMENSION = 5
-const MAX_ROOM_DIMENSION = 8
+const MAX_ROOM_DIMENSION = 7
 
 onready var tile_map = $TileMap
 onready var visibility_map = $VisibilityMap
@@ -87,12 +99,13 @@ var chests = []
 
 var game
 var player_tile
+var player_pos setget , get_player_pos
 var enemy_pathfinding
 var active = false
 
 func init(_game):
 	game = _game
-	game.level_num = 4
+	game.level_num = 0
 	level_num = game.level_num
 	build_level()
 	player.show()
@@ -124,10 +137,6 @@ func _unhandled_input(event):
 		else:
 			dir = "Stay"
 			AudioController.confirm()
-			game.inventory.add_item("Short Bow")
-			game.inventory.add_item("Grenade")
-			game.inventory.add_item("Char")
-			game.inventory.add_item("Icicle")
 
 	if event.is_action("Up") or dir == "Up": try_move(0, -1)
 	elif event.is_action("Down") or dir == "Down": try_move(0, 1)
@@ -150,11 +159,18 @@ func try_move(dx, dy):
 		Tile.Floor:
 			for enemy in enemies:
 				if enemy.tile.x == x and enemy.tile.y == y:
-					enemy.collide()
+					blocked = true
+					break
+			for chest in chests:
+				if chest.tile.x == x and chest.tile.y == y:
+					if !chest.opened:
+						AudioController.play_sfx("chest")
+						chest.open()
 					blocked = true
 					break
 		Tile.Door:
 			blocked = true
+			AudioController.play_sfx("door")
 			set_tile(x, y, Tile.Floor)
 		Tile.StairsDown:
 			active = false
@@ -166,13 +182,14 @@ func try_move(dx, dy):
 			else:
 				$CanvasLayer/Win.show()
 
+	$Player/Sprite/AnimationPlayer.play("Hop")
 	if !blocked:
 		AudioController.play_sfx("melee_step")
-		$Player/Sprite/AnimationPlayer.play("Hop")
 		player_tile = Vector2(x, y)
-
+	
+	var collided = false
 	for enemy in enemies:
-		enemy.act(self)
+		collided = enemy.act(self, collided)
 		if enemy.dead:
 			enemy.remove()
 			enemies.erase(enemy)
@@ -182,6 +199,7 @@ func try_move(dx, dy):
 func build_level():
 	rooms.clear()
 	rooms_content.clear()
+	chests.clear()
 	map.clear()
 	tile_map.clear()
 
@@ -249,8 +267,8 @@ func build_level():
 	# Place End Ladder
 
 	var end_room = rooms.back()
-	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 2)
-	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
+	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 3)
+	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 3)
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
 	call_deferred("update_visuals")
@@ -261,7 +279,7 @@ func build_level():
 
 func get_room(offset):
 	var room_num = offset + randi() % (rooms.size() - 1)
-	while rooms_content[room_num] > 2:
+	while rooms_content[room_num] > 1:
 		room_num = offset + randi() % (rooms.size() - 1)
 	rooms_content[room_num] += 1
 	return rooms[room_num]
@@ -284,7 +302,7 @@ func clear_path(tile):
 		enemy_pathfinding.connect_points(point, new_point)
 
 func update_visuals():
-	player.position = player_tile * TILE_SIZE
+	player.position = self.player_pos
 	yield(get_tree().create_timer(.05), "timeout")
 	var player_center = tile_to_pixel_center(player_tile.x, player_tile.y)
 	var space_state = get_world_2d().direct_space_state
@@ -505,6 +523,9 @@ func set_tile(x, y, type):
 
 func battle_start():
 	game.battle_start()
+
+func get_player_pos() -> Vector2:
+	return player_tile * TILE_SIZE
 
 func _on_Button_pressed() -> void:
 	self.level_num = 0

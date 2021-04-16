@@ -7,6 +7,7 @@ script = ExtResource( 1 )
 name = "Iron Knife"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
+tier = 2
 item_type = 0
 sub_type = 3
 melee = true

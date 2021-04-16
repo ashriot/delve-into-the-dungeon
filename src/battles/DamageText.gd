@@ -33,3 +33,12 @@ func animate(dir: String, duration = 1.0) -> void:
 	anim.play(dir)
 	yield(anim, "animation_finished")
 	self.queue_free()
+
+func found(text: String) -> void:
+	$Text/TextL.text = text
+	$Text/TextR.text = text
+	$Text/TextU.text = text
+	$Text/TextD.text = text
+	$Text/Text.text = text
+	$Text/Found.show()
+	animate("Display")

@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 name = "Pistol"
 description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 2
 item_type = 0
 sub_type = 4
 melee = false

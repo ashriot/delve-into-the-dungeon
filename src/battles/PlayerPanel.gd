@@ -5,7 +5,7 @@ onready var hp_cur_display = $HPCur
 onready var selector = $Selector
 onready var outline = $Outline
 
-var tab: int setget set_tab, get_tab
+var tab: int setget set_tab
 
 var ready:= true setget set_ready
 var selected:= false setget set_selected
@@ -13,6 +13,7 @@ var selected:= false setget set_selected
 func init(battle):
 	.init(battle)
 	anim.playback_speed = 1 / GameManager.spd
+	sprite.position.y = 2
 	pos = rect_global_position
 	pos.x -= 16
 	pos.y += rect_size.y / 2
@@ -23,6 +24,7 @@ func init(battle):
 
 func setup(_unit):
 	unit = _unit
+	tab = unit.tab
 	.setup(_unit)
 	self.selected = false
 	self.ready = true
@@ -68,10 +70,8 @@ func victory() -> void:
 	anim.play("Victory")
 
 func set_tab(value) -> void:
+	tab = value
 	unit.tab = value
-
-func get_tab() -> int:
-	return unit.tab
 
 func get_melee_penalty() -> bool:
 	return get_index() > 1 and !unit.has_perk("Reach")

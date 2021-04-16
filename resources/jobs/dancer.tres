@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/skills/wind_waltz.tres" type="Resource" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://resources/actions/skills/blade_dance.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wooden_knife.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/boomerang.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/weapons/short_bow.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -39,7 +40,7 @@ job_tab = "Dances"
 items = {
 0: ExtResource( 6 ),
 1: ExtResource( 5 ),
-2: null,
+2: ExtResource( 7 ),
 3: null,
 4: ExtResource( 4 ),
 5: ExtResource( 3 ),

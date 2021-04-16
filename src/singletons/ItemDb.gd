@@ -22,6 +22,16 @@ func get_perk(perk_name: String) -> Item:
 		if perk.name == perk_name: return perk
 	return null
 
+func get_random_item(lv: int) -> Item:
+	var types = [Enum.ItemType.WEAPON, Enum.ItemType.TOOL, Enum.ItemType.TOME]
+	var type = types[randi() % types.size()]
+	var rand_items = range(0, items.size())
+	rand_items.shuffle()
+	for i in rand_items:
+		if items[i].item_type == type and items[i].tier == lv:
+			return items[i]
+	return null
+
 ## HELPER FUNCTIONS
 
 func get_dir_contents(rootPath: String) -> Array:

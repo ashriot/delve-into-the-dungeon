@@ -8,6 +8,7 @@ script = ExtResource( 1 )
 name = "Battle Bolero"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
+tier = 1
 item_type = 2
 sub_type = 19
 melee = false
