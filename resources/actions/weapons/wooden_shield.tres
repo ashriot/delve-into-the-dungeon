@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 name = "Wooden Shield"
 description = "Block up to {potency} Martial damage until your next turn."
+tier = 1
 item_type = 0
 sub_type = 6
 melee = false
@@ -14,7 +15,7 @@ damage_type = 8
 stat_used = 2
 stat_vs = 6
 stat_hit = 6
-multiplier = 2.5
+multiplier = 3.0
 bonus_damage = 0
 hits = 1
 lifesteal = 0.0

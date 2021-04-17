@@ -89,15 +89,19 @@ func battle_start():
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
 	dungeon.active = true
+	dungeon.collided = false
 	update_hud()
 	menu_button.show()
 
 func get_enemies() -> Dictionary:
-	var lv = int(level_num  / 3) + 1
+	var lv = int(level_num / 3) + 1
+	var mob0 = [goblin, randi() % 2 + lv]
+	var mob1 = [gargoyle, randi() % 2 + lv] if randi() % 2 > 0 else null
+	var mob2 = [goblin, randi() % 2 + lv] if randi() % 2 > 0 else null
 	return {
-		0: [goblin, randi() % 2 + lv],
-		2: [goblin, randi() % 2 + lv],
-#		4: [pixie, 50],
+		0: mob0,
+		1: mob1,
+		2: mob2,
 	}
 
 func _on_Chest_opened() -> void:

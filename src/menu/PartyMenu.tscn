@@ -483,6 +483,7 @@ hframes = 10
 frame = 142
 
 [node name="Items" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 69.0
@@ -720,6 +721,7 @@ align = 1
 valign = 1
 
 [node name="Inventory" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -8.0

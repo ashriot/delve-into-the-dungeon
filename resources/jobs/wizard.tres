@@ -1,20 +1,19 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tomes/icicle.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/tomes/heal.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tomes/char.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
 name = "Orfus"
 frame = 8
-hp_max = 50
-hp_cur = 50
+hp_cur = 30
+hp_max = 30
 strength = 3
-agility = 10
-intellect = 15
-defense = 5
+agility = 8
+intellect = 10
+defense = 1
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -34,10 +33,13 @@ perks = {
 }
 job = "Wizard"
 job_tab = "Tomes"
+xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+xp_cut = [ 1, 1, 1, 1, 1 ]
+gains = [ 0, 0, 0, 0, 0 ]
 items = {
 0: ExtResource( 2 ),
 1: ExtResource( 4 ),
-2: ExtResource( 3 ),
+2: null,
 3: null,
 4: null,
 5: null,

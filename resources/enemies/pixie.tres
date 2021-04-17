@@ -9,8 +9,8 @@
 script = ExtResource( 1 )
 name = "Pixie"
 frame = 15
-hp_max = 50
 hp_cur = 0
+hp_max = 50
 strength = 3
 agility = 10
 intellect = 12

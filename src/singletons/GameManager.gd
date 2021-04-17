@@ -16,7 +16,7 @@ func initialize_game_data(_game):
 	var dir = Directory.new();
 	if dir.file_exists(file_path):
 		save_data = load(file_path)
-		loading = false # TRUE
+		loading = true
 	else:
 		dir.make_dir_recursive(path)
 		save_data = SaveData.new()
@@ -31,6 +31,7 @@ func initialize_party():
 			var new_player = Player.new()
 			new_player.name = player["name"]
 			new_player.job = player["job"]
+			new_player.job_tab = player["job_tab"]
 			new_player.slot = player["slot"]
 			new_player.tab = player["tab"]
 			new_player.frame = player["frame"]
@@ -40,6 +41,7 @@ func initialize_party():
 			new_player.agility = player["agi"]
 			new_player.intellect = player["int"]
 			new_player.defense = player["def"]
+			new_player.xp = player["xp"] if player.has("xp") else [0, 0, 0, 0, 0]
 			new_player.items = dict_to_items(player["items"])
 			new_player.perks = dict_to_perks(player["perks"])
 			players.insert(new_player.slot, new_player)
@@ -58,39 +60,44 @@ func initialize_party():
 func items_to_dict(items: Dictionary) -> Dictionary:
 	var dict = {}
 	for i in range(8):
-		if items[i] == null: continue
-		var item = ItemDb.get_item(items[i].name)
-		dict[i] = [item.name, item.uses]
+		if items[i] == null: dict[i] = null
+		else:
+			var item = ItemDb.get_item(items[i].name)
+			dict[i] = [item.name, item.uses]
 	return dict
 
 func dict_to_items(dict: Dictionary) -> Dictionary:
 	var items = {}
 	for i in range(8):
-		if dict[i] == null: continue
-		var item = ItemDb.get_item(dict[i][0])
-		item.uses = dict[i][1]
-		items.append(item)
+		if dict[i] == null: items[i] = null
+		else:
+			var item = ItemDb.get_item(dict[i][0])
+			item.uses = dict[i][1]
+			items[i] = item
 	return items
 
 func perks_to_dict(perks: Dictionary) -> Dictionary:
 	var dict = {}
 	for i in range(5):
-		if perks[i] == null: continue
-		dict[i] = (perks[i].name)
+		if perks[i] == null: dict[i] = null
+		else:
+			dict[i] = perks[i].name
 	return dict
 
 func dict_to_perks(dict: Dictionary) -> Dictionary:
 	var perks = {}
-	for i in range(8):
-		if dict[i] == null: continue
-		var perk = ItemDb.get_perk(dict[i])
-		perks.append(perk)
+	for i in range(5):
+			if dict[i] == null: perks[i] = null
+			else:
+				var perk = ItemDb.get_perk(dict[i])
+				perks[i] = perk
 	return perks
 
 func _on_player_changed(player: Player):
 	var new_player = {}
 	new_player["name"] = player.name
 	new_player["job"] = player.job
+	new_player["job_tab"] = player.job_tab
 	new_player["slot"] = player.slot
 	new_player["tab"] = player.tab
 	new_player["hp_max"] = player.hp_max
@@ -100,6 +107,7 @@ func _on_player_changed(player: Player):
 	new_player["agi"] = player.base_agi()
 	new_player["int"] = player.base_int()
 	new_player["def"] = player.base_def()
+	new_player["xp"] = player.xp
 	new_player["items"] = items_to_dict(player.items)
 	new_player["perks"] = perks_to_dict(player.perks)
 	save_data.players[player.slot] = new_player

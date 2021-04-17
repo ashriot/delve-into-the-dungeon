@@ -1,26 +1,25 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/skills/undertow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/wooden_wand.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/tomes/blizzard.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/skills/healing_wave.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/skills/fan_of_flames.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
 name = "Senan"
 frame = 6
-hp_max = 55
-hp_cur = 55
+hp_cur = 35
+hp_max = 35
 strength = 5
-agility = 11
-intellect = 13
-defense = 6
+agility = 6
+intellect = 9
+defense = 2
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
-def_bonus = 0
+def_bonus = 3
 hp_mods = [  ]
 str_mods = [  ]
 agi_mods = [  ]
@@ -35,13 +34,16 @@ perks = {
 }
 job = "Sorcerer"
 job_tab = "Sorcery"
+xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+xp_cut = [ 1, 1, 1, 1, 1 ]
+gains = [ 0, 0, 0, 0, 0 ]
 items = {
 0: ExtResource( 3 ),
-1: ExtResource( 4 ),
+1: ExtResource( 2 ),
 2: null,
 3: null,
-4: ExtResource( 2 ),
-5: ExtResource( 5 ),
+4: ExtResource( 4 ),
+5: null,
 6: null,
 7: null
 }

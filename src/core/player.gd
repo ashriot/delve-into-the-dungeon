@@ -8,6 +8,10 @@ var tab: int
 export var job: String
 export var job_tab: String
 
+export(Array) var xp = [0.0, 0.0, 0.0, 0.0, 0.0]
+export(Array) var xp_cut = [1, 1, 1, 1, 1]
+export(Array) var gains = [0, 0, 0, 0, 0]
+
 export(Dictionary) var items
 
 func changed():
@@ -26,3 +30,7 @@ func add_item(item: Item, slot: int):
 func remove_item(slot_num: int) -> void:
 	items[slot_num] = null
 	changed()
+
+func reset_xp() -> void:
+	xp_cut = [1, 1, 1, 1, 1]
+	gains = [0, 0, 0, 0, 0]

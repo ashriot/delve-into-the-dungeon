@@ -7,6 +7,7 @@
 script = ExtResource( 1 )
 name = "Fan of Flames"
 description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 1
 item_type = 2
 sub_type = 21
 melee = false

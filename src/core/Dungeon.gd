@@ -25,14 +25,16 @@ class EnemyNode extends Reference:
 		sprite.queue_free()
 
 	func collide():
+		dungeon.collided = true
+		print("Collided!")
 		AudioController.play_sfx("battle_start")
 		dungeon.battle_start()
 		if dead: return
 		else:
 			dead = true
 
-	func act(game, collided) -> bool:
-		if !sprite.visible: return false
+	func act(game) -> void:
+		if !sprite.visible: return
 
 		var point = game.enemy_pathfinding.get_closest_point(Vector3(tile.x, tile.y, 0))
 		var player_point = game.enemy_pathfinding.get_closest_point(Vector3(game.player_tile.x, game.player_tile.y, 0))
@@ -44,9 +46,7 @@ class EnemyNode extends Reference:
 			
 			if move_tile == game.player_tile:
 				blocked = true
-				if !collided:
-					collided = true
-					collide()
+				if !dungeon.collided: collide()
 			else:
 				var tile_type = game.map[move_tile.x][move_tile.y]
 				if tile_type == Tile.Floor:
@@ -60,7 +60,6 @@ class EnemyNode extends Reference:
 
 			if !blocked:
 				tile = move_tile
-		return collided
 
 ################################################
 
@@ -102,6 +101,7 @@ var player_tile
 var player_pos setget , get_player_pos
 var enemy_pathfinding
 var active = false
+var collided = false
 
 func init(_game):
 	game = _game
@@ -187,9 +187,8 @@ func try_move(dx, dy):
 		AudioController.play_sfx("melee_step")
 		player_tile = Vector2(x, y)
 	
-	var collided = false
 	for enemy in enemies:
-		collided = enemy.act(self, collided)
+		enemy.act(self)
 		if enemy.dead:
 			enemy.remove()
 			enemies.erase(enemy)
@@ -199,6 +198,7 @@ func try_move(dx, dy):
 func build_level():
 	rooms.clear()
 	rooms_content.clear()
+	for chest in chests: chest.queue_free()
 	chests.clear()
 	map.clear()
 	tile_map.clear()
@@ -267,8 +267,8 @@ func build_level():
 	# Place End Ladder
 
 	var end_room = rooms.back()
-	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 3)
-	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 3)
+	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 2)
+	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
 	call_deferred("update_visuals")

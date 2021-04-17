@@ -92,7 +92,7 @@ func update_stat_data() -> void:
 func update_item_data():
 	var i = 0
 	for child in item_buttons.get_children():
-		if cur_player.unit.items[i] != null:
+		if cur_player.unit.items.has(i):
 			child.setup(cur_player.unit, cur_player.unit.items[i])
 		else: child.setup(cur_player.unit, null)
 		i += 1

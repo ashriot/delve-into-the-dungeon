@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Bandage"
+name = "Potion"
 description = "Heal {tgt} for 50."
 tier = 1
 item_type = 4

@@ -24,6 +24,8 @@ var cur_tab: int
 var chose_next: bool
 var battle_active: bool
 
+var enc_lv: int
+
 func init():
 	battle_active = false
 	battleMenu.hide()
@@ -48,8 +50,8 @@ func init():
 
 func start(players: Array, enemies: Dictionary) -> void:
 	$Victory.hide()
-	player_panels.setup(players)
-	enemy_panels.setup(enemies)
+	enc_lv = enemy_panels.setup(enemies)
+	player_panels.setup(players, enc_lv)
 	clear_buttons()
 	var i = 0
 	for panel in player_panels.get_children():
@@ -319,6 +321,8 @@ func execute_vs_enemy(panel) -> void:
 		targets = enemy_panels.get_all()
 	var hits = item.hits
 	if item.name == "Pummel": hits = randi() % 3 + 3
+	cur_player.calc_xp(item.stat_used)
+	cur_player.calc_xp(item.stat_hit, 0.25)
 	for hit_num in hits:
 		for target in targets:
 			if not target.alive: continue
@@ -354,6 +358,7 @@ func execute_vs_player(panel) -> void:
 		for target in targets:
 			if not target.alive: continue
 			target.take_friendly_hit(user, item)
+			cur_player.calc_xp(item.stat_used)
 		if hit_num > item.hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
 	user.unit.changed()
@@ -410,7 +415,16 @@ func victory() -> void:
 	AudioController.play_bgm("victory")
 	for panel in player_panels.get_children():
 		panel.victory()
-	yield(get_tree().create_timer(2 * GameManager.spd, true), "timeout")
+	for panel in player_panels.get_children():
+		for i in range(panel.unit.gains.size()):
+			if panel.unit.gains[i] > 0:
+				var amt = panel.unit.gains[i]
+				panel.unit.increase_base_stat(i + 1, int(amt))
+				show_text(Enum.get_stat_name(i + 1) + "+" + str(amt), panel.pos)
+				print(panel.unit.name, " -> ", Enum.get_stat_name(i + 1), " increased by ", amt, "!")
+				AudioController.play_sfx("statup")
+				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
+	yield(get_tree().create_timer(0.5 * GameManager.spd, true), "timeout")
 	emit_signal("battle_done")
 
 func _on_Tab_Pressed(tab) -> void:

@@ -16,19 +16,28 @@ func init(battle) -> void:
 		panel.init(battle)
 	hide_all_selectors()
 
-func setup(enemies: Dictionary) -> void:
+func setup(enemies: Dictionary) -> int:
+	var enc_lv = 0
+	var num_of_enemies = 0
 	var i = 0
 	for panel in front_row.get_children():
-		if enemies.get(i) == null: panel.clear()
+		var enemy = enemies.get(i)
+		if enemy == null: panel.clear()
 		else:
-			print(enemies[i][0].strength)
-			panel.setup(enemies[i])
+			panel.setup(enemy)
+			enc_lv += enemy[1]
+			num_of_enemies += 1
 		i += 1
 	i = 3
 	for panel in back_row.get_children():
-		if enemies.get(i) == null: panel.clear()
-		else: panel.setup(enemies[i])
+		var enemy = enemies.get(i)
+		if enemy == null: panel.clear()
+		else:
+			panel.setup(enemy)
+			enc_lv += enemy[1]
+			num_of_enemies += 1
 		i += 1
+	return int(ceil(enc_lv / num_of_enemies))
 
 func get_row(panel: EnemyPanel) -> Array:
 	var row = []

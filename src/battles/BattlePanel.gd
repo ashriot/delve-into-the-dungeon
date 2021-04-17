@@ -46,7 +46,6 @@ func setup(_unit):
 	enabled = true
 	sprite.frame = unit.frame
 	self.hp_max = unit.hp_max
-	self.hp_cur = hp_max
 	hp_percent.max_value = hp_max
 	hp_percent.value = hp_max
 	blocking = 0
@@ -88,7 +87,7 @@ func take_hit(hit) -> void:
 	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
 	var def_mod = float(def / 2) * item.multiplier
-	dmg = int((dmg - def_mod) * (1 + hit.dmg_mod))
+	dmg = max(int((dmg - def_mod) * (1 + hit.dmg_mod)), 0)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	var dmg_text = ""
 #	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)

@@ -22,6 +22,7 @@ func setup(_unit):
 	unit.level = _unit[1]
 	level_up()
 	.setup(unit)
+	self.hp_cur = hp_max
 	actions = unit.actions
 	targetable(false)
 	for i in range(actions.size()):
@@ -40,6 +41,9 @@ func level_up() -> void:
 	unit.agi_growth = int((unit.base_agi() * 0.05 + 0.8) * unit.level - 1)
 	unit.int_growth = int((unit.base_int() * 0.05 + 0.8) * unit.level - 1)
 	unit.def_growth = int((unit.base_def() * 0.05 + 0.8) * unit.level - 1)
+	var cap = int(unit.level / 10)
+	for key in unit.actions:
+		if key > cap: unit.actions[key] = null
 
 func get_action() -> Action:
 	var action = null
