@@ -72,7 +72,8 @@ func _exit_tree() -> void:
 func get_stat(stat) -> int:
 	return unit.get_stat(stat)
 
-func take_hit(hit) -> void:
+func take_hit(hit) -> bool:
+	var gained_xp = false
 	var item = hit.item as Action
 	var effect_only = item.damage_type == Enum.DamageType.EFFECT_ONLY
 	var fx = item.sound_fx
@@ -82,7 +83,7 @@ func take_hit(hit) -> void:
 	var lifesteal = hit.item.lifesteal
 	var miss = false
 	var hit_roll = randi() % 100 + 1
-#	print(hit.user.name, " uses ", hit.item.name, ": ", 101 - hit_roll, " >= ", hit_chance, "%? = ", miss)
+	print(hit.user.name, " uses ", hit.item.name, ": ", 101 - hit_roll, " >= ", hit_chance, "%? = ", miss)
 	if hit_roll > hit_chance: miss = true
 	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
@@ -90,7 +91,7 @@ func take_hit(hit) -> void:
 	dmg = max(int((dmg - def_mod) * (1 + hit.dmg_mod)), 0)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	var dmg_text = ""
-#	print(unit.name, " DEF: ", unit.defense, " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)
+#	print(unit.name, " DEF: ", unit.get_stat(item.stat_vs), " Base dmg: ", (item.multiplier * hit.atk), " dmg taking: ", dmg)
 	if not miss and !effect_only:
 		if hit.item.damage_type == Enum.DamageType.MARTIAL and blocking > 0:
 			if blocking >= dmg:
@@ -99,6 +100,7 @@ func take_hit(hit) -> void:
 			else:
 				dmg -= blocking
 				self.blocking = 0
+		if dmg > 0: gained_xp = true
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
 		anim.play("Hit")
@@ -117,7 +119,9 @@ func take_hit(hit) -> void:
 			if randi() % 100 + 1 > hex[2]: continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_hex(hex[0], hex[1])
-			if success: emit_signal("show_text", "+" + hex[0].name, pos)
+			if success:
+				emit_signal("show_text", "+" + hex[0].name, pos)
+				gained_xp = true
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	if item.gain_boons.size() > 0 and not miss:
 		for boon in item.gain_boons:
@@ -126,6 +130,7 @@ func take_hit(hit) -> void:
 			var success = hit.user.gain_boon(boon[0], boon[1])
 			if success: emit_signal("show_text", "+" + boon[0].name, hit.user_pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	return gained_xp
 
 func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)

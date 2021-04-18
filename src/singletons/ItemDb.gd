@@ -14,19 +14,20 @@ func _ready():
 
 func get_item(item_name: String) -> Item:
 	for item in items:
-		if item.name == item_name: return item
+		if item.name == item_name: return item.duplicate()
 	return null
 
 func get_perk(perk_name: String) -> Item:
 	for perk in perks:
-		if perk.name == perk_name: return perk
+		if perk.name == perk_name: return perk.duplicate()
 	return null
 
 func get_random_item(lv: int) -> Item:
-	var types = [Enum.ItemType.WEAPON, Enum.ItemType.TOOL, Enum.ItemType.TOME]
+	var types = [Enum.ItemType.WEAPON, Enum.ItemType.WEAPON, Enum.ItemType.TOOL, Enum.ItemType.TOME, Enum.ItemType.TOME]
 	var type = types[randi() % types.size()]
 	var rand_items = range(0, items.size())
 	rand_items.shuffle()
+	print("Getting an item of type: ", type, " and tier: ", lv)
 	for i in rand_items:
 		if items[i].item_type == type and items[i].tier == lv:
 			return items[i]

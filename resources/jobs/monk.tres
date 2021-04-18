@@ -9,8 +9,8 @@
 script = ExtResource( 1 )
 name = "Koh"
 frame = 4
-hp_cur = 45
-hp_max = 45
+hp_cur = 75
+hp_max = 75
 strength = 8
 agility = 8
 intellect = 4
@@ -34,7 +34,10 @@ perks = {
 }
 job = "Monk"
 job_tab = "M. Arts"
+job_skill = 20
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+job_xp = 0
+job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {

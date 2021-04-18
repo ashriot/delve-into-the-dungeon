@@ -66,11 +66,16 @@ class EnemyNode extends Reference:
 const TILE_SIZE = 8
 
 const LEVEL_SIZES = [
-	Vector2(30, 30),
-	Vector2(35, 35),
 	Vector2(40, 40),
 	Vector2(45, 45),
 	Vector2(50, 50),
+	Vector2(55, 55),
+	Vector2(60, 60),
+	Vector2(65, 65),
+	Vector2(70, 70),
+	Vector2(75, 75),
+	Vector2(80, 80),
+	Vector2(85, 85),
 ]
 
 const LEVEL_ROOM_COUNTS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -105,7 +110,6 @@ var collided = false
 
 func init(_game):
 	game = _game
-	game.level_num = 0
 	level_num = game.level_num
 	build_level()
 	player.show()
@@ -232,8 +236,8 @@ func build_level():
 
 	print("Placing Player")
 	var start_room = rooms.front()
-	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
-	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
+	var player_x = start_room.position.x + 2 + randi() % int(start_room.size.x - 3)
+	var player_y = start_room.position.y + 2 + randi() % int(start_room.size.y - 3)
 	player_tile = Vector2(player_x, player_y)
 
 	# Place Enemies
@@ -242,8 +246,8 @@ func build_level():
 	for _i in range(num_enemies):
 		
 		var room = get_room(1)
-		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
-		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
+		var y = room.position.y + 2 + randi() % int(room.size.y - 3)
 
 		var blocked = false
 		for enemy in enemies:
@@ -259,8 +263,8 @@ func build_level():
 	var num_chests = LEVEL_CHEST_COUNTS[level_num]
 	for i in range(num_chests):
 		var room = get_room(0)
-		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
-		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
+		var y = room.position.y + 2 + randi() % int(room.size.y - 3)
 		var chest = ChestScene.instance()
 		chests.append(chest.init(self, x, y))
 	

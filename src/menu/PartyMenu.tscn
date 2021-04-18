@@ -483,7 +483,6 @@ hframes = 10
 frame = 142
 
 [node name="Items" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 69.0
@@ -679,22 +678,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Use" type="Button" parent="Items/PopupMenu/HBoxContainer"]
+[node name="Remove" type="Button" parent="Items/PopupMenu/HBoxContainer"]
 margin_right = 34.0
 margin_bottom = 9.0
 rect_min_size = Vector2( 34, 9 )
-disabled = true
+shortcut_in_tooltip = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Use"]
+[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Remove"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
 margin_top = 2.0
 margin_right = -1.0
-text = "USE"
+text = "REMOVE"
 align = 1
 valign = 1
 __meta__ = {
@@ -724,7 +723,7 @@ valign = 1
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -8.0
+margin_bottom = -7.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -927,8 +926,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 9.0
-margin_top = 1.0
-margin_bottom = 10.0
+margin_bottom = 9.0
 mouse_filter = 2
 color = Color( 1, 1, 0.921569, 1 )
 __meta__ = {
@@ -951,8 +949,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 9.0
-margin_top = 1.0
-margin_bottom = 10.0
+margin_bottom = 9.0
 mouse_filter = 2
 color = Color( 1, 1, 0.921569, 1 )
 __meta__ = {
@@ -960,6 +957,30 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Inventory/BG/FilterBack"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 62.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "INVENTORY"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FilterBack2" type="ColorRect" parent="Inventory/BG"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_bottom = 9.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Inventory/BG/FilterBack2"]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 62.0
@@ -1127,7 +1148,7 @@ __meta__ = {
 [connection signal="pressed" from="MainMenu/MenuButtons/Inventory" to="." method="_on_Inventory_pressed"]
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab1" to="." method="_on_Tab1_pressed"]
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab2" to="." method="_on_Tab2_pressed"]
-[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Use" to="." method="_on_Swap_pressed"]
+[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Swap" to="." method="_on_Swap_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Left" to="." method="_on_Left_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Right" to="." method="_on_Right_pressed"]

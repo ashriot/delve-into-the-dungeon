@@ -26,6 +26,7 @@ func setup(_item: Item, limited = true) -> void:
 	if limited:
 		self.uses_remain = item.uses
 		if uses_remain < 1: disabled = true
+		else: disabled = false
 	else:
 		uses.hide()
 		uses2.hide()

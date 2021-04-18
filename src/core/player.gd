@@ -7,8 +7,11 @@ var slot: int
 var tab: int
 export var job: String
 export var job_tab: String
+export(Enum.SubItemType) var job_skill
 
 export(Array) var xp = [0.0, 0.0, 0.0, 0.0, 0.0]
+export var job_xp = 0
+export var job_lv = 0
 export(Array) var xp_cut = [1, 1, 1, 1, 1]
 export(Array) var gains = [0, 0, 0, 0, 0]
 

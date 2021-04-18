@@ -3,8 +3,10 @@ extends Node2D
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
 
+var centuar = preload("res://resources/enemies/centuar.tres")
 var goblin = preload("res://resources/enemies/goblin.tres")
 var gargoyle = preload("res://resources/enemies/gargoyle.tres")
+var mandrake = preload("res://resources/enemies/mandrake.tres")
 var mermaid = preload("res://resources/enemies/mermaid.tres")
 var pixie = preload("res://resources/enemies/pixie.tres")
 
@@ -25,12 +27,15 @@ export var mute: bool
 export var spd: = 1.0
 export(Array, Resource) var players
 
+var enemy_picker = []
+
 var hud_timer: = 0.0
-var level_num: = 1 setget set_level_num
+var level_num: int setget set_level_num
 var _Inventory = load("res://src/core/inventory.gd")
 var inventory = _Inventory.new()
 
 func _ready():
+	randomize()
 	fade.show()
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
@@ -42,6 +47,7 @@ func _ready():
 	update_hud()
 	AudioController.play_bgm("dungeon")
 	hud_timer = 3
+	enemy_picker = [centuar, goblin, gargoyle, mandrake, mermaid, pixie]
 
 func _physics_process(delta: float) -> void:
 	if !dungeon.active: return
@@ -94,18 +100,24 @@ func battle_start():
 	menu_button.show()
 
 func get_enemies() -> Dictionary:
-	var lv = int(level_num / 3) + 1
-	var mob0 = [goblin, randi() % 2 + lv]
-	var mob1 = [gargoyle, randi() % 2 + lv] if randi() % 2 > 0 else null
-	var mob2 = [goblin, randi() % 2 + lv] if randi() % 2 > 0 else null
-	return {
-		0: mob0,
-		1: mob1,
-		2: mob2,
-	}
+	var mod = int(min(level_num + 2, 6))
+	print( "Max num of mobs: ", mod)
+	var mobs = randi() % mod + 1
+	var max_lv = int(level_num / 5) + 1
+	var min_lv = max(int(level_num / 5) - 3, 1)
+	var encounter = {}
+	for i in range(mobs):
+		var slot = 1 if mobs == 1 else i
+		var lv = randi() % (1 + max_lv - min_lv) + min_lv
+		if mobs == 1: lv += 1
+		if mobs == 2 and i == 1: slot = 2
+		if mobs == 3 and i == 1: slot = (randi() % 2) * 3 + 1
+		encounter[slot] = [enemy_picker[randi() % enemy_picker.size()], lv]
+	return encounter
 
 func _on_Chest_opened() -> void:
-	var item = ItemDb.get_random_item(level_num + 1)
+	var lv = int(level_num / 5) + 1
+	var item = ItemDb.get_random_item(lv)
 	var text = item.name
 	if item.item_type == Enum.ItemType.TOME: text = text.insert(0,"Tome of ")
 	found(text)
@@ -133,6 +145,7 @@ func _on_FadeIn() -> void:
 func set_level_num(value) -> void:
 	level_num = value
 	level.text = str(value)
+	print(level.text)
 
 func _on_MenuButton_pressed() -> void:
 	dungeon.active = false

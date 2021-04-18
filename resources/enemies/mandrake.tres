@@ -1,19 +1,18 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
-[ext_resource path="res://resources/enemy actions/claw.tres" type="Resource" id=2]
-[ext_resource path="res://resources/enemy actions/wing_flap.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemy actions/leaf_slash.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Gargoyle"
-frame = 1
+name = "Mandrake"
+frame = 10
 hp_cur = 0
-hp_max = 55
-strength = 8
-agility = 5
-intellect = 6
-defense = 12
+hp_max = 60
+strength = 7
+agility = 6
+intellect = 9
+defense = 8
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -32,7 +31,7 @@ level = 1
 gold = 25
 actions = {
 0: ExtResource( 2 ),
-1: ExtResource( 3 ),
+1: null,
 2: null,
 3: null,
 4: null

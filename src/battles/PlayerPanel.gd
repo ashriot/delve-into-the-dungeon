@@ -10,7 +10,8 @@ var tab: int setget set_tab
 var ready:= true setget set_ready
 var selected:= false setget set_selected
 
-var enc_lv:= 0
+var enc_lv: float
+var gained_xp: bool
 
 func init(battle):
 	.init(battle)
@@ -57,10 +58,10 @@ func set_ready(value: bool):
 		outline.modulate.a = 0.15
 
 func set_hp_cur(value):
-	if hp_cur > value:
+	if hp_cur > value and !gained_xp:
 		calc_hp_xp()
 	.set_hp_cur(value)
-	unit.hp_cur = value
+	unit.hp_cur = clamp(value, 0, hp_max)
 	if blocking > 0:
 		hp_cur_display.modulate = Color.slategray
 		hp_cur_display.text = str(blocking)
@@ -85,8 +86,15 @@ func get_melee_penalty() -> bool:
 
 func take_hit(hit) -> void:
 	.take_hit(hit)
-	calc_xp(hit.item.stat_vs)
-	calc_xp(hit.stat_hit)
+	if gained_xp: return
+	calc_xp(hit.item.stat_vs, 0.5)
+	calc_xp(hit.stat_hit, 0.25)
+	gained_xp = true
+
+func take_friendly_hit(user, item) -> void:
+	var prev_hp = hp_cur
+	.take_friendly_hit(user, item)
+	if prev_hp < hp_cur: calc_xp(item.stat_vs, 0.5)
 
 func calc_xp(stat, mod = 1.0) -> void:
 	if stat < 2: return
@@ -97,20 +105,34 @@ func calc_xp(stat, mod = 1.0) -> void:
 	var stat_val = unit.get_stat(stat)
 	var threshold = float((enc_lv * 1) +  (15 * 1))
 	var xp = 1 - pow(0.85, threshold / (stat_val + unit.gains[0]))
-	unit.xp[id] += xp / unit.xp_cut[id] * 100 * mod
-	unit.xp_cut[id] += 0.5 * mod
-	if unit.xp[id] > 100:
-		unit.xp[id] = 0
+	var prev = unit.xp[id]
+	unit.xp[id] += xp * unit.xp_cut[id] * mod
+	unit.xp_cut[id] *= 1 - 0.66 * mod
+	if unit.xp[id] > 1:
+		unit.xp[id] -= 1
 		unit.gains[id] += 1
-	print(unit.name, " ", Enum.get_stat_name(stat), " XP -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
+	print(unit.name, " ", Enum.get_stat_name(stat), ": ", prev, " -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
 
 func calc_hp_xp() -> void:
 	var stat_val = unit.get_stat(Enum.StatType.MaxHP)
 	var threshold = float((enc_lv * 10) +  (15 * 10))
 	var xp = 1 - pow(0.85, threshold / (stat_val + unit.gains[0]))
-	unit.xp[0] += xp / unit.xp_cut[0] * 100
-	unit.xp_cut[0] += 0.5
-	if unit.xp[0] > 100:
-		unit.xp[0] = 0
-		unit.gains[0] += randi() % 4 + 2
-	print(unit.name, " Max HP", " -> ", unit.xp[0], " cut: ", unit.xp_cut[0])
+	var prev = unit.xp[0]
+	unit.xp[0] += xp * unit.xp_cut[0]
+	unit.xp_cut[0] *= 0.66
+	if unit.xp[0] > 1:
+		unit.xp[0] -= 1
+		unit.gains[0] += randi() % 3 + 3
+	print(unit.name, " Max HP: ", prev, " -> ", unit.xp[0], " cut: ", unit.xp_cut[0])
+
+func calc_job_xp() -> void:
+	print("Enc Lv: ", enc_lv)
+	var stat_val = unit.job_lv + 1
+	var threshold = float(enc_lv)
+	var xp = 1 - pow(0.9, threshold / stat_val)
+	var prev = unit.job_xp
+	unit.job_xp += xp
+	if unit.job_xp > 1:
+		unit.job_xp -= 1
+		print("Job Rank UP! Learned a new action!")
+	print(unit.name, " Job XP ", prev, " -> ", unit.job_xp)

@@ -14,7 +14,8 @@ export(Enum.StatType) var stat_vs
 export(Enum.StatType) var stat_hit = Enum.StatType.NA
 export var multiplier: float
 export var bonus_damage: int
-export var hits:= 1
+export var min_hits:= 1
+export var max_hits:= 1
 export var lifesteal: = 0.0
 export var hit_chance: int
 export var crit_chance: int
@@ -62,7 +63,8 @@ func get_frame() -> int:
 func get_desc() -> String:
 	var sub = description as String
 	var dmg = Enum.get_stat_name(stat_used) + "x" + str(multiplier)
-	dmg += ("(x" + str(hits) + ")") if hits > 1 else ""
+	var hits = str(max_hits) if min_hits == max_hits else (str(min_hits) + "-" + str(max_hits))
+	dmg += ("(x" + hits + ")") if max_hits > 1 else ""
 	dmg = colorize(stat_used, dmg)
 	sub = sub.replace("{potency}", dmg)
 	sub = sub.replace("{dmg}", Enum.get_damage_name(damage_type))

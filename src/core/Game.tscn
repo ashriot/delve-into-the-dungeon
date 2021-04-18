@@ -219,7 +219,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-mute = true
 players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
 
 [node name="Dungeon" type="Node2D" parent="."]
@@ -263,7 +262,6 @@ anims/Hop = SubResource( 9 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DungeonHUD" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -496,7 +494,6 @@ hframes = 10
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
-visible = false
 
 [node name="Fade" parent="CanvasLayer" instance=ExtResource( 13 )]
 visible = false

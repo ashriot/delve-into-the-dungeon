@@ -7,3 +7,4 @@ export(Array, String) var profiles
 
 export var inventory: Array
 export var players: Dictionary
+export var level_num: int

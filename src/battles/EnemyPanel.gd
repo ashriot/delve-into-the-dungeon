@@ -75,7 +75,7 @@ func update_dmg_display(hit):
 	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
 	var def_mod = int(float(def / 2) * item.multiplier)
-	dmg = int(dmg - def_mod) * (1 + hit.dmg_mod) * hit.item.hits
+	dmg = int(dmg - def_mod) * (1 + hit.dmg_mod) * hit.item.max_hits
 	dmg_display.max_value = hp_max
 	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
 	dmg_display.show()

@@ -20,12 +20,12 @@ func get_items():
 func get_item(index):
 	return items[index]
 
-func add_item(item_name):
+func add_item(item_name, uses = -1):
 	var item = ItemDb.get_item(item_name)
 	if not item:
 		print("ERROR: Could not find an item called: ", item_name)
 		return
-	item.uses = item.max_uses
+	item.uses = item.max_uses if uses == -1 else uses
 	items.append(item)
 	emit_signal("inventory_changed", self)
 

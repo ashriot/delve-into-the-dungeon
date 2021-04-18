@@ -115,24 +115,6 @@ func set_cur_tab(value) -> void:
 		$Items/BG/HBoxContainer/Tab1/ColorRect.show()
 		$Items/BG/HBoxContainer/Tab2/ColorRect.hide()
 
-func set_cur_btn(value) -> void:
-	if value == null:
-		cur_btn.selected = false
-		popup.hide()
-		return
-	if cur_btn == value:
-		AudioController.back()
-		cur_btn.selected = false
-		cur_btn = null
-		popup.hide()
-		return
-	AudioController.select()
-	if cur_btn != null: cur_btn.selected = false
-	cur_btn = value
-	cur_btn.selected = true
-	popup.rect_global_position = cur_btn.rect_global_position - Vector2(-1, popup.rect_size.y * 1)
-	popup.show()
-
 func _on_Items_pressed() -> void:
 	AudioController.click()
 	cur_menu = items_panel
@@ -153,14 +135,15 @@ func _on_PlayerMenuPanel_pressed(panel) -> void:
 
 func _on_ItemButton_clicked(button) -> void:
 	if button.empty:
-		AudioController.select()
-		equip_item(button)
+		if (button.get_index() < 4 or button.slot_type == Enum.SubItemType.NA):
+			AudioController.select()
+			equip_item(button)
 	else:
 		self.cur_btn = button
 
 func equip_item(button) -> void:
 	cur_btn = button
-	inv_preview.setup(cur_player, button)
+	inv_preview.setup(cur_player.unit, button)
 	inv_preview.show()
 	inv_panel.show()
 
@@ -182,9 +165,19 @@ func _on_Tab2_pressed() -> void:
 	AudioController.confirm()
 	self.cur_tab = 1
 
+func _on_Remove_pressed():
+	AudioController.confirm()
+	cur_player.unit.remove_item(cur_btn.get_index())
+	if cur_btn.item.uses > 0: game.inventory.add_item(cur_btn.item.name, cur_btn.item.uses)
+	cur_btn.setup(cur_player.unit, null)
+	cur_btn.selected = false
+	cur_btn = null
+	popup.hide()
+	update_inv_data()
+
 func _on_Swap_pressed() -> void:
 	AudioController.confirm()
-	inv_preview.setup(cur_player, cur_btn.item)
+	inv_preview.setup(cur_player.unit, cur_btn.item)
 	inv_preview.show()
 	inv_panel.show()
 
@@ -242,6 +235,25 @@ func update_page_data():
 	total_pages = max(ceil(size / 10.0), 1)
 	if cur_page < 0: cur_page = total_pages - 1
 	elif cur_page >= total_pages: cur_page = 0
+
+func set_cur_btn(value) -> void:
+	if value.get_index() > 3: return
+	if value == null:
+		cur_btn.selected = false
+		popup.hide()
+		return
+	if cur_btn == value:
+		AudioController.back()
+		cur_btn.selected = false
+		cur_btn = null
+		popup.hide()
+		return
+	AudioController.select()
+	if cur_btn != null: cur_btn.selected = false
+	cur_btn = value
+	cur_btn.selected = true
+	popup.rect_global_position = cur_btn.rect_global_position - Vector2(-1, popup.rect_size.y * 1)
+	popup.show()
 
 func _on_Left_pressed():
 	if total_pages == 1: return 

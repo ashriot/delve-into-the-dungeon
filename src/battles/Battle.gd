@@ -24,7 +24,7 @@ var cur_tab: int
 var chose_next: bool
 var battle_active: bool
 
-var enc_lv: int
+var enc_lv: float
 
 func init():
 	battle_active = false
@@ -176,7 +176,8 @@ func enemy_take_action(panel: EnemyPanel):
 	panel.anim.play("Hit")
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = get_enemy_targets(panel, action)
-	for hit_num in action.hits:
+	var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
+	for hit_num in hits:
 		for target in targets:
 			if not target.alive: continue
 			var atk = panel.get_stat(action.stat_used)
@@ -194,8 +195,9 @@ func enemy_take_action(panel: EnemyPanel):
 			else: target.take_hit(hit)
 		if action.target_type >= Enum.TargetType.ANY_ROW:
 			AudioController.play_sfx(action.sound_fx)
-		if hit_num < action.hits - 1:
+		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
+	for target in targets: target.gained_xp = false
 	emit_signal("enemy_done")
 
 func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
@@ -305,6 +307,7 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 		select_player(panel, true)
 
 func execute_vs_enemy(panel) -> void:
+	var gained_xp = false
 	var reach = false
 	var melee_penalty = cur_player.get_index() > 1
 	var item = cur_btn.item as Item
@@ -319,10 +322,7 @@ func execute_vs_enemy(panel) -> void:
 		targets = enemy_panels.get_row(panel)
 	if item.target_type == Enum.TargetType.ALL_ENEMIES:
 		targets = enemy_panels.get_all()
-	var hits = item.hits
-	if item.name == "Pummel": hits = randi() % 3 + 3
-	cur_player.calc_xp(item.stat_used)
-	cur_player.calc_xp(item.stat_hit, 0.25)
+	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
 	for hit_num in hits:
 		for target in targets:
 			if not target.alive: continue
@@ -331,12 +331,13 @@ func execute_vs_enemy(panel) -> void:
 			var atk = user.get_stat(item.stat_used)
 			var hit = Hit.new()
 			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
-			target.take_hit(hit)
+			gained_xp = target.take_hit(hit)
 		if item.target_type >= Enum.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
-	user.unit.changed()
+	if gained_xp: cur_player.calc_xp(item.stat_used)
+	cur_player.calc_xp(item.stat_hit, 0.25)
 	get_next_player()
 
 func execute_vs_player(panel) -> void:
@@ -350,18 +351,17 @@ func execute_vs_player(panel) -> void:
 	finish_action(turn_spent)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
-	AudioController.play_sfx(item.sound_fx)
 	var targets = [panel]
 	if item.target_type == Enum.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()
-	for hit_num in item.hits:
+	cur_player.calc_xp(item.stat_used)
+	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
+	for hit_num in hits:
 		for target in targets:
 			if not target.alive: continue
 			target.take_friendly_hit(user, item)
-			cur_player.calc_xp(item.stat_used)
-		if hit_num > item.hits - 1:
+		if hit_num > hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
-	user.unit.changed()
 	get_next_player()
 
 func finish_action(spend_turn: = true) -> void:
@@ -424,6 +424,8 @@ func victory() -> void:
 				print(panel.unit.name, " -> ", Enum.get_stat_name(i + 1), " increased by ", amt, "!")
 				AudioController.play_sfx("statup")
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
+		panel.calc_job_xp()
+		panel.unit.changed()
 	yield(get_tree().create_timer(0.5 * GameManager.spd, true), "timeout")
 	emit_signal("battle_done")
 

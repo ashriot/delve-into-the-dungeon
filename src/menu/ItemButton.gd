@@ -5,6 +5,7 @@ var empty: bool setget set_empty
 var selected: bool setget set_selected
 var item: Item
 var player: Player
+var slot_type: int
 
 func init(menu):
 	.init(menu)
@@ -12,6 +13,7 @@ func init(menu):
 
 func setup(_player: Player, _item: Item) -> void:
 	player = _player
+	slot_type = player.job_skill
 	if _item == null:
 		self.empty = true
 		return

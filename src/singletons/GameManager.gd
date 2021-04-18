@@ -1,5 +1,7 @@
 extends Node
 
+const VERSION = "0.1a"
+
 var save_name = "adam"
 var save_data: SaveData
 var path = "user://" + save_name;
@@ -15,41 +17,52 @@ func initialize_game_data(_game):
 	spd = game.spd
 	var dir = Directory.new();
 	if dir.file_exists(file_path):
-		save_data = load(file_path)
-		loading = true
-	else:
+		save_data = load(file_path) as SaveData
+		if save_data.game_version != VERSION:
+			dir.remove(file_path)
+			loading = false
+		else:
+			loading = true
+	if !loading:
 		dir.make_dir_recursive(path)
 		save_data = SaveData.new()
-		save_data.game_version = "0.1a"
+		save_data.game_version = VERSION
 		loading = false
 
 func initialize_party():
-	var players = []
-	if loading:
-		print("LOADING DATA")
-		for player in save_data.players.values():
-			var new_player = Player.new()
-			new_player.name = player["name"]
-			new_player.job = player["job"]
-			new_player.job_tab = player["job_tab"]
-			new_player.slot = player["slot"]
-			new_player.tab = player["tab"]
-			new_player.frame = player["frame"]
-			new_player.hp_max = player["hp_max"]
-			new_player.hp_cur = player["hp_cur"]
-			new_player.strength = player["str"]
-			new_player.agility = player["agi"]
-			new_player.intellect = player["int"]
-			new_player.defense = player["def"]
-			new_player.xp = player["xp"] if player.has("xp") else [0, 0, 0, 0, 0]
-			new_player.items = dict_to_items(player["items"])
-			new_player.perks = dict_to_perks(player["perks"])
-			players.insert(new_player.slot, new_player)
-		game.players = players
-	else:
-		players = game.players
-		for player in players:
+	if !loading:
+		save_data.level_num = 1
+		var i = 0
+		for player in game.players:
+			player.slot = i
+			_on_player_changed(player)
 			player.heal()
+			i += 1
+		
+	var players = []
+	for player in save_data.players.values():
+		var new_player = Player.new()
+		new_player.name = player["name"]
+		new_player.job = player["job"]
+		new_player.job_tab = player["job_tab"]
+		new_player.job_skill = player["job_skill"]
+		new_player.slot = player["slot"]
+		new_player.tab = player["tab"]
+		new_player.frame = player["frame"]
+		new_player.hp_max = player["hp_max"]
+		new_player.hp_cur = player["hp_cur"]
+		new_player.strength = player["str"]
+		new_player.agility = player["agi"]
+		new_player.intellect = player["int"]
+		new_player.defense = player["def"]
+		new_player.xp = player["xp"]
+		new_player.job_xp = player["job_xp"]
+		new_player.job_lv = player["job_lv"]
+		new_player.items = dict_to_items(player["items"])
+		new_player.perks = dict_to_perks(player["perks"])
+		players.insert(new_player.slot, new_player)
+	game.players = players
+	game.level_num = save_data.level_num
 	var i = 0
 	for player in players:
 		player.slot = i
@@ -62,7 +75,7 @@ func items_to_dict(items: Dictionary) -> Dictionary:
 	for i in range(8):
 		if items[i] == null: dict[i] = null
 		else:
-			var item = ItemDb.get_item(items[i].name)
+			var item = items[i]
 			dict[i] = [item.name, item.uses]
 	return dict
 
@@ -98,6 +111,7 @@ func _on_player_changed(player: Player):
 	new_player["name"] = player.name
 	new_player["job"] = player.job
 	new_player["job_tab"] = player.job_tab
+	new_player["job_skill"] = player.job_skill
 	new_player["slot"] = player.slot
 	new_player["tab"] = player.tab
 	new_player["hp_max"] = player.hp_max
@@ -108,11 +122,17 @@ func _on_player_changed(player: Player):
 	new_player["int"] = player.base_int()
 	new_player["def"] = player.base_def()
 	new_player["xp"] = player.xp
+	new_player["job_xp"] = player.job_xp
+	new_player["job_lv"] = player.job_lv
 	new_player["items"] = items_to_dict(player.items)
 	new_player["perks"] = perks_to_dict(player.perks)
 	save_data.players[player.slot] = new_player
+	save_data.level_num = game.level_num
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)
+
+func _on_level_changed() -> void:
+	save_data.level_num = game.level_num
 
 func initialize_inventory():
 	game.inventory.connect("inventory_changed", self, "_on_inventory_changed")
