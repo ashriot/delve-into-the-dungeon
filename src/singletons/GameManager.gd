@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.1a"
+const VERSION = "0.2"
 
 var save_name = "adam"
 var save_data: SaveData
@@ -127,11 +127,11 @@ func _on_player_changed(player: Player):
 	new_player["items"] = items_to_dict(player.items)
 	new_player["perks"] = perks_to_dict(player.perks)
 	save_data.players[player.slot] = new_player
-	save_data.level_num = game.level_num
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)
 
 func _on_level_changed() -> void:
+	print("Saving level: ", game.level_num)
 	save_data.level_num = game.level_num
 
 func initialize_inventory():

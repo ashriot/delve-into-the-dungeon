@@ -167,17 +167,24 @@ func take_healing(amt: int) -> void:
 	if amt > 0: emit_signal("show_text", "+" + str(amt), pos)
 
 func gain_hex(hex: Effect, duration: int) -> bool:
-	if hexes.has(hex.name): return false
-	hexes.append([hex.name, duration])
-	add_status([hex.name, hex.frame])
-	if hex.name == "Dull": unit.int_mods.append(0.75)
-	elif hex.name == "Frail": unit.def_mods.append(0.75)
-	elif hex.name == "Slow": unit.agi_mods.append(0.75)
-	elif hex.name == "Weak": unit.str_mods.append(0.75)
+	var found = false
+	for h in hexes: if h[0].name == hex.name:
+		found = true
+		if h[1] < duration: h[1] = duration
+		else: return false
+	if not found:
+		hexes.append([hex, duration])
+		add_status([hex.name, hex.frame])
+		if hex.name == "Dull": unit.int_mods.append(0.75)
+		elif hex.name == "Frail": unit.def_mods.append(0.75)
+		elif hex.name == "Slow": unit.agi_mods.append(0.75)
+		elif hex.name == "Weak": unit.str_mods.append(0.75)
 	return true
 
 func has_hex(hex_name: String) -> bool:
-	return hexes.has(hex_name)
+	for hex in hexes:
+		if hex[0].name == hex_name: return true
+	return false
 
 func gain_boon(boon: Effect, duration: int) -> bool:
 	var found = false
@@ -210,8 +217,8 @@ func decrement_hexes(timing: String) -> void:
 				print(hex[0].name, " -> ", hex[1])
 				hex[1] -= 1
 				if hex[1] == 0:
-					remove_boon(hex[0])
-
+					remove_hex(hex[0])
+					
 func remove_boon(find: Effect) -> void:
 	for boon in boons:
 		if boon[0] == find:
@@ -225,6 +232,20 @@ func remove_boon(find: Effect) -> void:
 	elif find.name == "Fast": unit.agi_mods.remove(unit.agi_mods.find(1.25))
 	elif find.name == "Safe": unit.def_mods.remove(unit.def_mods.find(1.25))
 	elif find.name == "Wise": unit.int_mods.remove(unit.int_mods.find(1.25))
+
+func remove_hex(find: Effect) -> void:
+	for hex in hexes:
+		if hex[0] == find:
+			hexes.remove(hexes.find(hex))
+			break
+	for s in statuses:
+		if s[0] == find.name:
+			remove_status(find.name)
+			break
+	if find.name == "Weak": unit.str_mods.remove(unit.str_mods.find(0.75))
+	elif find.name == "Slow": unit.agi_mods.remove(unit.agi_mods.find(0.75))
+	elif find.name == "Frail": unit.def_mods.remove(unit.def_mods.find(0.75))
+	elif find.name == "Dull": unit.int_mods.remove(unit.int_mods.find(0.75))
 
 func add_status(value: Array) -> void:
 	statuses.append(value)

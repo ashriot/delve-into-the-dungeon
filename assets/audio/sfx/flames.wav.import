@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/flames.wav-049973229a9ed776a7d11318aa84637b.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/flames.wav"
+dest_files=[ "res://.import/flames.wav-049973229a9ed776a7d11318aa84637b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

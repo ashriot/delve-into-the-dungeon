@@ -160,7 +160,6 @@ func end_turn():
 	enemy_turns()
 
 func enemy_turns():
-	print("Enemy Turns")
 	for enemy in enemy_panels.get_children():
 		if enemy.enabled and enemy.alive:
 			enemy_take_action(enemy)
@@ -172,34 +171,41 @@ func enemy_turns():
 	start_players_turns()
 
 func enemy_take_action(panel: EnemyPanel):
-	var action = panel.get_action()
-	AudioController.play_sfx(action.use_fx)
-	show_text(action.name, panel.pos)
-	panel.anim.play("Hit")
-	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-	var targets = get_enemy_targets(panel, action)
-	var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
-	for hit_num in hits:
-		for target in targets:
-			if not target.alive: continue
-			var atk = panel.get_stat(action.stat_used)
-			var dmg_mod = 0
-			if action.melee and panel.melee_penalty: dmg_mod -= 0.50
-			var hit = Hit.new()
-			var hit_chance = 100 if !panel.has_perk("Precise") else 160
-			if action.item_type == Enum.ItemType.MARTIAL_SKILL or \
-				action.item_type == Enum.ItemType.WEAPON:
-				hit_chance = action.hit_chance * panel.get_stat(Enum.StatType.AGI)
-			if panel.has_hex("Blind"): hit_chance /= 2
-			hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
-			if action.target_type < Enum.TargetType.ONE_ENEMY:
-				target.take_friendly_hit(hit)
-			else: target.take_hit(hit)
-		if action.target_type >= Enum.TargetType.ANY_ROW:
-			AudioController.play_sfx(action.sound_fx)
-		if hit_num < hits - 1:
-			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
-	for target in targets: target.gained_xp = false
+	panel.decrement_hexes("Start")
+	var stunned = false
+	if panel.has_hex("Stun"):
+		stunned = true
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	if !stunned:
+		var action = panel.get_action()
+		AudioController.play_sfx(action.use_fx)
+		show_text(action.name, panel.pos)
+		panel.anim.play("Hit")
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+		var targets = get_enemy_targets(panel, action)
+		var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
+		for hit_num in hits:
+			for target in targets:
+				if not target.alive: continue
+				var atk = panel.get_stat(action.stat_used)
+				var dmg_mod = 0
+				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
+				var hit = Hit.new()
+				var hit_chance = 100 if !panel.has_perk("Precise") else 160
+				if action.item_type == Enum.ItemType.MARTIAL_SKILL or \
+					action.item_type == Enum.ItemType.WEAPON:
+					hit_chance = action.hit_chance * panel.get_stat(Enum.StatType.AGI)
+				if panel.has_hex("Blind"): hit_chance /= 2
+				hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
+				if action.target_type < Enum.TargetType.ONE_ENEMY:
+					target.take_friendly_hit(hit)
+				else: target.take_hit(hit)
+			if action.target_type >= Enum.TargetType.ANY_ROW:
+				AudioController.play_sfx(action.sound_fx)
+			if hit_num < hits - 1:
+				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
+		for target in targets: target.gained_xp = false
+	panel.decrement_hexes("End")
 	emit_signal("enemy_done")
 
 func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:

@@ -92,6 +92,11 @@ func take_hit(hit) -> void:
 	gained_xp = true
 
 func take_friendly_hit(user, item) -> void:
+	if item.name == "Quick Step":
+		if !ready:
+			self.ready = true
+			emit_signal("show_text", "Ready!", pos)
+		return
 	var prev_hp = hp_cur
 	.take_friendly_hit(user, item)
 	if prev_hp < hp_cur: calc_xp(item.stat_vs, 0.5)

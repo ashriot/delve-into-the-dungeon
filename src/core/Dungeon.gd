@@ -158,8 +158,8 @@ func try_move(dx, dy):
 
 	var blocked = false
 	match tile_type:
-		Tile.Wall: blocked = false
-		Tile.Stone: blocked = false
+		Tile.Wall: blocked = true
+		Tile.Stone: blocked = true
 		Tile.Floor:
 			for enemy in enemies:
 				if enemy.tile.x == x and enemy.tile.y == y:
@@ -236,8 +236,8 @@ func build_level():
 
 	print("Placing Player")
 	var start_room = rooms.front()
-	var player_x = start_room.position.x + 2 + randi() % int(start_room.size.x - 3)
-	var player_y = start_room.position.y + 2 + randi() % int(start_room.size.y - 3)
+	var player_x = start_room.position.x + 2 + randi() % int(start_room.size.x - 2)
+	var player_y = start_room.position.y + 2 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
 
 	# Place Enemies
@@ -246,8 +246,8 @@ func build_level():
 	for _i in range(num_enemies):
 		
 		var room = get_room(1)
-		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
-		var y = room.position.y + 2 + randi() % int(room.size.y - 3)
+		var x = room.position.x + 2 + randi() % int(room.size.x - 2)
+		var y = room.position.y + 2 + randi() % int(room.size.y - 2)
 
 		var blocked = false
 		for enemy in enemies:
@@ -262,7 +262,7 @@ func build_level():
 	# Place Chests
 	var num_chests = LEVEL_CHEST_COUNTS[level_num]
 	for i in range(num_chests):
-		var room = get_room(0)
+		var room = get_room(1)
 		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
 		var y = room.position.y + 2 + randi() % int(room.size.y - 3)
 		var chest = ChestScene.instance()
@@ -271,6 +271,11 @@ func build_level():
 	# Place End Ladder
 
 	var end_room = rooms.back()
+	if rooms_content[rooms.find(end_room)] == 0:
+		print("Finding a new exit")
+		for i in range(rooms.size()):
+			if rooms_content[i] > 0: end_room = rooms[i]
+		
 	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 2)
 	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
@@ -283,7 +288,7 @@ func build_level():
 
 func get_room(offset):
 	var room_num = offset + randi() % (rooms.size() - 1)
-	while rooms_content[room_num] > 1:
+	while rooms_content[room_num] > 3:
 		room_num = offset + randi() % (rooms.size() - 1)
 	rooms_content[room_num] += 1
 	return rooms[room_num]

@@ -23,6 +23,7 @@ onready var level = $CanvasLayer/DungeonHUD/Level
 
 signal done_fading
 signal done_learned_skill
+signal level_changed
 
 export var mute: bool
 export var spd: = 1.0
@@ -36,9 +37,10 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
 func _ready():
-	randomize()
+#	randomize()
 	fade.show()
 	GameManager.initialize_game_data(self)
+	connect("level_changed", GameManager, "_on_level_changed")
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
 	AudioController.mute = mute
@@ -146,7 +148,7 @@ func _on_FadeIn() -> void:
 func set_level_num(value) -> void:
 	level_num = value
 	level.text = str(value)
-	print(level.text)
+	emit_signal("level_changed")
 
 func _on_MenuButton_pressed() -> void:
 	dungeon.active = false
@@ -158,14 +160,14 @@ func close_menu() -> void:
 	dungeon.active = true
 
 func learned_skill(unit: Player) -> void:
-	var next = -1
+	var next = 7
 	var excluding = []
 	for i in range(4, 8):
 		if unit.items[i] == null:
-			if next == -1: next = i
+			if next == 7: next = i
 		else: excluding.append(unit.items[i].name)
 			
 	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
-	if next > -1: unit.items[next] = skill
+	unit.items[next] = skill
 	yield(get_tree().create_timer(0.1), "timeout")
 	emit_signal("done_learned_skill", skill.name)
