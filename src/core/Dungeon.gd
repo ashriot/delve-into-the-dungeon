@@ -66,21 +66,20 @@ class EnemyNode extends Reference:
 const TILE_SIZE = 8
 
 const LEVEL_SIZES = [
-	Vector2(20, 20),
+	Vector2(25, 25),
+	Vector2(25, 25),
+	Vector2(30, 30),
+	Vector2(35, 35),
+	Vector2(40, 40),
 	Vector2(45, 45),
 	Vector2(50, 50),
 	Vector2(55, 55),
 	Vector2(60, 60),
-	Vector2(65, 65),
-	Vector2(70, 70),
-	Vector2(75, 75),
-	Vector2(80, 80),
-	Vector2(85, 85),
 ]
 
-const LEVEL_ROOM_COUNTS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-const LEVEL_ENEMY_COUNTS = [6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20]
-const LEVEL_CHEST_COUNTS = [2, 2, 3, 3, 4, 4, 5, 6, 7, 8, 9, 10]
+const LEVEL_ROOM_COUNTS = [3, 3, 4, 5, 6, 7, 8, 9, 10]
+const LEVEL_ENEMY_COUNTS = [2, 2, 4, 6, 8, 10, 12, 14, 16]
+const LEVEL_CHEST_COUNTS = [2, 2, 3, 4, 5, 6, 7, 8, 9]
 #const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
 #const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
 #const LEVEL_CHEST_COUNTS = [2, 4, 6, 8, 10]
@@ -107,6 +106,10 @@ var player_pos setget , get_player_pos
 var enemy_pathfinding
 var active = false
 var collided = false
+var moving = false
+var first_step = false
+var moving_counter = 0.0
+var move_event = null
 
 func init(_game):
 	game = _game
@@ -118,13 +121,29 @@ func init(_game):
 # warning-ignore:return_value_discarded
 	connect("fade_in", game, "_on_FadeIn")
 
+func _physics_process(delta):
+	if moving:
+		moving_counter += 1 * delta
+		if moving_counter > 0.15:
+			moving_counter = -0.15 if first_step else 0
+			first_step = false
+			movement()
+
 func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed:
+			first_step = true
+			moving_counter = 1
+			move_event = event
+			moving = true
+		else:
+			first_step = false
+			move_event = null
+			moving = false
 	if !active or !event.is_pressed(): return
 
-	if event.is_action("ui_accept"):
-		AudioController.confirm()
-		game.inventory.add_item("Short Bow")
-
+func movement():
+	var event = move_event
 	game.hud_timer = 0.0
 	var dir = null
 	if event is InputEventMouseButton:
@@ -178,6 +197,7 @@ func try_move(dx, dy):
 			set_tile(x, y, Tile.Floor)
 		Tile.StairsDown:
 			active = false
+			moving = false
 			emit_signal("fade_out")
 			yield(game, "done_fading")
 			game.level_num += 1
@@ -236,8 +256,8 @@ func build_level():
 
 	print("Placing Player")
 	var start_room = rooms.front()
-	var player_x = start_room.position.x + 2 + randi() % int(start_room.size.x - 2)
-	var player_y = start_room.position.y + 2 + randi() % int(start_room.size.y - 2)
+	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
+	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
 
 	# Place Enemies
@@ -246,8 +266,8 @@ func build_level():
 	for _i in range(num_enemies):
 		
 		var room = get_room(1)
-		var x = room.position.x + 2 + randi() % int(room.size.x - 2)
-		var y = room.position.y + 2 + randi() % int(room.size.y - 2)
+		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
+		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
 
 		var blocked = false
 		for enemy in enemies:
@@ -271,6 +291,7 @@ func build_level():
 	# Place End Ladder
 
 	var end_room = rooms.back()
+	print("ROOMS CONTENT ", rooms_content)
 	if rooms_content[rooms.find(end_room)] == 0:
 		print("Finding a new exit")
 		for i in range(rooms.size()):
@@ -288,7 +309,10 @@ func build_level():
 
 func get_room(offset):
 	var room_num = offset + randi() % (rooms.size() - 1)
-	while rooms_content[room_num] > 3:
+	var empty_rooms = rooms_content.count(0) > 1
+	if empty_rooms:
+		room_num = rooms_content.find_last(0)
+	else:
 		room_num = offset + randi() % (rooms.size() - 1)
 	rooms_content[room_num] += 1
 	return rooms[room_num]
@@ -531,6 +555,7 @@ func set_tile(x, y, type):
 		clear_path(Vector2(x, y))
 
 func battle_start():
+	moving = false
 	game.battle_start()
 
 func get_player_pos() -> Vector2:
