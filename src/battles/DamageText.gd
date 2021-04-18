@@ -42,3 +42,16 @@ func found(text: String) -> void:
 	$Text/Text.text = text
 	$Text/Found.show()
 	animate("Display")
+
+func learned(parent, text: String) -> void:
+	$Text/TextL.text = text
+	$Text/TextR.text = text
+	$Text/TextU.text = text
+	$Text/TextD.text = text
+	$Text/Text.text = text
+	$Text/Learned.show()
+	parent.add_child(self)
+	var size = txt.rect_size.x
+	rect_global_position.x = clamp(rect_global_position.x, \
+		-31 + size / 2, (get_viewport_rect().size.x - size) / 2 + 3)
+	animate("Display")

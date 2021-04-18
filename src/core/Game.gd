@@ -22,6 +22,7 @@ onready var gold = $CanvasLayer/DungeonHUD/Gold
 onready var level = $CanvasLayer/DungeonHUD/Level
 
 signal done_fading
+signal done_learned_skill
 
 export var mute: bool
 export var spd: = 1.0
@@ -32,7 +33,7 @@ var enemy_picker = []
 var hud_timer: = 0.0
 var level_num: int setget set_level_num
 var _Inventory = load("res://src/core/inventory.gd")
-var inventory = _Inventory.new()
+var inventory: Inventory = _Inventory.new()
 
 func _ready():
 	randomize()
@@ -41,7 +42,7 @@ func _ready():
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
 	AudioController.mute = mute
-	battle.init()
+	battle.init(self)
 	dungeon.init(self)
 	party_menu.init(self)
 	update_hud()
@@ -116,7 +117,7 @@ func get_enemies() -> Dictionary:
 	return encounter
 
 func _on_Chest_opened() -> void:
-	var lv = int(level_num / 5) + 1
+	var lv = int(level_num / 5) + 2
 	var item = ItemDb.get_random_item(lv)
 	var text = item.name
 	if item.item_type == Enum.ItemType.TOME: text = text.insert(0,"Tome of ")
@@ -155,3 +156,16 @@ func _on_MenuButton_pressed() -> void:
 func close_menu() -> void:
 	party_menu.hide()
 	dungeon.active = true
+
+func learned_skill(unit: Player) -> void:
+	var next = -1
+	var excluding = []
+	for i in range(4, 8):
+		if unit.items[i] == null:
+			if next == -1: next = i
+		else: excluding.append(unit.items[i].name)
+			
+	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
+	if next > -1: unit.items[next] = skill
+	yield(get_tree().create_timer(0.1), "timeout")
+	emit_signal("done_learned_skill", skill.name)

@@ -25,8 +25,10 @@ var chose_next: bool
 var battle_active: bool
 
 var enc_lv: float
+var game = null
 
-func init():
+func init(game):
+	self.game = game
 	battle_active = false
 	battleMenu.hide()
 #	for child in buttons.get_children():
@@ -241,6 +243,11 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	damage_text.rect_global_position = pos
 	if display: damage_text.display(self, text)
 	else: damage_text.text(self, text)
+	
+func learned_text(text: String, pos: Vector2) -> void:
+	var damage_text = DamageText.instance()
+	damage_text.rect_global_position = pos
+	damage_text.learned(self, text)
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
 	if !battle_active: return
@@ -356,6 +363,7 @@ func execute_vs_player(panel) -> void:
 		targets = player_panels.get_children()
 	cur_player.calc_xp(item.stat_used)
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
+	AudioController.play_sfx(item.sound_fx)
 	for hit_num in hits:
 		for target in targets:
 			if not target.alive: continue
@@ -401,7 +409,7 @@ func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
 
 func _on_PlayerPanel_died(panel: PlayerPanel) -> void:
 	pass
-
+	
 func victory() -> void:
 	AudioController.bgm.stop()
 	clear_selections()
@@ -424,9 +432,16 @@ func victory() -> void:
 				print(panel.unit.name, " -> ", Enum.get_stat_name(i + 1), " increased by ", amt, "!")
 				AudioController.play_sfx("statup")
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
-		panel.calc_job_xp()
+		var ranks_up = panel.calc_job_xp()
+		for r in range(ranks_up):
+			if panel.unit.job_skill == Enum.SubItemType.NA: break
+			game.learned_skill(panel.unit)
+			var skill_name = yield(game, "done_learned_skill")
+			AudioController.play_sfx("skillup")
+			learned_text(skill_name, panel.pos)
+			yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 		panel.unit.changed()
-	yield(get_tree().create_timer(0.5 * GameManager.spd, true), "timeout")
+	yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 	emit_signal("battle_done")
 
 func _on_Tab_Pressed(tab) -> void:

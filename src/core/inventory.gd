@@ -27,9 +27,16 @@ func add_item(item_name, uses = -1):
 		return
 	item.uses = item.max_uses if uses == -1 else uses
 	items.append(item)
+	items.sort_custom(InventorySorter, "sort_by_name")
 	emit_signal("inventory_changed", self)
 
 func remove_item(item: Item):
 	print("removing: ", item.name)
 	items.erase(item)
 	emit_signal("inventory_changed", self)
+
+class InventorySorter:
+	static func sort_by_name(a, b):
+		if a.name < b.name:
+			return true
+		return false

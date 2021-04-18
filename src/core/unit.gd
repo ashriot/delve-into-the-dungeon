@@ -102,7 +102,6 @@ func increase_base_stat(stat, amt: int) -> void:
 		Enum.StatType.DEF:
 			defense += amt
 			return
-		
 
 func has_perk(perk_name) -> bool:
 	for i in perks.size():

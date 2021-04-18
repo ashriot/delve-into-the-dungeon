@@ -66,7 +66,7 @@ class EnemyNode extends Reference:
 const TILE_SIZE = 8
 
 const LEVEL_SIZES = [
-	Vector2(40, 40),
+	Vector2(20, 20),
 	Vector2(45, 45),
 	Vector2(50, 50),
 	Vector2(55, 55),
@@ -530,8 +530,3 @@ func battle_start():
 
 func get_player_pos() -> Vector2:
 	return player_tile * TILE_SIZE
-
-func _on_Button_pressed() -> void:
-	self.level_num = 0
-	build_level()
-	$CanvasLayer/Win.hide()

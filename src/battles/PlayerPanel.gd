@@ -125,14 +125,16 @@ func calc_hp_xp() -> void:
 		unit.gains[0] += randi() % 3 + 3
 	print(unit.name, " Max HP: ", prev, " -> ", unit.xp[0], " cut: ", unit.xp_cut[0])
 
-func calc_job_xp() -> void:
-	print("Enc Lv: ", enc_lv)
+func calc_job_xp() -> int:
+	var ranks_up = 0
 	var stat_val = unit.job_lv + 1
 	var threshold = float(enc_lv)
 	var xp = 1 - pow(0.9, threshold / stat_val)
-	var prev = unit.job_xp
+	var prev = unit.job_xp * rand_range(0.85, 1.15)
 	unit.job_xp += xp
 	if unit.job_xp > 1:
 		unit.job_xp -= 1
-		print("Job Rank UP! Learned a new action!")
+		unit.job_lv += 1
+		ranks_up += 1
 	print(unit.name, " Job XP ", prev, " -> ", unit.job_xp)
+	return ranks_up

@@ -29,8 +29,18 @@ func get_random_item(lv: int) -> Item:
 	rand_items.shuffle()
 	print("Getting an item of type: ", type, " and tier: ", lv)
 	for i in rand_items:
-		if items[i].item_type == type and items[i].tier == lv:
-			return items[i]
+		if items[i].item_type == type and items[i].tier <= lv:
+			return items[i].duplicate()
+	return null
+
+func get_item_by_type(type: int, lv: int, excluding: Array) -> Item:
+	var rand_items = range(0, items.size())
+	rand_items.shuffle()
+	print("Getting an item of type: ", type, " and tier: ", lv)
+	for i in rand_items:
+		var item = items[i]
+		if item.sub_type == type and item.tier <= lv and !excluding.has(item.name):
+			return items[i].duplicate()
 	return null
 
 ## HELPER FUNCTIONS

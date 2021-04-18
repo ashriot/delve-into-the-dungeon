@@ -138,7 +138,6 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 	if item.name == "Healing Haka":
 		def = int(float(hp_max - hp_cur) * 0.33)
 	var dmg_text = ""
-	AudioController.play_sfx(item.sound_fx)
 	if item.damage_type == Enum.DamageType.HEAL:
 		dmg += def
 		self.hp_cur += dmg
