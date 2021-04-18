@@ -11,6 +11,9 @@ onready var buttons = $Buttons
 onready var tab1 = $Tabs/Tab1
 onready var tab2 = $Tabs/Tab2
 onready var battleMenu = $BattleMenu
+onready var enemy_info = $EnemyInfo
+onready var enemy_title = $EnemyInfo/Panel/Title
+onready var enemy_desc = $EnemyInfo/Panel/Desc
 
 var cur_player = null
 var cur_btn = null
@@ -28,6 +31,7 @@ var enc_lv: float
 var game = null
 
 func init(game):
+	enemy_info.hide()
 	self.game = game
 	battle_active = false
 	battleMenu.hide()
@@ -255,6 +259,13 @@ func learned_text(text: String, pos: Vector2) -> void:
 	damage_text.rect_global_position = pos
 	damage_text.learned(self, text)
 
+func _on_ItemButton_long_pressed(button: BattleButton) -> void:
+	AudioController.click()
+	$EnemyInfo/Panel.rect_position.y = 1
+	enemy_title.text = button.item.name
+	enemy_desc.text = button.item.desc
+	enemy_info.show()
+
 func _on_BattleButton_pressed(button: BattleButton) -> void:
 	if !battle_active: return
 	if button.item.name == "End Turn":
@@ -304,11 +315,15 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	if !battle_active: return
-	print("Lv. ", panel.unit.level, " ", panel.unit.name, "\tHP: ", panel.hp_cur, "/", panel.hp_max, \
-		"\tSTR: ", panel.unit.strength, "\tAGI: ", panel.unit.agility, \
-		"\tINT: ", panel.unit.intellect, "\tDEF: ", panel.unit.defense)
-	if not panel.valid_target: return
-	execute_vs_enemy(panel)
+	AudioController.click()
+	if not panel.valid_target:
+		$EnemyInfo/Panel.rect_position.y = 50
+		enemy_info.show()
+		enemy_title.text = "Lv. " + str(panel.unit.level) + " " + panel.unit.name
+		enemy_desc.text = "HP: " + str(panel.hp_cur) + "/" + str(panel.hp_max)
+		enemy_desc.text += "\nSTR: " + str(panel.unit.strength) + "   AGI: " + str(panel.unit.agility)
+		enemy_desc.text += "\nINT: " + str(panel.unit.intellect) + "   DEF: " + str(panel.unit.defense)
+	else: execute_vs_enemy(panel)
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 	if !battle_active: return
@@ -456,3 +471,7 @@ func _on_Tab_Pressed(tab) -> void:
 
 	AudioController.select()
 	toggle_tabs(index)
+
+func _on_Close_pressed():
+	AudioController.back()
+	enemy_info.hide()

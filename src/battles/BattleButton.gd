@@ -1,4 +1,4 @@
-extends Button
+extends PressButton
 class_name BattleButton
 
 onready var sprite = $Sprite
@@ -14,8 +14,9 @@ var selected: bool setget set_selected
 var enabled: = false
 
 func init(battle) -> void:
+	.init(battle)
 # warning-ignore:return_value_discarded
-	connect("pressed", battle, "_on_BattleButton_pressed", [self])
+	connect("clicked", battle, "_on_BattleButton_pressed", [self])
 
 func setup(_item: Item, limited = true) -> void:
 	enabled = true

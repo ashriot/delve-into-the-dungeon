@@ -65,7 +65,6 @@ func get_desc() -> String:
 	var dmg = Enum.get_stat_name(stat_used) + "x" + str(multiplier)
 	var hits = str(max_hits) if min_hits == max_hits else (str(min_hits) + "-" + str(max_hits))
 	dmg += ("(x" + hits + ")") if max_hits > 1 else ""
-	dmg = colorize(stat_used, dmg)
 	sub = sub.replace("{potency}", dmg)
 	sub = sub.replace("{dmg}", Enum.get_damage_name(damage_type))
 	sub = sub.replace("{tgt}", Enum.get_target_name(target_type))
