@@ -100,6 +100,7 @@ static func get_target_name(target) -> String:
 	match target:
 		TargetType.ALL_ALLIES: return "the party"
 		TargetType.ALL_ENEMIES: return "the enemy party"
+		TargetType.RANDOM_ENEMY: return "a random enemy"
 		TargetType.ANY_ALLY: return "an ally"
 		TargetType.ANY_ROW: return "an enemy row"
 		TargetType.BACK_ROW: return "the back enemy row"

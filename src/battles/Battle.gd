@@ -346,13 +346,21 @@ func execute_vs_enemy(panel) -> void:
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = [panel]
+	var randoms = []
 	if item.target_type >= Enum.TargetType.ANY_ROW \
 		and item.target_type <= Enum.TargetType.BACK_ROW:
 		targets = enemy_panels.get_row(panel)
-	if item.target_type == Enum.TargetType.ALL_ENEMIES:
+	if item.target_type == Enum.TargetType.ALL_ENEMIES or \
+		item.target_type == Enum.TargetType.RANDOM_ENEMY:
 		targets = enemy_panels.get_all()
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
+	if item.target_type == Enum.TargetType.RANDOM_ENEMY:
+		var size = targets.size()
+		for i in range(hits):
+			randoms.append(randi() % size)
+		print(randoms)
 	for hit_num in hits:
+		if randoms.size() > 0: targets = [enemy_panels.get_all()[hit_num]]
 		for target in targets:
 			if not target.alive: continue
 			var dmg_mod = 0.0

@@ -84,6 +84,8 @@ func show_selectors(target_type):
 		show_back_row_selector()
 	elif target_type == Enum.TargetType.ALL_ENEMIES:
 		show_all_selector()
+	elif target_type == Enum.TargetType.RANDOM_ENEMY:
+		show_all_selector()
 
 func show_front_row_selector():
 	if front_row_dead():
