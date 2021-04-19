@@ -9,7 +9,7 @@ var slot: int
 
 func init(menu) -> void:
 	.init(menu)
-	var _err = connect("clicked", menu, "_on_InvButton_clicked", [self])
+	var _err = connect("pressed", menu, "_on_InvButton_pressed", [self])
 	_err = connect("remove_item", menu, "_on_InvButton_remove_item")
 
 func setup(_item: Item, _slot: = -1) -> void:

@@ -16,7 +16,7 @@ var enabled: = false
 func init(battle) -> void:
 	.init(battle)
 # warning-ignore:return_value_discarded
-	connect("clicked", battle, "_on_BattleButton_pressed", [self])
+	connect("pressed", battle, "_on_BattleButton_pressed", [self])
 
 func setup(_item: Item, limited = true) -> void:
 	enabled = true

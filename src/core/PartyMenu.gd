@@ -133,7 +133,8 @@ func _on_PlayerMenuPanel_pressed(panel) -> void:
 	update_stat_data()
 	if cur_menu == items_panel: update_item_data()
 
-func _on_ItemButton_clicked(button) -> void:
+func _on_ItemButton_pressed(button) -> void:
+	if button.tooltip: return
 	if button.empty:
 		if (button.get_index() < 4 or button.slot_type == Enum.SubItemType.NA):
 			AudioController.select()
@@ -213,7 +214,8 @@ func update_inv_data():
 func _on_InvButton_remove_item(item: Item) -> void:
 	game.inventory.remove_item(item)
 
-func _on_InvButton_clicked(button) -> void:
+func _on_InvButton_pressed(button) -> void:
+	if button.tooltip: return
 	if inv_preview.visible:
 		AudioController.click()
 		var item = button.item

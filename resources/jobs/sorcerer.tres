@@ -3,7 +3,7 @@
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/wooden_wand.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/skills/fan_of_flames.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/tomes/icicle.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -36,16 +36,16 @@ job = "Sorcerer"
 job_tab = "Sorcery"
 job_skill = 21
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
-job_xp = 0
+job_xp = 0.5
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
 0: ExtResource( 3 ),
-1: ExtResource( 2 ),
-2: null,
+1: ExtResource( 4 ),
+2: ExtResource( 2 ),
 3: null,
-4: ExtResource( 4 ),
+4: null,
 5: null,
 6: null,
 7: null

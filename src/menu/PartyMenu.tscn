@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
 [ext_resource path="res://src/core/PartyMenu.gd" type="Script" id=3]
 [ext_resource path="res://assets/themes/ui/button_select.png" type="Texture" id=4]
 [ext_resource path="res://src/menu/ItemButton.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/themes/ui/x_button.png" type="Texture" id=6]
 [ext_resource path="res://src/menu/Tooltip.gd" type="Script" id=7]
 [ext_resource path="res://assets/themes/ui/left_arrow.png" type="Texture" id=8]
 [ext_resource path="res://assets/themes/ui/right_arrow.png" type="Texture" id=9]
@@ -299,7 +298,6 @@ __meta__ = {
 }
 
 [node name="MainMenu" type="ColorRect" parent="."]
-visible = false
 margin_top = 30.0
 margin_right = 72.0
 margin_bottom = 121.0
@@ -351,6 +349,7 @@ hframes = 10
 frame = 142
 
 [node name="Traits" type="Button" parent="MainMenu/MenuButtons"]
+modulate = Color( 1, 1, 1, 0.12549 )
 margin_top = 11.0
 margin_right = 68.0
 margin_bottom = 20.0
@@ -384,6 +383,7 @@ hframes = 10
 frame = 142
 
 [node name="Equipment" type="Button" parent="MainMenu/MenuButtons"]
+modulate = Color( 1, 1, 1, 0.12549 )
 margin_top = 22.0
 margin_right = 68.0
 margin_bottom = 31.0
@@ -450,6 +450,7 @@ hframes = 10
 frame = 142
 
 [node name="Options" type="Button" parent="MainMenu/MenuButtons"]
+modulate = Color( 1, 1, 1, 0.12549 )
 margin_top = 44.0
 margin_right = 68.0
 margin_bottom = 53.0
@@ -483,6 +484,7 @@ hframes = 10
 frame = 142
 
 [node name="Items" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 69.0
@@ -1018,34 +1020,8 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+color = Color( 0.0588235, 0.0588235, 0.0784314, 0.784314 )
 script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="Tooltip"]
-margin_top = 120.0
-margin_right = 72.0
-margin_bottom = 127.0
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Tooltip/ColorRect"]
-margin_left = 8.0
-margin_top = 1.0
-margin_right = 48.0
-margin_bottom = 8.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "CLOSE"
-
-[node name="CloseTooltip" type="TextureButton" parent="Tooltip"]
-margin_top = 120.0
-margin_right = 72.0
-margin_bottom = 127.0
-texture_normal = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1067,22 +1043,19 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Tooltip/Container/Panel"]
-margin_left = 2.0
-margin_top = 10.0
-margin_right = 73.0
+[node name="Label" type="Label" parent="Tooltip/Container/Panel"]
+margin_left = 1.0
+margin_top = 9.0
+margin_right = 71.0
 margin_bottom = 59.0
-bbcode_enabled = true
-bbcode_text = "UNINITIALIZED!!!!! "
 text = "UNINITIALIZED!!!!! "
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
+align = 1
+valign = 1
+autowrap = true
 
 [node name="ColorRect" type="ColorRect" parent="Tooltip/Container/Panel"]
 margin_right = 71.0
-margin_bottom = 8.0
+margin_bottom = 9.0
 color = Color( 1, 1, 0.921569, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1139,6 +1112,14 @@ margin_right = 72.0
 margin_bottom = 19.0
 text = "POISON. Lose 10% HP per turn."
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseTooltip" type="Button" parent="Tooltip"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

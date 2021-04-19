@@ -83,7 +83,7 @@ const LEVEL_CHEST_COUNTS = [2, 2, 3, 4, 5, 6, 7, 8, 9]
 #const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
 #const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
 #const LEVEL_CHEST_COUNTS = [2, 4, 6, 8, 10]
-const MIN_ROOM_DIMENSION = 5
+const MIN_ROOM_DIMENSION = 6
 const MAX_ROOM_DIMENSION = 7
 
 onready var tile_map = $TileMap
@@ -168,6 +168,7 @@ func movement():
 	else: try_move(0, 0)
 
 func try_move(dx, dy):
+	var move_down = false
 	var x = player_tile.x + dx
 	var y = player_tile.y + dy
 
@@ -189,26 +190,36 @@ func try_move(dx, dy):
 					if !chest.opened:
 						AudioController.play_sfx("chest")
 						chest.open()
-					blocked = true
+						chest.remove()
+						chests.erase(chest)
+						blocked = true
 					break
 		Tile.Door:
 			blocked = true
 			AudioController.play_sfx("door")
 			set_tile(x, y, Tile.Floor)
 		Tile.StairsDown:
+			for enemy in enemies:
+				if enemy.tile.x == x and enemy.tile.y == y:
+					blocked = true
+					break
+			for chest in chests:
+				if chest.tile.x == x and chest.tile.y == y:
+					if !chest.opened:
+						AudioController.play_sfx("chest")
+						chest.open()
+						chest.remove()
+						chests.erase(chest)
+						blocked = true
+					break
 			active = false
 			moving = false
-			emit_signal("fade_out")
-			yield(game, "done_fading")
-			game.level_num += 1
-			if game.level_num < LEVEL_SIZES.size():
-				build_level()
-			else:
-				$CanvasLayer/Win.show()
+			move_down = true
 
 	$Player/Sprite/AnimationPlayer.play("Hop")
 	if !blocked:
-		AudioController.play_sfx("melee_step")
+		if move_down: AudioController.play_sfx("stairs")
+		else: AudioController.play_sfx("melee_step")
 		player_tile = Vector2(x, y)
 	
 	for enemy in enemies:
@@ -218,6 +229,14 @@ func try_move(dx, dy):
 			enemies.erase(enemy)
 
 	call_deferred("update_visuals")
+	if move_down:
+		emit_signal("fade_out")
+		yield(game, "done_fading")
+		game.level_num += 1
+		if game.level_num < LEVEL_SIZES.size():
+			build_level()
+		else:
+			$CanvasLayer/Win.show()
 
 func build_level():
 	rooms.clear()
@@ -232,6 +251,7 @@ func build_level():
 	enemies.clear()
 
 	enemy_pathfinding = AStar.new()
+	var blocklist = []
 
 	level_size = LEVEL_SIZES[level_num]
 	for x in range(level_size.x):
@@ -259,6 +279,7 @@ func build_level():
 	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
 	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
+	blocklist.append(player_tile)
 
 	# Place Enemies
 
@@ -266,18 +287,20 @@ func build_level():
 	for _i in range(num_enemies):
 		
 		var room = get_room(1)
+		
 		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
 		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+		
+		var j = 0
+		while (blocklist.has(Vector2(x, y))) and j < 100:
+			j += 1
+			print("Enemy looping ", j)
+			x = room.position.x + 1 + randi() % int(room.size.x - 2)
+			y = room.position.y + 1 + randi() % int(room.size.y - 2)
 
-		var blocked = false
-		for enemy in enemies:
-			if enemy.tile.x == x and enemy.tile.y == y:
-				blocked = true
-				break
-
-		if !blocked:
-			var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
-			enemies.append(enemy)
+		var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
+		enemies.append(enemy)
+		blocklist.append(Vector2(x, y))
 
 	# Place Chests
 	var num_chests = LEVEL_CHEST_COUNTS[level_num]
@@ -285,20 +308,34 @@ func build_level():
 		var room = get_room(1)
 		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
 		var y = room.position.y + 2 + randi() % int(room.size.y - 3)
+		
+		var j = 0
+		while (blocklist.has(Vector2(x, y))) and j < 100:
+			j += 1
+			print("Chest looping ", j)
+			x = room.position.x + 2 + randi() % int(room.size.x - 3)
+			y = room.position.y + 2 + randi() % int(room.size.y - 3)
+		
 		var chest = ChestScene.instance()
 		chests.append(chest.init(self, x, y))
+		blocklist.append(Vector2(x, y))
 	
 	# Place End Ladder
-
 	var end_room = rooms.back()
-	print("ROOMS CONTENT ", rooms_content)
 	if rooms_content[rooms.find(end_room)] == 0:
-		print("Finding a new exit")
 		for i in range(rooms.size()):
 			if rooms_content[i] > 0: end_room = rooms[i]
 		
-	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 2)
-	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
+	var ladder_x = end_room.position.x + 2 + randi() % int(end_room.size.x - 3)
+	var ladder_y = end_room.position.y + 2 + randi() % int(end_room.size.y - 3)
+	
+	var j = 0
+	while (blocklist.has(Vector2(ladder_x, ladder_y))) and j < 100:
+		j += 1
+		print("Ladder looping ", j)
+		ladder_x = end_room.position.x + 2 + randi() % int(end_room.size.x - 3)
+		ladder_y = end_room.position.y + 2 + randi() % int(end_room.size.y - 3)
+	
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
 	call_deferred("update_visuals")
@@ -306,7 +343,7 @@ func build_level():
 	emit_signal("fade_in")
 	yield(game, "done_fading")
 	active = true
-
+	
 func get_room(offset):
 	var room_num = offset + randi() % (rooms.size() - 1)
 	var empty_rooms = rooms_content.count(0) > 1

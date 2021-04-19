@@ -9,7 +9,7 @@ var slot_type: int
 
 func init(menu):
 	.init(menu)
-	var _err = connect("clicked", menu, "_on_ItemButton_clicked", [self])
+	var _err = connect("pressed", menu, "_on_ItemButton_pressed", [self])
 
 func setup(_player: Player, _item: Item) -> void:
 	player = _player
@@ -42,6 +42,8 @@ func set_selected(value) -> void:
 
 # DRAG AND DROP
 func get_drag_data(_pos: Vector2):
+	tooltip = false
+	timer.stop()
 	if empty: return
 	AudioController.select()
 	var data = {

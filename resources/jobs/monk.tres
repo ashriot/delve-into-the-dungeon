@@ -1,7 +1,6 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/skills/flying_kick.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wooden_mace.tres" type="Resource" id=6]
 
@@ -36,7 +35,7 @@ job = "Monk"
 job_tab = "M. Arts"
 job_skill = 20
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
-job_xp = 0
+job_xp = 0.5
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
@@ -45,7 +44,7 @@ items = {
 1: ExtResource( 4 ),
 2: null,
 3: null,
-4: ExtResource( 2 ),
+4: null,
 5: null,
 6: null,
 7: null

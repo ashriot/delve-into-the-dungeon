@@ -37,9 +37,9 @@ func init(game):
 	battleMenu.hide()
 #	for child in buttons.get_children():
 #		child.init(self)
-	var inspect = load("res://resources/actions/battleCommands/inspect.tres")
-	var end_turn = load("res://resources/actions/battleCommands/end_turn.tres")
-	var flee = load("res://resources/actions/battleCommands/flee.tres")
+	var inspect = load("res://resources/battleCommands/inspect.tres")
+	var end_turn = load("res://resources/battleCommands/end_turn.tres")
+	var flee = load("res://resources/battleCommands/flee.tres")
 	battleMenu.get_child(0).init(self)
 	battleMenu.get_child(0).setup(inspect, false)
 	battleMenu.get_child(1).init(self)
@@ -267,6 +267,7 @@ func _on_ItemButton_long_pressed(button: BattleButton) -> void:
 	enemy_info.show()
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
+	if button.tooltip: return
 	if !battle_active: return
 	if button.item.name == "End Turn":
 		AudioController.confirm()
@@ -315,8 +316,8 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	if !battle_active: return
-	AudioController.click()
 	if not panel.valid_target:
+		AudioController.click()
 		$EnemyInfo/Panel.rect_position.y = 50
 		enemy_info.show()
 		enemy_title.text = "Lv. " + str(panel.unit.level) + " " + panel.unit.name
@@ -473,5 +474,6 @@ func _on_Tab_Pressed(tab) -> void:
 	toggle_tabs(index)
 
 func _on_Close_pressed():
+	print("Closing tooltip")
 	AudioController.back()
 	enemy_info.hide()

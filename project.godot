@@ -134,6 +134,11 @@ boot_splash/bg_color=Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 config/icon="res://icon.png"
 config/Version="0.2"
 
+[audio]
+
+output_latency=40
+output_latency.web=70
+
 [autoload]
 
 ItemDb="*res://src/singletons/ItemDb.gd"

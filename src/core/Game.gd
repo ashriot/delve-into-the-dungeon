@@ -37,7 +37,7 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
 func _ready():
-#	randomize()
+	randomize()
 	fade.show()
 	GameManager.initialize_game_data(self)
 	connect("level_changed", GameManager, "_on_level_changed")
@@ -104,7 +104,6 @@ func battle_start():
 
 func get_enemies() -> Dictionary:
 	var mod = int(min(level_num + 2, 6))
-	print( "Max num of mobs: ", mod)
 	var mobs = randi() % mod + 1
 	var max_lv = int(level_num / 5) + 1
 	var min_lv = max(int(level_num / 5) - 3, 1)
@@ -112,7 +111,7 @@ func get_enemies() -> Dictionary:
 	for i in range(mobs):
 		var slot = 1 if mobs == 1 else i
 		var lv = randi() % (1 + max_lv - min_lv) + min_lv
-		if mobs == 1: lv += 1
+		if mobs == 1 and level_num > 1: lv += 1
 		if mobs == 2 and i == 1: slot = 2
 		if mobs == 3 and i == 1: slot = (randi() % 2) * 3 + 1
 		encounter[slot] = [enemy_picker[randi() % enemy_picker.size()], lv]
@@ -148,6 +147,7 @@ func _on_FadeIn() -> void:
 func set_level_num(value) -> void:
 	level_num = value
 	level.text = str(value)
+	hud_timer = 3
 	emit_signal("level_changed")
 
 func _on_MenuButton_pressed() -> void:

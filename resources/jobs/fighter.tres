@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/wooden_shield.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/weapons/wooden_sword.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/weapons/wooden_spear.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -36,15 +37,15 @@ job = "Fighter"
 job_tab = "Weapons"
 job_skill = 23
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
-job_xp = 0
+job_xp = 0.5
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
 0: ExtResource( 4 ),
-1: ExtResource( 2 ),
-2: ExtResource( 3 ),
-3: null,
+1: ExtResource( 5 ),
+2: ExtResource( 2 ),
+3: ExtResource( 3 ),
 4: null,
 5: null,
 6: null,

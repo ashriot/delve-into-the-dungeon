@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.3"
+const VERSION = "0.6"
 
 var save_name = "adam"
 var save_data: SaveData
@@ -136,9 +136,10 @@ func _on_level_changed() -> void:
 
 func initialize_inventory():
 	game.inventory.connect("inventory_changed", self, "_on_inventory_changed")
+	var inv = [ ["Potion", 5], ["Potion", 5], ["Potion", 5] ]
 	if loading:
-		var existing_inventory = save_data.inventory.duplicate()
-		game.inventory.set_items(existing_inventory)
+		inv = save_data.inventory.duplicate()
+	game.inventory.set_items(inv)
 
 func _on_inventory_changed(inventory):
 	print("Inventory Changed")

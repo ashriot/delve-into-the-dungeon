@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Nuke"
 description = "Deal 25 True damage to {tgt}."
-tier = 1
+tier = 9
 item_type = 0
 sub_type = 4
 melee = false

@@ -13,6 +13,7 @@ func set_items(newitems: Array) -> void:
 			return
 		item_resource.uses = item[1]
 		items.append(item_resource)
+	emit_signal("inventory_changed", self)
 
 func get_items():
 	return items

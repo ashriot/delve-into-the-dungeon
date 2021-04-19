@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/stairs.wav-d66d3ac313448359951d3a48159f4959.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/stairs.wav"
+dest_files=[ "res://.import/stairs.wav-d66d3ac313448359951d3a48159f4959.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

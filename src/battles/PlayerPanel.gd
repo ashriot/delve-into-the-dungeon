@@ -134,7 +134,7 @@ func calc_job_xp() -> int:
 	var ranks_up = 0
 	var stat_val = unit.job_lv + 1
 	var threshold = float(enc_lv)
-	var xp = 1 - pow(0.9, threshold / stat_val)
+	var xp = 1 - pow(0.75, threshold / stat_val)
 	var prev = unit.job_xp * rand_range(0.85, 1.15)
 	unit.job_xp += xp
 	if unit.job_xp > 1:
