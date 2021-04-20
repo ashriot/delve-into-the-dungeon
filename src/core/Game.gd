@@ -14,6 +14,7 @@ onready var battle = $CanvasLayer/Battle
 onready var dungeon = $Dungeon
 onready var menu_button = $CanvasLayer/MenuButton
 onready var party_menu = $CanvasLayer/PartyMenu
+onready var town_menu = $CanvasLayer/TownMenu
 
 onready var hud = $CanvasLayer/DungeonHUD
 onready var faces = $CanvasLayer/DungeonHUD/Faces
@@ -25,7 +26,7 @@ signal done_fading
 signal done_learned_skill
 signal level_changed
 
-export var mute: bool
+export var mute: bool setget set_mute
 export var spd: = 1.0
 export(Array, Resource) var players
 
@@ -37,18 +38,18 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
 func _ready():
-	randomize()
+#	randomize()
 	fade.show()
 	GameManager.initialize_game_data(self)
 	connect("level_changed", GameManager, "_on_level_changed")
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
-	AudioController.mute = mute
 	battle.init(self)
 	dungeon.init(self)
 	party_menu.init(self)
+	AudioController.mute = mute
 	update_hud()
-	AudioController.play_bgm("dungeon")
+	AudioController.play_bgm("town")
 	hud_timer = 3
 	enemy_picker = [centuar, goblin, gargoyle, mandrake, mermaid, pixie]
 
@@ -171,3 +172,7 @@ func learned_skill(unit: Player) -> void:
 	unit.items[next] = skill
 	yield(get_tree().create_timer(0.1), "timeout")
 	emit_signal("done_learned_skill", skill.name)
+
+func set_mute(value) -> void:
+	mute = value
+	AudioController.mute = mute

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -13,6 +13,10 @@
 [ext_resource path="res://resources/jobs/dancer.tres" type="Resource" id=11]
 [ext_resource path="res://resources/jobs/monk.tres" type="Resource" id=12]
 [ext_resource path="res://src/core/Fade.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/town/TownMenu.gd" type="Script" id=14]
+[ext_resource path="res://src/town/TownMenu.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/images/title.png" type="Texture" id=16]
+[ext_resource path="res://assets/themes/formal.tres" type="DynamicFont" id=17]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
@@ -219,7 +223,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-mute = true
 players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
 
 [node name="Dungeon" type="Node2D" parent="."]
@@ -263,6 +266,7 @@ anims/Hop = SubResource( 9 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DungeonHUD" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -443,24 +447,11 @@ vframes = 20
 hframes = 10
 frame = 131
 
-[node name="TownMenu" type="Control" parent="CanvasLayer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
+script = ExtResource( 14 )
 
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
-
-[node name="Title" type="Control" parent="CanvasLayer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MenuButton" type="Button" parent="CanvasLayer"]
 margin_top = 121.0
@@ -495,6 +486,63 @@ hframes = 10
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
+visible = false
+
+[node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Title"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Title/ColorRect"]
+anchor_right = 1.0
+margin_bottom = 27.0
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Sprite" parent="CanvasLayer/Title/ColorRect"]
+position = Vector2( 36, 44 )
+texture = ExtResource( 16 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Title"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = 22.0
+margin_bottom = 29.0
+text = "TAP TO START"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer/Title"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 44.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 17 )
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "DELVE
+IN THE
+DARK"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Fade" parent="CanvasLayer" instance=ExtResource( 13 )]
 visible = false

@@ -5,6 +5,8 @@ onready var tooltip = $Tooltip
 onready var player_panels = $PlayerPanels
 onready var main_menu = $MainMenu
 onready var stats_panel = $Stats
+onready var options = $Options
+onready var opt_mute = $Options/Panel/Button
 
 onready var items_panel = $Items
 onready var popup = $Items/PopupMenu
@@ -35,10 +37,12 @@ func init(_game) -> void:
 	items_panel.hide()
 	stats_panel.hide()
 	inv_panel.hide()
+	options.hide()
 	game = _game
 	players = game.players
 	inv_preview.hide()
 	main_menu.show()
+	opt_mute.pressed = game.mute
 	for child in player_panels.get_children(): child.init(self)
 	for child in item_buttons.get_children(): child.init(self)
 	for child in inv_buttons.get_children(): child.init(self)
@@ -268,3 +272,11 @@ func _on_Right_pressed():
 	AudioController.click()
 	cur_page += 1
 	update_inv_data()
+
+func _on_OptMute_pressed():
+	game.mute = !game.mute
+
+func _on_Options_pressed():
+	AudioController.click()
+	cur_menu = options
+	options.show()

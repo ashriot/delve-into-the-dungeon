@@ -53,6 +53,11 @@ func get_all() -> Array:
 		if enemy.enabled and enemy.alive: all.append(enemy)
 	return all
 
+func get_random() -> Array:
+	var array = get_all()
+	if array == []: return []
+	return [array[randi() % array.size()]]
+
 func get_children():
 	return front_row.get_children() + back_row.get_children()
 

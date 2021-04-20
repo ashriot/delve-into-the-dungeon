@@ -1,6 +1,6 @@
 extends Node
 
-export var mute: = false
+export var mute: = false setget set_mute
 export var vol_bgm: = 0.0
 export var vol_sfx: = 0.0
 
@@ -11,13 +11,16 @@ onready var sfx3: = $sfx3
 onready var sfx4: = $sfx4
 onready var sfx5: = $sfx5
 
+var bgm_playing: String
+
 func _ready() -> void:
 	set_bgm_volume()
 	set_sfx_volume()
 
 func play_bgm(name: String) -> void:
-	if mute: return
 	if name == "": return
+	bgm_playing = name
+	if mute: return
 	bgm.volume_db = -5
 	bgm.stream = load("res://assets/audio/bgm/" + name + ".ogg")
 	bgm.play()
@@ -71,3 +74,9 @@ func set_sfx_volume() -> void:
 	sfx3.volume_db = vol_sfx
 	sfx4.volume_db = vol_sfx
 	sfx5.volume_db = vol_sfx
+
+func set_mute(value) -> void:
+	mute = value
+	if bgm == null: return
+	if mute: stop_bgm()
+	else: play_bgm(bgm_playing)

@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
 [ext_resource path="res://src/core/PartyMenu.gd" type="Script" id=3]
 [ext_resource path="res://assets/themes/ui/button_select.png" type="Texture" id=4]
 [ext_resource path="res://src/menu/ItemButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/images/icons/check_pressed.png" type="Texture" id=6]
 [ext_resource path="res://src/menu/Tooltip.gd" type="Script" id=7]
 [ext_resource path="res://assets/themes/ui/left_arrow.png" type="Texture" id=8]
 [ext_resource path="res://assets/themes/ui/right_arrow.png" type="Texture" id=9]
 [ext_resource path="res://src/menu/InvButton.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/images/icons/check_empty.png" type="Texture" id=11]
 
 [node name="PartyMenu" type="Control"]
 anchor_right = 1.0
@@ -450,7 +452,6 @@ hframes = 10
 frame = 142
 
 [node name="Options" type="Button" parent="MainMenu/MenuButtons"]
-modulate = Color( 1, 1, 1, 0.12549 )
 margin_top = 44.0
 margin_right = 68.0
 margin_bottom = 53.0
@@ -1123,10 +1124,61 @@ anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Options" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Options"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -7.0
+
+[node name="Button" type="TextureButton" parent="Options/Panel"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 13.0
+margin_bottom = 13.0
+toggle_mode = true
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Options/Panel/Button"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 2.0
+margin_top = -2.5
+margin_right = 42.0
+margin_bottom = 4.5
+text = "Mute BGM"
+
+[node name="BackBanner" type="ColorRect" parent="Options/Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_bottom = 7.0
+mouse_filter = 2
+color = Color( 1, 1, 0.921569, 1 )
+
+[node name="Label" type="Label" parent="Options/Panel/BackBanner"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 41.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "OPTIONS"
 [connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Stats/InfoButton" to="." method="_on_InfoButton_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/Actions" to="." method="_on_Items_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/Inventory" to="." method="_on_Inventory_pressed"]
+[connection signal="pressed" from="MainMenu/MenuButtons/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab1" to="." method="_on_Tab1_pressed"]
 [connection signal="pressed" from="Items/BG/HBoxContainer/Tab2" to="." method="_on_Tab2_pressed"]
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
@@ -1134,3 +1186,4 @@ __meta__ = {
 [connection signal="pressed" from="Inventory/BG/Pages/Left" to="." method="_on_Left_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Right" to="." method="_on_Right_pressed"]
 [connection signal="pressed" from="Tooltip/CloseTooltip" to="Tooltip" method="_on_CloseTooltip_pressed"]
+[connection signal="pressed" from="Options/Panel/Button" to="." method="_on_OptMute_pressed"]
