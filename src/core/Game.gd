@@ -10,6 +10,8 @@ var mandrake = preload("res://resources/enemies/mandrake.tres")
 var mermaid = preload("res://resources/enemies/mermaid.tres")
 var pixie = preload("res://resources/enemies/pixie.tres")
 
+onready var title = $CanvasLayer/Title
+onready var title_anim = $CanvasLayer/Title/AnimationPlayer
 onready var battle = $CanvasLayer/Battle
 onready var dungeon = $Dungeon
 onready var menu_button = $CanvasLayer/MenuButton
@@ -30,6 +32,8 @@ export var mute: bool setget set_mute
 export var spd: = 1.0
 export(Array, Resource) var players
 
+var game_starting
+
 var enemy_picker = []
 
 var hud_timer: = 0.0
@@ -38,20 +42,39 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
 func _ready():
-#	randomize()
+	randomize()
+	title.hide()
 	fade.show()
 	GameManager.initialize_game_data(self)
-	connect("level_changed", GameManager, "_on_level_changed")
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
+	connect("level_changed", GameManager, "_on_level_changed")
+	AudioController.mute = mute
 	battle.init(self)
 	dungeon.init(self)
 	party_menu.init(self)
-	AudioController.mute = mute
 	update_hud()
-	AudioController.play_bgm("town")
 	hud_timer = 3
+	town_menu.show()
+#	show_title()
+#	begin()
 	enemy_picker = [centuar, goblin, gargoyle, mandrake, mermaid, pixie]
+
+func show_title() -> void:
+	game_starting = true
+	dungeon.active = false
+	title.show()
+	AudioController.play_bgm("title")
+	yield(get_tree().create_timer(1), "timeout")
+	title_anim.playback_speed = 0.6
+	title_anim.play("FadeIn")
+	yield(title_anim, "animation_finished")
+	title_anim.playback_speed = 1
+	title_anim.play("Flash")
+	game_starting = false
+
+func begin() -> void:
+	AudioController.play_bgm("dungeon")
 
 func _physics_process(delta: float) -> void:
 	if !dungeon.active: return
@@ -176,3 +199,13 @@ func learned_skill(unit: Player) -> void:
 func set_mute(value) -> void:
 	mute = value
 	AudioController.mute = mute
+
+
+func _on_StartGame_pressed():
+	if game_starting: return
+	fade.fade_to_black()
+	yield(fade, "done")
+	title_anim.stop()
+	title.hide()
+	fade.fade_from_black()
+	begin()

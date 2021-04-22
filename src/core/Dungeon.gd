@@ -25,6 +25,7 @@ class EnemyNode extends Reference:
 		sprite.queue_free()
 
 	func collide():
+		dungeon.active = false
 		dungeon.collided = true
 		print("Collided!")
 		AudioController.play_sfx("battle_start")
@@ -125,11 +126,12 @@ func _physics_process(delta):
 	if moving:
 		moving_counter += 1 * delta
 		if moving_counter > 0.15:
-			moving_counter = -0.15 if first_step else 0
+			moving_counter = -0.15 if first_step else 0.0
 			first_step = false
 			movement()
 
 func _unhandled_input(event):
+	if !active: return
 	if event is InputEventMouseButton:
 		if event.pressed:
 			first_step = true
@@ -140,7 +142,7 @@ func _unhandled_input(event):
 			first_step = false
 			move_event = null
 			moving = false
-	if !active or !event.is_pressed(): return
+	if !event.is_pressed(): return
 
 func movement():
 	var event = move_event
@@ -219,7 +221,7 @@ func try_move(dx, dy):
 	$Player/Sprite/AnimationPlayer.play("Hop")
 	if !blocked:
 		if move_down: AudioController.play_sfx("stairs")
-		else: AudioController.play_sfx("melee_step")
+		else: AudioController.play_sfx("step")
 		player_tile = Vector2(x, y)
 	
 	for enemy in enemies:
@@ -304,7 +306,7 @@ func build_level():
 
 	# Place Chests
 	var num_chests = LEVEL_CHEST_COUNTS[level_num]
-	for i in range(num_chests):
+	for _i in range(num_chests):
 		var room = get_room(1)
 		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
 		var y = room.position.y + 2 + randi() % int(room.size.y - 3)

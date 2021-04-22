@@ -11,7 +11,7 @@ var tile
 var opened: = false
 
 func init(dungeon, x, y) -> Node2D:
-	connect("opened_chest", dungeon.game, "_on_Chest_opened")
+	var _err = connect("opened_chest", dungeon.game, "_on_Chest_opened")
 	tile = Vector2(x, y)
 	$Sprite.frame = 0
 	position =  tile * TILE_SIZE

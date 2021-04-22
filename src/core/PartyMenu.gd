@@ -197,9 +197,9 @@ func _on_Inventory_pressed() -> void:
 func update_inv_data():
 	update_page_data()
 	var size = game.inventory.items.size()
-	var lo = cur_page * 10
-	var hi = min((cur_page * 10) + 9, size)
-	var items = game.inventory.items.slice(lo, hi)
+#	var lo = cur_page * 10
+#	var hi = min((cur_page * 10) + 9, size)
+#	var items = game.inventory.items.slice(lo, hi)
 	var i = cur_page * 10
 	for child in inv_buttons.get_children():
 		if i < game.inventory.items.size():
@@ -238,6 +238,7 @@ func _on_InvButton_pressed(button) -> void:
 
 func update_page_data():
 	var size = game.inventory.items.size()
+# warning-ignore:narrowing_conversion
 	total_pages = max(ceil(size / 10.0), 1)
 	if cur_page < 0: cur_page = total_pages - 1
 	elif cur_page >= total_pages: cur_page = 0

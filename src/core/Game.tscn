@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -13,7 +13,7 @@
 [ext_resource path="res://resources/jobs/dancer.tres" type="Resource" id=11]
 [ext_resource path="res://resources/jobs/monk.tres" type="Resource" id=12]
 [ext_resource path="res://src/core/Fade.tscn" type="PackedScene" id=13]
-[ext_resource path="res://src/town/TownMenu.gd" type="Script" id=14]
+[ext_resource path="res://assets/images/logo.png" type="Texture" id=14]
 [ext_resource path="res://src/town/TownMenu.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/images/title.png" type="Texture" id=16]
 [ext_resource path="res://assets/themes/formal.tres" type="DynamicFont" id=17]
@@ -179,7 +179,112 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Animation" id=10]
+resource_name = "FadeIn"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("BlackBG/WhiteBG/Title:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.6, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TapToStart:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2.5, 3.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BlackBG/WhiteBG:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.7, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TapToStart:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BlackBG/WhiteBG/Title:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("BlackBG/WhiteBG:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("BlackBG/Adam:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Flash"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TapToStart:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Shader" id=12]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -193,10 +298,10 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=11]
-shader = SubResource( 10 )
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 12 )
 
-[sub_resource type="Shader" id=12]
+[sub_resource type="Shader" id=14]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -215,14 +320,15 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=13]
-shader = SubResource( 12 )
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 14 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+mute = true
 players = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 3 ) ]
 
 [node name="Dungeon" type="Node2D" parent="."]
@@ -448,7 +554,7 @@ hframes = 10
 frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
-script = ExtResource( 14 )
+visible = false
 
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
@@ -489,14 +595,13 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Title"]
+[node name="BlackBG" type="ColorRect" parent="CanvasLayer/Title"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
@@ -504,32 +609,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Title/ColorRect"]
-anchor_right = 1.0
-margin_bottom = 27.0
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="logo" type="Sprite" parent="CanvasLayer/Title/BlackBG"]
+visible = false
+position = Vector2( 36, 38 )
+texture = ExtResource( 14 )
 
-[node name="title" type="Sprite" parent="CanvasLayer/Title/ColorRect"]
-position = Vector2( 36, 44 )
-texture = ExtResource( 16 )
-
-[node name="Label" type="Label" parent="CanvasLayer/Title"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = 22.0
-margin_bottom = 29.0
-text = "TAP TO START"
+[node name="Adam" type="Label" parent="CanvasLayer/Title/BlackBG"]
+margin_top = 7.0
+margin_right = 72.0
+margin_bottom = 21.0
+text = "[C] 2021
+Adam Bray"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="CanvasLayer/Title"]
+[node name="WhiteBG" type="ColorRect" parent="CanvasLayer/Title/BlackBG"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+margin_bottom = 64.0
+color = Color( 1, 1, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="CanvasLayer/Title/BlackBG/WhiteBG"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 44.0
@@ -544,13 +651,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="CanvasLayer/Title"]
+position = Vector2( 36, 44 )
+texture = ExtResource( 16 )
+
+[node name="TapToStart" type="Label" parent="CanvasLayer/Title"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = 22.0
+margin_bottom = 29.0
+text = "TAP TO START"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Title"]
+anims/FadeIn = SubResource( 10 )
+anims/Flash = SubResource( 11 )
+
+[node name="StartGame" type="Button" parent="CanvasLayer/Title"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Fade" parent="CanvasLayer" instance=ExtResource( 13 )]
 visible = false
 mouse_filter = 2
 
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false
-material = SubResource( 11 )
+material = SubResource( 13 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -559,7 +696,7 @@ __meta__ = {
 
 [node name="SepiaShader" type="ColorRect" parent="."]
 visible = false
-material = SubResource( 13 )
+material = SubResource( 15 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -567,3 +704,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]

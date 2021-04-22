@@ -1,7 +1,5 @@
 extends PressButton
 
-signal remove_item(item)
-
 var empty: bool setget set_empty
 var selected: bool setget set_selected
 var item: Item
@@ -10,7 +8,6 @@ var slot: int
 func init(menu) -> void:
 	.init(menu)
 	var _err = connect("pressed", menu, "_on_InvButton_pressed", [self])
-	_err = connect("remove_item", menu, "_on_InvButton_remove_item")
 
 func setup(_item: Item, _slot: = -1) -> void:
 	if _item == null:
