@@ -2,8 +2,14 @@ extends Resource
 class_name Inventory
 
 signal inventory_changed
+signal gold_changed
 
 export var items = Array() setget set_items, get_items
+export var gold: int setget set_gold
+
+func set_gold(value) -> void:
+	gold = value
+	emit_signal("gold_changed", gold)
 
 func set_items(newitems: Array) -> void:
 	for item in newitems:

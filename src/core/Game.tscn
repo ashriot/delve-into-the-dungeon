@@ -578,7 +578,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "OPEN MENU"
+text = "MENU"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -595,6 +595,7 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {

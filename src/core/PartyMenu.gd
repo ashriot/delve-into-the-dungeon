@@ -5,6 +5,7 @@ onready var tooltip = $Tooltip
 onready var player_panels = $PlayerPanels
 onready var main_menu = $MainMenu
 onready var stats_panel = $Stats
+onready var gold_label = $Gold
 onready var options = $Options
 onready var opt_mute = $Options/Panel/Button
 
@@ -15,8 +16,10 @@ onready var tab2 = $Items/BG/HBoxContainer/Tab2
 onready var item_buttons = $Items/BG/Items
 
 onready var inv_panel = $Inventory
+onready var inv_back = $Inventory/BG/InvBack/Label
 onready var inv_preview = $Inventory/PreviewBtn
-#onready var inv_popup = $Inventory/PopupMenu
+onready var sell_panel = $Inventory/SellPanel
+onready var sell_price = $Inventory/SellPanel/Price
 onready var inv_filters = $Inventory/BG/Filters
 onready var inv_buttons = $Inventory/BG/Items
 onready var page_label = $Inventory/BG/Pages/Label
@@ -25,6 +28,7 @@ var game
 var players
 var cur_player: PlayerMenuPanel
 var cur_menu: Control
+var shopping: bool
 
 var cur_page: int
 var total_pages: int
@@ -53,10 +57,17 @@ func open_menu() -> void:
 	main_menu.show()
 	update_menu_data()
 	update_inv_data()
+	sell_panel.hide()
+	shopping = false
 	show()
 
 func _on_CloseButton_pressed() -> void:
 	AudioController.back()
+	if shopping:
+		sell_panel.hide()
+		cur_menu.hide()
+		cur_menu = null
+		hide()
 	if inv_preview.visible:
 		inv_preview.hide()
 		inv_panel.hide()
@@ -69,6 +80,7 @@ func _on_CloseButton_pressed() -> void:
 	else: game.close_menu()
 
 func update_menu_data() -> void:
+	gold_label.text = str(game.inventory.gold)
 	var i = 0
 	for child in player_panels.get_children():
 		if players[i] == null: continue
@@ -188,18 +200,25 @@ func _on_Swap_pressed() -> void:
 
 #### INVENTORY ####
 
+func open_inv() -> void:
+	shopping = true
+	sell_panel.hide()
+	inv_back.text = "SELLING"
+	self.show()
+	cur_menu = inv_panel
+	update_inv_data()
+	inv_panel.show()
+
 func _on_Inventory_pressed() -> void:
 	AudioController.click()
+	inv_back.text = "INVENTORY"
 	cur_menu = inv_panel
 	update_inv_data()
 	inv_panel.show()
 
 func update_inv_data():
+	sell_panel.hide()
 	update_page_data()
-	var size = game.inventory.items.size()
-#	var lo = cur_page * 10
-#	var hi = min((cur_page * 10) + 9, size)
-#	var items = game.inventory.items.slice(lo, hi)
 	var i = cur_page * 10
 	for child in inv_buttons.get_children():
 		if i < game.inventory.items.size():
@@ -244,21 +263,26 @@ func update_page_data():
 	elif cur_page >= total_pages: cur_page = 0
 
 func set_cur_btn(value) -> void:
-	if value.get_index() > 3: return
+#	if value.get_index() > 3: return
 	if value == null:
 		cur_btn.selected = false
 		popup.hide()
+		sell_panel.hide()
 		return
 	if cur_btn == value:
 		AudioController.back()
 		cur_btn.selected = false
 		cur_btn = null
 		popup.hide()
+		sell_panel.hide()
 		return
 	AudioController.select()
 	if cur_btn != null: cur_btn.selected = false
 	cur_btn = value
 	cur_btn.selected = true
+	if shopping:
+		sell_price.text = "Sell for " + str(cur_btn.item.price / 2) + "?"
+		sell_panel.show()
 	popup.rect_global_position = cur_btn.rect_global_position - Vector2(-1, popup.rect_size.y * 1)
 	popup.show()
 
@@ -281,3 +305,11 @@ func _on_Options_pressed():
 	AudioController.click()
 	cur_menu = options
 	options.show()
+
+func _on_Sell_pressed():
+	AudioController.confirm()
+	game.inventory.remove_item(cur_btn.item)
+	game.inventory.gold += int(cur_btn.item.price / 2)
+	gold_label.text = str(game.inventory.gold)
+	cur_btn = null
+	update_inv_data()

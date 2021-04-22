@@ -31,3 +31,4 @@ gain_boons = [  ]
 gain_hexes = [  ]
 max_uses = 30
 uses = 30
+price = 0

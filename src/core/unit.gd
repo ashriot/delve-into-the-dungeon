@@ -27,6 +27,7 @@ export(Array, float) var def_mods
 export(Dictionary) var perks
 
 func heal(amt: = 9999) -> void:
+# warning-ignore:narrowing_conversion
 	hp_cur = clamp(amt, 0, self.hp_max)
 
 func get_hp_max() -> int:

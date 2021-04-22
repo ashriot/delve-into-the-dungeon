@@ -337,8 +337,6 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 
 func execute_vs_enemy(panel) -> void:
 	var gained_xp = false
-	var reach = false
-	var melee_penalty = cur_player.get_index() > 1
 	var item = cur_btn.item as Item
 	var user = cur_player
 	AudioController.play_sfx(item.use_fx)
@@ -463,7 +461,7 @@ func victory() -> void:
 				AudioController.play_sfx("statup")
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 		var ranks_up = panel.calc_job_xp()
-		for r in range(ranks_up):
+		for _r in range(ranks_up):
 			if panel.unit.job_skill == Enum.SubItemType.NA: break
 			game.learned_skill(panel.unit)
 			var skill_name = yield(game, "done_learned_skill")

@@ -48,14 +48,16 @@ func _ready():
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
-	connect("level_changed", GameManager, "_on_level_changed")
+	var _err = connect("level_changed", GameManager, "_on_level_changed")
 	AudioController.mute = mute
 	battle.init(self)
 	dungeon.init(self)
 	party_menu.init(self)
 	update_hud()
 	hud_timer = 3
+	town_menu.init(self)
 	town_menu.show()
+	AudioController.play_bgm("town")
 #	show_title()
 #	begin()
 	enemy_picker = [centuar, goblin, gargoyle, mandrake, mermaid, pixie]
@@ -95,7 +97,7 @@ func update_hud():
 		child.get_child(1).max_value = p.hp_max
 		child.get_child(1).value = p.hp_cur
 		i += 1
-	gold.text = str(1250)
+	gold.text = str(inventory.gold)
 	level.text = str(level_num)
 	hud.show()
 	hud_timer = 2.1
@@ -129,7 +131,9 @@ func battle_start():
 func get_enemies() -> Dictionary:
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
+# warning-ignore:integer_division
 	var max_lv = int(level_num / 5) + 1
+# warning-ignore:integer_division
 	var min_lv = max(int(level_num / 5) - 3, 1)
 	var encounter = {}
 	for i in range(mobs):
@@ -142,6 +146,7 @@ func get_enemies() -> Dictionary:
 	return encounter
 
 func _on_Chest_opened() -> void:
+# warning-ignore:integer_division
 	var lv = int(level_num / 5) + 2
 	var item = ItemDb.get_random_item(lv)
 	var text = item.name
@@ -209,3 +214,6 @@ func _on_StartGame_pressed():
 	title.hide()
 	fade.fade_from_black()
 	begin()
+
+func _on_BuyBS_pressed():
+	party_menu.open_inv()

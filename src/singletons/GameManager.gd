@@ -136,10 +136,14 @@ func _on_level_changed() -> void:
 
 func initialize_inventory():
 	game.inventory.connect("inventory_changed", self, "_on_inventory_changed")
+	game.inventory.connect("gold_changed", self, "_on_gold_changed")
 	var inv = [ ["Potion", 5], ["Potion", 5], ["Potion", 5] ]
+	var gold = 100
 	if loading:
 		inv = save_data.inventory.duplicate()
+		gold = save_data.gold
 	game.inventory.set_items(inv)
+	game.inventory.gold = gold
 
 func _on_inventory_changed(inventory):
 	print("Inventory Changed")
@@ -150,6 +154,10 @@ func _on_inventory_changed(inventory):
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)
 
+func _on_gold_changed(gold):
+	print("Gold changed")
+	save_data.gold = gold
+	var error = ResourceSaver.save(file_path, save_data)
 
 func check_error(error):
 	if error != OK:
