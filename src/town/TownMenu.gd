@@ -28,3 +28,8 @@ func _on_BuyBS_pressed():
 func _on_SellBS_pressed():
 	AudioController.click()
 	emit_signal("open_inv")
+
+
+func _on_TownGates_pressed():
+	AudioController.click()
+	hide()
