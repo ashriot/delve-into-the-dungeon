@@ -54,7 +54,7 @@ func init(game):
 	tab2.connect("pressed", self, "_on_Tab_Pressed", [tab2])
 	hide()
 
-func start(players: Array, enemies: Dictionary) -> void:
+func start(players: Dictionary, enemies: Dictionary) -> void:
 	$Victory.hide()
 	enc_lv = enemy_panels.setup(enemies)
 	player_panels.setup(players, enc_lv)

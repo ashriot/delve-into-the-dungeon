@@ -25,7 +25,7 @@ onready var inv_buttons = $Inventory/BG/Items
 onready var page_label = $Inventory/BG/Pages/Label
 
 var game
-var players
+var players: Dictionary
 var cur_player: PlayerMenuPanel
 var cur_menu: Control
 var shopping: bool
@@ -60,6 +60,14 @@ func open_menu() -> void:
 	sell_panel.hide()
 	shopping = false
 	show()
+
+func swap_players(player1: Player, player2: Player) -> void:
+	var key1 = player1.slot
+	var key2 = player2.slot
+	players[key1] = player2
+	players[key2] = player1
+	player1.slot = key2
+	player2.slot = key1
 
 func _on_CloseButton_pressed() -> void:
 	AudioController.back()
@@ -143,6 +151,9 @@ func _on_Items_pressed() -> void:
 func _on_PlayerMenuPanel_pressed(panel) -> void:
 	if cur_player != null and cur_player == panel: return
 	AudioController.confirm()
+	select_player(panel)
+
+func select_player(panel: PlayerMenuPanel) -> void:
 	cur_player.select(false)
 	cur_player = panel
 	cur_player.select(true)
@@ -307,7 +318,7 @@ func _on_Options_pressed():
 	options.show()
 
 func _on_Sell_pressed():
-	AudioController.confirm()
+	AudioController.play_sfx("sell")
 	game.inventory.remove_item(cur_btn.item)
 	game.inventory.gold += int(cur_btn.item.price / 2)
 	gold_label.text = str(game.inventory.gold)

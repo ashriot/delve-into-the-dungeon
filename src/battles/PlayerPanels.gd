@@ -8,7 +8,7 @@ func init(battle) -> void:
 		panel.init(battle)
 	hide_all_selectors()
 
-func setup(players, enc_lv) -> void:
+func setup(players: Dictionary, enc_lv: int) -> void:
 	var i = 0
 	for panel in panels.get_children():
 		if i >= players.size(): panel.clear()

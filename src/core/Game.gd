@@ -30,7 +30,7 @@ signal level_changed
 
 export var mute: bool setget set_mute
 export var spd: = 1.0
-export(Array, Resource) var players
+export(Dictionary) var players
 
 var game_starting
 
@@ -115,7 +115,6 @@ func battle_start():
 	fade.fade_from_black()
 	yield(fade, "done")
 	yield(battle, "battle_done")
-	print("OK DONE!")
 	fade.fade_to_black()
 	yield(fade, "done")
 	battle.hide()

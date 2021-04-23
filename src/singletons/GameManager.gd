@@ -39,7 +39,7 @@ func initialize_party():
 			player.heal()
 			i += 1
 		
-	var players = []
+	var players = {}
 	for player in save_data.players.values():
 		var new_player = Player.new()
 		new_player.name = player["name"]
@@ -60,12 +60,13 @@ func initialize_party():
 		new_player.job_lv = player["job_lv"]
 		new_player.items = dict_to_items(player["items"])
 		new_player.perks = dict_to_perks(player["perks"])
-		players.insert(new_player.slot, new_player)
+		players[new_player.slot] = new_player
 	game.players = players
 	game.level_num = save_data.level_num
 	var i = 0
-	for player in players:
-		player.slot = i
+	for key in players.keys():
+		var player = players[key]
+		player.slot = key
 		player.connect("player_changed", self, "_on_player_changed")
 		player.changed()
 		i += 1
