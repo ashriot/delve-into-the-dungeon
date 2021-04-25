@@ -17,6 +17,17 @@ func setup(players: Dictionary, enc_lv: int) -> void:
 			panel.setup(players[i])
 		i += 1
 
+func get_all() -> Array:
+	var all = []
+	for panel in panels.get_children():
+		all.append(panel)
+	return all
+
+func get_random() -> Array:
+	var array = get_all()
+	if array == []: return []
+	return [array[randi() % array.size()]]
+	
 func get_children():
 	return panels.get_children()
 

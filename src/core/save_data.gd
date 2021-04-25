@@ -8,4 +8,5 @@ export(Array, String) var profiles
 export var inventory: Array
 export var players: Dictionary
 export var level_num: int
+export var discovered: int
 export var gold: int

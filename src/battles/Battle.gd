@@ -187,8 +187,14 @@ func enemy_take_action(panel: EnemyPanel):
 		panel.anim.play("Hit")
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 		var targets = get_enemy_targets(panel, action)
+		var randoms = []
+		var rand_targets = false
 		var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
+		if action.target_type == Enum.TargetType.RANDOM_ENEMY: rand_targets = true
 		for hit_num in hits:
+			if rand_targets:
+				targets = player_panels.get_random()
+				if targets == []: break
 			for target in targets:
 				if not target.alive: continue
 				var atk = panel.get_stat(action.stat_used)
@@ -240,6 +246,10 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 			for i in range(2): if player_targets[i]: choices.append(i)
 		else: for i in range(2, 4): if player_targets[i]: choices.append(i)
 		for target in choices: targets.append(player_panels.get_child(target))
+	if action.target_type == Enum.TargetType.RANDOM_ENEMY:
+		for i in range(player_targets.size()):
+			if player_targets[i]: choices.append(i)
+			targets.append(player_panels.get_child(choice))
 
 	return targets
 

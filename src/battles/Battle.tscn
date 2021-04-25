@@ -473,6 +473,7 @@ text = "VICTORY!"
 align = 1
 
 [node name="EnemyInfo" type="ColorRect" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.784314 )
@@ -534,4 +535,5 @@ anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="EnemyInfo/Close" to="." method="_on_Close_pressed"]

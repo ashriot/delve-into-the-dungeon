@@ -290,15 +290,15 @@ func build_level():
 		
 		var room = get_room(1)
 		
-		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
-		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+		var x = room.position.x + 2 + randi() % int(room.size.x - 2)
+		var y = room.position.y + 2 + randi() % int(room.size.y - 2)
 		
 		var j = 0
 		while (blocklist.has(Vector2(x, y))) and j < 100:
 			j += 1
 			print("Enemy looping ", j)
-			x = room.position.x + 1 + randi() % int(room.size.x - 2)
-			y = room.position.y + 1 + randi() % int(room.size.y - 2)
+			x = room.position.x + 2 + randi() % int(room.size.x - 2)
+			y = room.position.y + 2 + randi() % int(room.size.y - 2)
 
 		var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
 		enemies.append(enemy)
@@ -308,15 +308,15 @@ func build_level():
 	var num_chests = LEVEL_CHEST_COUNTS[level_num]
 	for _i in range(num_chests):
 		var room = get_room(1)
-		var x = room.position.x + 2 + randi() % int(room.size.x - 3)
-		var y = room.position.y + 2 + randi() % int(room.size.y - 3)
+		var x = room.position.x + 1 + randi() % int(room.size.x - 3)
+		var y = room.position.y + 1 + randi() % int(room.size.y - 3)
 		
 		var j = 0
 		while (blocklist.has(Vector2(x, y))) and j < 100:
 			j += 1
 			print("Chest looping ", j)
-			x = room.position.x + 2 + randi() % int(room.size.x - 3)
-			y = room.position.y + 2 + randi() % int(room.size.y - 3)
+			x = room.position.x + 1 + randi() % int(room.size.x - 3)
+			y = room.position.y + 1 + randi() % int(room.size.y - 3)
 		
 		var chest = ChestScene.instance()
 		chests.append(chest.init(self, x, y))
@@ -328,15 +328,15 @@ func build_level():
 		for i in range(rooms.size()):
 			if rooms_content[i] > 0: end_room = rooms[i]
 		
-	var ladder_x = end_room.position.x + 2 + randi() % int(end_room.size.x - 3)
-	var ladder_y = end_room.position.y + 2 + randi() % int(end_room.size.y - 3)
+	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 3)
+	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 3)
 	
 	var j = 0
 	while (blocklist.has(Vector2(ladder_x, ladder_y))) and j < 100:
 		j += 1
 		print("Ladder looping ", j)
-		ladder_x = end_room.position.x + 2 + randi() % int(end_room.size.x - 3)
-		ladder_y = end_room.position.y + 2 + randi() % int(end_room.size.y - 3)
+		ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 3)
+		ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 3)
 	
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 

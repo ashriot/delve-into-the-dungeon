@@ -1,4 +1,5 @@
 extends Node2D
+class_name Game
 # GAME.gd
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
@@ -6,9 +7,13 @@ var DamageText = preload("res://src/battles/DamageText.tscn")
 var centuar = preload("res://resources/enemies/centuar.tres")
 var goblin = preload("res://resources/enemies/goblin.tres")
 var gargoyle = preload("res://resources/enemies/gargoyle.tres")
+var hydra = preload("res://resources/enemies/hydra.tres")
+var kappa = preload("res://resources/enemies/kappa.tres")
+var kraken = preload("res://resources/enemies/kraken.tres")
 var mandrake = preload("res://resources/enemies/mandrake.tres")
 var mermaid = preload("res://resources/enemies/mermaid.tres")
 var pixie = preload("res://resources/enemies/pixie.tres")
+var slime = preload("res://resources/enemies/slime.tres")
 
 onready var title = $CanvasLayer/Title
 onready var title_anim = $CanvasLayer/Title/AnimationPlayer
@@ -23,6 +28,8 @@ onready var faces = $CanvasLayer/DungeonHUD/Faces
 onready var fade = $CanvasLayer/Fade
 onready var gold = $CanvasLayer/DungeonHUD/Gold
 onready var level = $CanvasLayer/DungeonHUD/Level
+
+onready var discovered: int
 
 signal done_fading
 signal done_learned_skill
@@ -42,7 +49,7 @@ var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
 func _ready():
-	randomize()
+#	randomize()
 	title.hide()
 	fade.show()
 	GameManager.initialize_game_data(self)
@@ -60,7 +67,8 @@ func _ready():
 	AudioController.play_bgm("town")
 #	show_title()
 #	begin()
-	enemy_picker = [centuar, goblin, gargoyle, mandrake, mermaid, pixie]
+#	enemy_picker = [goblin, kappa, kraken, mermaid, slime]
+	enemy_picker = [ kraken]
 
 func show_title() -> void:
 	game_starting = true
@@ -85,26 +93,19 @@ func _physics_process(delta: float) -> void:
 	elif hud_timer < 2 and hud.visible: hud.hide()
 	elif hud_timer < 2: hud_timer += 1 * delta
 
-func _exit_tree() -> void:
-	pass
-
-func update_hud():
-	var i = 0
-	for child in faces.get_children():
-		var p = players[i]
-		child.frame = p.frame + 20
-		child.get_child(0).text = str(p.hp_cur)
-		child.get_child(1).max_value = p.hp_max
-		child.get_child(1).value = p.hp_cur
-		i += 1
-	gold.text = str(inventory.gold)
-	level.text = str(level_num)
-	hud.show()
-	hud_timer = 2.1
+func enter_dungeon() -> void:
+	fade.fade_to_black()
+	yield(fade, "done")
+	town_menu.hide()
+	town_menu.map.hide()
+	dungeon.active = true
+	AudioController.play_bgm("dungeon")
+	fade.fade_from_black()
 
 func battle_start():
 	menu_button.hide()
 	dungeon.active = false
+	var pos = AudioController.get_pos()
 	AudioController.play_bgm("battle")
 	fade.fade_to_black()
 	yield(fade, "done")
@@ -120,7 +121,7 @@ func battle_start():
 	battle.hide()
 	hud.show()
 	yield(get_tree().create_timer(0.5), "timeout")
-	AudioController.play_bgm("dungeon")
+	AudioController.play_bgm("dungeon", pos)
 	fade.fade_from_black()
 	dungeon.active = true
 	dungeon.collided = false
@@ -185,6 +186,7 @@ func _on_MenuButton_pressed() -> void:
 
 func close_menu() -> void:
 	party_menu.hide()
+	update_hud()
 	dungeon.active = true
 
 func learned_skill(unit: Player) -> void:
@@ -204,6 +206,22 @@ func set_mute(value) -> void:
 	mute = value
 	AudioController.mute = mute
 
+func _exit_tree() -> void:
+	pass
+
+func update_hud():
+	var i = 0
+	for child in faces.get_children():
+		var p = players[i]
+		child.frame = p.frame + 20
+		child.get_child(0).text = str(p.hp_cur)
+		child.get_child(1).max_value = p.hp_max
+		child.get_child(1).value = p.hp_cur
+		i += 1
+	gold.text = str(inventory.gold)
+	level.text = str(level_num)
+	hud.show()
+	hud_timer = 2.1
 
 func _on_StartGame_pressed():
 	if game_starting: return

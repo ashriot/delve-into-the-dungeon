@@ -32,6 +32,7 @@ func initialize_game_data(_game):
 func initialize_party():
 	if !loading:
 		save_data.level_num = 1
+		save_data.discovered = 1
 		var i = 0
 		for player in game.players:
 			player.slot = i
@@ -63,6 +64,7 @@ func initialize_party():
 		players[new_player.slot] = new_player
 	game.players = players
 	game.level_num = save_data.level_num
+	game.discovered = save_data.discovered
 	var i = 0
 	for key in players.keys():
 		var player = players[key]

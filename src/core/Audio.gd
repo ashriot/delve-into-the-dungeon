@@ -12,18 +12,19 @@ onready var sfx4: = $sfx4
 onready var sfx5: = $sfx5
 
 var bgm_playing: String
+var pos: int
 
 func _ready() -> void:
 	set_bgm_volume()
 	set_sfx_volume()
 
-func play_bgm(name: String) -> void:
+func play_bgm(name: String, pos: = 0) -> void:
 	if name == "": return
 	bgm_playing = name
 	if mute: return
 	bgm.volume_db = -5
 	bgm.stream = load("res://assets/audio/bgm/" + name + ".ogg")
-	bgm.play()
+	bgm.play(pos)
 
 func stop_bgm() -> void:
 	bgm.stop()
@@ -49,6 +50,10 @@ func play_sfx(name: String) -> void:
 		sfx1.stop()
 		sfx1.stream = load("res://assets/audio/sfx/" + name + ".wav")
 		sfx1.play()
+
+func get_pos() -> int:
+	if bgm.playing: return bgm.get_playback_position()
+	return 0
 
 func back() -> void:
 	play_sfx("back")

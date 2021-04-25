@@ -1,0 +1,34 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/enemy_action.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Tentacles"
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
+tier = 1
+item_type = 1
+sub_type = 23
+melee = false
+target_type = 13
+damage_type = 0
+stat_used = 3
+stat_vs = 5
+stat_hit = 3
+multiplier = 1.0
+bonus_damage = 0
+min_hits = 2
+max_hits = 4
+lifesteal = 0.0
+hit_chance = 75
+crit_chance = 0
+sound_fx = "slap"
+use_fx = "skill"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+cooldown = 0
+starting_cd = 0
+starting_min = 0
