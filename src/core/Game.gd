@@ -4,17 +4,6 @@ class_name Game
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
 
-var centuar = preload("res://resources/enemies/centuar.tres")
-var goblin = preload("res://resources/enemies/goblin.tres")
-var gargoyle = preload("res://resources/enemies/gargoyle.tres")
-var hydra = preload("res://resources/enemies/hydra.tres")
-var kappa = preload("res://resources/enemies/kappa.tres")
-var kraken = preload("res://resources/enemies/kraken.tres")
-var mandrake = preload("res://resources/enemies/mandrake.tres")
-var mermaid = preload("res://resources/enemies/mermaid.tres")
-var pixie = preload("res://resources/enemies/pixie.tres")
-var slime = preload("res://resources/enemies/slime.tres")
-
 onready var title = $CanvasLayer/Title
 onready var title_anim = $CanvasLayer/Title/AnimationPlayer
 onready var battle = $CanvasLayer/Battle
@@ -41,10 +30,9 @@ export(Dictionary) var players
 
 var game_starting
 
-var enemy_picker = []
-
 var hud_timer: = 0.0
 var level_num: int setget set_level_num
+var dungeon_lvs: = []
 var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
@@ -64,11 +52,11 @@ func _ready():
 	hud_timer = 3
 	town_menu.init(self)
 	town_menu.show()
+	yield(get_tree().create_timer(0.25), "timeout")
 	AudioController.play_bgm("town")
+	fade.fade_from_black()
 #	show_title()
 #	begin()
-#	enemy_picker = [goblin, kappa, kraken, mermaid, slime]
-	enemy_picker = [ kraken]
 
 func show_title() -> void:
 	game_starting = true
@@ -93,12 +81,12 @@ func _physics_process(delta: float) -> void:
 	elif hud_timer < 2 and hud.visible: hud.hide()
 	elif hud_timer < 2: hud_timer += 1 * delta
 
-func enter_dungeon() -> void:
+func enter_dungeon(locale: Locale, depth: int) -> void:
+	dungeon.setup(locale, depth)
 	fade.fade_to_black()
 	yield(fade, "done")
 	town_menu.hide()
 	town_menu.map.hide()
-	dungeon.active = true
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
 
@@ -129,6 +117,7 @@ func battle_start():
 	menu_button.show()
 
 func get_enemies() -> Dictionary:
+	var enemy_picker = dungeon.get_enemies()
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
 # warning-ignore:integer_division
@@ -142,7 +131,7 @@ func get_enemies() -> Dictionary:
 		if mobs == 1 and level_num > 1: lv += 1
 		if mobs == 2 and i == 1: slot = 2
 		if mobs == 3 and i == 1: slot = (randi() % 2) * 3 + 1
-		encounter[slot] = [enemy_picker[randi() % enemy_picker.size()], lv]
+		encounter[slot] = [enemy_picker[randi() % enemy_picker.size()], lv].duplicate()
 	return encounter
 
 func _on_Chest_opened() -> void:

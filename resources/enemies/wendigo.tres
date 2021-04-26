@@ -1,0 +1,37 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
+[ext_resource path="res://resources/enemy actions/wild_swings.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Wendigo"
+frame = 25
+hp_cur = 0
+hp_max = 70
+strength = 10
+agility = 8
+intellect = 5
+defense = 8
+hp_bonus = 0
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+hp_mods = [  ]
+str_mods = [  ]
+agi_mods = [  ]
+int_mods = [  ]
+def_mods = [  ]
+perks = {
+}
+desc = "BOOGIE"
+level = 1
+gold = 25
+actions = {
+0: ExtResource( 2 ),
+1: null,
+2: null,
+3: null,
+4: null
+}

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://resources/locales/locale.gd" type="Script" id=1]
+[ext_resource path="res://resources/enemies/goblin.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemies/kappa.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemies/slime.tres" type="Resource" id=4]
+[ext_resource path="res://resources/enemies/kraken.tres" type="Resource" id=5]
+[ext_resource path="res://resources/enemies/mermaid.tres" type="Resource" id=6]
+[ext_resource path="res://resources/enemies/hydra.tres" type="Resource" id=7]
+
+[resource]
+script = ExtResource( 1 )
+name = "Sea Caves"
+desc = "Until recently, the sea caves weren't notable. Now, monsters of all shapes and sizes seem to be issuing forth from the dark depths.
+What has caused the disruption in the sea caves? And can it be reversed?"
+frame = 2
+enemy_lv = 1
+enemies = [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 5 ) ]
+boss = ExtResource( 7 )
+dungeon_id = 1

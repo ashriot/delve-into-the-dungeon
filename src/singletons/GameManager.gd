@@ -10,7 +10,7 @@ var file_path = path.plus_file("data.tres")
 var loading: = false
 var spd: = 1.0 setget, get_spd
 
-var game
+var game: Game
 
 func initialize_game_data(_game):
 	game = _game
@@ -33,6 +33,7 @@ func initialize_party():
 	if !loading:
 		save_data.level_num = 1
 		save_data.discovered = 1
+		save_data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
 		var i = 0
 		for player in game.players:
 			player.slot = i
@@ -63,6 +64,7 @@ func initialize_party():
 		new_player.perks = dict_to_perks(player["perks"])
 		players[new_player.slot] = new_player
 	game.players = players
+	game.dungeon_lvs = save_data.dungeon_lvs
 	game.level_num = save_data.level_num
 	game.discovered = save_data.discovered
 	var i = 0

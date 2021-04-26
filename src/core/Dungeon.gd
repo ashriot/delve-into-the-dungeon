@@ -93,6 +93,8 @@ onready var player = $Player
 
 enum Tile {Floor, Stone, Wall, Door, StairsDown, StairsUp}
 
+var locale: Locale
+var dungeon_id
 var level_num
 var map = []
 var rooms = []
@@ -115,12 +117,19 @@ var move_event = null
 func init(_game):
 	game = _game
 	level_num = game.level_num
-	build_level()
 	player.show()
 # warning-ignore:return_value_discarded
 	connect("fade_out", game, "_on_FadeOut")
 # warning-ignore:return_value_discarded
 	connect("fade_in", game, "_on_FadeIn")
+
+func setup(_locale: Locale, depth: int) -> void:
+	self.locale = _locale
+	level_num = depth
+	build_level()
+
+func get_enemies() -> Array:
+	return locale.enemies
 
 func _physics_process(delta):
 	if moving:
@@ -241,6 +250,7 @@ func try_move(dx, dy):
 			$CanvasLayer/Win.show()
 
 func build_level():
+	dungeon_id = locale.dungeon_id
 	rooms.clear()
 	rooms_content.clear()
 	for chest in chests: chest.queue_free()
@@ -255,7 +265,7 @@ func build_level():
 	enemy_pathfinding = AStar.new()
 	var blocklist = []
 
-	level_size = LEVEL_SIZES[level_num]
+	level_size = LEVEL_SIZES[8]
 	for x in range(level_size.x):
 		map.append([])
 		for y in range(level_size.y):
@@ -264,7 +274,7 @@ func build_level():
 			visibility_map.set_cell(x, y, 0)
 
 	var free_regions = [Rect2(Vector2(2, 2), level_size - Vector2(4, 4))]
-	var num_rooms = LEVEL_ROOM_COUNTS[level_num]
+	var num_rooms = LEVEL_ROOM_COUNTS[8]
 	for _i in range(num_rooms):
 		add_room(free_regions)
 		if free_regions.empty():
@@ -285,7 +295,7 @@ func build_level():
 
 	# Place Enemies
 
-	var num_enemies = LEVEL_ENEMY_COUNTS[level_num]
+	var num_enemies = LEVEL_ENEMY_COUNTS[8]
 	for _i in range(num_enemies):
 		
 		var room = get_room(1)
@@ -305,7 +315,7 @@ func build_level():
 		blocklist.append(Vector2(x, y))
 
 	# Place Chests
-	var num_chests = LEVEL_CHEST_COUNTS[level_num]
+	var num_chests = LEVEL_CHEST_COUNTS[8]
 	for _i in range(num_chests):
 		var room = get_room(1)
 		var x = room.position.x + 1 + randi() % int(room.size.x - 3)
@@ -341,9 +351,6 @@ func build_level():
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
 	call_deferred("update_visuals")
-	yield(get_tree().create_timer(0.1), "timeout")
-	emit_signal("fade_in")
-	yield(game, "done_fading")
 	active = true
 	
 func get_room(offset):
