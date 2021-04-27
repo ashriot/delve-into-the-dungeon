@@ -53,10 +53,9 @@ func _ready():
 	town_menu.init(self)
 	town_menu.show()
 	yield(get_tree().create_timer(0.25), "timeout")
-	AudioController.play_bgm("town")
-	fade.fade_from_black()
-#	show_title()
-#	begin()
+#	AudioController.play_bgm("town")
+	fade.instant_hide()
+	show_title()
 
 func show_title() -> void:
 	game_starting = true
@@ -83,6 +82,7 @@ func _physics_process(delta: float) -> void:
 
 func enter_dungeon(locale: Locale, depth: int) -> void:
 	dungeon.setup(locale, depth)
+	self.level_num = depth
 	fade.fade_to_black()
 	yield(fade, "done")
 	town_menu.hide()
@@ -121,9 +121,9 @@ func get_enemies() -> Dictionary:
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
 # warning-ignore:integer_division
-	var max_lv = int(level_num / 5) + 1
+	var max_lv = int(level_num / 3) + 1
 # warning-ignore:integer_division
-	var min_lv = max(int(level_num / 5) - 3, 1)
+	var min_lv = max(max_lv - 3, 1)
 	var encounter = {}
 	for i in range(mobs):
 		var slot = 1 if mobs == 1 else i

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
-[ext_resource path="res://resources/enemy actions/gobsmack.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemy actions/goop.tres" type="Resource" id=2]
 [ext_resource path="res://resources/enemy actions/gob_bow.tres" type="Resource" id=3]
 
 [resource]
@@ -9,11 +9,11 @@ script = ExtResource( 1 )
 name = "Slime"
 frame = 20
 hp_cur = 0
-hp_max = 55
+hp_max = 75
 strength = 7
-agility = 9
+agility = 5
 intellect = 3
-defense = 8
+defense = 10
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0

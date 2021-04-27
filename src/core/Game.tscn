@@ -1,13 +1,17 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resources/locales/sea_caves.tres" type="Resource" id=3]
+[ext_resource path="res://resources/locales/fae_weald.tres" type="Resource" id=4]
 [ext_resource path="res://src/menu/PartyMenu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/images/sheets/tileset.png" type="Texture" id=6]
 [ext_resource path="res://assets/images/sheets/black_tile.png" type="Texture" id=7]
 [ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=8]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=9]
 [ext_resource path="res://src/core/Dungeon.gd" type="Script" id=10]
+[ext_resource path="res://resources/locales/labyrinth.tres" type="Resource" id=11]
+[ext_resource path="res://assets/images/title_color.png" type="Texture" id=12]
 [ext_resource path="res://src/core/Fade.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/images/logo.png" type="Texture" id=14]
 [ext_resource path="res://src/town/TownMenu.tscn" type="PackedScene" id=15]
@@ -262,6 +266,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("Sprite2:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 2.5, 3.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=11]
 resource_name = "Flash"
@@ -324,7 +340,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-mute = true
 
 [node name="Dungeon" type="Node2D" parent="."]
 script = ExtResource( 10 )
@@ -550,6 +565,11 @@ frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
 visible = false
+locales = {
+1: ExtResource( 3 ),
+2: ExtResource( 4 ),
+3: ExtResource( 11 )
+}
 
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
@@ -652,6 +672,11 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="CanvasLayer/Title"]
 position = Vector2( 36, 44 )
 texture = ExtResource( 16 )
+
+[node name="Sprite2" type="Sprite" parent="CanvasLayer/Title"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 36, 44 )
+texture = ExtResource( 12 )
 
 [node name="TapToStart" type="Label" parent="CanvasLayer/Title"]
 modulate = Color( 1, 1, 1, 0 )
