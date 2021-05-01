@@ -8,6 +8,7 @@ onready var title = $CanvasLayer/Title
 onready var title_anim = $CanvasLayer/Title/AnimationPlayer
 onready var battle = $CanvasLayer/Battle
 onready var dungeon = $Dungeon
+onready var dungeon_complete = $CanvasLayer/DungeonComplete
 onready var menu_button = $CanvasLayer/MenuButton
 onready var party_menu = $CanvasLayer/PartyMenu
 onready var town_menu = $CanvasLayer/TownMenu
@@ -40,6 +41,7 @@ func _ready():
 #	randomize()
 	title.hide()
 	fade.show()
+	dungeon_complete.hide()
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
@@ -53,9 +55,8 @@ func _ready():
 	town_menu.init(self)
 	town_menu.show()
 	yield(get_tree().create_timer(0.25), "timeout")
-#	AudioController.play_bgm("town")
 	fade.instant_hide()
-	show_title()
+	begin()
 
 func show_title() -> void:
 	game_starting = true
@@ -70,8 +71,17 @@ func show_title() -> void:
 	title_anim.play("Flash")
 	game_starting = false
 
+func _on_StartGame_pressed():
+	if game_starting: return
+	fade.fade_to_black()
+	yield(fade, "done")
+	title_anim.stop()
+	title.hide()
+	begin()
+
 func begin() -> void:
-	AudioController.play_bgm("dungeon")
+	AudioController.play_bgm("town")
+	fade.fade_from_black()
 
 func _physics_process(delta: float) -> void:
 	if !dungeon.active: return
@@ -81,6 +91,7 @@ func _physics_process(delta: float) -> void:
 	elif hud_timer < 2: hud_timer += 1 * delta
 
 func enter_dungeon(locale: Locale, depth: int) -> void:
+	dungeon_complete.hide()
 	dungeon.setup(locale, depth)
 	self.level_num = depth
 	fade.fade_to_black()
@@ -89,6 +100,15 @@ func enter_dungeon(locale: Locale, depth: int) -> void:
 	town_menu.map.hide()
 	AudioController.play_bgm("dungeon")
 	fade.fade_from_black()
+
+func dungeon_complete() -> void:
+	fade.fade_to_black()
+	yield(fade, "done")
+	yield(get_tree().create_timer(0.25), "timeout")
+	dungeon_complete.show()
+	fade.fade_from_black()
+	yield(fade, "done")
+	AudioController.play_sfx("dungeon_done")
 
 func battle_start():
 	menu_button.hide()
@@ -212,14 +232,13 @@ func update_hud():
 	hud.show()
 	hud_timer = 2.1
 
-func _on_StartGame_pressed():
-	if game_starting: return
-	fade.fade_to_black()
-	yield(fade, "done")
-	title_anim.stop()
-	title.hide()
-	fade.fade_from_black()
-	begin()
-
 func _on_BuyBS_pressed():
 	party_menu.open_inv()
+
+func _on_BackToTown_pressed():
+	AudioController.play_sfx("stairs")
+	fade.fade_to_black()
+	yield(fade, "done")
+	town_menu.show()
+	fade.fade_from_black()
+	AudioController.play_bgm("town")

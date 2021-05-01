@@ -16,4 +16,4 @@ frame = 48
 enemy_lv = 10
 enemies = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ) ]
 boss = ExtResource( 7 )
-dungeon_id = 1
+dungeon_id = 2

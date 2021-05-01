@@ -78,17 +78,17 @@ const LEVEL_SIZES = [
 	Vector2(60, 60),
 ]
 
-const LEVEL_ROOM_COUNTS = [3, 3, 4, 5, 6, 7, 8, 9, 10]
-const LEVEL_ENEMY_COUNTS = [2, 2, 4, 6, 8, 10, 12, 14, 16]
-const LEVEL_CHEST_COUNTS = [2, 2, 3, 4, 5, 6, 7, 8, 9]
+const LEVEL_ROOM_COUNTS = [4, 5, 6, 7, 8, 9, 10, 11]
+const LEVEL_ENEMY_COUNTS = [4, 6, 8, 10, 12, 14, 16, 18]
+const LEVEL_CHEST_COUNTS = [1, 2, 3, 4, 5, 6, 7, 8]
 #const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
 #const LEVEL_ENEMY_COUNTS = [6, 9, 12, 16, 20]
 #const LEVEL_CHEST_COUNTS = [2, 4, 6, 8, 10]
 const MIN_ROOM_DIMENSION = 6
 const MAX_ROOM_DIMENSION = 7
 
-onready var tile_map = $TileMap
-onready var visibility_map = $VisibilityMap
+onready var tile_map = $TileMap as TileMap
+onready var visibility_map = $VisibilityMap as TileMap
 onready var player = $Player
 
 enum Tile {Floor, Stone, Wall, Door, StairsDown, StairsUp}
@@ -114,6 +114,14 @@ var first_step = false
 var moving_counter = 0.0
 var move_event = null
 
+var tile_sets = [
+	load("res://assets/images/sheets/tile_sea.png"),
+	load("res://assets/images/sheets/tile_fae.png"),
+	load("res://assets/images/sheets/tile_lab.png"),
+	load("res://assets/images/sheets/tile_crypt.png"),
+	load("res://assets/images/sheets/tile_palace.png"),
+	load("res://assets/images/sheets/tile_ruins.png")]
+
 func init(_game):
 	game = _game
 	level_num = game.level_num
@@ -125,6 +133,8 @@ func init(_game):
 
 func setup(_locale: Locale, depth: int) -> void:
 	self.locale = _locale
+	var tex = tile_sets[locale.dungeon_id]
+#	tile_map.tile_set.tile_set_texture(0, tex)
 	level_num = depth
 	build_level()
 
@@ -241,15 +251,11 @@ func try_move(dx, dy):
 
 	call_deferred("update_visuals")
 	if move_down:
-		emit_signal("fade_out")
-		yield(game, "done_fading")
 		game.level_num += 1
-		if game.level_num < LEVEL_SIZES.size():
-			build_level()
-		else:
-			$CanvasLayer/Win.show()
+		game.dungeon_complete()
 
 func build_level():
+	var size = randi() % 4
 	dungeon_id = locale.dungeon_id
 	rooms.clear()
 	rooms_content.clear()
@@ -265,7 +271,7 @@ func build_level():
 	enemy_pathfinding = AStar.new()
 	var blocklist = []
 
-	level_size = LEVEL_SIZES[8]
+	level_size = LEVEL_SIZES[0]
 	for x in range(level_size.x):
 		map.append([])
 		for y in range(level_size.y):
@@ -274,7 +280,7 @@ func build_level():
 			visibility_map.set_cell(x, y, 0)
 
 	var free_regions = [Rect2(Vector2(2, 2), level_size - Vector2(4, 4))]
-	var num_rooms = LEVEL_ROOM_COUNTS[8]
+	var num_rooms = LEVEL_ROOM_COUNTS[size]
 	for _i in range(num_rooms):
 		add_room(free_regions)
 		if free_regions.empty():
@@ -295,27 +301,27 @@ func build_level():
 
 	# Place Enemies
 
-	var num_enemies = LEVEL_ENEMY_COUNTS[8]
+	var num_enemies = LEVEL_ENEMY_COUNTS[size]
 	for _i in range(num_enemies):
 		
 		var room = get_room(1)
 		
-		var x = room.position.x + 2 + randi() % int(room.size.x - 2)
-		var y = room.position.y + 2 + randi() % int(room.size.y - 2)
+		var x = room.position.x + 1 + randi() % int(room.size.x - 3)
+		var y = room.position.y + 1 + randi() % int(room.size.y - 3)
 		
 		var j = 0
 		while (blocklist.has(Vector2(x, y))) and j < 100:
 			j += 1
 			print("Enemy looping ", j)
-			x = room.position.x + 2 + randi() % int(room.size.x - 2)
-			y = room.position.y + 2 + randi() % int(room.size.y - 2)
+			x = room.position.x + 1 + randi() % int(room.size.x - 3)
+			y = room.position.y + 1 + randi() % int(room.size.y - 3)
 
 		var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
 		enemies.append(enemy)
 		blocklist.append(Vector2(x, y))
 
 	# Place Chests
-	var num_chests = LEVEL_CHEST_COUNTS[8]
+	var num_chests = LEVEL_CHEST_COUNTS[size]
 	for _i in range(num_chests):
 		var room = get_room(1)
 		var x = room.position.x + 1 + randi() % int(room.size.x - 3)
@@ -605,4 +611,5 @@ func battle_start():
 	game.battle_start()
 
 func get_player_pos() -> Vector2:
+#	return Vector2(0, 0)
 	return player_tile * TILE_SIZE

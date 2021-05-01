@@ -707,6 +707,44 @@ __meta__ = {
 visible = false
 mouse_filter = 2
 
+[node name="DungeonComplete" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DungeonComplete"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+
+[node name="Label" type="Label" parent="CanvasLayer/DungeonComplete"]
+anchor_right = 1.0
+margin_left = 1.0
+margin_top = 17.0
+margin_right = 1.0
+margin_bottom = 24.0
+text = "Dungeon COMPLETE!"
+align = 1
+valign = 1
+
+[node name="BackToTown" type="Button" parent="CanvasLayer/DungeonComplete"]
+margin_left = 1.0
+margin_top = 96.0
+margin_right = 71.0
+margin_bottom = 105.0
+
+[node name="Label" type="Label" parent="CanvasLayer/DungeonComplete/BackToTown"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 2.0
+text = "Back to Town"
+align = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false
 material = SubResource( 13 )
@@ -728,3 +766,4 @@ __meta__ = {
 
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]
+[connection signal="pressed" from="CanvasLayer/DungeonComplete/BackToTown" to="." method="_on_BackToTown_pressed"]
