@@ -115,12 +115,12 @@ var moving_counter = 0.0
 var move_event = null
 
 var tile_sets = [
-	load("res://assets/images/sheets/tile_sea.png"),
-	load("res://assets/images/sheets/tile_fae.png"),
-	load("res://assets/images/sheets/tile_lab.png"),
-	load("res://assets/images/sheets/tile_crypt.png"),
-	load("res://assets/images/sheets/tile_palace.png"),
-	load("res://assets/images/sheets/tile_ruins.png")]
+	load("res://src/dungeon/tile_sets/sea_caves.tres"),
+	load("res://src/dungeon/tile_sets/fae_weald.tres"),
+	load("res://src/dungeon/tile_sets/labyrinth.tres"),
+	load("res://src/dungeon/tile_sets/shadow_crypt.tres"),
+	load("res://src/dungeon/tile_sets/buried_palace.tres"),
+	load("res://src/dungeon/tile_sets/ancient_ruins.tres")]
 
 func init(_game):
 	game = _game
@@ -199,8 +199,8 @@ func try_move(dx, dy):
 
 	var blocked = false
 	match tile_type:
-		Tile.Wall: blocked = true
-		Tile.Stone: blocked = true
+		Tile.Wall: blocked = false
+		Tile.Stone: blocked = false
 		Tile.Floor:
 			for enemy in enemies:
 				if enemy.tile.x == x and enemy.tile.y == y:
@@ -251,12 +251,14 @@ func try_move(dx, dy):
 
 	call_deferred("update_visuals")
 	if move_down:
+		game.dungeon_lvs[dungeon_id] = level_num + 1
 		game.level_num += 1
 		game.dungeon_complete()
 
 func build_level():
 	var size = randi() % 4
 	dungeon_id = locale.dungeon_id
+	tile_map.tile_set = tile_sets[dungeon_id]
 	rooms.clear()
 	rooms_content.clear()
 	for chest in chests: chest.queue_free()
@@ -608,7 +610,7 @@ func set_tile(x, y, type):
 
 func battle_start():
 	moving = false
-	game.battle_start()
+	game.battle_start(locale.enemy_lv + int(level_num / 3))
 
 func get_player_pos() -> Vector2:
 #	return Vector2(0, 0)

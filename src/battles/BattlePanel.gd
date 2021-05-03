@@ -16,7 +16,7 @@ onready var status = $Status
 
 var enabled: bool
 var alive: bool setget, get_alive
-var unit = null
+var unit: Unit = null
 var hp_cur: int setget set_hp_cur
 var hp_max: int
 var valid_target: bool
@@ -164,7 +164,11 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 
 func take_healing(amt: int) -> void:
 	self.hp_cur += amt
-	if amt > 0: emit_signal("show_text", "+" + str(amt), pos)
+	if amt != 0: emit_signal("show_text", "+" + str(amt), pos)
+
+func take_damage(amt: int) -> void:
+	self.hp_cur -= amt
+	if amt != 0: emit_signal("show_dmg", str(amt), pos)
 
 func gain_hex(hex: Effect, duration: int) -> bool:
 	var found = false
@@ -209,16 +213,30 @@ func decrement_boons(timing: String) -> void:
 				boon[1] -= 1
 				if boon[1] == 0:
 					remove_boon(boon[0])
+	emit_signal("done")
 
 func decrement_hexes(timing: String) -> void:
 	for hex in hexes:
 		if (hex[0].turn_end and timing == "End") or \
 			(hex[0].turn_start and timing == "Start"):
-				print(hex[0].name, " -> ", hex[1])
 				hex[1] -= 1
+				if hex[0].triggered:
+					trigger_hex(hex[0].name)
+					yield(get_tree().create_timer(0.25, true), "timeout")
 				if hex[1] == 0:
 					remove_hex(hex[0])
+	call_deferred("emit_signal", "done")
 					
+func trigger_hex(hex_name: String) -> void:
+	print(hex_name, " triggered!")
+	if hex_name == "Poison":
+		AudioController.play_sfx("poison")
+		take_damage(int(float(hp_max) * 0.1))
+	if hex_name == "Burn":
+		AudioController.play_sfx("fire")
+		var dmg = unit.get_highest()
+		take_damage(dmg)
+
 func remove_boon(find: Effect) -> void:
 	for boon in boons:
 		if boon[0] == find:

@@ -52,6 +52,7 @@ func set_ready(value: bool):
 		outline.modulate.a = 1
 		if blocking > 0: self.blocking = 0
 		decrement_boons("Start")
+		decrement_hexes("Start")
 	else:
 		if sprite.frame < 10:
 			sprite.frame += 10
@@ -115,7 +116,7 @@ func calc_xp(stat, mod = 1.0) -> void:
 	unit.xp_cut[id] *= 1 - 0.66 * mod
 	if unit.xp[id] > 1:
 		unit.xp[id] -= 1
-		unit.gains[id] += 1
+		unit.gains[id] += randi() % 3 + 1
 	print(unit.name, " ", Enum.get_stat_name(stat), ": ", prev, " -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
 
 func calc_hp_xp() -> void:

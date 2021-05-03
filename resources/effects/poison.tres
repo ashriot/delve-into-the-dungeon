@@ -9,4 +9,5 @@ desc = ""
 frame = 99
 permanent = true
 turn_start = true
-turn_end = true
+turn_end = false
+triggered = true

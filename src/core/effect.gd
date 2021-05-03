@@ -7,3 +7,4 @@ export var frame: int
 export var permanent: bool
 export var turn_start: bool
 export var turn_end: bool
+export var triggered: = false

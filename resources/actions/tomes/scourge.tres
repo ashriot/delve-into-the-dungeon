@@ -1,0 +1,33 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Scourge"
+description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 5
+item_type = 3
+sub_type = 11
+melee = false
+target_type = 12
+damage_type = 5
+stat_used = 4
+stat_vs = 4
+stat_hit = 6
+multiplier = 4.0
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "blizzard"
+use_fx = "cast"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+max_uses = 20
+uses = 20
+price = 0

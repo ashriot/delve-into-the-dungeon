@@ -51,11 +51,17 @@ func _on_TownGates_pressed():
 	self.map_pos = map_max
 	discovered.rect_size.x = x
 	if map_max == 1:
-		prev.modulate.a = 0.5
-		next.modulate.a = 0.5
+		prev.modulate.a = 0.1
+		next.modulate.a = 0.1
 	else:
 		prev.modulate.a = 1.0
 		next.modulate.a = 1.0
+	if game.dungeon_lvs[map_pos - 1] == 1:
+		$WorldMap/Progress/Plus.modulate.a = 0.1
+		$WorldMap/Progress/Minus.modulate.a = 0.1
+	else:
+		$WorldMap/Progress/Plus.modulate.a = 1
+		$WorldMap/Progress/Minus.modulate.a = 1
 	map.show()
 
 func _on_Back_pressed():
@@ -94,19 +100,33 @@ func _on_Prev_pressed():
 	AudioController.select()
 	if map_pos == 1: self.map_pos = map_max
 	else: self.map_pos -= 1
+	if game.dungeon_lvs[map_pos - 1] == 1:
+		$WorldMap/Progress/Plus.modulate.a = 0.1
+		$WorldMap/Progress/Minus.modulate.a = 0.1
+	else:
+		$WorldMap/Progress/Plus.modulate.a = 1
+		$WorldMap/Progress/Minus.modulate.a = 1
 
 func _on_Next_pressed():
 	if map_max == 1: return
 	AudioController.select()
 	if map_pos == map_max: self.map_pos = 1
 	else: self.map_pos += 1
+	if game.dungeon_lvs[map_pos - 1] == 1:
+		$WorldMap/Progress/Plus.modulate.a = 0.1
+		$WorldMap/Progress/Minus.modulate.a = 0.1
+	else:
+		$WorldMap/Progress/Plus.modulate.a = 1
+		$WorldMap/Progress/Minus.modulate.a = 1
 
 func _on_Minus_pressed():
+	if game.dungeon_lvs[map_pos - 1] == 1: return
 	AudioController.confirm()
 	if depth == 1: self.depth = game.dungeon_lvs[map_pos - 1]
 	else: self.depth -= 1
 
 func _on_Plus_pressed():
+	if game.dungeon_lvs[map_pos - 1] == 1: return
 	AudioController.confirm()
 	if depth == game.dungeon_lvs[map_pos - 1]: self.depth = 1
 	else: self.depth += 1

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://resources/locales/locale.gd" type="Script" id=1]
-[ext_resource path="res://resources/enemies/goblin.tres" type="Resource" id=2]
-[ext_resource path="res://resources/enemies/centuar.tres" type="Resource" id=3]
-[ext_resource path="res://resources/enemies/pixie.tres" type="Resource" id=4]
-[ext_resource path="res://resources/enemies/spider.tres" type="Resource" id=5]
-[ext_resource path="res://resources/enemies/mandrake.tres" type="Resource" id=6]
+[ext_resource path="res://resources/enemies/slime.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemies/cyclops.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemies/gazer.tres" type="Resource" id=4]
+[ext_resource path="res://resources/enemies/gargoyle.tres" type="Resource" id=5]
+[ext_resource path="res://resources/enemies/minotaur.tres" type="Resource" id=6]
 [ext_resource path="res://resources/enemies/wendigo.tres" type="Resource" id=7]
 
 [resource]
@@ -14,6 +14,6 @@ name = "The Labyrinth"
 desc = "The ancient labyrinth has been abandoned for millennia, but recently has awoken with evil magic. Extinct monsters have reappeared and threaten nearby settlements."
 frame = 48
 enemy_lv = 10
-enemies = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ) ]
+enemies = [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ) ]
 boss = ExtResource( 7 )
 dungeon_id = 2

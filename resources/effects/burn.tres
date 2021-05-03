@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/effect.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Burn"
+desc = ""
+frame = 119
+permanent = true
+turn_start = true
+turn_end = false
+triggered = true

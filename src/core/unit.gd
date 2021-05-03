@@ -30,6 +30,14 @@ func heal(amt: = 9999) -> void:
 # warning-ignore:narrowing_conversion
 	hp_cur = clamp(amt, 0, self.hp_max)
 
+func get_highest() -> int:
+	var highest = self.strength
+	if highest < self.agility:
+		highest = self.agility
+	if highest < self.intellect:
+		highest = self.intellect
+	return highest
+
 func get_hp_max() -> int:
 	var hp_mod = 1.0
 	for mod in hp_mods:

@@ -175,7 +175,13 @@ func enemy_turns():
 	start_players_turns()
 
 func enemy_take_action(panel: EnemyPanel):
-	panel.decrement_hexes("Start")
+	if panel.hexes.size() > 0:
+		panel.decrement_hexes("Start")
+		yield(panel, "done")
+	if not panel.alive:
+		panel.die()
+		call_deferred("emit_signal", "enemy_done")
+		return
 	var stunned = false
 	if panel.has_hex("Stun"):
 		stunned = true

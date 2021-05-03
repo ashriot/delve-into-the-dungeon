@@ -10,7 +10,7 @@ hp_cur = 0
 hp_max = 50
 strength = 3
 agility = 7
-intellect = 9
+intellect = 12
 defense = 6
 hp_bonus = 0
 str_bonus = 0
@@ -23,7 +23,6 @@ agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
 perks = {
-
 }
 desc = "BOOGIE"
 level = 2

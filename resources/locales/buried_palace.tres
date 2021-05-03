@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://resources/locales/locale.gd" type="Script" id=1]
+[ext_resource path="res://resources/enemies/slime.tres" type="Resource" id=2]
+[ext_resource path="res://resources/enemies/cyclops.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemies/gazer.tres" type="Resource" id=4]
+[ext_resource path="res://resources/enemies/gargoyle.tres" type="Resource" id=5]
+[ext_resource path="res://resources/enemies/minotaur.tres" type="Resource" id=6]
+[ext_resource path="res://resources/enemies/wendigo.tres" type="Resource" id=7]
+
+[resource]
+script = ExtResource( 1 )
+name = "Buried Palace"
+desc = "Deep beneath the scorching sands of the Viro desert, sleeps an ancient palace brimming with ancient magic and artifacts."
+frame = 67
+enemy_lv = 20
+enemies = [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ) ]
+boss = ExtResource( 7 )
+dungeon_id = 4

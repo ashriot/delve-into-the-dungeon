@@ -4,6 +4,9 @@ const VERSION = "0.6"
 
 var save_name = "adam"
 var save_data: SaveData
+var profile1: SaveData
+var profile2: SaveData
+var profile3: SaveData
 var path = "user://" + save_name;
 var file_path = path.plus_file("data.tres")
 
@@ -30,43 +33,42 @@ func initialize_game_data(_game):
 		loading = false
 
 func initialize_party():
+	var players = {}
 	if !loading:
-		save_data.level_num = 1
 		save_data.discovered = 1
 		save_data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
 		var i = 0
-		for player in game.players:
+		for player in game.players.values():
 			player.slot = i
 			_on_player_changed(player)
 			player.heal()
+			players[i] = player
 			i += 1
-		
-	var players = {}
-	for player in save_data.players.values():
-		var new_player = Player.new()
-		new_player.name = player["name"]
-		new_player.job = player["job"]
-		new_player.job_tab = player["job_tab"]
-		new_player.job_skill = player["job_skill"]
-		new_player.slot = player["slot"]
-		new_player.tab = player["tab"]
-		new_player.frame = player["frame"]
-		new_player.hp_max = player["hp_max"]
-		new_player.hp_cur = player["hp_cur"]
-		new_player.strength = player["str"]
-		new_player.agility = player["agi"]
-		new_player.intellect = player["int"]
-		new_player.defense = player["def"]
-		new_player.xp = player["xp"]
-		new_player.job_xp = player["job_xp"]
-		new_player.job_lv = player["job_lv"]
-		new_player.items = dict_to_items(player["items"])
-		new_player.perks = dict_to_perks(player["perks"])
-		players[new_player.slot] = new_player
-	game.players = players
+	else:
+		for player in save_data.players.values():
+			var new_player = Player.new()
+			new_player.name = player["name"]
+			new_player.job = player["job"]
+			new_player.job_tab = player["job_tab"]
+			new_player.job_skill = player["job_skill"]
+			new_player.slot = player["slot"]
+			new_player.tab = player["tab"]
+			new_player.frame = player["frame"]
+			new_player.hp_max = player["hp_max"]
+			new_player.hp_cur = player["hp_cur"]
+			new_player.strength = player["str"]
+			new_player.agility = player["agi"]
+			new_player.intellect = player["int"]
+			new_player.defense = player["def"]
+			new_player.xp = player["xp"]
+			new_player.job_xp = player["job_xp"]
+			new_player.job_lv = player["job_lv"]
+			new_player.items = dict_to_items(player["items"])
+			new_player.perks = dict_to_perks(player["perks"])
+			players[new_player.slot] = new_player
 	game.dungeon_lvs = save_data.dungeon_lvs
-	game.level_num = save_data.level_num
 	game.discovered = save_data.discovered
+	game.players = players
 	var i = 0
 	for key in players.keys():
 		var player = players[key]
@@ -136,8 +138,9 @@ func _on_player_changed(player: Player):
 	check_error(error)
 
 func _on_level_changed() -> void:
-	print("Saving level: ", game.level_num)
-	save_data.level_num = game.level_num
+	save_data.dungeon_lvs = game.dungeon_lvs
+	var error = ResourceSaver.save(file_path, save_data)
+	check_error(error)
 
 func initialize_inventory():
 	game.inventory.connect("inventory_changed", self, "_on_inventory_changed")

@@ -22,7 +22,6 @@ func play_bgm(name: String, pos: = 0) -> void:
 	if name == "": return
 	bgm_playing = name
 	if mute: return
-	bgm.volume_db = -5
 	bgm.stream = load("res://assets/audio/bgm/" + name + ".ogg")
 	bgm.play(pos)
 
@@ -71,6 +70,7 @@ func steps() -> void:
 	play_sfx("footsteps")
 
 func set_bgm_volume() -> void:
+	vol_bgm = -5
 	bgm.volume_db = vol_bgm
 
 func set_sfx_volume() -> void:

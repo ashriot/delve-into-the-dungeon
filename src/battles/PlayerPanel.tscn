@@ -84,10 +84,10 @@ __meta__ = {
 [node name="HPCur" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -14.0
-margin_top = 2.0
-margin_right = -2.0
-margin_bottom = 9.0
+margin_left = -13.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = 8.0
 text = "023"
 align = 2
 __meta__ = {
@@ -118,15 +118,15 @@ __meta__ = {
 position = Vector2( 2, 2 )
 texture = ExtResource( 5 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 
 [node name="Status" type="Sprite" parent="."]
 position = Vector2( 11, 2 )
 texture = ExtResource( 5 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 90
 
 [node name="Selector" type="Sprite" parent="."]

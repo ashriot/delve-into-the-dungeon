@@ -19,6 +19,12 @@ onready var fade = $CanvasLayer/Fade
 onready var gold = $CanvasLayer/DungeonHUD/Gold
 onready var level = $CanvasLayer/DungeonHUD/Level
 
+onready var profiles = $CanvasLayer/Profiles
+onready var profile1 = $CanvasLayer/Profiles/Profiles/Profile1
+onready var profile2 = $CanvasLayer/Profiles/Profiles/Profile2
+onready var profile3 = $CanvasLayer/Profiles/Profiles/Profile3
+onready var new_profile = $CanvasLayer/Profiles/NewProfile
+
 onready var discovered: int
 
 signal done_fading
@@ -26,20 +32,20 @@ signal done_learned_skill
 signal level_changed
 
 export var mute: bool setget set_mute
+export var skip_title: bool
 export var spd: = 1.0
 export(Dictionary) var players
 
-var game_starting
-
 var hud_timer: = 0.0
 var level_num: int setget set_level_num
-var dungeon_lvs: = []
+var dungeon_lvs: = [] setget set_dungeon_lvs
 var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
 func _ready():
 #	randomize()
-	title.hide()
+	profiles.hide()
+	new_profile.hide()
 	fade.show()
 	dungeon_complete.hide()
 	GameManager.initialize_game_data(self)
@@ -54,25 +60,42 @@ func _ready():
 	hud_timer = 3
 	town_menu.init(self)
 	town_menu.show()
+	title.show()
 	yield(get_tree().create_timer(0.25), "timeout")
 	fade.instant_hide()
-	begin()
+	
+	# FIX THESE!! You need to load profile data but also attach SaveData to each profile.
+	profile1.init(self, GameManager.profile1)
+	profile2.init(self, GameManager.profile2)
+	profile3.init(self, GameManager.profile3)
+	if skip_title: skip_title()
+	else: show_title()
 
 func show_title() -> void:
-	game_starting = true
 	dungeon.active = false
-	title.show()
 	AudioController.play_bgm("title")
 	yield(get_tree().create_timer(1), "timeout")
 	title_anim.playback_speed = 0.6
 	title_anim.play("FadeIn")
+	title.show()
 	yield(title_anim, "animation_finished")
 	title_anim.playback_speed = 1
 	title_anim.play("Flash")
-	game_starting = false
+	$CanvasLayer/Title/StartGame.disabled = false
+
+func skip_title():
+	AudioController.play_bgm("title")
+	title_anim.play("FadeIn")
+	title_anim.seek(3.5, true)
+	title.show()
+	$CanvasLayer/Title/StartGame.disabled = false
 
 func _on_StartGame_pressed():
-	if game_starting: return
+	AudioController.select()
+	profiles.show()
+
+func on_Profile_pressed(id) -> void:
+	print("Clicked profile: ", id)
 	fade.fade_to_black()
 	yield(fade, "done")
 	title_anim.stop()
@@ -104,13 +127,13 @@ func enter_dungeon(locale: Locale, depth: int) -> void:
 func dungeon_complete() -> void:
 	fade.fade_to_black()
 	yield(fade, "done")
-	yield(get_tree().create_timer(0.25), "timeout")
+	yield(get_tree().create_timer(0.15), "timeout")
 	dungeon_complete.show()
 	fade.fade_from_black()
 	yield(fade, "done")
 	AudioController.play_sfx("dungeon_done")
 
-func battle_start():
+func battle_start(lv: int):
 	menu_button.hide()
 	dungeon.active = false
 	var pos = AudioController.get_pos()
@@ -118,7 +141,7 @@ func battle_start():
 	fade.fade_to_black()
 	yield(fade, "done")
 	hud.hide()
-	var enemies = get_enemies()
+	var enemies = get_enemies(lv)
 	yield(get_tree().create_timer(0.25), "timeout")
 	battle.start(players, enemies)
 	fade.fade_from_black()
@@ -136,12 +159,11 @@ func battle_start():
 	update_hud()
 	menu_button.show()
 
-func get_enemies() -> Dictionary:
+func get_enemies(max_lv: int) -> Dictionary:
 	var enemy_picker = dungeon.get_enemies()
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
 # warning-ignore:integer_division
-	var max_lv = int(level_num / 3) + 1
 # warning-ignore:integer_division
 	var min_lv = max(max_lv - 3, 1)
 	var encounter = {}
@@ -186,6 +208,9 @@ func set_level_num(value) -> void:
 	level_num = value
 	level.text = str(value)
 	hud_timer = 3
+
+func set_dungeon_lvs(value) -> void:
+	dungeon_lvs = value
 	emit_signal("level_changed")
 
 func _on_MenuButton_pressed() -> void:
@@ -208,8 +233,8 @@ func learned_skill(unit: Player) -> void:
 			
 	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
 	unit.items[next] = skill
-	yield(get_tree().create_timer(0.1), "timeout")
-	emit_signal("done_learned_skill", skill.name)
+	var skill_name = skill.name
+	call_deferred("emit_signal", "done_learned_skill", "skill_name") #emit_signal(, skill.name)
 
 func set_mute(value) -> void:
 	mute = value
@@ -239,6 +264,13 @@ func _on_BackToTown_pressed():
 	AudioController.play_sfx("stairs")
 	fade.fade_to_black()
 	yield(fade, "done")
+	dungeon_complete.hide()
 	town_menu.show()
 	fade.fade_from_black()
 	AudioController.play_bgm("town")
+
+func _on_ProfileBtn_create_new(slot: int):
+	print("Creating a new save in slot: ", slot)
+
+func _on_ProfileBtn_load_profile(slot: int):
+	print("Loading a save from slot: ", slot)

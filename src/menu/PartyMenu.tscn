@@ -80,8 +80,8 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="CloseButton"]
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 140
 
 [node name="Stats" type="Panel" parent="."]
@@ -96,8 +96,8 @@ __meta__ = {
 position = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 20
 
 [node name="Name" type="Label" parent="Stats"]
@@ -322,17 +322,7 @@ __meta__ = {
 [node name="Actions" type="Button" parent="MainMenu/MenuButtons"]
 margin_right = 68.0
 margin_bottom = 9.0
-
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Actions"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 9.0
-margin_top = 2.0
-margin_right = -2.0
-text = "Actions"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+text = "  ACTIONS"
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Actions"]
 margin_right = 8.0
@@ -347,8 +337,8 @@ __meta__ = {
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 142
 
 [node name="Traits" type="Button" parent="MainMenu/MenuButtons"]
@@ -356,17 +346,6 @@ modulate = Color( 1, 1, 1, 0.12549 )
 margin_top = 11.0
 margin_right = 68.0
 margin_bottom = 20.0
-
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Traits"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 9.0
-margin_top = 2.0
-margin_right = -2.0
-text = "Traits"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Traits"]
 margin_right = 8.0
@@ -381,8 +360,8 @@ __meta__ = {
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 142
 
 [node name="Equipment" type="Button" parent="MainMenu/MenuButtons"]
@@ -390,17 +369,6 @@ modulate = Color( 1, 1, 1, 0.12549 )
 margin_top = 22.0
 margin_right = 68.0
 margin_bottom = 31.0
-
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Equipment"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 9.0
-margin_top = 2.0
-margin_right = -2.0
-text = "Equipment"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Equipment"]
 margin_right = 8.0
@@ -415,25 +383,15 @@ __meta__ = {
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 142
 
 [node name="Inventory" type="Button" parent="MainMenu/MenuButtons"]
 margin_top = 33.0
 margin_right = 68.0
 margin_bottom = 42.0
-
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Inventory"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 9.0
-margin_top = 2.0
-margin_right = -2.0
-text = "Inventory"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+text = "  INVENTORY"
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Inventory"]
 margin_right = 8.0
@@ -448,25 +406,15 @@ __meta__ = {
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 142
 
 [node name="Options" type="Button" parent="MainMenu/MenuButtons"]
 margin_top = 44.0
 margin_right = 68.0
 margin_bottom = 53.0
-
-[node name="Label" type="Label" parent="MainMenu/MenuButtons/Options"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 9.0
-margin_top = 2.0
-margin_right = -2.0
-text = "Options"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+text = "  OPTIONS"
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Options"]
 margin_right = 8.0
@@ -481,8 +429,8 @@ __meta__ = {
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 142
 
 [node name="Gold" type="Label" parent="."]
@@ -502,7 +450,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Gold"]
-position = Vector2( 40, -1 )
+position = Vector2( 40, 0 )
 texture = ExtResource( 12 )
 centered = false
 
@@ -1109,6 +1057,9 @@ text = "UNINITIALIZED!!!!! "
 align = 1
 valign = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="Tooltip/Container/Panel"]
 margin_right = 71.0
@@ -1120,9 +1071,9 @@ __meta__ = {
 
 [node name="Title" type="Label" parent="Tooltip/Container/Panel"]
 margin_left = 2.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 70.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "Uninitialized"
 align = 1
@@ -1210,9 +1161,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 margin_left = 2.0
-margin_top = -2.5
+margin_top = -3.5
 margin_right = 42.0
-margin_bottom = 4.5
+margin_bottom = 3.5
 text = "Mute BGM"
 
 [node name="BackBanner" type="ColorRect" parent="Options/Panel"]
@@ -1226,11 +1177,11 @@ color = Color( 1, 1, 0.921569, 1 )
 
 [node name="Label" type="Label" parent="Options/Panel/BackBanner"]
 margin_left = 1.0
-margin_top = 1.0
 margin_right = 41.0
-margin_bottom = 8.0
+margin_bottom = 7.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "OPTIONS"
+
 [connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Stats/InfoButton" to="." method="_on_InfoButton_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/Actions" to="." method="_on_Items_pressed"]
