@@ -667,7 +667,6 @@ anchor_right = 0.5
 margin_left = -34.0
 margin_right = 24.0
 margin_bottom = 11.0
-text = "Ash Riot"
 align = 1
 max_length = 10
 context_menu_enabled = false
@@ -681,7 +680,9 @@ __meta__ = {
 margin_left = 59.0
 margin_right = 70.0
 margin_bottom = 11.0
-texture_normal = ExtResource( 31 )
+disabled = true
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 32 )
 texture_pressed = ExtResource( 32 )
 texture_disabled = ExtResource( 31 )
 __meta__ = {
@@ -744,25 +745,24 @@ __meta__ = {
 }
 
 [node name="Hardcore" type="TextureButton" parent="CanvasLayer/Profiles/NewProfile"]
-margin_left = 16.0
-margin_top = 40.0
-margin_right = 25.0
-margin_bottom = 49.0
+margin_left = 17.0
+margin_top = 42.0
+margin_right = 55.0
+margin_bottom = 47.0
 toggle_mode = true
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 30 )
 texture_pressed = ExtResource( 26 )
-expand = true
 stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="CanvasLayer/Profiles/NewProfile/Hardcore"]
-margin_left = 9.0
-margin_top = 1.0
-margin_right = 57.0
-margin_bottom = 8.0
+margin_left = 6.0
+margin_top = -1.0
+margin_right = 54.0
+margin_bottom = 6.0
 text = "Hardcore"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -782,7 +782,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Profiles/NewProfile"]
+[node name="NewBack" type="TextureButton" parent="CanvasLayer/Profiles/NewProfile"]
 margin_left = 2.0
 margin_top = -8.0
 margin_right = 11.0
@@ -863,4 +863,5 @@ __meta__ = {
 
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]
+[connection signal="pressed" from="CanvasLayer/Profiles/NewProfile/NewBack" to="." method="_on_NewBack_pressed"]
 [connection signal="pressed" from="CanvasLayer/DungeonComplete/BackToTown" to="." method="_on_BackToTown_pressed"]

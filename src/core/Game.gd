@@ -42,12 +42,24 @@ var dungeon_lvs: = [] setget set_dungeon_lvs
 var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
+var chosen_profile: String
+
 func _ready():
 #	randomize()
 	profiles.hide()
 	new_profile.hide()
 	fade.show()
 	dungeon_complete.hide()
+	title.show()
+	fade.instant_hide()
+	profile1.init(self, GameManager.profile1, 1)
+	profile2.init(self, GameManager.profile2, 2)
+	profile3.init(self, GameManager.profile3, 3)
+	yield(get_tree().create_timer(0.25), "timeout")
+	if skip_title: skip_title()
+	else: show_title()
+
+func init(profile) -> void:
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
@@ -56,20 +68,11 @@ func _ready():
 	battle.init(self)
 	dungeon.init(self)
 	party_menu.init(self)
-	update_hud()
-	hud_timer = 3
 	town_menu.init(self)
 	town_menu.show()
-	title.show()
-	yield(get_tree().create_timer(0.25), "timeout")
-	fade.instant_hide()
-	
+	update_hud()
+	hud_timer = 3
 	# FIX THESE!! You need to load profile data but also attach SaveData to each profile.
-	profile1.init(self, GameManager.profile1)
-	profile2.init(self, GameManager.profile2)
-	profile3.init(self, GameManager.profile3)
-	if skip_title: skip_title()
-	else: show_title()
 
 func show_title() -> void:
 	dungeon.active = false
@@ -271,6 +274,12 @@ func _on_BackToTown_pressed():
 
 func _on_ProfileBtn_create_new(slot: int):
 	print("Creating a new save in slot: ", slot)
+	AudioController.select()
+	new_profile.show()
 
 func _on_ProfileBtn_load_profile(slot: int):
 	print("Loading a save from slot: ", slot)
+
+func _on_NewBack_pressed():
+	AudioController.back()
+	new_profile.hide()

@@ -2,21 +2,37 @@ extends Node
 
 const VERSION = "0.6"
 
-var save_name = "adam"
+var profile_id: String
+var path: String
+var file_path: String
 var save_data: SaveData
-var profile1: SaveData
-var profile2: SaveData
-var profile3: SaveData
-var path = "user://" + save_name;
-var file_path = path.plus_file("data.tres")
+
+var profile1: Profile
+var profile2: Profile
+var profile3: Profile
 
 var loading: = false
 var spd: = 1.0 setget, get_spd
 
 var game: Game
 
+func _ready() -> void:
+	var profile_path = "user://profile"
+	var dir = Directory.new();
+	for i in range(3):
+		var full_path = profile_path + str(i + 1)
+		if dir.file_exists(full_path.plus_file("profile.tres")):
+			if i == 0: profile1 = load(full_path.plus_file("profile.tres")) as Profile
+			if i == 1: profile2 = load(full_path.plus_file("profile.tres")) as Profile
+			if i == 2: profile3 = load(full_path.plus_file("profile.tres")) as Profile
+		else:
+			dir.make_dir_recursive(full_path)
+
 func initialize_game_data(_game):
 	game = _game
+	profile_id = game.profile
+	path = "user://profile" + profile_id;
+	file_path = path.plus_file("data.tres")
 	spd = game.spd
 	var dir = Directory.new();
 	if dir.file_exists(file_path):
