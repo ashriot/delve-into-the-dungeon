@@ -265,8 +265,8 @@ drag_margin_bottom = 0.0
 [node name="Sprite" type="Sprite" parent="Dungeon/Player"]
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Dungeon/Player/Sprite"]
@@ -298,8 +298,8 @@ __meta__ = {
 position = Vector2( 59, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 23
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite"]
@@ -330,8 +330,8 @@ __meta__ = {
 position = Vector2( 59, 6 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 24
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite2"]
@@ -362,8 +362,8 @@ __meta__ = {
 position = Vector2( 59, 12 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite3"]
@@ -394,8 +394,8 @@ __meta__ = {
 position = Vector2( 59, 18 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 28
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite4"]
@@ -437,8 +437,8 @@ __meta__ = {
 position = Vector2( 34, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 130
 
 [node name="Level" type="Label" parent="CanvasLayer/DungeonHUD"]
@@ -456,8 +456,8 @@ __meta__ = {
 position = Vector2( 25, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
@@ -505,8 +505,8 @@ __meta__ = {
 position = Vector2( 1, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
@@ -662,15 +662,13 @@ __meta__ = {
 }
 
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer/Profiles/NewProfile"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -34.0
-margin_right = 24.0
+margin_left = 2.0
+margin_right = 60.0
 margin_bottom = 11.0
 align = 1
 max_length = 10
 context_menu_enabled = false
-placeholder_text = "Profile Name"
+placeholder_text = "Profile"
 placeholder_alpha = 0.4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -703,6 +701,27 @@ __meta__ = {
 [node name="Easy" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -50.0
+text = "Easy"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Btn" type="Button" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Easy"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -2.0
+margin_top = -1.0
+margin_right = 19.0
+margin_bottom = 8.0
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Color" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Easy"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -2.0
 custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
 text = "Easy"
 __meta__ = {
@@ -712,7 +731,29 @@ __meta__ = {
 [node name="Normal" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 21.0
+margin_right = -20.0
+text = "Normal"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Btn" type="Button" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Normal"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Color" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Normal"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 2.0
+margin_right = -2.0
 custom_colors/font_color = Color( 0.858824, 0.713726, 0.258824, 1 )
 text = "Normal"
 align = 1
@@ -723,6 +764,28 @@ __meta__ = {
 [node name="Hard" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 50.0
+text = "Hard"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Btn" type="Button" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Hard"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_right = 2.0
+action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Color" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Hard"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
 custom_colors/font_color = Color( 0.8, 0.376471, 0.337255, 1 )
 text = "Hard"
 align = 2
@@ -734,7 +797,7 @@ __meta__ = {
 margin_top = 19.0
 margin_right = 73.0
 margin_bottom = 38.0
-custom_colors/font_color = Color( 0.329412, 0.329412, 0.301961, 1 )
+custom_colors/font_color = Color( 1, 1, 0.921569, 0.392157 )
 custom_constants/line_spacing = -1
 text = "Enemies are 25% stronger. Prices are increased."
 align = 1
@@ -751,6 +814,7 @@ margin_right = 55.0
 margin_bottom = 47.0
 toggle_mode = true
 shortcut_in_tooltip = false
+action_mode = 0
 texture_normal = ExtResource( 30 )
 texture_pressed = ExtResource( 26 )
 stretch_mode = 3
@@ -772,9 +836,9 @@ __meta__ = {
 margin_top = 48.0
 margin_right = 73.0
 margin_bottom = 62.0
-custom_colors/font_color = Color( 0.329412, 0.329412, 0.301961, 1 )
+custom_colors/font_color = Color( 1, 1, 0.921569, 0.392157 )
 custom_constants/line_spacing = -1
-text = "Dead heroes can be revived in town."
+text = "Fallen heroes can be revived in town."
 align = 1
 valign = 1
 autowrap = true
@@ -860,8 +924,9 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]
+[connection signal="text_changed" from="CanvasLayer/Profiles/NewProfile/LineEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="pressed" from="CanvasLayer/Profiles/NewProfile/Hardcore" to="." method="_on_Hardcore_pressed"]
 [connection signal="pressed" from="CanvasLayer/Profiles/NewProfile/NewBack" to="." method="_on_NewBack_pressed"]
 [connection signal="pressed" from="CanvasLayer/DungeonComplete/BackToTown" to="." method="_on_BackToTown_pressed"]

@@ -269,7 +269,7 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	damage_text.rect_global_position = pos
 	if display: damage_text.display(self, text)
 	else: damage_text.text(self, text)
-	
+
 func learned_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
 	damage_text.rect_global_position = pos
@@ -453,7 +453,7 @@ func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
 
 func _on_PlayerPanel_died(panel: PlayerPanel) -> void:
 	pass
-	
+
 func victory() -> void:
 	AudioController.bgm.stop()
 	clear_selections()

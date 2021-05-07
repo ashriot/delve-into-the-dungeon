@@ -25,6 +25,13 @@ onready var profile2 = $CanvasLayer/Profiles/Profiles/Profile2
 onready var profile3 = $CanvasLayer/Profiles/Profiles/Profile3
 onready var new_profile = $CanvasLayer/Profiles/NewProfile
 
+onready var easy_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Easy/Color
+onready var norm_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Color
+onready var hard_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Color
+onready var hardcore: = $CanvasLayer/Profiles/NewProfile/Hardcore
+onready var hard_desc = $CanvasLayer/Profiles/NewProfile/HardcoreDesc
+#onready var new_text = $CanvasLayer/Profiles/NewProfile/LineEdit
+
 onready var discovered: int
 
 signal done_fading
@@ -55,6 +62,10 @@ func _ready():
 	profile1.init(self, GameManager.profile1, 1)
 	profile2.init(self, GameManager.profile2, 2)
 	profile3.init(self, GameManager.profile3, 3)
+	$CanvasLayer/Profiles/NewProfile/Difficulty/Easy/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Easy"])
+	$CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Normal"])
+	$CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Hard"])
+	$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 0.25
 	yield(get_tree().create_timer(0.25), "timeout")
 	if skip_title: skip_title()
 	else: show_title()
@@ -233,7 +244,7 @@ func learned_skill(unit: Player) -> void:
 		if unit.items[i] == null:
 			if next == 7: next = i
 		else: excluding.append(unit.items[i].name)
-			
+
 	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
 	unit.items[next] = skill
 	var skill_name = skill.name
@@ -260,6 +271,25 @@ func update_hud():
 	hud.show()
 	hud_timer = 2.1
 
+func _on_DifficultyBtn_pressed(value: String) -> void:
+	AudioController.click()
+	set_difficulty(value)
+
+func set_difficulty(value: String) -> void:
+	easy_color.hide()
+	norm_color.hide()
+	hard_color.hide()
+	var text = "The standard game experience."
+	if value == "Easy":
+		easy_color.show()
+		text = "Enemies are 25% weaker and prices are reduced."
+	if value == "Normal":
+		norm_color.show()
+	if value == "Hard":
+		hard_color.show()
+		text = "Enemies are 25% stronger and prices are increased."
+	$CanvasLayer/Profiles/NewProfile/DifficultyDesc.text = text
+
 func _on_BuyBS_pressed():
 	party_menu.open_inv()
 
@@ -276,6 +306,7 @@ func _on_ProfileBtn_create_new(slot: int):
 	print("Creating a new save in slot: ", slot)
 	AudioController.select()
 	new_profile.show()
+	set_difficulty("Normal")
 
 func _on_ProfileBtn_load_profile(slot: int):
 	print("Loading a save from slot: ", slot)
@@ -283,3 +314,18 @@ func _on_ProfileBtn_load_profile(slot: int):
 func _on_NewBack_pressed():
 	AudioController.back()
 	new_profile.hide()
+
+func _on_Hardcore_pressed():
+	if hardcore.pressed:
+		AudioController.click()
+		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 1.0
+		hard_desc.text = "Fallen heroes are permanently killed."
+	else:
+		AudioController.back()
+		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 0.25
+		hard_desc.text = "Fallen heroes can be revived in town."
+
+func _on_LineEdit_text_changed(new_text):
+	var result = new_text.length() < 2
+	$CanvasLayer/Profiles/NewProfile/Check.disabled = result
+#	$Profiles/CreateDialog/Min.modulate.a = 1.0 if result else 0.25
