@@ -105,11 +105,6 @@ _global_script_classes=[ {
 "path": "res://src/menu/PressButton.gd"
 }, {
 "base": "Resource",
-"class": "Profile",
-"language": "GDScript",
-"path": "res://src/menu/profile.gd"
-}, {
-"base": "Resource",
 "class": "SaveData",
 "language": "GDScript",
 "path": "res://src/core/save_data.gd"
@@ -144,7 +139,6 @@ _global_script_class_icons={
 "PlayerMenuPanel": "",
 "PlayerPanel": "",
 "PressButton": "",
-"Profile": "",
 "SaveData": "",
 "TileToggle": "",
 "Unit": ""
@@ -234,6 +228,6 @@ Right={
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+batching/precision/uv_contract=true
 environment/default_clear_color=Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 environment/default_environment="res://default_env.tres"
-batching/precision/uv_contract=true

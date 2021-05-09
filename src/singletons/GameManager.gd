@@ -7,9 +7,9 @@ var path: String
 var file_path: String
 var save_data: SaveData
 
-var profile1: Profile
-var profile2: Profile
-var profile3: Profile
+var profile1: SaveData
+var profile2: SaveData
+var profile3: SaveData
 
 var loading: = false
 var spd: = 1.0 setget, get_spd
@@ -21,16 +21,16 @@ func _ready() -> void:
 	var dir = Directory.new();
 	for i in range(3):
 		var full_path = profile_path + str(i + 1)
-		if dir.file_exists(full_path.plus_file("profile.tres")):
-			if i == 0: profile1 = load(full_path.plus_file("profile.tres")) as Profile
-			if i == 1: profile2 = load(full_path.plus_file("profile.tres")) as Profile
-			if i == 2: profile3 = load(full_path.plus_file("profile.tres")) as Profile
+		if dir.file_exists(full_path.plus_file("data.tres")):
+			if i == 0: profile1 = load(full_path.plus_file("data.tres")) as SaveData
+			if i == 1: profile2 = load(full_path.plus_file("data.tres")) as SaveData
+			if i == 2: profile3 = load(full_path.plus_file("data.tres")) as SaveData
 		else:
 			dir.make_dir_recursive(full_path)
 
 func initialize_game_data(_game):
 	game = _game
-	profile_id = game.profile
+	profile_id = str(game.profile_id)
 	path = "user://profile" + profile_id;
 	file_path = path.plus_file("data.tres")
 	spd = game.spd

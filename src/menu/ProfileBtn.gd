@@ -16,27 +16,30 @@ onready var hardcore = $SaveData/Hardcore
 var new: = false
 var slot_num: int
 
-func init(game: Game, profile: Profile, id: int) -> void:
+func init(game: Game, slot: int) -> void:
 	connect("create_new", game, "_on_ProfileBtn_create_new")
 	connect("load_profile", game, "_on_ProfileBtn_load_profile")
+	slot_num = slot
+	self.setup(null)
+
+func setup(data: SaveData) -> void:
 	slot_1.hide()
 	slot_2.hide()
 	slot_3.hide()
-	slot_num = id
 	if slot_num == 1: slot_1.show()
 	if slot_num == 2: slot_2.show()
 	if slot_num == 3: slot_3.show()
-	if profile == null:
+	if data == null:
 		new = true
 		new_game.show()
 		save_data.hide()
 	else:
 		new_game.hide()
 		save_data.show()
-		profile_name.text = profile.name
-		difficulty.text = profile.difficulty
-		gold.text = str(profile.gold)
-		if profile.hardcore: hardcore.show()
+		profile_name.text = data.profile_name
+		difficulty.text = data.difficulty
+		gold.text = str(data.gold)
+		if data.hardcore: hardcore.show()
 
 
 func _on_ProfileBtn_pressed():

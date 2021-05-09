@@ -30,7 +30,7 @@ onready var norm_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Colo
 onready var hard_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Color
 onready var hardcore: = $CanvasLayer/Profiles/NewProfile/Hardcore
 onready var hard_desc = $CanvasLayer/Profiles/NewProfile/HardcoreDesc
-#onready var new_text = $CanvasLayer/Profiles/NewProfile/LineEdit
+onready var line_edit = $CanvasLayer/Profiles/NewProfile/LineEdit
 
 onready var discovered: int
 
@@ -43,13 +43,17 @@ export var skip_title: bool
 export var spd: = 1.0
 export(Dictionary) var players
 
+var difficulty: String setget set_difficulty
+var slot_num: int
+var hardcore_enabled: bool
+
 var hud_timer: = 0.0
 var level_num: int setget set_level_num
 var dungeon_lvs: = [] setget set_dungeon_lvs
 var _Inventory = load("res://src/core/inventory.gd")
 var inventory: Inventory = _Inventory.new()
 
-var chosen_profile: String
+var profile_id: int
 
 func _ready():
 #	randomize()
@@ -59,9 +63,9 @@ func _ready():
 	dungeon_complete.hide()
 	title.show()
 	fade.instant_hide()
-	profile1.init(self, GameManager.profile1, 1)
-	profile2.init(self, GameManager.profile2, 2)
-	profile3.init(self, GameManager.profile3, 3)
+	profile1.init(self, 1)
+	profile2.init(self, 2)
+	profile3.init(self, 3)
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Easy/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Easy"])
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Normal"])
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Hard"])
@@ -273,9 +277,10 @@ func update_hud():
 
 func _on_DifficultyBtn_pressed(value: String) -> void:
 	AudioController.click()
-	set_difficulty(value)
+	self.difficulty = value
 
 func set_difficulty(value: String) -> void:
+	difficulty = value
 	easy_color.hide()
 	norm_color.hide()
 	hard_color.hide()
@@ -303,10 +308,11 @@ func _on_BackToTown_pressed():
 	AudioController.play_bgm("town")
 
 func _on_ProfileBtn_create_new(slot: int):
-	print("Creating a new save in slot: ", slot)
 	AudioController.select()
+	slot_num = slot
 	new_profile.show()
 	set_difficulty("Normal")
+	print("Creating a new save in slot: ", slot)
 
 func _on_ProfileBtn_load_profile(slot: int):
 	print("Loading a save from slot: ", slot)
@@ -316,6 +322,7 @@ func _on_NewBack_pressed():
 	new_profile.hide()
 
 func _on_Hardcore_pressed():
+	hardcore_enabled = hardcore.pressed
 	if hardcore.pressed:
 		AudioController.click()
 		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 1.0
@@ -329,3 +336,33 @@ func _on_LineEdit_text_changed(new_text):
 	var result = new_text.length() < 2
 	$CanvasLayer/Profiles/NewProfile/Check.disabled = result
 #	$Profiles/CreateDialog/Min.modulate.a = 1.0 if result else 0.25
+
+func _on_Check_pressed():
+	AudioController.confirm()
+	var data = SaveData.new()
+	data.game_version = GameManager.VERSION
+	data.profile_name = line_edit.text
+	data.slot_num = slot_num
+	data.hardcore = hardcore_enabled
+	data.difficulty = difficulty
+	data.discovered = 1
+	data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
+	data.gold = 0
+	if slot_num == 1: profile1.setup(data)
+	if slot_num == 2: profile2.setup(data)
+	if slot_num == 3: profile3.setup(data)
+	save_new_profile(slot_num, data)
+	new_profile.hide()
+
+func save_new_profile(slot: int, save_data: SaveData):
+	var path = "user://profile" + str(slot)
+	var dir = Directory.new();
+	if dir.file_exists(path.plus_file("data.tres")):
+		dir.remove(path)
+	var file_path = path.plus_file("data.tres")
+	var error = ResourceSaver.save(file_path, save_data)
+	check_error(error)
+
+func check_error(error):
+	if error != OK:
+		print("There was an error writing the save %s." % [error])
