@@ -61,137 +61,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Blacksmith" type="Button" parent="TownMenu"]
+[node name="BlacksmithBtn" type="Button" parent="TownMenu"]
 margin_right = 64.0
 margin_bottom = 9.0
 rect_min_size = Vector2( 0, 9 )
-
-[node name="Label" type="Label" parent="TownMenu/Blacksmith"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
 text = "Blacksmith"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Button2" type="Button" parent="TownMenu"]
+[node name="AlchemistBtn" type="Button" parent="TownMenu"]
 margin_top = 10.0
 margin_right = 64.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 0, 9 )
-
-[node name="Label" type="Label" parent="TownMenu/Button2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
 text = "Alchemist"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Button3" type="Button" parent="TownMenu"]
+[node name="MonestaryBtn" type="Button" parent="TownMenu"]
 margin_top = 20.0
 margin_right = 64.0
 margin_bottom = 29.0
 rect_min_size = Vector2( 0, 9 )
-
-[node name="Label" type="Label" parent="TownMenu/Button3"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
 text = "Monestary"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Button4" type="Button" parent="TownMenu"]
+[node name="WizBtn" type="Button" parent="TownMenu"]
 margin_top = 30.0
 margin_right = 64.0
 margin_bottom = 39.0
 rect_min_size = Vector2( 0, 9 )
+text = "Mage's Tower"
 
-[node name="Label" type="Label" parent="TownMenu/Button4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
-text = "Wizard Tower"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button5" type="Button" parent="TownMenu"]
+[node name="TavernBtn" type="Button" parent="TownMenu"]
 margin_top = 40.0
 margin_right = 64.0
 margin_bottom = 49.0
 rect_min_size = Vector2( 0, 9 )
+text = "The Tavern"
 
-[node name="Label" type="Label" parent="TownMenu/Button5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
-text = "Tavern"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button7" type="Button" parent="TownMenu"]
+[node name="DocksBtn" type="Button" parent="TownMenu"]
 margin_top = 50.0
 margin_right = 64.0
 margin_bottom = 59.0
 rect_min_size = Vector2( 0, 9 )
-
-[node name="Label" type="Label" parent="TownMenu/Button7"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
 text = "Docks"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="TownGates" type="Button" parent="TownMenu"]
+[node name="GatesBtn" type="Button" parent="TownMenu"]
 margin_top = 60.0
 margin_right = 64.0
 margin_bottom = 69.0
 rect_min_size = Vector2( 0, 9 )
-
-[node name="Label" type="Label" parent="TownMenu/TownGates"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 2.0
-margin_bottom = 1.0
 text = "Town Gates"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
 margin_top = 42.0
@@ -205,6 +121,7 @@ __meta__ = {
 }
 
 [node name="Blacksmith" type="Control" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
@@ -648,8 +565,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="TownMenu/Blacksmith" to="." method="_on_Blacksmith_pressed"]
-[connection signal="pressed" from="TownMenu/TownGates" to="." method="_on_TownGates_pressed"]
+[connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
+[connection signal="pressed" from="TownMenu/GatesBtn" to="." method="_on_TownGates_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/BuyBS" to="." method="_on_BuyBS_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/SellBS" to="." method="_on_SellBS_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/Leave_BS" to="." method="_on_Leave_BS_pressed"]

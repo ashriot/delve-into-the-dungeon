@@ -20,9 +20,14 @@ func init(game: Game, slot: int) -> void:
 	connect("create_new", game, "_on_ProfileBtn_create_new")
 	connect("load_profile", game, "_on_ProfileBtn_load_profile")
 	slot_num = slot
-	self.setup(null)
+	var data = null
+	if slot == 1: data = GameManager.profile1
+	elif slot == 2: data = GameManager.profile2
+	elif slot == 3: data = GameManager.profile3
+	self.setup(data)
 
 func setup(data: SaveData) -> void:
+	print("Setting up! ", data)
 	slot_1.hide()
 	slot_2.hide()
 	slot_3.hide()
@@ -34,6 +39,7 @@ func setup(data: SaveData) -> void:
 		new_game.show()
 		save_data.hide()
 	else:
+		new = false
 		new_game.hide()
 		save_data.show()
 		profile_name.text = data.profile_name

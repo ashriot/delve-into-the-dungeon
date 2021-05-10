@@ -63,6 +63,7 @@ func _ready():
 	dungeon_complete.hide()
 	title.show()
 	fade.instant_hide()
+	GameManager.init()
 	profile1.init(self, 1)
 	profile2.init(self, 2)
 	profile3.init(self, 3)
@@ -74,7 +75,12 @@ func _ready():
 	if skip_title: skip_title()
 	else: show_title()
 
-func init(profile) -> void:
+func init() -> void:
+	fade.fade_to_black()
+	yield(fade, "done")
+	profiles.hide()
+	title.hide()
+	menu_button.show()
 	GameManager.initialize_game_data(self)
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
@@ -87,7 +93,8 @@ func init(profile) -> void:
 	town_menu.show()
 	update_hud()
 	hud_timer = 3
-	# FIX THESE!! You need to load profile data but also attach SaveData to each profile.
+	AudioController.play_bgm("town")
+	fade.fade_from_black()
 
 func show_title() -> void:
 	dungeon.active = false
@@ -111,18 +118,6 @@ func skip_title():
 func _on_StartGame_pressed():
 	AudioController.select()
 	profiles.show()
-
-func on_Profile_pressed(id) -> void:
-	print("Clicked profile: ", id)
-	fade.fade_to_black()
-	yield(fade, "done")
-	title_anim.stop()
-	title.hide()
-	begin()
-
-func begin() -> void:
-	AudioController.play_bgm("town")
-	fade.fade_from_black()
 
 func _physics_process(delta: float) -> void:
 	if !dungeon.active: return
@@ -264,6 +259,9 @@ func _exit_tree() -> void:
 func update_hud():
 	var i = 0
 	for child in faces.get_children():
+		if players.size() == 0:
+			child.hide()
+			continue
 		var p = players[i]
 		child.frame = p.frame + 20
 		child.get_child(0).text = str(p.hp_cur)
@@ -316,6 +314,8 @@ func _on_ProfileBtn_create_new(slot: int):
 
 func _on_ProfileBtn_load_profile(slot: int):
 	print("Loading a save from slot: ", slot)
+	profile_id = slot
+	init()
 
 func _on_NewBack_pressed():
 	AudioController.back()

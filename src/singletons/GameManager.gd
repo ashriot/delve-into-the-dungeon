@@ -16,7 +16,7 @@ var spd: = 1.0 setget, get_spd
 
 var game: Game
 
-func _ready() -> void:
+func init() -> void:
 	var profile_path = "user://profile"
 	var dir = Directory.new();
 	for i in range(3):

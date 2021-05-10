@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://src/menu/ProfileBtn.tscn" type="PackedScene" id=25]
 [ext_resource path="res://assets/images/icons/hardcore.png" type="Texture" id=26]
 [ext_resource path="res://assets/images/icons/back.png" type="Texture" id=27]
+[ext_resource path="res://src/core/NewHero.tscn" type="PackedScene" id=28]
 [ext_resource path="res://assets/images/icons/hardcore_off.png" type="Texture" id=30]
 [ext_resource path="res://assets/images/icons/check_dark.png" type="Texture" id=31]
 [ext_resource path="res://assets/images/icons/check.png" type="Texture" id=32]
@@ -461,7 +462,6 @@ vframes = 20
 frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
-visible = false
 locales = {
 1: ExtResource( 3 ),
 2: ExtResource( 4 ),
@@ -475,7 +475,6 @@ locales = {
 visible = false
 
 [node name="MenuButton" type="Button" parent="CanvasLayer"]
-visible = false
 margin_top = 121.0
 margin_right = 72.0
 margin_bottom = 130.0
@@ -494,6 +493,8 @@ color = Color( 1, 1, 0.921569, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
+margin_top = -1.0
+margin_bottom = -1.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "MENU"
 valign = 1
@@ -513,6 +514,7 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -606,6 +608,7 @@ __meta__ = {
 }
 
 [node name="Profiles" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 67.0
@@ -924,6 +927,8 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="NewHero" parent="." instance=ExtResource( 28 )]
 
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]

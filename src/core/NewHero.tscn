@@ -1,0 +1,77 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/core/NewHero.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
+
+[node name="NewHero" type="Control"]
+margin_right = 72.0
+margin_bottom = 128.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+margin_top = 1.0
+margin_bottom = 8.0
+text = "NEW HERO"
+align = 1
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 28.0
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 22.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprites" type="Sprite" parent="Panel"]
+position = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+hframes = 10
+vframes = 20
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = -28.0
+margin_top = 15.0
+margin_right = 44.0
+margin_bottom = 22.0
+text = "Alchemist"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 3.0
+margin_top = 102.0
+margin_right = 70.0
+margin_bottom = 111.0
+
+[node name="Label" type="Label" parent="LineEdit"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -19.5
+margin_top = -7.0
+margin_right = 19.5
+text = "Hero Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
