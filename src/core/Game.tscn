@@ -485,7 +485,6 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/MenuButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -2.0
 mouse_filter = 2
 color = Color( 1, 1, 0.921569, 1 )
 
@@ -909,6 +908,9 @@ valign = 1
 visible = false
 mouse_filter = 2
 
+[node name="NewHero" parent="CanvasLayer" instance=ExtResource( 28 )]
+visible = false
+
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false
 material = SubResource( 6 )
@@ -927,8 +929,6 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="NewHero" parent="." instance=ExtResource( 28 )]
 
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]
