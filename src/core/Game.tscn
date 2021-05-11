@@ -266,8 +266,8 @@ drag_margin_bottom = 0.0
 [node name="Sprite" type="Sprite" parent="Dungeon/Player"]
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Dungeon/Player/Sprite"]
@@ -299,8 +299,8 @@ __meta__ = {
 position = Vector2( 59, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 23
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite"]
@@ -331,8 +331,8 @@ __meta__ = {
 position = Vector2( 59, 6 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 24
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite2"]
@@ -363,8 +363,8 @@ __meta__ = {
 position = Vector2( 59, 12 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite3"]
@@ -395,8 +395,8 @@ __meta__ = {
 position = Vector2( 59, 18 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 28
 
 [node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite4"]
@@ -438,8 +438,8 @@ __meta__ = {
 position = Vector2( 34, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 130
 
 [node name="Level" type="Label" parent="CanvasLayer/DungeonHUD"]
@@ -457,8 +457,8 @@ __meta__ = {
 position = Vector2( 25, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
@@ -505,8 +505,8 @@ __meta__ = {
 position = Vector2( 1, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
@@ -909,7 +909,6 @@ visible = false
 mouse_filter = 2
 
 [node name="NewHero" parent="CanvasLayer" instance=ExtResource( 28 )]
-visible = false
 
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false
@@ -929,7 +928,6 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="text_changed" from="CanvasLayer/Profiles/NewProfile/LineEdit" to="." method="_on_LineEdit_text_changed"]

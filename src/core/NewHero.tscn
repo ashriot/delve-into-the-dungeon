@@ -27,39 +27,20 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_top = 110.0
+margin_top = 112.0
 margin_right = 72.0
-margin_bottom = 117.0
+margin_bottom = 119.0
 text = "ARTIFICER"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="."]
-margin_left = 30.0
-margin_top = 3.0
-margin_right = 42.0
-margin_bottom = 15.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprites" type="Sprite" parent="Panel"]
-position = Vector2( 2, 2 )
-texture = ExtResource( 2 )
-centered = false
-hframes = 10
-vframes = 20
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="LineEdit" type="LineEdit" parent="."]
 margin_left = 2.0
-margin_top = 95.0
+margin_top = 99.0
 margin_right = 60.0
-margin_bottom = 106.0
+margin_bottom = 110.0
 align = 1
 max_length = 12
 context_menu_enabled = false
@@ -78,8 +59,13 @@ margin_left = -1.0
 margin_top = -5.5
 margin_right = 10.0
 margin_bottom = 5.5
+disabled = true
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 6 )
+texture_disabled = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Banner" type="ColorRect" parent="."]
 anchor_top = 1.0
@@ -111,10 +97,10 @@ __meta__ = {
 
 [node name="ClassAction" type="Label" parent="."]
 margin_left = -1.0
-margin_top = 47.0
+margin_top = 34.0
 margin_right = 71.0
-margin_bottom = 54.0
-text = "TINKERING"
+margin_bottom = 41.0
+text = "TINKER"
 align = 1
 autowrap = true
 __meta__ = {
@@ -125,18 +111,38 @@ __meta__ = {
 margin_left = 2.0
 margin_top = 8.0
 margin_right = 74.0
-margin_bottom = 50.0
-text = "After battles, the Artificer has a chance to repair his equipped guns and tools."
+margin_bottom = 64.0
+text = "Equip up to 4 more Tools.
+After battles, the Artificer has a chance to repair his equipped guns and tools."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Panel" type="Panel" parent="."]
+margin_left = 5.0
+margin_top = 2.0
+margin_right = 17.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprites" type="Sprite" parent="Panel"]
+position = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 20
+hframes = 10
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="Stats" type="Control" parent="."]
 margin_left = 5.0
-margin_top = 18.0
+margin_top = 7.0
 margin_right = 67.0
-margin_bottom = 43.0
+margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -277,12 +283,11 @@ valign = 1
 [node name="HP" type="Label" parent="Stats"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -6.0
-margin_right = 14.0
+margin_left = 24.0
+margin_right = 44.0
 margin_bottom = 7.0
 custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
-text = "50/50"
-align = 2
+text = "50"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -296,6 +301,7 @@ margin_right = -1.0
 margin_bottom = 3.5
 color = Color( 0.313726, 0.760784, 0.227451, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -307,13 +313,14 @@ margin_right = 1.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "HP"
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="PrevBtn" type="TextureButton" parent="."]
-margin_top = 109.0
+margin_top = 111.0
 margin_right = 14.0
-margin_bottom = 118.0
+margin_bottom = 120.0
 texture_normal = ExtResource( 4 )
 expand = true
 stretch_mode = 3
@@ -323,12 +330,14 @@ __meta__ = {
 
 [node name="NextBtn" type="TextureButton" parent="."]
 margin_left = 58.0
-margin_top = 109.0
+margin_top = 111.0
 margin_right = 72.0
-margin_bottom = 118.0
+margin_bottom = 120.0
 texture_normal = ExtResource( 5 )
 expand = true
 stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="PrevBtn" to="." method="_on_PrevBtn_pressed"]
+[connection signal="pressed" from="NextBtn" to="." method="_on_NextBtn_pressed"]
