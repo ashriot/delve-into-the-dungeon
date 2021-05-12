@@ -12,6 +12,7 @@ onready var dungeon_complete = $CanvasLayer/DungeonComplete
 onready var menu_button = $CanvasLayer/MenuButton
 onready var party_menu = $CanvasLayer/PartyMenu
 onready var town_menu = $CanvasLayer/TownMenu
+onready var new_hero = $CanvasLayer/NewHero
 
 onready var hud = $CanvasLayer/DungeonHUD
 onready var faces = $CanvasLayer/DungeonHUD/Faces

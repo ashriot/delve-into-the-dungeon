@@ -26,7 +26,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
+[node name="ClassName" type="Label" parent="."]
 margin_top = 112.0
 margin_right = 72.0
 margin_bottom = 119.0
@@ -132,8 +132,8 @@ __meta__ = {
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 __meta__ = {
 "_edit_lock_": true
 }
@@ -339,5 +339,6 @@ stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="PrevBtn" to="." method="_on_PrevBtn_pressed"]
 [connection signal="pressed" from="NextBtn" to="." method="_on_NextBtn_pressed"]
