@@ -34,6 +34,10 @@ perks = {
 job = "Monk"
 job_tab = "M. Arts"
 job_skill = 20
+job_perk = "Unarmed Combatant"
+perk_desc = "Gain bonus DEF when unarmored.
+Can equip 4 Martial Arts skills.
+After combat, you have a chance to learn a new martial arts skill."
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0

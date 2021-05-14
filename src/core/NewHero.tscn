@@ -32,11 +32,12 @@ margin_right = 72.0
 margin_bottom = 119.0
 text = "ARTIFICER"
 align = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="HeroName" type="LineEdit" parent="."]
 margin_left = 2.0
 margin_top = 99.0
 margin_right = 60.0
@@ -50,7 +51,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="LineEdit"]
+[node name="TextureButton" type="TextureButton" parent="HeroName"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -95,40 +96,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ClassAction" type="Label" parent="."]
-margin_left = -1.0
-margin_top = 34.0
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 1.0
+margin_top = 33.0
 margin_right = 71.0
+margin_bottom = 42.0
+color = Color( 1, 1, 0.921569, 1 )
+
+[node name="ClassAction" type="Label" parent="."]
+margin_top = 34.0
+margin_right = 72.0
 margin_bottom = 41.0
+custom_colors/font_color = Color( 0.145098, 0.145098, 0.164706, 1 )
 text = "TINKER"
+align = 1
+autowrap = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Features" type="Label" parent="ClassAction"]
+margin_top = 8.0
+margin_right = 73.0
+margin_bottom = 64.0
+text = "Equip up to 4 more Tools.
+After battles, the Artificer has a chance to repair his equipped guns and tools.
+5445454545454"
 align = 1
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Features" type="Label" parent="ClassAction"]
-margin_left = 2.0
-margin_top = 8.0
-margin_right = 74.0
-margin_bottom = 64.0
-text = "Equip up to 4 more Tools.
-After battles, the Artificer has a chance to repair his equipped guns and tools."
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Panel" type="Panel" parent="."]
-margin_left = 5.0
-margin_top = 2.0
-margin_right = 17.0
-margin_bottom = 14.0
+margin_left = 30.0
+margin_top = 1.0
+margin_right = 42.0
+margin_bottom = 13.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprites" type="Sprite" parent="Panel"]
+[node name="Sprite" type="Sprite" parent="Panel"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
@@ -140,9 +150,9 @@ __meta__ = {
 
 [node name="Stats" type="Control" parent="."]
 margin_left = 5.0
-margin_top = 7.0
+margin_top = 6.0
 margin_right = 67.0
-margin_bottom = 32.0
+margin_bottom = 31.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -318,27 +328,27 @@ __meta__ = {
 }
 
 [node name="PrevBtn" type="TextureButton" parent="."]
-margin_top = 111.0
-margin_right = 14.0
-margin_bottom = 120.0
+margin_left = 1.0
+margin_top = 112.0
+margin_right = 9.0
+margin_bottom = 119.0
 texture_normal = ExtResource( 4 )
-expand = true
 stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="NextBtn" type="TextureButton" parent="."]
-margin_left = 58.0
-margin_top = 111.0
+margin_left = 64.0
+margin_top = 112.0
 margin_right = 72.0
-margin_bottom = 120.0
+margin_bottom = 119.0
 texture_normal = ExtResource( 5 )
-expand = true
 stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="pressed" from="Banner/BackBtn" to="." method="_on_BackBtn_pressed"]
 [connection signal="pressed" from="PrevBtn" to="." method="_on_PrevBtn_pressed"]
 [connection signal="pressed" from="NextBtn" to="." method="_on_NextBtn_pressed"]

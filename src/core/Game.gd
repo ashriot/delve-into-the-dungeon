@@ -33,7 +33,6 @@ onready var hardcore: = $CanvasLayer/Profiles/NewProfile/Hardcore
 onready var hard_desc = $CanvasLayer/Profiles/NewProfile/HardcoreDesc
 onready var line_edit = $CanvasLayer/Profiles/NewProfile/LineEdit
 
-onready var discovered: int
 
 signal done_fading
 signal done_learned_skill
@@ -44,6 +43,7 @@ export var skip_title: bool
 export var spd: = 1.0
 export(Dictionary) var players
 
+var discovered: int
 var difficulty: String setget set_difficulty
 var slot_num: int
 var hardcore_enabled: bool
@@ -64,6 +64,7 @@ func _ready():
 	dungeon_complete.hide()
 	title.show()
 	fade.instant_hide()
+	new_hero.hide()
 	GameManager.init()
 	profile1.init(self, 1)
 	profile2.init(self, 2)
@@ -86,6 +87,7 @@ func init() -> void:
 	GameManager.initialize_inventory()
 	GameManager.initialize_party()
 	var _err = connect("level_changed", GameManager, "_on_level_changed")
+	new_hero.init(self)
 	AudioController.mute = mute
 	battle.init(self)
 	dungeon.init(self)
@@ -318,6 +320,9 @@ func _on_ProfileBtn_load_profile(slot: int):
 	profile_id = slot
 	init()
 
+func create_new_hero():
+	new_hero.show()
+
 func _on_NewBack_pressed():
 	AudioController.back()
 	new_profile.hide()
@@ -348,6 +353,7 @@ func _on_Check_pressed():
 	data.difficulty = difficulty
 	data.discovered = 1
 	data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
+	data.unlocked_heroes = ["Fighter", "Thief", "Sorcerer", "Wizard"]
 	data.gold = 0
 	if slot_num == 1: profile1.setup(data)
 	if slot_num == 2: profile2.setup(data)

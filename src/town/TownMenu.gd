@@ -1,6 +1,7 @@
 extends Control
 
 signal open_inv
+signal new_hero
 
 export(Dictionary) var locales
 
@@ -27,6 +28,7 @@ func _ready() -> void:
 func init(game: Game) -> void:
 	self.game = game
 	connect("open_inv", game, "_on_BuyBS_pressed")
+	connect("new_hero", game, "create_new_hero")
 
 func _on_Blacksmith_pressed():
 	AudioController.click()
@@ -130,3 +132,7 @@ func _on_Plus_pressed():
 	AudioController.confirm()
 	if depth == game.dungeon_lvs[map_pos - 1]: self.depth = 1
 	else: self.depth += 1
+
+
+func _on_TavernBtn_pressed():
+	emit_signal("new_hero")

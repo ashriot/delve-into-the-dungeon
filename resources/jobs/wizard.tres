@@ -8,8 +8,8 @@
 script = ExtResource( 1 )
 name = "Orfus"
 frame = 8
-hp_cur = 55
-hp_max = 55
+hp_cur = 0
+hp_max = 50
 strength = 3
 agility = 8
 intellect = 10
@@ -34,8 +34,12 @@ perks = {
 job = "Wizard"
 job_tab = "Tomes"
 job_skill = 23
+job_perk = "Memorization"
+perk_desc = "Can equip 4 extra tomes.
+
+Equipped tomes lose half their uses, but become rechargable skills."
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
-job_xp = 0
+job_xp = 0.0
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]

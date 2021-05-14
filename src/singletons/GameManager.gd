@@ -54,6 +54,7 @@ func initialize_party():
 		save_data.discovered = 1
 		save_data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
 		save_data.unlocked_heroes = ["Fighter", "Thief", "Wizard", "Sorcerer"]
+		print('initializing save data')
 		var i = 0
 		for player in game.players.values():
 			player.slot = i
@@ -84,7 +85,7 @@ func initialize_party():
 			new_player.perks = dict_to_perks(player["perks"])
 			players[new_player.slot] = new_player
 	game.dungeon_lvs = save_data.dungeon_lvs
-	game.unlocked_heroes = save_data.unlocked_heroes
+#	game.unlocked_heroes = save_data.unlocked_heroes
 	game.players = players
 	var i = 0
 	for key in players.keys():

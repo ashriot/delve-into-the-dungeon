@@ -566,6 +566,7 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
+[connection signal="pressed" from="TownMenu/TavernBtn" to="." method="_on_TavernBtn_pressed"]
 [connection signal="pressed" from="TownMenu/GatesBtn" to="." method="_on_TownGates_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/BuyBS" to="." method="_on_BuyBS_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/SellBS" to="." method="_on_SellBS_pressed"]

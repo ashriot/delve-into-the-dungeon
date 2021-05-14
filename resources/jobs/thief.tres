@@ -8,12 +8,12 @@
 script = ExtResource( 1 )
 name = "Vayne"
 frame = 7
-hp_cur = 75
-hp_max = 75
+hp_cur = 0
+hp_max = 70
 strength = 8
-agility = 8
+agility = 10
 intellect = 4
-defense = 10
+defense = 5
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -31,9 +31,13 @@ perks = {
 3: null,
 4: null
 }
-job = "Monk"
-job_tab = "M. Arts"
-job_skill = 20
+job = "Thief"
+job_tab = "Knives"
+job_skill = 23
+job_perk = "Sleight of Hand"
+perk_desc = "Can equip 4 extra Daggers.
+
+Can learn unique Thief passive traits."
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0

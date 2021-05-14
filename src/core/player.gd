@@ -8,6 +8,8 @@ var tab: int
 export var job: String
 export var job_tab: String
 export(Enum.SubItemType) var job_skill
+export var job_perk: String
+export(String, MULTILINE) var perk_desc
 
 export(Array) var xp = [0.0, 0.0, 0.0, 0.0, 0.0]
 export var job_xp = 0.0

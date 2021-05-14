@@ -10,7 +10,7 @@
 script = ExtResource( 1 )
 name = "Asher"
 frame = 3
-hp_cur = 80
+hp_cur = 0
 hp_max = 80
 strength = 10
 agility = 6
@@ -36,6 +36,10 @@ perks = {
 job = "Fighter"
 job_tab = "Weapons"
 job_skill = 23
+job_perk = "Weapon Mastery"
+perk_desc = "Can equip 4 extra weapons.
+
+As you fight with weapons equipped, you gain passive effects for that weapon type."
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0
