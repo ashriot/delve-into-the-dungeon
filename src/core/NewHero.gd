@@ -1,5 +1,7 @@
 extends Control
 
+signal add_player
+
 onready var sprite = $Panel/Sprite
 onready var job_name = $ClassName
 onready var hp = $Stats/HP
@@ -9,12 +11,13 @@ onready var intellect = $Stats/Stats/INT/Value
 onready var defense = $Stats/Stats/DEF/Value
 onready var job_perk = $ClassAction
 onready var job_desc = $ClassAction/Features
-onready var hero_name = $HeroName
+onready var hero_name = $LineEdit
 
 var units: = []
 var index: = 0
 
 func init(game:Game) -> void:
+	connect("add_player", game, "_on_add_player")
 	setup()
 
 func setup() -> void:
@@ -51,4 +54,13 @@ func _on_NextBtn_pressed():
 
 func _on_BackBtn_pressed():
 	AudioController.back()
+	hide()
+
+func _on_LineEdit_text_changed(new_text):
+	var result = new_text.length() < 2
+	$LineEdit/CheckBtn.disabled = result
+
+func _on_CheckBtn_pressed():
+	AudioController.confirm()
+	emit_signal("add_player", units[index])
 	hide()

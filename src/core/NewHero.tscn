@@ -37,7 +37,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HeroName" type="LineEdit" parent="."]
+[node name="LineEdit" type="LineEdit" parent="."]
 margin_left = 2.0
 margin_top = 99.0
 margin_right = 60.0
@@ -51,7 +51,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="HeroName"]
+[node name="CheckBtn" type="TextureButton" parent="LineEdit"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -60,7 +60,6 @@ margin_left = -1.0
 margin_top = -5.5
 margin_right = 10.0
 margin_bottom = 5.5
-disabled = true
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 6 )
 texture_disabled = ExtResource( 6 )
@@ -89,7 +88,7 @@ __meta__ = {
 }
 
 [node name="BackBtn" type="TextureButton" parent="Banner"]
-margin_right = 9.0
+margin_right = 72.0
 margin_bottom = 7.0
 texture_normal = ExtResource( 3 )
 __meta__ = {
@@ -349,6 +348,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="text_changed" from="LineEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="pressed" from="LineEdit/CheckBtn" to="." method="_on_CheckBtn_pressed"]
 [connection signal="pressed" from="Banner/BackBtn" to="." method="_on_BackBtn_pressed"]
 [connection signal="pressed" from="PrevBtn" to="." method="_on_PrevBtn_pressed"]
 [connection signal="pressed" from="NextBtn" to="." method="_on_NextBtn_pressed"]

@@ -60,6 +60,12 @@ func open_menu() -> void:
 	sell_panel.hide()
 	shopping = false
 	show()
+	if players.size() == 0:
+		$MainMenu/MenuButtons/Actions.disabled = true
+		$Recruit.show()
+	else:
+		$MainMenu/MenuButtons/Actions.disabled = false
+		$Recruit.hide()
 
 func swap_players(player1: Player, player2: Player) -> void:
 	var key1 = player1.slot
@@ -91,10 +97,10 @@ func update_menu_data() -> void:
 	gold_label.text = str(game.inventory.gold)
 	var i = 0
 	for child in player_panels.get_children():
-		if players.size() == 0:
+		if players.size() <= i:
 			child.hide()
 			continue
-		if players[i] == null: continue
+		child.show()
 		child.setup(players[i])
 		if cur_player == null:
 			cur_player = child

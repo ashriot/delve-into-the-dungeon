@@ -30,14 +30,14 @@ modulate = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 84
 
 [node name="Title" type="Label" parent="."]
 margin_left = 9.0
-margin_top = 2.0
-margin_right = 58.0
+margin_top = 1.0
+margin_right = 59.0
 margin_bottom = 8.0
 text = "Wooden Sword"
 __meta__ = {
@@ -50,7 +50,7 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 margin_left = -10.0
-margin_top = -2.5
+margin_top = -3.5
 margin_right = -2.0
 margin_bottom = 3.5
 text = "99"
@@ -74,8 +74,8 @@ __meta__ = {
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 1.0
-margin_top = -2.5
-margin_right = 50.0
+margin_top = -3.5
+margin_right = 51.0
 margin_bottom = 3.5
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Wooden Sword"
@@ -89,7 +89,7 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 margin_left = -10.0
-margin_top = -2.5
+margin_top = -3.5
 margin_right = -2.0
 margin_bottom = 3.5
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -100,6 +100,7 @@ __meta__ = {
 }
 
 [node name="Equip" type="Panel" parent="."]
+visible = false
 modulate = Color( 0.486275, 0.490196, 0.501961, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -112,12 +113,14 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
-margin_top = 2.0
+margin_top = 1.0
+margin_bottom = -1.0
 text = "[Empty Slot]"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="button_down" from="." to="." method="_on_Button_down"]
 [connection signal="button_up" from="." to="." method="_on_Button_up"]

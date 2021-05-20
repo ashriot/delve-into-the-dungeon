@@ -475,6 +475,7 @@ locales = {
 visible = false
 
 [node name="MenuButton" type="Button" parent="CanvasLayer"]
+visible = false
 margin_top = 121.0
 margin_right = 72.0
 margin_bottom = 130.0
@@ -909,6 +910,7 @@ visible = false
 mouse_filter = 2
 
 [node name="NewHero" parent="CanvasLayer" instance=ExtResource( 28 )]
+visible = false
 
 [node name="WhiteShader" type="ColorRect" parent="."]
 visible = false

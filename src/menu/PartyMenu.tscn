@@ -86,6 +86,7 @@ vframes = 20
 frame = 140
 
 [node name="Stats" type="Panel" parent="."]
+visible = false
 margin_top = 30.0
 margin_right = 72.0
 margin_bottom = 69.0
@@ -103,9 +104,9 @@ frame = 20
 
 [node name="Name" type="Label" parent="Stats"]
 margin_left = 13.0
-margin_top = 3.0
+margin_top = 2.0
 margin_right = 72.0
-margin_bottom = 10.0
+margin_bottom = 9.0
 text = "Alzahar"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -113,9 +114,9 @@ __meta__ = {
 
 [node name="Job" type="Label" parent="Stats"]
 margin_left = 3.0
-margin_top = 10.0
+margin_top = 9.0
 margin_right = 43.0
-margin_bottom = 17.0
+margin_bottom = 16.0
 custom_colors/font_color = Color( 0.486275, 0.490196, 0.501961, 1 )
 text = "Artificer"
 __meta__ = {
@@ -133,9 +134,9 @@ __meta__ = {
 
 [node name="STR" type="Label" parent="Stats/Stats"]
 margin_left = 3.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 15.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 custom_colors/font_color = Color( 0.8, 0.376471, 0.337255, 1 )
 text = "STR"
 __meta__ = {
@@ -144,9 +145,9 @@ __meta__ = {
 
 [node name="ColorRect" type="ColorRect" parent="Stats/Stats/STR"]
 margin_left = -1.0
-margin_top = 6.0
+margin_top = 7.0
 margin_right = 12.0
-margin_bottom = 13.0
+margin_bottom = 14.0
 color = Color( 0.8, 0.376471, 0.337255, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -164,9 +165,9 @@ valign = 1
 
 [node name="AGI" type="Label" parent="Stats/Stats"]
 margin_left = 18.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 30.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 custom_colors/font_color = Color( 0.858824, 0.713726, 0.258824, 1 )
 text = "AGI"
 __meta__ = {
@@ -175,9 +176,9 @@ __meta__ = {
 
 [node name="ColorRect" type="ColorRect" parent="Stats/Stats/AGI"]
 margin_left = -1.0
-margin_top = 6.0
+margin_top = 7.0
 margin_right = 12.0
-margin_bottom = 13.0
+margin_bottom = 14.0
 color = Color( 0.858824, 0.713726, 0.258824, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -195,9 +196,9 @@ valign = 1
 
 [node name="INT" type="Label" parent="Stats/Stats"]
 margin_left = 33.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 45.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 custom_colors/font_color = Color( 0.380392, 0.768627, 0.854902, 1 )
 text = "INT"
 __meta__ = {
@@ -206,9 +207,9 @@ __meta__ = {
 
 [node name="ColorRect" type="ColorRect" parent="Stats/Stats/INT"]
 margin_left = -1.0
-margin_top = 6.0
+margin_top = 7.0
 margin_right = 12.0
-margin_bottom = 13.0
+margin_bottom = 14.0
 color = Color( 0.380392, 0.768627, 0.854902, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -226,9 +227,9 @@ valign = 1
 
 [node name="DEF" type="Label" parent="Stats/Stats"]
 margin_left = 48.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 60.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 custom_colors/font_color = Color( 0.705882, 0.705882, 0.682353, 1 )
 text = "DEF"
 __meta__ = {
@@ -237,9 +238,9 @@ __meta__ = {
 
 [node name="ColorRect" type="ColorRect" parent="Stats/Stats/DEF"]
 margin_left = -1.0
-margin_top = 6.0
+margin_top = 7.0
 margin_right = 12.0
-margin_bottom = 13.0
+margin_bottom = 14.0
 color = Color( 0.705882, 0.705882, 0.682353, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -257,9 +258,9 @@ valign = 1
 
 [node name="HP" type="Label" parent="Stats"]
 margin_left = 53.0
-margin_top = 3.0
+margin_top = 2.0
 margin_right = 70.0
-margin_bottom = 17.0
+margin_bottom = 16.0
 custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
 text = "250
 /250"
@@ -282,9 +283,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
-margin_top = 1.0
 margin_right = 1.0
-margin_bottom = 1.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "HP"
 __meta__ = {
@@ -298,10 +297,12 @@ margin_top = 1.0
 margin_right = 47.0
 margin_bottom = 18.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="MainMenu" type="ColorRect" parent="."]
+visible = false
 margin_top = 30.0
 margin_right = 72.0
 margin_bottom = 121.0
@@ -456,7 +457,6 @@ texture = ExtResource( 12 )
 centered = false
 
 [node name="Items" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 69.0
@@ -532,8 +532,6 @@ rect_min_size = Vector2( 35, 9 )
 [node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 1.0
-margin_bottom = 1.0
 text = "Items"
 align = 1
 valign = 1
@@ -542,6 +540,7 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="Items/BG/HBoxContainer/Tab1"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -553,8 +552,6 @@ __meta__ = {
 [node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab1/ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 1.0
-margin_bottom = 1.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "Items"
 align = 1
@@ -572,8 +569,6 @@ rect_min_size = Vector2( 35, 9 )
 [node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 1.0
-margin_bottom = 1.0
 text = "Class"
 align = 1
 valign = 1
@@ -582,6 +577,7 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="Items/BG/HBoxContainer/Tab2"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -593,8 +589,6 @@ __meta__ = {
 [node name="Label" type="Label" parent="Items/BG/HBoxContainer/Tab2/ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 1.0
-margin_bottom = 1.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "Tab2"
 align = 1
@@ -617,9 +611,8 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Items/BG/Back"]
 margin_left = 1.0
-margin_top = 1.0
 margin_right = 62.0
-margin_bottom = 8.0
+margin_bottom = 7.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "ACTIONS"
 __meta__ = {
@@ -665,8 +658,9 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = -1.0
+margin_bottom = -1.0
 text = "REMOVE"
 align = 1
 valign = 1
@@ -687,8 +681,9 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = -1.0
+margin_bottom = -1.0
 text = "SWAP"
 align = 1
 valign = 1
@@ -948,9 +943,8 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Inventory/BG/InvBack"]
 margin_left = 1.0
-margin_top = 1.0
 margin_right = 62.0
-margin_bottom = 8.0
+margin_bottom = 7.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "INVENTORY"
 valign = 1
@@ -1142,7 +1136,7 @@ mouse_filter = 2
 [node name="Panel" type="Panel" parent="Options"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -7.0
+margin_bottom = -6.0
 
 [node name="Button" type="TextureButton" parent="Options/Panel"]
 margin_left = 4.0
@@ -1178,10 +1172,23 @@ color = Color( 1, 1, 0.921569, 1 )
 
 [node name="Label" type="Label" parent="Options/Panel/BackBanner"]
 margin_left = 1.0
+margin_top = -1.0
 margin_right = 41.0
-margin_bottom = 7.0
+margin_bottom = 6.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "OPTIONS"
+
+[node name="Recruit" type="Label" parent="."]
+visible = false
+anchor_right = 1.0
+margin_top = 5.0
+margin_bottom = 26.0
+text = "Recruit party members at the tavern."
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Stats/InfoButton" to="." method="_on_InfoButton_pressed"]

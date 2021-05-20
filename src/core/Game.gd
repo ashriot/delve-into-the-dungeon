@@ -262,9 +262,10 @@ func _exit_tree() -> void:
 func update_hud():
 	var i = 0
 	for child in faces.get_children():
-		if players.size() == 0:
+		if players.size() <= i:
 			child.hide()
 			continue
+		child.show()
 		var p = players[i]
 		child.frame = p.frame + 20
 		child.get_child(0).text = str(p.hp_cur)
@@ -322,6 +323,14 @@ func _on_ProfileBtn_load_profile(slot: int):
 
 func create_new_hero():
 	new_hero.show()
+
+func _on_add_player(player: Player) -> void:
+	var i = players.size()
+	players[i] = player
+	player.slot = i
+	player.heal()
+	player.connect("player_changed", GameManager, "_on_player_changed")
+	player.changed()
 
 func _on_NewBack_pressed():
 	AudioController.back()
