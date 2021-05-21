@@ -7,6 +7,7 @@ export(Dictionary) var locales
 
 onready var blacksmith = $Blacksmith
 onready var tavern = $Tavern
+onready var bench = $Tavern/BenchHero
 
 onready var map = $WorldMap
 onready var hidden = $WorldMap/Nav/Hidden
@@ -24,6 +25,7 @@ var depth: int setget set_depth
 func _ready() -> void:
 	blacksmith.hide()
 	tavern.hide()
+	bench.hide()
 	map.hide()
 	scout.hide()
 
@@ -135,7 +137,6 @@ func _on_Plus_pressed():
 	if depth == game.dungeon_lvs[map_pos - 1]: self.depth = 1
 	else: self.depth += 1
 
-
 func _on_TavernBtn_pressed():
 	AudioController.click()
 	tavern.show()
@@ -143,3 +144,12 @@ func _on_TavernBtn_pressed():
 func _on_NewHeroBtn_pressed():
 	AudioController.click()
 	emit_signal("new_hero")
+
+func _on_BenchBtn_pressed():
+	AudioController.click()
+
+	bench.show()
+
+func _on_LeaveBtn_pressed():
+	AudioController.back()
+	bench.hide()

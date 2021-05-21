@@ -24,6 +24,7 @@ agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
 perks = {
+
 }
 desc = "BOOGIE"
 level = 1

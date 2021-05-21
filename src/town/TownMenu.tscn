@@ -49,8 +49,8 @@ __meta__ = {
 position = Vector2( -4, 0 )
 texture = ExtResource( 1 )
 centered = false
-hframes = 21
 vframes = 6
+hframes = 21
 frame = 24
 
 [node name="TownMenu" type="VBoxContainer" parent="."]
@@ -149,8 +149,8 @@ __meta__ = {
 position = Vector2( 4, 6 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 30
 
 [node name="Quote" type="Label" parent="Blacksmith/Panel"]
@@ -283,8 +283,8 @@ __meta__ = {
 position = Vector2( -4, 0 )
 texture = ExtResource( 1 )
 centered = false
-hframes = 21
 vframes = 6
+hframes = 21
 frame = 2
 
 [node name="Title" type="Label" parent="WorldMap"]
@@ -593,8 +593,8 @@ align = 1
 position = Vector2( 3, 11 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 31
 
 [node name="ChatBtn" type="Button" parent="Tavern"]
@@ -687,7 +687,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tavern/BenchHero"]
+[node name="BenchList" type="VBoxContainer" parent="Tavern/BenchHero"]
 margin_left = 4.0
 margin_top = 40.0
 margin_right = 68.0
@@ -697,87 +697,87 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HeroBtn1" type="Button" parent="Tavern/BenchHero/VBoxContainer"]
+[node name="HeroBtn1" type="Button" parent="Tavern/BenchHero/BenchList"]
 margin_right = 64.0
 margin_bottom = 9.0
 text = "Zorah"
 
-[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/VBoxContainer/HeroBtn1"]
+[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/BenchList/HeroBtn1"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
-[node name="HeroBtn2" type="Button" parent="Tavern/BenchHero/VBoxContainer"]
+[node name="HeroBtn2" type="Button" parent="Tavern/BenchHero/BenchList"]
 margin_top = 11.0
 margin_right = 64.0
 margin_bottom = 20.0
 text = "Zorah"
 
-[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/VBoxContainer/HeroBtn2"]
+[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/BenchList/HeroBtn2"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
-[node name="HeroBtn3" type="Button" parent="Tavern/BenchHero/VBoxContainer"]
+[node name="HeroBtn3" type="Button" parent="Tavern/BenchHero/BenchList"]
 margin_top = 22.0
 margin_right = 64.0
 margin_bottom = 31.0
 text = "Zorah"
 
-[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/VBoxContainer/HeroBtn3"]
+[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/BenchList/HeroBtn3"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
-[node name="HeroBtn4" type="Button" parent="Tavern/BenchHero/VBoxContainer"]
+[node name="HeroBtn4" type="Button" parent="Tavern/BenchHero/BenchList"]
 margin_top = 33.0
 margin_right = 64.0
 margin_bottom = 42.0
 text = "Zorah"
 
-[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/VBoxContainer/HeroBtn4"]
+[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/BenchList/HeroBtn4"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
-[node name="HeroBtn5" type="Button" parent="Tavern/BenchHero/VBoxContainer"]
+[node name="HeroBtn5" type="Button" parent="Tavern/BenchHero/BenchList"]
 margin_top = 44.0
 margin_right = 64.0
 margin_bottom = 53.0
 text = "Zorah"
 
-[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/VBoxContainer/HeroBtn5"]
+[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/BenchList/HeroBtn5"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
-[node name="HeroBtn6" type="Button" parent="Tavern/BenchHero/VBoxContainer"]
+[node name="HeroBtn6" type="Button" parent="Tavern/BenchHero/BenchList"]
 margin_top = 55.0
 margin_right = 64.0
 margin_bottom = 64.0
 text = "Zorah"
 
-[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/VBoxContainer/HeroBtn6"]
+[node name="Sprite" type="Sprite" parent="Tavern/BenchHero/BenchList/HeroBtn6"]
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 21
 
 [node name="LeaveBtn" type="Button" parent="Tavern/BenchHero"]
@@ -789,7 +789,6 @@ text = "LEAVE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
 [connection signal="pressed" from="TownMenu/TavernBtn" to="." method="_on_TavernBtn_pressed"]
 [connection signal="pressed" from="TownMenu/GatesBtn" to="." method="_on_TownGates_pressed"]
@@ -805,3 +804,5 @@ __meta__ = {
 [connection signal="pressed" from="WorldMap/Buttons/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="WorldMap/Scout/ScoutDone" to="." method="_on_ScoutDone_pressed"]
 [connection signal="pressed" from="Tavern/NewHeroBtn" to="." method="_on_NewHeroBtn_pressed"]
+[connection signal="pressed" from="Tavern/BenchBtn" to="." method="_on_BenchBtn_pressed"]
+[connection signal="pressed" from="Tavern/BenchHero/LeaveBtn" to="." method="_on_LeaveBtn_pressed"]

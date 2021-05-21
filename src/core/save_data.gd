@@ -10,6 +10,7 @@ export var hardcore: bool
 
 export var inventory: Array
 export var players: Dictionary
+export var bench: Dictionary
 export var discovered: int
 export var dungeon_lvs: Array
 export var unlocked_heroes: Array
