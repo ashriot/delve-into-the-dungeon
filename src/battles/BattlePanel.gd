@@ -226,7 +226,7 @@ func decrement_hexes(timing: String) -> void:
 				if hex[1] == 0:
 					remove_hex(hex[0])
 	call_deferred("emit_signal", "done")
-					
+
 func trigger_hex(hex_name: String) -> void:
 	print(hex_name, " triggered!")
 	if hex_name == "Poison":

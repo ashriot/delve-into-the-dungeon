@@ -43,7 +43,6 @@ export var skip_title: bool
 export var spd: = 1.0
 export(Dictionary) var players
 
-var discovered: int
 var difficulty: String setget set_difficulty
 var slot_num: int
 var hardcore_enabled: bool

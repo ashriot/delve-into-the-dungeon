@@ -307,11 +307,11 @@ func set_cur_btn(value) -> void:
 	popup.show()
 
 func _on_Left_pressed():
-	if total_pages == 1: return 
+	if total_pages == 1: return
 	AudioController.click()
 	cur_page -= 1
 	update_inv_data()
-	
+
 func _on_Right_pressed():
 	if total_pages == 1: return
 	AudioController.click()

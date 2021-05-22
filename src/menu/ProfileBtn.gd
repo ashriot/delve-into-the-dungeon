@@ -17,7 +17,9 @@ var new: = false
 var slot_num: int
 
 func init(game: Game, slot: int) -> void:
+# warning-ignore:return_value_discarded
 	connect("create_new", game, "_on_ProfileBtn_create_new")
+# warning-ignore:return_value_discarded
 	connect("load_profile", game, "_on_ProfileBtn_load_profile")
 	slot_num = slot
 	var data = null
@@ -55,4 +57,4 @@ func _on_ProfileBtn_pressed():
 	else:
 		AudioController.click()
 		emit_signal("load_profile", slot_num)
-	
+

@@ -7,7 +7,10 @@ export(Dictionary) var locales
 
 onready var blacksmith = $Blacksmith
 onready var tavern = $Tavern
+
 onready var bench = $Tavern/BenchHero
+onready var party_panels = $Tavern/BenchHero/PartyPanels
+onready var bench_list = $Tavern/BenchHero/BenchList
 
 onready var map = $WorldMap
 onready var hidden = $WorldMap/Nav/Hidden
@@ -29,9 +32,12 @@ func _ready() -> void:
 	map.hide()
 	scout.hide()
 
+# warning-ignore:shadowed_variable
 func init(game: Game) -> void:
 	self.game = game
+# warning-ignore:return_value_discarded
 	connect("open_inv", game, "_on_BuyBS_pressed")
+# warning-ignore:return_value_discarded
 	connect("new_hero", game, "create_new_hero")
 
 func _on_Blacksmith_pressed():
@@ -52,7 +58,7 @@ func _on_SellBS_pressed():
 
 func _on_TownGates_pressed():
 	AudioController.click()
-	map_max = game.discovered
+	map_max = GameManager.save_data.discovered
 	var x = map_max * 6 - 1
 	self.map_pos = map_max
 	discovered.rect_size.x = x
@@ -86,6 +92,7 @@ func set_map_pos(value) -> void:
 func set_depth(value) -> void:
 	depth = value
 	$WorldMap/Progress/Depth.text = "Depth: " + str(depth) + "/" + str(game.dungeon_lvs[map_pos - 1])
+# warning-ignore:integer_division
 	var lv = locales[map_pos].enemy_lv + int(depth / 3)
 	$WorldMap/Progress/Level.text = "Avg. Lv: " + str(lv)
 
@@ -147,9 +154,24 @@ func _on_NewHeroBtn_pressed():
 
 func _on_BenchBtn_pressed():
 	AudioController.click()
-
+	var party = game.players
+	var i = 0
+	for child in party_panels.get_children():
+		if i >= party.size(): child.setup(null)
+		else: child.setup(party[i])
+		i += 1
+	i = 0
+	var benched = GameManager.save_data.bench
+	for child in bench_list.get_children():
+		if i >= benched.size(): child.setup(null)
+		else: child.setup(benched[i])
+		i += 1
 	bench.show()
 
 func _on_LeaveBtn_pressed():
 	AudioController.back()
 	bench.hide()
+
+func _on_TavernLeaveBtn_pressed():
+	AudioController.back()
+	tavern.hide()

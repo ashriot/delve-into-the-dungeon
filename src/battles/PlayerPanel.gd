@@ -62,6 +62,7 @@ func set_hp_cur(value):
 	if hp_cur > value and !gained_xp:
 		calc_hp_xp()
 	.set_hp_cur(value)
+# warning-ignore:narrowing_conversion
 	unit.hp_cur = clamp(value, 0, hp_max)
 	if blocking > 0:
 		hp_cur_display.modulate = Color.slategray

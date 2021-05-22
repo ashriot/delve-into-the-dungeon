@@ -3,9 +3,6 @@ extends Node2D
 const EnemyScene = preload("res://src/dungeon/EnemyNode.tscn")
 const ChestScene = preload("res://src/dungeon/Chest.tscn")
 
-signal fade_out
-signal fade_in
-
 ## ENEMY CLASS
 class EnemyNode extends Reference:
 	var sprite
@@ -13,7 +10,7 @@ class EnemyNode extends Reference:
 	var dead = false
 	var dungeon
 
-	func _init(_dungeon, enemy_type, enemy_level, x, y):
+	func _init(_dungeon, enemy_type, x, y):
 		dungeon = _dungeon
 		tile = Vector2(x, y)
 		sprite = EnemyScene.instance()
@@ -44,7 +41,7 @@ class EnemyNode extends Reference:
 			var blocked = false
 			assert(path.size() > 1)
 			var move_tile = Vector2(path[1].x, path[1].y)
-			
+
 			if move_tile == game.player_tile:
 				blocked = true
 				if !dungeon.collided: collide()
@@ -126,10 +123,6 @@ func init(_game):
 	game = _game
 	level_num = game.level_num
 	player.show()
-# warning-ignore:return_value_discarded
-	connect("fade_out", game, "_on_FadeOut")
-# warning-ignore:return_value_discarded
-	connect("fade_in", game, "_on_FadeIn")
 
 func setup(_locale: Locale, depth: int) -> void:
 	self.locale = _locale
@@ -242,7 +235,7 @@ func try_move(dx, dy):
 		if move_down: AudioController.play_sfx("stairs")
 		else: AudioController.play_sfx("step")
 		player_tile = Vector2(x, y)
-	
+
 	for enemy in enemies:
 		enemy.act(self)
 		if enemy.dead:
@@ -305,12 +298,12 @@ func build_level():
 
 	var num_enemies = LEVEL_ENEMY_COUNTS[size]
 	for _i in range(num_enemies):
-		
+
 		var room = get_room(1)
-		
+
 		var x = room.position.x + 1 + randi() % int(room.size.x - 3)
 		var y = room.position.y + 1 + randi() % int(room.size.y - 3)
-		
+
 		var j = 0
 		while (blocklist.has(Vector2(x, y))) and j < 100:
 			j += 1
@@ -318,7 +311,7 @@ func build_level():
 			x = room.position.x + 1 + randi() % int(room.size.x - 3)
 			y = room.position.y + 1 + randi() % int(room.size.y - 3)
 
-		var enemy = EnemyNode.new(self, randi() % 4, level_num, x, y)
+		var enemy = EnemyNode.new(self, randi() % 4, x, y)
 		enemies.append(enemy)
 		blocklist.append(Vector2(x, y))
 
@@ -328,39 +321,39 @@ func build_level():
 		var room = get_room(1)
 		var x = room.position.x + 1 + randi() % int(room.size.x - 3)
 		var y = room.position.y + 1 + randi() % int(room.size.y - 3)
-		
+
 		var j = 0
 		while (blocklist.has(Vector2(x, y))) and j < 100:
 			j += 1
 			print("Chest looping ", j)
 			x = room.position.x + 1 + randi() % int(room.size.x - 3)
 			y = room.position.y + 1 + randi() % int(room.size.y - 3)
-		
+
 		var chest = ChestScene.instance()
 		chests.append(chest.init(self, x, y))
 		blocklist.append(Vector2(x, y))
-	
+
 	# Place End Ladder
 	var end_room = rooms.back()
 	if rooms_content[rooms.find(end_room)] == 0:
 		for i in range(rooms.size()):
 			if rooms_content[i] > 0: end_room = rooms[i]
-		
+
 	var ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 3)
 	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 3)
-	
+
 	var j = 0
 	while (blocklist.has(Vector2(ladder_x, ladder_y))) and j < 100:
 		j += 1
 		print("Ladder looping ", j)
 		ladder_x = end_room.position.x + 1 + randi() % int(end_room.size.x - 3)
 		ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 3)
-	
+
 	set_tile(ladder_x, ladder_y, Tile.StairsDown)
 
 	call_deferred("update_visuals")
 	active = true
-	
+
 func get_room(offset):
 	var room_num = offset + randi() % (rooms.size() - 1)
 	var empty_rooms = rooms_content.count(0) > 1

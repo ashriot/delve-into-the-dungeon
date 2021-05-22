@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=1]
+[ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=2]
+[ext_resource path="res://src/town/PlayerBench.gd" type="Script" id=3]
+
+[node name="PlayerBench" type="Control"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 35.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 33, 12 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Outline" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Control" parent="."]
+margin_right = 33.0
+margin_bottom = 12.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPCur" type="Label" parent="Info"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -13.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = 8.0
+text = "023"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="Info"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -13.0
+margin_top = -4.0
+margin_right = -2.0
+margin_bottom = -3.0
+mouse_filter = 2
+value = 100.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 2 )
+tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Info"]
+position = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+centered = false
+hframes = 10
+vframes = 20
+
+[node name="Status" type="Sprite" parent="Info"]
+position = Vector2( 11, 2 )
+texture = ExtResource( 1 )
+centered = false
+hframes = 10
+vframes = 20
+frame = 90
+
+[node name="Button" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

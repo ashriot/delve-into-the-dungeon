@@ -30,6 +30,7 @@ var battle_active: bool
 var enc_lv: float
 var game = null
 
+# warning-ignore:shadowed_variable
 func init(game):
 	enemy_info.hide()
 	self.game = game
@@ -193,7 +194,7 @@ func enemy_take_action(panel: EnemyPanel):
 		panel.anim.play("Hit")
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 		var targets = get_enemy_targets(panel, action)
-		var randoms = []
+		var randoms = [] # Fix random targeting
 		var rand_targets = false
 		var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
 		if action.target_type == Enum.TargetType.RANDOM_ENEMY: rand_targets = true

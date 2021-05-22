@@ -12,7 +12,6 @@ onready var sfx4: = $sfx4
 onready var sfx5: = $sfx5
 
 var bgm_playing: String
-var pos: int
 
 func _ready() -> void:
 	set_bgm_volume()
