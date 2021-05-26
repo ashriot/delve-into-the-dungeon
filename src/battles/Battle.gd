@@ -467,8 +467,8 @@ func victory() -> void:
 	$Victory.show()
 	AudioController.play_bgm("victory")
 	for panel in player_panels.get_children():
+		if !panel.enabled: continue
 		panel.victory()
-	for panel in player_panels.get_children():
 		for i in range(panel.unit.gains.size()):
 			if panel.unit.gains[i] > 0:
 				var amt = panel.unit.gains[i]

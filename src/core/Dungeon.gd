@@ -192,8 +192,8 @@ func try_move(dx, dy):
 
 	var blocked = false
 	match tile_type:
-		Tile.Wall: blocked = false
-		Tile.Stone: blocked = false
+		Tile.Wall: blocked = true
+		Tile.Stone: blocked = true
 		Tile.Floor:
 			for enemy in enemies:
 				if enemy.tile.x == x and enemy.tile.y == y:
