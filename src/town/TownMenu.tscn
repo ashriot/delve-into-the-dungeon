@@ -266,6 +266,7 @@ margin_top = 50.0
 margin_bottom = 59.0
 
 [node name="WorldMap" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -714,6 +715,7 @@ __meta__ = {
 
 [connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
 [connection signal="pressed" from="TownMenu/TavernBtn" to="." method="_on_TavernBtn_pressed"]
+[connection signal="pressed" from="TownMenu/DocksBtn" to="." method="_on_DocksBtn_pressed"]
 [connection signal="pressed" from="TownMenu/GatesBtn" to="." method="_on_TownGates_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/BuyBS" to="." method="_on_BuyBS_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/SellBS" to="." method="_on_SellBS_pressed"]

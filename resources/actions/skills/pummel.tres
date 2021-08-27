@@ -8,6 +8,7 @@ name = "Pummel"
 description = "Deal {potency} {dmg} damage to {tgt} 3-5 times.
 {aim}"
 tier = 1
+ap_cost = 2
 item_type = 1
 sub_type = 20
 melee = true
@@ -29,5 +30,6 @@ inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]
 gain_hexes = [  ]
-max_uses = 2
-uses = 2
+max_uses = 0
+uses = 0
+price = 0

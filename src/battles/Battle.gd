@@ -42,11 +42,11 @@ func init(game):
 	var end_turn = load("res://resources/battleCommands/end_turn.tres")
 	var flee = load("res://resources/battleCommands/flee.tres")
 	battleMenu.get_child(0).init(self)
-	battleMenu.get_child(0).setup(inspect, false)
+	battleMenu.get_child(0).setup(inspect)
 	battleMenu.get_child(1).init(self)
-	battleMenu.get_child(1).setup(end_turn, false)
+	battleMenu.get_child(1).setup(end_turn)
 	battleMenu.get_child(2).init(self)
-	battleMenu.get_child(2).setup(flee, false)
+	battleMenu.get_child(2).setup(flee)
 	player_panels.init(self)
 	enemy_panels.init(self)
 	for button in buttons.get_children():
@@ -144,6 +144,9 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 	setup_buttons()
 
 func start_players_turns() -> void:
+	if !battle_active: return
+	for child in player_panels.panels.get_children():
+		child.ap += 2
 	AudioController.play_sfx("player_turn")
 	get_next_player(false)
 
@@ -356,6 +359,7 @@ func execute_vs_enemy(panel) -> void:
 	var gained_xp = false
 	var item = cur_btn.item as Item
 	var user = cur_player
+	user.ap -= item.ap_cost
 	AudioController.play_sfx(item.use_fx)
 	finish_action()
 	show_text(item.name, user.pos)
@@ -395,6 +399,7 @@ func execute_vs_enemy(panel) -> void:
 func execute_vs_player(panel) -> void:
 	var user = cur_player
 	var item = cur_btn.item as Item
+	user.ap -= item.ap_cost
 	AudioController.play_sfx(item.use_fx)
 	var turn_spent = true
 	if item.sub_type == Enum.SubItemType.SHIELD:
@@ -422,8 +427,6 @@ func finish_action(spend_turn: = true) -> void:
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if cur_btn == null: return
-	cur_btn.uses_remain -= 1
-	print(cur_btn.item.name, " -> ", cur_btn.uses_remain)
 	clear_buttons()
 	cur_player.selected = false
 	if spend_turn:

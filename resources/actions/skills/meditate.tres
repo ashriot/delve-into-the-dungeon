@@ -12,6 +12,7 @@ name = "Meditate"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 3
+ap_cost = 2
 item_type = 2
 sub_type = 20
 melee = false
@@ -33,5 +34,6 @@ inflict_boons = [ [ ExtResource( 5 ), 3, 100 ], [ ExtResource( 4 ), 3, 100 ], [ 
 inflict_hexes = [  ]
 gain_boons = [  ]
 gain_hexes = [  ]
-max_uses = 10
-uses = 10
+max_uses = 0
+uses = 0
+price = 0

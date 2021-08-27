@@ -3,6 +3,7 @@ class_name Enemy
 
 export(String, MULTILINE) var desc
 export var level:= 1
+export var ap_init: int
 export var gold: int
 export(Dictionary) var actions
 

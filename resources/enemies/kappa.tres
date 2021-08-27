@@ -10,6 +10,7 @@ name = "Kappa"
 frame = 30
 hp_cur = 0
 hp_max = 50
+ap = 0
 strength = 5
 agility = 10
 intellect = 7
@@ -28,6 +29,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 2
 gold = 25
 actions = {
 0: ExtResource( 2 ),

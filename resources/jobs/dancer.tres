@@ -11,6 +11,7 @@ name = "Zorah"
 frame = 1
 hp_cur = 60
 hp_max = 60
+ap = 0
 strength = 5
 agility = 10
 intellect = 6

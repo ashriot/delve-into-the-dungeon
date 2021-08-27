@@ -10,6 +10,7 @@ name = "Gargoyle"
 frame = 1
 hp_cur = 0
 hp_max = 60
+ap = 0
 strength = 8
 agility = 5
 intellect = 6
@@ -28,6 +29,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 0
 gold = 25
 actions = {
 0: ExtResource( 2 ),

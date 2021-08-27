@@ -150,7 +150,7 @@ func dungeon_complete() -> void:
 
 func battle_start(lv: int):
 	menu_button.hide()
-	dungeon.active = false
+	#dungeon.active = false
 	var pos = AudioController.get_pos()
 	AudioController.play_bgm("battle")
 	fade.fade_to_black()
@@ -175,7 +175,8 @@ func battle_start(lv: int):
 	menu_button.show()
 
 func get_enemies(max_lv: int) -> Dictionary:
-	var enemy_picker = dungeon.get_enemies()
+#	var enemy_picker = dungeon.get_enemies()
+	var enemy_picker = load("res://resources/locales/sea_caves.tres").enemies
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
 # warning-ignore:integer_division

@@ -10,6 +10,7 @@ name = "Koh"
 frame = 4
 hp_cur = 75
 hp_max = 75
+ap = 0
 strength = 8
 agility = 8
 intellect = 4

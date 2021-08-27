@@ -30,6 +30,7 @@ func setup(_unit):
 	tab = unit.tab
 	.setup(_unit)
 	self.hp_cur = unit.hp_cur
+	self.ap = unit.ap
 	sprite.position.y = 2
 	self.selected = false
 	self.ready = true
@@ -66,10 +67,19 @@ func set_hp_cur(value):
 	unit.hp_cur = clamp(value, 0, hp_max)
 	if blocking > 0:
 		hp_cur_display.modulate = Color.slategray
-		hp_cur_display.text = str(blocking)
+		hp_cur_display.bbcode_text = get_hp_str(blocking)
 	else:
 		hp_cur_display.modulate = Color.white
-		hp_cur_display.text = str(hp_cur)
+		hp_cur_display.bbcode_text = get_hp_str(hp_cur)
+
+func get_hp_str(value: int) -> String:
+	if value > 100: return "[right]" + str(value)
+	if value > 10: return "[color=#242428]0[/color]" + str(value)
+	else: return "[color=#242428]00[/color]" + str(value)
+
+func set_ap(value: int) -> void:
+	.set_ap(value)
+	ap_gauge.rect_size.x = ap * 4
 
 func die() -> void:
 	.die()

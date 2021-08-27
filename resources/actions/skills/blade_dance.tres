@@ -8,6 +8,7 @@ name = "Blade Dance"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
+ap_cost = 2
 item_type = 1
 sub_type = 19
 melee = false
@@ -29,5 +30,6 @@ inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]
 gain_hexes = [  ]
-max_uses = 20
-uses = 20
+max_uses = 0
+uses = 0
+price = 0

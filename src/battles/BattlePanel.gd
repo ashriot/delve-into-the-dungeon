@@ -7,7 +7,8 @@ signal show_dmg(text)
 signal show_text(text, pos, display)
 
 onready var button: = $Button
-onready var hp_percent: = $TextureProgress
+onready var hp_gauge: = $HpGauge
+onready var ap_gauge = $ApGauge
 onready var target: = $Target
 onready var sprite: = $Sprite
 onready var anim: = $AnimationPlayer
@@ -19,6 +20,7 @@ var alive: bool setget, get_alive
 var unit: Unit = null
 var hp_cur: int setget set_hp_cur
 var hp_max: int
+var ap: int setget set_ap
 var valid_target: bool
 var melee_penalty: bool setget, get_melee_penalty
 var pos: Vector2
@@ -46,8 +48,9 @@ func setup(_unit):
 	enabled = true
 	sprite.frame = unit.frame
 	self.hp_max = unit.hp_max
-	hp_percent.max_value = hp_max
-	hp_percent.value = hp_max
+	self.ap = unit.ap
+	hp_gauge.max_value = hp_max
+	hp_gauge.value = hp_max
 	blocking = 0
 	hexes.clear()
 	boons.clear()
@@ -304,8 +307,11 @@ func die():
 
 func set_hp_cur(value: int):
 	hp_cur = int(clamp(value, 0, hp_max))
-	hp_percent.value = value
+	hp_gauge.value = value
 	if hp_cur <= 0: die()
+
+func set_ap(value: int) -> void:
+	ap = int(clamp(value, 0, 6))
 
 func set_blocking(value: int) -> void:
 	blocking = value

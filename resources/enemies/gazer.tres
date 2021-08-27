@@ -8,6 +8,7 @@ name = "Gazer"
 frame = 3
 hp_cur = 0
 hp_max = 50
+ap = 0
 strength = 3
 agility = 7
 intellect = 12
@@ -26,6 +27,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 2
+ap_init = 0
 gold = 25
 actions = {
 0: null,

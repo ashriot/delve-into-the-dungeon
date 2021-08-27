@@ -606,5 +606,4 @@ func battle_start():
 	game.battle_start(locale.enemy_lv + int(level_num / 3))
 
 func get_player_pos() -> Vector2:
-#	return Vector2(0, 0)
 	return player_tile * TILE_SIZE

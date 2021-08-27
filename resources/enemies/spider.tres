@@ -11,6 +11,7 @@ name = "Spider"
 frame = 13
 hp_cur = 0
 hp_max = 45
+ap = 0
 strength = 5
 agility = 8
 intellect = 9
@@ -29,6 +30,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 0
 gold = 25
 actions = {
 0: ExtResource( 3 ),

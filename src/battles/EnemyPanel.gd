@@ -23,6 +23,7 @@ func setup(_unit):
 	level_up()
 	.setup(unit)
 	self.hp_cur = hp_max
+	self.ap = unit.ap_init
 	actions = unit.actions
 	targetable(false)
 	for i in range(actions.size()):
@@ -97,6 +98,11 @@ func update_status() -> void:
 	else:
 		status.show()
 		$StatusBG.show()
+
+func set_ap(value: int) -> void:
+	.set_ap(value)
+	print(unit.name, " AP: ", ap)
+	ap_gauge.rect_size.x = ap * 3
 
 func die():
 	.die()

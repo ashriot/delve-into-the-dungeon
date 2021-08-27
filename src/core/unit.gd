@@ -7,6 +7,7 @@ export var frame: int
 export var hp_cur: int
 
 export var hp_max: int setget, get_hp_max
+export var ap: int
 export var strength: int setget, get_strength
 export var agility: int setget, get_agility
 export var intellect: int setget, get_intellect

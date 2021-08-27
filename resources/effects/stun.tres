@@ -10,3 +10,4 @@ frame = 113
 permanent = false
 turn_start = false
 turn_end = true
+triggered = false

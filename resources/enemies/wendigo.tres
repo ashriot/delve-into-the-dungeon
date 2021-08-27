@@ -9,6 +9,7 @@ name = "Wendigo"
 frame = 25
 hp_cur = 0
 hp_max = 70
+ap = 0
 strength = 10
 agility = 8
 intellect = 5
@@ -27,6 +28,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 0
 gold = 25
 actions = {
 0: ExtResource( 2 ),

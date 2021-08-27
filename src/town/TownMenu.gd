@@ -175,3 +175,7 @@ func _on_LeaveBtn_pressed():
 func _on_TavernLeaveBtn_pressed():
 	AudioController.back()
 	tavern.hide()
+
+
+func _on_DocksBtn_pressed():
+	game.battle_start(1)

@@ -21,8 +21,7 @@ func setup(_player: Player, _item: Item) -> void:
 	$Sprite.frame = item.frame
 	$Title.text = item.name
 	$Selected/Title.text = item.name
-	$Uses.text = str(item.uses)
-	$Selected/Uses.text = str(item.uses)
+	$ApCost.text = str(item.ap_cost)
 	self.empty = false
 	self.selected = false
 	show()

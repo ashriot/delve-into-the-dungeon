@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/images/sheets/enemies.png" type="Texture" id=1]
 [ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=2]
 [ext_resource path="res://src/battles/EnemyPanel.gd" type="Script" id=3]
 [ext_resource path="res://assets/images/icons/selector_variable.png" type="Texture" id=4]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/ui_ap_enemy.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Attack"
@@ -105,7 +106,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress" type="TextureProgress" parent="."]
+[node name="HpGauge" type="TextureProgress" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -115,7 +116,7 @@ value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.145098, 0.145098, 0.164706, 1 )
-tint_progress = Color( 0.312404, 0.759766, 0.228523, 1 )
+tint_progress = Color( 0.8, 0.376471, 0.337255, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -152,23 +153,11 @@ hframes = 10
 vframes = 20
 frame = 107
 
-[node name="Button" type="Button" parent="."]
-modulate = Color( 0.647059, 0.215686, 0.215686, 0 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1.0
-margin_top = -1.0
-margin_right = 1.0
-margin_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Target" type="NinePatchRect" parent="."]
 margin_left = -3.0
 margin_top = -3.0
 margin_right = 19.0
-margin_bottom = 20.0
+margin_bottom = 21.0
 texture = ExtResource( 4 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -219,3 +208,26 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DmgDisplay"]
 autoplay = "Blink"
 anims/Blink = SubResource( 4 )
+
+[node name="ApGauge" type="TextureRect" parent="."]
+margin_top = 18.0
+margin_right = 17.0
+margin_bottom = 19.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+modulate = Color( 0.647059, 0.215686, 0.215686, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = -3.0
+margin_right = 3.0
+margin_bottom = 3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

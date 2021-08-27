@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/battles/PlayerPanel.gd" type="Script" id=1]
 [ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/ui_outline.png" type="Texture" id=3]
 [ext_resource path="res://assets/images/icons/selector.png" type="Texture" id=4]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=5]
 [ext_resource path="res://assets/images/icons/selector_variable.png" type="Texture" id=6]
+[ext_resource path="res://assets/images/ui_ap.png" type="Texture" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Hit"
@@ -73,28 +75,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Outline" type="Panel" parent="."]
+[node name="Outline" type="TextureRect" parent="."]
+self_modulate = Color( 1, 0.984314, 0.937255, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HPCur" type="Label" parent="."]
+[node name="HPCur" type="RichTextLabel" parent="."]
+self_modulate = Color( 1, 0.984314, 0.937255, 1 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -13.0
-margin_top = 1.0
+margin_top = 2.0
 margin_right = -1.0
-margin_bottom = 8.0
+margin_bottom = 9.0
+bbcode_enabled = true
+bbcode_text = "[right][color=#242428]0[/color]23[/right]"
 text = "023"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
+scroll_active = false
 
-[node name="TextureProgress" type="TextureProgress" parent="."]
+[node name="HpGauge" type="TextureProgress" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -108,7 +112,7 @@ value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
-tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+tint_progress = Color( 0.8, 0.376471, 0.337255, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -150,6 +154,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Hit = SubResource( 1 )
+anims/Victory = SubResource( 2 )
+
+[node name="ApGauge" type="TextureRect" parent="."]
+margin_left = 5.0
+margin_top = 11.0
+margin_right = 29.0
+margin_bottom = 12.0
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Button" type="Button" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
@@ -157,7 +177,3 @@ anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Hit = SubResource( 1 )
-anims/Victory = SubResource( 2 )

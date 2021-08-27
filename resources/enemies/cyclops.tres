@@ -9,6 +9,7 @@ name = "Cyclops"
 frame = 16
 hp_cur = 0
 hp_max = 80
+ap = 0
 strength = 11
 agility = 6
 intellect = 4
@@ -27,6 +28,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 0
 gold = 25
 actions = {
 0: ExtResource( 2 ),

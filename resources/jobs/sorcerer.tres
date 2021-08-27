@@ -11,6 +11,7 @@ name = "Senan"
 frame = 6
 hp_cur = 0
 hp_max = 60
+ap = 0
 strength = 5
 agility = 6
 intellect = 9

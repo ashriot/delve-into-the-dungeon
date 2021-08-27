@@ -10,6 +10,7 @@ name = "Goblin"
 frame = 8
 hp_cur = 0
 hp_max = 40
+ap = 0
 strength = 9
 agility = 7
 intellect = 4
@@ -28,6 +29,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 3
 gold = 25
 actions = {
 0: ExtResource( 2 ),

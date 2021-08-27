@@ -10,6 +10,7 @@ name = "Minotaur"
 frame = 23
 hp_cur = 0
 hp_max = 65
+ap = 0
 strength = 9
 agility = 7
 intellect = 5
@@ -28,6 +29,7 @@ perks = {
 }
 desc = "BOOGIE"
 level = 1
+ap_init = 0
 gold = 25
 actions = {
 0: ExtResource( 2 ),
