@@ -29,31 +29,19 @@ __meta__ = {
 margin_left = 3.0
 margin_top = 4.0
 margin_right = 69.0
-margin_bottom = 46.0
+margin_bottom = 47.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AllSelect" type="NinePatchRect" parent="EnemyPanels"]
-margin_left = -1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
 margin_top = -3.0
-margin_right = 67.0
-margin_bottom = 44.0
-texture = ExtResource( 3 )
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FrontSelect" type="NinePatchRect" parent="EnemyPanels"]
-margin_left = -1.0
-margin_top = 21.0
-margin_right = 67.0
-margin_bottom = 44.0
+margin_right = 2.0
+margin_bottom = 2.0
 texture = ExtResource( 3 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -64,9 +52,9 @@ __meta__ = {
 }
 
 [node name="BackSelect" type="NinePatchRect" parent="EnemyPanels"]
-margin_left = -1.0
+margin_left = -2.0
 margin_top = -3.0
-margin_right = 67.0
+margin_right = 68.0
 margin_bottom = 20.0
 texture = ExtResource( 3 )
 patch_margin_left = 3
@@ -77,45 +65,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FrontRow" type="Control" parent="EnemyPanels"]
-margin_left = 1.0
-margin_top = 24.0
-margin_right = 65.0
-margin_bottom = 42.0
-mouse_filter = 2
+[node name="FrontSelect" type="NinePatchRect" parent="EnemyPanels"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -35.0
+margin_top = -21.0
+margin_right = 35.0
+margin_bottom = 2.0
+texture = ExtResource( 3 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EnemyPanel0" parent="EnemyPanels/FrontRow" instance=ExtResource( 1 )]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_top = -9.0
-margin_bottom = 9.0
-
-[node name="EnemyPanel1" parent="EnemyPanels/FrontRow" instance=ExtResource( 1 )]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -8.0
-margin_top = -9.0
-margin_right = 8.0
-margin_bottom = 9.0
-
-[node name="EnemyPanel2" parent="EnemyPanels/FrontRow" instance=ExtResource( 1 )]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -16.0
-margin_top = -9.0
-margin_right = 0.0
-margin_bottom = 9.0
-
 [node name="BackRow" type="Control" parent="EnemyPanels"]
-margin_left = 1.0
-margin_right = 65.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -32.0
+margin_right = 32.0
 margin_bottom = 18.0
 mouse_filter = 2
 __meta__ = {
@@ -139,6 +111,45 @@ margin_right = 8.0
 margin_bottom = 9.0
 
 [node name="EnemyPanel2" parent="EnemyPanels/BackRow" instance=ExtResource( 1 )]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -9.0
+margin_right = 0.0
+margin_bottom = 9.0
+
+[node name="FrontRow" type="Control" parent="EnemyPanels"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -32.0
+margin_top = -18.0
+margin_right = 32.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyPanel0" parent="EnemyPanels/FrontRow" instance=ExtResource( 1 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -9.0
+margin_bottom = 9.0
+
+[node name="EnemyPanel1" parent="EnemyPanels/FrontRow" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 9.0
+
+[node name="EnemyPanel2" parent="EnemyPanels/FrontRow" instance=ExtResource( 1 )]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
