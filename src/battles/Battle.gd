@@ -15,7 +15,7 @@ onready var enemy_info = $EnemyInfo
 onready var enemy_title = $EnemyInfo/Panel/Title
 onready var enemy_desc = $EnemyInfo/Panel/Desc
 
-var cur_player = null
+var cur_player: PlayerPanel
 var cur_btn = null
 var cur_hit_chance: int
 var cur_crit_chance: int
@@ -80,7 +80,7 @@ func setup_buttons() -> void:
 			if item == null:
 				button.clear()
 				continue
-			button.setup(item)
+			button.setup(item, cur_player.unit)
 			button.toggle(true)
 	$Tabs/Tab1/Label.text = "Actions"
 	$Tabs/Tab1/ColorRect/Label.text = "Actions"
@@ -311,14 +311,18 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	AudioController.click()
 	cur_btn = button
 	cur_btn.selected = true
-	if button.item.target_type >= Enum.TargetType.MYSELF \
-		and button.item.target_type <= Enum.TargetType.RANDOM_ALLY:
+	var target_type = cur_btn.item.target_type
+	if (cur_player.unit.job_perk == "Knife Thrower" and \
+		cur_btn.item.sub_type == Enum.SubItemType.DAGGER):
+			target_type = Enum.TargetType.ONE_ENEMY
+	if target_type >= Enum.TargetType.MYSELF \
+		and target_type <= Enum.TargetType.RANDOM_ALLY:
 		player_panels.show_selectors(cur_player, button.item.target_type)
 	else:
 		if button.item.stat_hit == Enum.StatType.AGI:
 			cur_hit_chance = int(cur_btn.item.hit_chance \
 				* cur_player.get_stat(Enum.StatType.AGI)) \
-				 + (60 if cur_player.has_perk("Precise") else 0)
+				 + (50 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enum.StatType.AGI
 # warning-ignore:integer_division
 			cur_crit_chance = int(cur_btn.item.crit_chance + (cur_hit_chance - 60) / 2)
@@ -332,7 +336,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
 		enemy_panels.update_item_stats(hit)
-		enemy_panels.show_selectors(cur_btn.item.target_type)
+		enemy_panels.show_selectors(target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	if !battle_active: return
@@ -358,8 +362,10 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 func execute_vs_enemy(panel) -> void:
 	var gained_xp = false
 	var item = cur_btn.item as Item
-	var user = cur_player
-	user.ap -= item.ap_cost
+	var user = cur_player as PlayerPanel
+	var skill = max(user.unit.skill[item.sub_type] + int(user.unit.prof[item.sub_type]), 0)
+	if item.max_uses > 0: cur_btn.uses_remain -= 1
+	user.ap -= item.ap_cost - skill
 	AudioController.play_sfx(item.use_fx)
 	finish_action()
 	show_text(item.name, user.pos)
@@ -399,6 +405,7 @@ func execute_vs_enemy(panel) -> void:
 func execute_vs_player(panel) -> void:
 	var user = cur_player
 	var item = cur_btn.item as Item
+	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= item.ap_cost
 	AudioController.play_sfx(item.use_fx)
 	var turn_spent = true
@@ -482,7 +489,7 @@ func victory() -> void:
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 		var ranks_up = panel.calc_job_xp()
 		for _r in range(ranks_up):
-			if panel.unit.job_skill == Enum.SubItemType.NA: break
+			if panel.unit.job_skill == Enum.SubItemType.TOOL: break
 			game.learned_skill(panel.unit)
 			var skill_name = yield(game, "done_learned_skill")
 			AudioController.play_sfx("skillup")

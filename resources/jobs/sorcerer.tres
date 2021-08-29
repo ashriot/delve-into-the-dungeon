@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/weapons/wooden_wand.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tomes/icicle.tres" type="Resource" id=4]
 
 [resource]
@@ -40,6 +40,8 @@ job_perk = "Sorcery"
 perk_desc = "Can equip 4 Sorcery skills.
 
 After combat, you have a chance to learn a new Sorcery skill."
+prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+skill = [ 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0

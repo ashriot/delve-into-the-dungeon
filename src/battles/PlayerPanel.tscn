@@ -76,7 +76,7 @@ __meta__ = {
 }
 
 [node name="Outline" type="TextureRect" parent="."]
-self_modulate = Color( 1, 0.984314, 0.937255, 1 )
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2

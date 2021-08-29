@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
+[ext_resource path="res://resources/actions/weapons/short_bow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/weapons/iron_knife.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/wooden_mace.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,10 +11,11 @@ name = "Vayne"
 frame = 7
 hp_cur = 0
 hp_max = 70
+ap = 0
 strength = 8
 agility = 10
 intellect = 4
-defense = 5
+defense = 7
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -33,20 +35,22 @@ perks = {
 }
 job = "Thief"
 job_tab = "Knives"
-job_skill = 23
-job_perk = "Sleight of Hand"
+job_skill = 24
+job_perk = "Knife Thrower"
 perk_desc = "Can equip 4 extra Daggers.
 
 Can learn unique Thief passive traits."
+prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+skill = [ 1, 1, 1, 2, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
-0: ExtResource( 6 ),
-1: ExtResource( 4 ),
-2: null,
+0: ExtResource( 3 ),
+1: ExtResource( 2 ),
+2: ExtResource( 4 ),
 3: null,
 4: null,
 5: null,

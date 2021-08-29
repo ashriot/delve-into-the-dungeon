@@ -56,7 +56,7 @@ var inventory: Inventory = _Inventory.new()
 var profile_id: int
 
 func _ready():
-#	randomize()
+	randomize()
 	profiles.hide()
 	new_profile.hide()
 	fade.show()
@@ -68,6 +68,7 @@ func _ready():
 	profile1.init(self, 1)
 	profile2.init(self, 2)
 	profile3.init(self, 3)
+	AudioController.mute = mute
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Easy/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Easy"])
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Normal"])
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Hard"])
@@ -87,7 +88,6 @@ func init() -> void:
 	GameManager.initialize_party()
 	var _err = connect("level_changed", GameManager, "_on_level_changed")
 	new_hero.init(self)
-	AudioController.mute = mute
 	battle.init(self)
 	dungeon.init(self)
 	party_menu.init(self)

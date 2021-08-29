@@ -80,6 +80,8 @@ func initialize_party():
 			new_player.intellect = player["int"]
 			new_player.defense = player["def"]
 			new_player.xp = player["xp"]
+			new_player.prof = player["prof"]
+			new_player.skill = player["skill"]
 			new_player.job_xp = player["job_xp"]
 			new_player.job_lv = player["job_lv"]
 			new_player.items = dict_to_items(player["items"])
@@ -148,6 +150,8 @@ func _on_player_changed(player: Player):
 	new_player["int"] = player.base_int()
 	new_player["def"] = player.base_def()
 	new_player["xp"] = player.xp
+	new_player["prof"] = player.prof
+	new_player["skill"] = player.skill
 	new_player["job_xp"] = player.job_xp
 	new_player["job_lv"] = player.job_lv
 	new_player["items"] = items_to_dict(player.items)

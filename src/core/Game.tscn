@@ -276,7 +276,6 @@ anims/Hop = SubResource( 2 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DungeonHUD" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -462,6 +461,7 @@ vframes = 20
 frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
+visible = false
 locales = {
 1: ExtResource( 3 ),
 2: ExtResource( 4 ),
@@ -514,7 +514,6 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -559,14 +558,15 @@ __meta__ = {
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 44.0
+margin_right = 60.0
 margin_bottom = 26.0
 custom_fonts/font = ExtResource( 17 )
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "DELVE
-IN THE
-DARK"
+text = "Delve
+into the
+Dungeon"
 valign = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -582,11 +582,14 @@ texture = ExtResource( 12 )
 
 [node name="TapToStart" type="Label" parent="CanvasLayer/Title"]
 modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-margin_top = 22.0
-margin_bottom = 29.0
+margin_left = -23.0
+margin_top = 24.0
+margin_right = 23.0
+margin_bottom = 31.0
 text = "TAP TO START"
 align = 1
 valign = 1

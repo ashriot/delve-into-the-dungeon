@@ -10,23 +10,28 @@ var item: Item
 var uses_remain: int setget set_uses_remain
 var selected: bool setget set_selected
 var enabled: = false
-var default_color: = Color("#fffbef")
+var default_color: Color
 
 func init(battle) -> void:
 	.init(battle)
+	default_color = self.modulate
 # warning-ignore:return_value_discarded
 	connect("pressed", battle, "_on_BattleButton_pressed", [self])
 
-func setup(_item: Item) -> void:
+func setup(_item: Item, unit: Player = null) -> void:
 	enabled = true
 	item = _item
 	sprite.frame = item.frame
 	title.text = item.name
-	ap_cost.text = str(item.ap_cost)
+	var skill = 0
+	if unit != null:
+		skill = max(unit.skill[item.sub_type] + int(unit.prof[item.sub_type]), 0)
+	ap_cost.text = str(item.ap_cost - skill)
+	disabled = false
 	if item.max_uses > 0:
+		uses.show()
 		self.uses_remain = item.uses
 		if uses_remain < 1: disabled = true
-		else: disabled = false
 	else:
 		uses.hide()
 	self.selected = false
@@ -43,7 +48,8 @@ func clear() -> void:
 func set_uses_remain(value):
 	uses_remain = value
 	item.uses = value
-	uses.text = str(uses_remain)
+	print("setting uses remain for ", item.name, " x", item.uses)
+	uses.text = "x" + str(uses_remain)
 
 func set_selected(value: bool):
 	selected = value

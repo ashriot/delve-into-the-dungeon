@@ -9,7 +9,7 @@ name = "Slap"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
-ap_cost = 2
+ap_cost = 3
 item_type = 1
 sub_type = 23
 melee = true

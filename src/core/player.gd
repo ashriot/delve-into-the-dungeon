@@ -11,6 +11,20 @@ export(Enum.SubItemType) var job_skill
 export var job_perk: String
 export(String, MULTILINE) var perk_desc
 
+export(Array) var prof = [
+	0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0]
+
+export(Array) var skill = [
+	0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0]
+
 export(Array) var xp = [0.0, 0.0, 0.0, 0.0, 0.0]
 export var job_xp = 0.0
 export var job_lv = 0

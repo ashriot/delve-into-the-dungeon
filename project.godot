@@ -158,7 +158,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Delve in the Dark"
+config/name="Delve into the Dungeon"
 run/main_scene="res://src/core/Game.tscn"
 boot_splash/bg_color=Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 config/icon="res://icon.png"

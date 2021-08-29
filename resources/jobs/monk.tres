@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
+[ext_resource path="res://resources/actions/weapons/iron_mace.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/wooden_mace.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
@@ -14,7 +14,7 @@ ap = 0
 strength = 8
 agility = 8
 intellect = 4
-defense = 10
+defense = 8
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -39,13 +39,15 @@ job_perk = "Unarmed Combatant"
 perk_desc = "Gain bonus DEF when unarmored.
 Can equip 4 Martial Arts skills.
 After combat, you have a chance to learn a new martial arts skill."
+prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+skill = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
-0: ExtResource( 6 ),
+0: ExtResource( 2 ),
 1: ExtResource( 4 ),
 2: null,
 3: null,

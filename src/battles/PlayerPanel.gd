@@ -116,9 +116,7 @@ func take_friendly_hit(user, item) -> void:
 func calc_xp(stat, mod = 1.0) -> void:
 	if stat < 2: return
 	var id = stat - 1
-	if id == 5:
-		print("NA")
-		return
+	if id == 5: return
 	var stat_val = unit.get_stat(stat)
 	var threshold = float((enc_lv * 1) +  (15 * 1))
 	var xp = 1 - pow(0.85, threshold / (stat_val + unit.gains[0]))
@@ -128,7 +126,7 @@ func calc_xp(stat, mod = 1.0) -> void:
 	if unit.xp[id] > 1:
 		unit.xp[id] -= 1
 		unit.gains[id] += randi() % 3 + 1
-	print(unit.name, " ", Enum.get_stat_name(stat), ": ", prev, " -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
+#	print(unit.name, " ", Enum.get_stat_name(stat), ": ", prev, " -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
 
 func calc_hp_xp() -> void:
 	var stat_val = unit.get_stat(Enum.StatType.MaxHP)
@@ -140,7 +138,7 @@ func calc_hp_xp() -> void:
 	if unit.xp[0] > 1:
 		unit.xp[0] -= 1
 		unit.gains[0] += randi() % 3 + 3
-	print(unit.name, " Max HP: ", prev, " -> ", unit.xp[0], " cut: ", unit.xp_cut[0])
+#	print(unit.name, " Max HP: ", prev, " -> ", unit.xp[0], " cut: ", unit.xp_cut[0])
 
 func calc_job_xp() -> int:
 	var ranks_up = 0
