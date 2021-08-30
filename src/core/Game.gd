@@ -177,6 +177,7 @@ func battle_start(lv: int):
 func get_enemies(max_lv: int) -> Dictionary:
 #	var enemy_picker = dungeon.get_enemies()
 	var enemy_picker = load("res://resources/locales/sea_caves.tres").enemies
+	var level_num = 10
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
 # warning-ignore:integer_division
@@ -250,7 +251,7 @@ func learned_skill(unit: Player) -> void:
 	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
 	unit.items[next] = skill
 	var skill_name = skill.name
-	call_deferred("emit_signal", "done_learned_skill", "skill_name") #emit_signal(, skill.name)
+	call_deferred("emit_signal", "done_learned_skill", skill_name) #emit_signal(, skill.name)
 
 func set_mute(value) -> void:
 	mute = value
@@ -362,7 +363,7 @@ func _on_Check_pressed():
 	data.difficulty = difficulty
 	data.discovered = 1
 	data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
-	data.unlocked_heroes = ["Fighter", "Thief", "Sorcerer", "Wizard"]
+	data.unlocked_heroes = ["Fighter", "Thief", "Priest", "Wizard", "Sorcerer"]
 	data.gold = 0
 	if slot_num == 1: profile1.setup(data)
 	if slot_num == 2: profile2.setup(data)

@@ -88,7 +88,7 @@ margin_top = 30.0
 margin_right = 64.0
 margin_bottom = 39.0
 rect_min_size = Vector2( 0, 9 )
-text = "Mage's Tower"
+text = "Mage Tower"
 
 [node name="TavernBtn" type="Button" parent="TownMenu"]
 margin_top = 40.0
@@ -112,6 +112,7 @@ rect_min_size = Vector2( 0, 9 )
 text = "Town Gates"
 
 [node name="Label" type="Label" parent="."]
+modulate = Color( 1, 0.984314, 0.937255, 1 )
 margin_top = 42.0
 margin_right = 71.0
 margin_bottom = 49.0
@@ -480,7 +481,7 @@ __meta__ = {
 
 [node name="Desc" type="Label" parent="WorldMap/Scout/ScrollContainer"]
 margin_right = 67.0
-margin_bottom = 91.0
+margin_bottom = 78.0
 rect_min_size = Vector2( 67, 0 )
 text = "Until recently, the sea caves weren't notable. Now, monsters of all shapes and sizes seem to be issuing forth from the dark depths.
 What has caused the disruption in the sea caves? And can it be reversed?"

@@ -35,7 +35,7 @@ perks = {
 }
 job = "Dancer"
 job_tab = "Dances"
-job_skill = 19
+job_skill = 20
 job_perk = "Dance"
 perk_desc = ""
 prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]

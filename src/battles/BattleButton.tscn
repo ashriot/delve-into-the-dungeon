@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/images/sheets/ui_icons.png" type="Texture" id=3]
 
 [node name="BattleButton" type="Button"]
-modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 10.0
 margin_right = 70.0
@@ -18,6 +17,7 @@ __meta__ = {
 }
 
 [node name="Bg" type="TextureRect" parent="."]
+modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
@@ -28,9 +28,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="Bg"]
 modulate = Color( 0.776471, 0.776471, 0.776471, 1 )
-position = Vector2( 51, 1 )
+position = Vector2( 45, 0 )
 texture = ExtResource( 3 )
 centered = false
 hframes = 10
@@ -43,13 +43,13 @@ margin_left = 8.0
 margin_top = 1.0
 margin_right = 63.0
 margin_bottom = 8.0
-text = "Wooden Sword"
+text = "Iron Sword"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ApCost" type="Label" parent="."]
-modulate = Color( 0.45098, 0.898039, 0.364706, 1 )
+modulate = Color( 0.713726, 0.835294, 0.235294, 1 )
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -74,7 +74,7 @@ margin_left = -14.0
 margin_top = -3.5
 margin_right = -1.0
 margin_bottom = 3.5
-text = "x99"
+text = "*99"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false

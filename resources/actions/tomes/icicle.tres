@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Icicle"
-description = "Deal {potency} {dmg} damage to {tgt} with a 50% chance to apply SLOW for 3 turns."
+description = "Deal {potency} {dmg} damage to {tgt}; Inflict SLOW [50%] for 3 turns."
 tier = 1
 ap_cost = 3
 item_type = 4

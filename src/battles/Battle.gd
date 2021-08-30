@@ -23,12 +23,14 @@ var cur_stat_type: int
 var player_targets: = [false, false, false, false]
 
 var cur_tab: int
+var default_tab_color: Color
 
 var chose_next: bool
 var battle_active: bool
 
 var enc_lv: float
-var game = null
+var game: Game
+var gold: = Color("#ffbe22")
 
 # warning-ignore:shadowed_variable
 func init(game):
@@ -53,6 +55,7 @@ func init(game):
 		button.init(self)
 	tab1.connect("pressed", self, "_on_Tab_Pressed", [tab1])
 	tab2.connect("pressed", self, "_on_Tab_Pressed", [tab2])
+	default_tab_color = tab1.self_modulate
 	hide()
 
 func start(players: Dictionary, enemies: Dictionary) -> void:
@@ -83,25 +86,23 @@ func setup_buttons() -> void:
 			button.setup(item, cur_player.unit)
 			button.toggle(true)
 	$Tabs/Tab1/Label.text = "Actions"
-	$Tabs/Tab1/ColorRect/Label.text = "Actions"
 	$Tabs/Tab2/Label.text = cur_player.unit.job_tab
-	$Tabs/Tab2/ColorRect/Label.text = cur_player.unit.job_tab
 	display_tabs()
 
 func display_tabs() -> void:
 	tab1.show()
 	tab2.show()
 	var other_tab = (cur_tab + 1) % 2
-	if other_tab == 0:
-		$Tabs/Tab1/ColorRect.hide()
-		$Tabs/Tab2/ColorRect.show()
-	else:
-		$Tabs/Tab1/ColorRect.show()
-		$Tabs/Tab2/ColorRect.hide()
+	if other_tab != 0: # Tab 1
+		$Tabs/Tab1.self_modulate = gold
+		$Tabs/Tab2.self_modulate = default_tab_color
+	else:				# Tab 1
+		$Tabs/Tab1.self_modulate = default_tab_color
+		$Tabs/Tab2.self_modulate = gold
 
-	for i in range((other_tab * 4), (other_tab * 4) + 4):
+	for i in range((other_tab * 5), (other_tab * 5) + 5):
 		buttons.get_child(i).toggle(false)
-	for i in range((cur_tab * 4), (cur_tab * 4) + 4):
+	for i in range((cur_tab * 5), (cur_tab * 5) + 5):
 		buttons.get_child(i).toggle(true)
 
 func toggle_tabs(value) -> void:
@@ -220,8 +221,8 @@ func enemy_take_action(panel: EnemyPanel):
 				if action.target_type < Enum.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(hit)
 				else: target.take_hit(hit)
-			if action.target_type >= Enum.TargetType.ANY_ROW:
-				AudioController.play_sfx(action.sound_fx)
+#			if action.target_type >= Enum.TargetType.ANY_ROW:
+#				AudioController.play_sfx(action.sound_fx)
 			if hit_num < hits - 1:
 				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 		for target in targets: target.gained_xp = false
@@ -287,6 +288,8 @@ func _on_ItemButton_long_pressed(button: BattleButton) -> void:
 	enemy_info.show()
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
+	if cur_player != null:
+		if button.ap_cost > cur_player.ap: return
 	if button.tooltip: return
 	if !battle_active: return
 	if button.item.name == "End Turn":
@@ -296,9 +299,6 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		end_turn()
 		return
 	if button.item.name == "Inspect":
-		AudioController.confirm()
-		enemy_panels.show_selectors(Enum.TargetType.ONE_ENEMY)
-		player_panels.show_selectors(null, Enum.TargetType.ANY_ALLY)
 		return
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
@@ -312,7 +312,8 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	cur_btn = button
 	cur_btn.selected = true
 	var target_type = cur_btn.item.target_type
-	if (cur_player.unit.job_perk == "Knife Thrower" and \
+	print(cur_player.unit.job_tab, " -> ", cur_btn.item.sub_type)
+	if (cur_player.unit.job_tab == "Knives" and \
 		cur_btn.item.sub_type == Enum.SubItemType.DAGGER):
 			target_type = Enum.TargetType.ONE_ENEMY
 	if target_type >= Enum.TargetType.MYSELF \
@@ -363,9 +364,8 @@ func execute_vs_enemy(panel) -> void:
 	var gained_xp = false
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel
-	var skill = max(user.unit.skill[item.sub_type] + int(user.unit.prof[item.sub_type]), 0)
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
-	user.ap -= item.ap_cost - skill
+	user.ap -= cur_btn.ap_cost
 	AudioController.play_sfx(item.use_fx)
 	finish_action()
 	show_text(item.name, user.pos)
@@ -406,7 +406,7 @@ func execute_vs_player(panel) -> void:
 	var user = cur_player
 	var item = cur_btn.item as Item
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
-	user.ap -= item.ap_cost
+	user.ap -= cur_btn.ap_cost
 	AudioController.play_sfx(item.use_fx)
 	var turn_spent = true
 	if item.sub_type == Enum.SubItemType.SHIELD:
@@ -489,7 +489,7 @@ func victory() -> void:
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 		var ranks_up = panel.calc_job_xp()
 		for _r in range(ranks_up):
-			if panel.unit.job_skill == Enum.SubItemType.TOOL: break
+			if panel.unit.job_skill == Enum.SubItemType.NA: break
 			game.learned_skill(panel.unit)
 			var skill_name = yield(game, "done_learned_skill")
 			AudioController.play_sfx("skillup")

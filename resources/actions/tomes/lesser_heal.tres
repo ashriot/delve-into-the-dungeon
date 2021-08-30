@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Lesser Heal"
 description = "Heal {tgt} for {potency} + their INTx1."
-tier = 1
+tier = 2
 ap_cost = 4
 item_type = 3
 sub_type = 18

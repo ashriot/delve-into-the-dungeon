@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/short_bow.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/iron_knife.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/weapons/snake_knife.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -35,7 +36,7 @@ perks = {
 }
 job = "Thief"
 job_tab = "Knives"
-job_skill = 24
+job_skill = 25
 job_perk = "Knife Thrower"
 perk_desc = "Can equip 4 extra Daggers.
 
@@ -50,9 +51,9 @@ gains = [ 0, 0, 0, 0, 0 ]
 items = {
 0: ExtResource( 3 ),
 1: ExtResource( 2 ),
-2: ExtResource( 4 ),
+2: ExtResource( 5 ),
 3: null,
-4: null,
+4: ExtResource( 4 ),
 5: null,
 6: null,
 7: null

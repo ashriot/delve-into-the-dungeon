@@ -75,6 +75,7 @@ func initialize_party():
 			new_player.frame = player["frame"]
 			new_player.hp_max = player["hp_max"]
 			new_player.hp_cur = player["hp_cur"]
+			new_player.ap = player["ap"]
 			new_player.strength = player["str"]
 			new_player.agility = player["agi"]
 			new_player.intellect = player["int"]
@@ -144,6 +145,7 @@ func _on_player_changed(player: Player):
 	new_player["tab"] = player.tab
 	new_player["hp_max"] = player.hp_max
 	new_player["hp_cur"] = player.hp_cur
+	new_player["ap"] = player.ap
 	new_player["frame"] = player.frame
 	new_player["str"] = player.base_str()
 	new_player["agi"] = player.base_agi()

@@ -45,7 +45,8 @@ enum SubItemType {
 	MARTIAL_ARTS,
 	PERFORM,
 	SORCERY,
-	TOOL
+	TOOL,
+	NA
 }
 
 enum TargetType {

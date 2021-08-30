@@ -41,6 +41,7 @@ tracks/1/keys = {
 resource_name = "Victory"
 length = 0.6
 loop = true
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 1
@@ -48,10 +49,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 0.5, 2 ),
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 2, 0.5 ),
 "update": 0,
-"values": [ Vector2( 2, 2 ), Vector2( 2, 0 ), Vector2( 2, 2 ) ]
+"values": [ Vector2( 2, 2 ), Vector2( 2, -1 ), Vector2( 2, 2 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:visible")

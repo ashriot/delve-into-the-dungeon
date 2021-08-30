@@ -474,14 +474,10 @@ locales = {
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]
 visible = false
 
-[node name="MenuButton" type="Button" parent="CanvasLayer"]
-visible = false
+[node name="MenuButton" type="TextureButton" parent="CanvasLayer"]
 margin_top = 121.0
 margin_right = 72.0
-margin_bottom = 130.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 128.0
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/MenuButton"]
 anchor_right = 1.0
@@ -492,11 +488,9 @@ color = Color( 1, 1, 0.921569, 1 )
 [node name="Label" type="Label" parent="CanvasLayer/MenuButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = -1.0
-margin_bottom = -1.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "MENU"
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+text = "Party Menu"
+align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -514,6 +508,7 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {

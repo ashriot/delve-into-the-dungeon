@@ -7,10 +7,10 @@
 script = ExtResource( 1 )
 name = "Prism Burst"
 description = "Deal {potency} {dmg} damage to {tgt}."
-tier = 1
-ap_cost = 2
+tier = 4
+ap_cost = 5
 item_type = 2
-sub_type = 21
+sub_type = 23
 melee = false
 target_type = 10
 damage_type = 5

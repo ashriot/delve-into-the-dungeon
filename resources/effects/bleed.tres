@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/effect.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Bleed"
+desc = "Lose 10% Max HP each turn and suffer 10% increased martial damage."
+frame = 118
+permanent = true
+turn_start = true
+turn_end = false
+triggered = true

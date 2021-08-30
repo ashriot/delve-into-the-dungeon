@@ -1,8 +1,10 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tomes/icicle.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/tomes/scorch.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tomes/char.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -34,7 +36,7 @@ perks = {
 }
 job = "Wizard"
 job_tab = "Tomes"
-job_skill = 23
+job_skill = 25
 job_perk = "Memorization"
 perk_desc = "Can equip 4 extra tomes.
 
@@ -47,10 +49,10 @@ job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
-0: ExtResource( 2 ),
-1: ExtResource( 4 ),
-2: null,
-3: null,
+0: ExtResource( 5 ),
+1: ExtResource( 2 ),
+2: ExtResource( 4 ),
+3: ExtResource( 3 ),
 4: null,
 5: null,
 6: null,

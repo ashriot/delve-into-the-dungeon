@@ -143,6 +143,7 @@ texture = ExtResource( 2 )
 centered = false
 hframes = 10
 vframes = 20
+frame = 30
 __meta__ = {
 "_edit_lock_": true
 }

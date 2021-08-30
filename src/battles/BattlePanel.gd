@@ -115,7 +115,8 @@ func take_hit(hit) -> bool:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 		hit.user.take_healing(lifesteal_heal)
 	if item.target_type >= Enum.TargetType.ONE_ENEMY \
-		and item.target_type <= Enum.TargetType.ONE_BACK:
+		and item.target_type <= Enum.TargetType.ONE_BACK \
+		or item.target_type == Enum.TargetType.RANDOM_ENEMY:
 		AudioController.play_sfx(fx)
 	if item.inflict_hexes.size() > 0 and not miss and self.alive:
 		for hex in item.inflict_hexes:
@@ -147,7 +148,7 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 		dmg_text = str(dmg)
 	elif item.damage_type == Enum.DamageType.BLOCK:
 		dmg_text = "Block:" + str(dmg)
-		self.blocking += dmg
+		self.blocking = max(blocking, dmg)
 	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
 	if item.inflict_hexes.size() > 0:
 		for hex in item.inflict_hexes:
@@ -231,14 +232,15 @@ func decrement_hexes(timing: String) -> void:
 	call_deferred("emit_signal", "done")
 
 func trigger_hex(hex_name: String) -> void:
-	print(hex_name, " triggered!")
-	if hex_name == "Poison":
-		AudioController.play_sfx("poison")
+	if hex_name == "Bleed":
+		AudioController.play_sfx("gash")
 		take_damage(int(float(hp_max) * 0.1))
 	if hex_name == "Burn":
 		AudioController.play_sfx("fire")
-		var dmg = unit.get_highest()
-		take_damage(dmg)
+		take_damage(unit.get_highest())
+	if hex_name == "Poison":
+		AudioController.play_sfx("poison")
+		take_damage(max(int(float(hp_cur) * 0.2), 1))
 
 func remove_boon(find: Effect) -> void:
 	for boon in boons:
@@ -312,6 +314,7 @@ func set_hp_cur(value: int):
 
 func set_ap(value: int) -> void:
 	ap = int(clamp(value, 0, 6))
+	unit.ap = ap
 
 func set_blocking(value: int) -> void:
 	blocking = value

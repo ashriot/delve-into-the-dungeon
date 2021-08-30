@@ -172,7 +172,7 @@ func select_player(panel: PlayerMenuPanel) -> void:
 func _on_ItemButton_pressed(button) -> void:
 	if button.tooltip: return
 	if button.empty:
-		if (button.get_index() < 4 or button.slot_type == Enum.SubItemType.TOOL):
+		if (button.get_index() < 4 or button.slot_type == Enum.SubItemType.NA):
 			AudioController.select()
 			equip_item(button)
 	else:

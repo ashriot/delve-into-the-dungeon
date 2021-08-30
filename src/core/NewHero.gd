@@ -22,11 +22,13 @@ func init(game:Game) -> void:
 
 func setup() -> void:
 	units.clear()
+	print(GameManager.save_data.unlocked_heroes)
 	for hero in GameManager.save_data.unlocked_heroes:
 		if hero == "Fighter": units.append(load("res://resources/jobs/fighter.tres"))
 		elif hero == "Thief": units.append(load("res://resources/jobs/thief.tres"))
-		elif hero == "Sorcerer": units.append(load("res://resources/jobs/sorcerer.tres"))
+		elif hero == "Priest": units.append(load("res://resources/jobs/priest.tres"))
 		elif hero == "Wizard": units.append(load("res://resources/jobs/wizard.tres"))
+		elif hero == "Sorcerer": units.append(load("res://resources/jobs/sorcerer.tres"))
 	index = 0
 	setup_unit(units[index])
 

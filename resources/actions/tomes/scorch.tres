@@ -6,10 +6,10 @@
 script = ExtResource( 1 )
 name = "Scorch"
 description = "Deal {potency} {dmg} damage to {tgt}."
-tier = 3
+tier = 2
 ap_cost = 4
-item_type = 3
-sub_type = 14
+item_type = 4
+sub_type = 13
 melee = false
 target_type = 6
 damage_type = 3

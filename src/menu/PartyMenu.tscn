@@ -69,10 +69,10 @@ color = Color( 1, 1, 0.921569, 1 )
 [node name="Label" type="Label" parent="CloseButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
 margin_bottom = -2.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "PARTY MENU"
+text = "Close Menu"
+align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -302,7 +302,6 @@ __meta__ = {
 }
 
 [node name="MainMenu" type="ColorRect" parent="."]
-visible = false
 margin_top = 30.0
 margin_right = 72.0
 margin_bottom = 121.0
@@ -323,7 +322,7 @@ __meta__ = {
 
 [node name="Actions" type="Button" parent="MainMenu/MenuButtons"]
 margin_right = 68.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 text = "  ACTIONS"
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Actions"]
@@ -345,9 +344,9 @@ frame = 142
 
 [node name="Traits" type="Button" parent="MainMenu/MenuButtons"]
 modulate = Color( 1, 1, 1, 0.12549 )
-margin_top = 11.0
+margin_top = 10.0
 margin_right = 68.0
-margin_bottom = 20.0
+margin_bottom = 18.0
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Traits"]
 margin_right = 8.0
@@ -368,9 +367,9 @@ frame = 142
 
 [node name="Equipment" type="Button" parent="MainMenu/MenuButtons"]
 modulate = Color( 1, 1, 1, 0.12549 )
-margin_top = 22.0
+margin_top = 20.0
 margin_right = 68.0
-margin_bottom = 31.0
+margin_bottom = 28.0
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Equipment"]
 margin_right = 8.0
@@ -390,9 +389,9 @@ vframes = 20
 frame = 142
 
 [node name="Inventory" type="Button" parent="MainMenu/MenuButtons"]
-margin_top = 33.0
+margin_top = 30.0
 margin_right = 68.0
-margin_bottom = 42.0
+margin_bottom = 38.0
 text = "  INVENTORY"
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Inventory"]
@@ -413,9 +412,9 @@ vframes = 20
 frame = 142
 
 [node name="Options" type="Button" parent="MainMenu/MenuButtons"]
-margin_top = 44.0
+margin_top = 40.0
 margin_right = 68.0
-margin_bottom = 53.0
+margin_bottom = 48.0
 text = "  OPTIONS"
 
 [node name="ColorRect" type="ColorRect" parent="MainMenu/MenuButtons/Options"]
@@ -457,6 +456,7 @@ texture = ExtResource( 12 )
 centered = false
 
 [node name="Items" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 69.0

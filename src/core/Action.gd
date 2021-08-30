@@ -49,15 +49,17 @@ func get_frame() -> int:
 			id += 21
 		Enum.ItemType.TOME:
 			id += 10
+		Enum.ItemType.STAFF:
+			id += 11
 		Enum.ItemType.TOOL:
 			id += 12
 	return id
 
 func get_desc() -> String:
 	var sub = description as String
-	var dmg = Enum.get_stat_name(stat_used) + "x" + str(multiplier)
+	var dmg = Enum.get_stat_name(stat_used) + "*" + str(multiplier)
 	var hits = str(max_hits) if min_hits == max_hits else (str(min_hits) + "-" + str(max_hits))
-	dmg += ("(x" + hits + ")") if max_hits > 1 else ""
+	dmg += ("(*" + hits + ")") if max_hits > 1 else ""
 	sub = sub.replace("{potency}", dmg)
 	sub = sub.replace("{dmg}", Enum.get_damage_name(damage_type))
 	sub = sub.replace("{tgt}", Enum.get_target_name(target_type))
