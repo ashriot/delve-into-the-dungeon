@@ -48,15 +48,13 @@ func set_selected(value: bool):
 func set_ready(value: bool):
 	ready = value
 	if ready:
-		if sprite.frame > 9 + unit.frame:
-			sprite.frame -= 10
+		sprite.frame = unit.frame
 		outline.modulate.a = 1
 		if blocking > 0: self.blocking = 0
 		decrement_boons("Start")
 		decrement_hexes("Start")
 	else:
-		if sprite.frame < 9 - unit.frame:
-			sprite.frame += 10
+		sprite.frame = unit.frame + 10
 		outline.modulate.a = 0.15
 
 func set_hp_cur(value):
