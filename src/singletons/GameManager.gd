@@ -16,6 +16,10 @@ var spd: = 1.0 setget, get_spd
 
 var game: Game
 
+var ui_color: Color
+var gold = Color("#ffbe22")
+var gray = Color("#606060")
+
 func init() -> void:
 	var profile_path = "user://profile"
 	var dir = Directory.new();
@@ -30,6 +34,7 @@ func init() -> void:
 
 func initialize_game_data(_game):
 	game = _game
+	ui_color = _game.default_color
 	profile_id = str(game.profile_id)
 	path = "user://profile" + profile_id;
 	file_path = path.plus_file("data.tres")

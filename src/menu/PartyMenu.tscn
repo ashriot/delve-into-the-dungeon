@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
 [ext_resource path="res://src/core/PartyMenu.gd" type="Script" id=3]
-[ext_resource path="res://assets/themes/ui/button_select.png" type="Texture" id=4]
 [ext_resource path="res://src/menu/ItemButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/images/icons/check_pressed.png" type="Texture" id=6]
 [ext_resource path="res://src/menu/Tooltip.gd" type="Script" id=7]
@@ -14,6 +13,8 @@
 [ext_resource path="res://assets/images/icons/coin.png" type="Texture" id=12]
 [ext_resource path="res://assets/images/ui_btn.png" type="Texture" id=13]
 [ext_resource path="res://src/core/TexBtn.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/images/ui_tab.png" type="Texture" id=15]
+[ext_resource path="res://assets/images/ui_btn_tex.png" type="Texture" id=16]
 
 [node name="PartyMenu" type="Control"]
 anchor_right = 1.0
@@ -28,6 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -86,14 +88,36 @@ hframes = 10
 vframes = 20
 frame = 140
 
+[node name="Gold" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -49.0
+margin_top = -15.0
+margin_right = -9.0
+margin_bottom = -8.0
+text = "125"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Gold"]
+position = Vector2( 40, 0 )
+texture = ExtResource( 12 )
+centered = false
+
 [node name="Stats" type="ColorRect" parent="."]
+visible = false
 margin_top = 30.0
 margin_right = 72.0
-margin_bottom = 69.0
+margin_bottom = 120.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="Sprite" type="Sprite" parent="Stats"]
-position = Vector2( 3, 3 )
+position = Vector2( 1, 1 )
 texture = ExtResource( 2 )
 centered = false
 hframes = 10
@@ -101,31 +125,96 @@ vframes = 20
 frame = 20
 
 [node name="Name" type="Label" parent="Stats"]
-margin_left = 13.0
-margin_top = 2.0
-margin_right = 72.0
-margin_bottom = 9.0
+margin_left = 10.0
+margin_right = 69.0
+margin_bottom = 7.0
 text = "Alzahar"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Job" type="Label" parent="Stats"]
-margin_left = 3.0
-margin_top = 9.0
-margin_right = 43.0
-margin_bottom = 16.0
+margin_left = 31.0
+margin_right = 71.0
+margin_bottom = 7.0
 custom_colors/font_color = Color( 0.486275, 0.490196, 0.501961, 1 )
 text = "Artificer"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpLabel" type="ColorRect" parent="Stats"]
+margin_left = 5.0
+margin_top = 9.0
+margin_right = 14.0
+margin_bottom = 16.0
+color = Color( 0.662745, 0.231373, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Stats/HpLabel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "HP"
+align = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HP" type="Label" parent="Stats/HpLabel"]
+margin_left = 10.0
+margin_right = 38.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.662745, 0.231373, 0.231373, 1 )
+text = "999/999"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApLabel" type="ColorRect" parent="Stats"]
+margin_left = 58.0
+margin_top = 9.0
+margin_right = 67.0
+margin_bottom = 16.0
+color = Color( 0.713726, 0.835294, 0.235294, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Stats/ApLabel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "AP"
+align = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="AP" type="Label" parent="Stats/ApLabel"]
+margin_left = -12.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.713726, 0.835294, 0.235294, 1 )
+text = "4/6"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Stats" type="Panel" parent="Stats"]
 margin_left = 5.0
-margin_top = 19.0
+margin_top = 18.0
 margin_right = 67.0
-margin_bottom = 36.0
+margin_bottom = 35.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -254,48 +343,12 @@ text = "999"
 align = 1
 valign = 1
 
-[node name="HP" type="Label" parent="Stats"]
-margin_left = 53.0
-margin_top = 2.0
-margin_right = 70.0
-margin_bottom = 16.0
-custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
-text = "250
-/250"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HPLabel" type="ColorRect" parent="Stats"]
-margin_left = 48.0
-margin_top = 2.0
-margin_right = 57.0
-margin_bottom = 9.0
-color = Color( 0.313726, 0.760784, 0.227451, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Stats/HPLabel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_right = 1.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "HP"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="InfoButton" type="Button" parent="Stats"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 1.0
-margin_top = 1.0
-margin_right = 47.0
-margin_bottom = 18.0
+margin_right = 71.0
+margin_bottom = 9.0
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -336,43 +389,29 @@ margin_right = 68.0
 margin_bottom = 25.0
 text = "Options"
 
-[node name="Gold" type="Label" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -49.0
-margin_top = -15.0
-margin_right = -9.0
-margin_bottom = -8.0
-text = "125"
-align = 2
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="Gold"]
-position = Vector2( 40, 0 )
-texture = ExtResource( 12 )
-centered = false
-
 [node name="Items" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 69.0
-margin_bottom = -8.0
+margin_top = 72.0
+margin_bottom = -7.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ActionsLabel" type="Label" parent="Items"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+margin_top = -6.0
+text = "Actions"
+align = 1
 
 [node name="Back" type="ColorRect" parent="Items"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 9.0
-margin_top = 1.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -389,103 +428,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PopupMenu" type="ColorRect" parent="Items"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = -8.0
-margin_right = -1.0
-margin_bottom = -48.0
-color = Color( 0.858824, 0.713726, 0.258824, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Items/PopupMenu"]
-modulate = Color( 0.858824, 0.713726, 0.258824, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 1.0
-margin_right = -1.0
-margin_bottom = -1.0
-custom_constants/separation = 0
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Remove" type="Button" parent="Items/PopupMenu/HBoxContainer"]
-margin_right = 34.0
-margin_bottom = 9.0
-rect_min_size = Vector2( 34, 9 )
-shortcut_in_tooltip = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Remove"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = 1.0
-margin_right = -1.0
-margin_bottom = -1.0
-text = "REMOVE"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Swap" type="Button" parent="Items/PopupMenu/HBoxContainer"]
-margin_left = 34.0
-margin_right = 68.0
-margin_bottom = 9.0
-rect_min_size = Vector2( 34, 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Swap"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = 1.0
-margin_right = -1.0
-margin_bottom = -1.0
-text = "SWAP"
-align = 1
-valign = 1
-
 [node name="Items" type="VBoxContainer" parent="Items"]
-margin_top = 2.0
 margin_right = 70.0
-margin_bottom = 51.0
-custom_constants/separation = 1
+margin_bottom = 41.0
+custom_constants/separation = -1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ItemButton1" parent="Items/Items" instance=ExtResource( 5 )]
-margin_top = 0.0
-margin_bottom = 9.0
 
 [node name="ItemButton2" parent="Items/Items" instance=ExtResource( 5 )]
+margin_top = 8.0
+margin_bottom = 17.0
 
 [node name="ItemButton3" parent="Items/Items" instance=ExtResource( 5 )]
-margin_top = 20.0
-margin_bottom = 29.0
+margin_top = 16.0
+margin_bottom = 25.0
 
 [node name="ItemButton4" parent="Items/Items" instance=ExtResource( 5 )]
-margin_top = 30.0
-margin_bottom = 39.0
+margin_top = 24.0
+margin_bottom = 33.0
 
 [node name="ItemButton5" parent="Items/Items" instance=ExtResource( 5 )]
-visible = false
-margin_top = 40.0
-margin_bottom = 49.0
+margin_top = 32.0
+margin_bottom = 41.0
 
 [node name="ItemButton6" parent="Items/Items" instance=ExtResource( 5 )]
 visible = false
@@ -512,23 +479,39 @@ visible = false
 margin_top = 70.0
 margin_bottom = 79.0
 
-[node name="Tabs" type="HBoxContainer" parent="Items"]
-margin_top = 42.0
-margin_right = 72.0
-margin_bottom = 51.0
-custom_constants/separation = 2
+[node name="Tabs" type="Control" parent="Items"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -35.0
+margin_top = -9.0
+margin_right = 35.0
+rect_min_size = Vector2( 70, 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tab1" type="Button" parent="Items/Tabs"]
-margin_right = 35.0
-margin_bottom = 9.0
-rect_min_size = Vector2( 35, 9 )
+[node name="Tab1" type="TextureButton" parent="Items/Tabs"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 1.0
+margin_top = -3.5
+margin_right = 34.0
+margin_bottom = 3.5
+rect_min_size = Vector2( 33, 7 )
+texture_normal = ExtResource( 15 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="Items/Tabs/Tab1"]
+self_modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1.0
 text = "Items"
 align = 1
 valign = 1
@@ -536,66 +519,142 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Items/Tabs/Tab1"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
+[node name="Tab2" type="TextureButton" parent="Items/Tabs"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 36.0
+margin_top = -3.5
+margin_right = 69.0
+margin_bottom = 3.5
+rect_min_size = Vector2( 33, 7 )
+texture_normal = ExtResource( 15 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
-
-[node name="Label" type="Label" parent="Items/Tabs/Tab1/ColorRect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "Items"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tab2" type="Button" parent="Items/Tabs"]
-margin_left = 37.0
-margin_right = 72.0
-margin_bottom = 9.0
-rect_min_size = Vector2( 35, 9 )
 
 [node name="Label" type="Label" parent="Items/Tabs/Tab2"]
+self_modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "Class"
+margin_left = 1.0
+text = "Items"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Items/Tabs/Tab2"]
-visible = false
+[node name="PopupMenu" type="ColorRect" parent="Items"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
+margin_left = 21.0
+margin_top = -24.0
+margin_right = -20.0
+margin_bottom = -48.0
+color = Color( 1, 0.745098, 0.133333, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Items/PopupMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -6.0
+custom_constants/separation = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Items/Tabs/Tab2/ColorRect"]
+[node name="Remove" type="TextureButton" parent="Items/PopupMenu/HBoxContainer"]
+margin_right = 29.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 29, 7 )
+
+[node name="TextureRect" type="NinePatchRect" parent="Items/PopupMenu/HBoxContainer/Remove"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "Tab2"
+texture = ExtResource( 16 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Remove"]
+self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+text = "Remove"
 align = 1
-valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Swap" type="TextureButton" parent="Items/PopupMenu/HBoxContainer"]
+margin_top = 8.0
+margin_right = 29.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 29, 7 )
+
+[node name="TextureRect" type="NinePatchRect" parent="Items/PopupMenu/HBoxContainer/Swap"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 16 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Swap"]
+self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+text = "Swap"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Use" type="TextureButton" parent="Items/PopupMenu/HBoxContainer"]
+margin_top = 16.0
+margin_right = 29.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 29, 7 )
+
+[node name="TextureRect" type="NinePatchRect" parent="Items/PopupMenu/HBoxContainer/Use"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 16 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Use"]
+self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+text = "Use"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Inventory" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -606,7 +665,8 @@ __meta__ = {
 [node name="BG" type="ColorRect" parent="Inventory"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+margin_top = 72.0
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -712,13 +772,11 @@ __meta__ = {
 
 [node name="Items" type="VBoxContainer" parent="Inventory/BG"]
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
 margin_left = -36.0
-margin_top = -108.0
-margin_right = 36.0
-margin_bottom = -9.0
+margin_right = 34.0
+margin_bottom = 41.0
+custom_constants/separation = -1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -726,40 +784,20 @@ __meta__ = {
 [node name="InvButton" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
 
 [node name="InvButton2" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 10.0
-margin_bottom = 19.0
+margin_top = 8.0
+margin_bottom = 17.0
 
 [node name="InvButton3" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 20.0
-margin_bottom = 29.0
+margin_top = 16.0
+margin_bottom = 25.0
 
 [node name="InvButton4" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 30.0
-margin_bottom = 39.0
+margin_top = 24.0
+margin_bottom = 33.0
 
 [node name="InvButton5" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 40.0
-margin_bottom = 49.0
-
-[node name="InvButton6" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 50.0
-margin_bottom = 59.0
-
-[node name="InvButton7" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 60.0
-margin_bottom = 69.0
-
-[node name="InvButton8" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 70.0
-margin_bottom = 79.0
-
-[node name="InvButton9" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 80.0
-margin_bottom = 89.0
-
-[node name="InvButton10" parent="Inventory/BG/Items" instance=ExtResource( 10 )]
-margin_top = 90.0
-margin_bottom = 99.0
+margin_top = 32.0
+margin_bottom = 41.0
 
 [node name="Pages" type="Control" parent="Inventory/BG"]
 anchor_top = 1.0
@@ -803,9 +841,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -13.0
-margin_top = -2.5
+margin_top = -3.5
 margin_right = 13.0
-margin_bottom = 4.5
+margin_bottom = 3.5
 text = "1/9"
 align = 1
 valign = 1
@@ -835,39 +873,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InvBack" type="ColorRect" parent="Inventory/BG"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 9.0
-margin_bottom = 9.0
-mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Inventory/BG/InvBack"]
-margin_left = 1.0
-margin_right = 62.0
-margin_bottom = 7.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "INVENTORY"
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="PreviewBtn" parent="Inventory" instance=ExtResource( 5 )]
-visible = false
-modulate = Color( 0.858824, 0.713726, 0.258824, 1 )
-margin_top = 1.0
-margin_bottom = 10.0
-
-[node name="Sprite2" type="Sprite" parent="Inventory/PreviewBtn"]
-visible = false
-texture = ExtResource( 4 )
-centered = false
+margin_top = 61.0
+margin_bottom = 70.0
 
 [node name="SellPanel" type="Panel" parent="Inventory"]
 visible = false
@@ -917,6 +925,29 @@ modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 35.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InvBack" type="ColorRect" parent="Inventory"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_bottom = 8.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Inventory/InvBack"]
+margin_left = -9.0
+margin_right = 62.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "Inventory"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1101,10 +1132,11 @@ __meta__ = {
 [connection signal="pressed" from="MainMenu/MenuButtons/ActionsBtn" to="." method="_on_ActionsBtn_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/InventoryBtn" to="." method="_on_InventoryBtn_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/OptionsBtn" to="." method="_on_OptionsBtn_pressed"]
-[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
-[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Swap" to="." method="_on_Swap_pressed"]
 [connection signal="pressed" from="Items/Tabs/Tab1" to="." method="_on_Tab1_pressed"]
 [connection signal="pressed" from="Items/Tabs/Tab2" to="." method="_on_Tab2_pressed"]
+[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Swap" to="." method="_on_Swap_pressed"]
+[connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Use" to="." method="_on_Swap_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Left" to="." method="_on_Left_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Right" to="." method="_on_Right_pressed"]
 [connection signal="pressed" from="Inventory/SellPanel/Sell" to="." method="_on_Sell_pressed"]

@@ -121,8 +121,9 @@ func update_stat_data() -> void:
 	$Stats/Sprite.frame = cur_player.unit.frame + 20
 	$Stats/Name.text = cur_player.unit.name
 	$Stats/Job.text = cur_player.unit.job
-	$Stats/HP.text = str(cur_player.unit.hp_cur) + "\n/" + \
+	$Stats/HpLabel/HP.text = str(cur_player.unit.hp_cur) + "/" + \
 		str(cur_player.unit.hp_max)
+	$Stats/ApLabel/AP.text = str(cur_player.unit.ap) + "/6"
 	$Stats/Stats/STR/Value.text = str(cur_player.unit.strength)
 	$Stats/Stats/AGI/Value.text = str(cur_player.unit.agility)
 	$Stats/Stats/INT/Value.text = str(cur_player.unit.intellect)
@@ -137,33 +138,17 @@ func update_item_data():
 		i += 1
 	self.cur_tab = cur_player.tab
 	$Items/Tabs/Tab2/Label.text = cur_player.unit.job_tab
-	$Items/Tabs/Tab2/ColorRect/Label.text = cur_player.unit.job_tab
 
 func set_cur_tab(value) -> void:
 	cur_tab = value
 	cur_player.tab = value
 	var other_tab = (cur_tab + 1) % 2
-	for j in range((other_tab * 4), (other_tab * 4) + 4):
-		item_buttons.get_child(j).hide()
-	for j in range((cur_tab * 4), (cur_tab * 4) + 4):
-		item_buttons.get_child(j).show()
-	if other_tab == 0:
-		$Items/Tabs/Tab1/ColorRect.hide()
-		$Items/Tabs/Tab2/ColorRect.show()
-	else:
-		$Items/Tabs/Tab1/ColorRect.show()
-		$Items/Tabs/Tab2/ColorRect.hide()
-
-func display_tabs() -> void:
-	tab1.show()
-	tab2.show()
-	var other_tab = (cur_tab + 1) % 2
 	if other_tab != 0: # Tab 1
-		$Tabs/Tab1.self_modulate = gold
-		$Tabs/Tab2.self_modulate = default_color
+		$Items/Tabs/Tab1.self_modulate = gold
+		$Items/Tabs/Tab2.self_modulate = default_color
 	else:				# Tab 1
-		$Tabs/Tab1.self_modulate = default_color
-		$Tabs/Tab2.self_modulate = gold
+		$Items/Tabs/Tab1.self_modulate = default_color
+		$Items/Tabs/Tab2.self_modulate = gold
 
 	for i in range((other_tab * 5), (other_tab * 5) + 5):
 		item_buttons.get_child(i).toggle(false)
@@ -203,6 +188,7 @@ func _on_ItemButton_pressed(button) -> void:
 func equip_item(button) -> void:
 	cur_btn = button
 	inv_preview.setup(cur_player.unit, button)
+	inv_preview.selected = true
 	inv_preview.show()
 	inv_panel.show()
 
@@ -325,7 +311,7 @@ func set_cur_btn(value) -> void:
 	if shopping:
 		sell_price.text = "Sell for " + str(cur_btn.item.price / 2) + "?"
 		sell_panel.show()
-	popup.rect_global_position = cur_btn.rect_global_position - Vector2(-1, popup.rect_size.y * 1)
+	popup.rect_global_position = cur_btn.rect_global_position + Vector2(6, popup.rect_size.y * -1 - 1)
 	popup.show()
 
 func _on_Left_pressed():

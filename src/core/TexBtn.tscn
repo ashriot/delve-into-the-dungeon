@@ -7,7 +7,7 @@
 [node name="TexBtn" type="TextureButton"]
 margin_right = 64.0
 margin_bottom = 7.0
-rect_min_size = Vector2( 64, 7 )
+rect_min_size = Vector2( 0, 7 )
 texture_normal = ExtResource( 1 )
 texture_disabled = ExtResource( 2 )
 expand = true

@@ -13,37 +13,34 @@ var ap_cost: = 0
 onready var ap_label = $ApCost
 onready var uses = $Uses
 
-var default_color: Color
-var gold = Color("#ffbe22")
-var gray = Color("#606060")
-
 func init(menu):
 	.init(menu)
 	var _err = connect("pressed", menu, "_on_ItemButton_pressed", [self])
 
 func setup(_player: Player, _item: Item) -> void:
-	default_color = $Bg.modulate
 	player = _player
 	slot_type = player.job_skill
+	uses.hide()
+	ap_label.show()
+	self.available = true
 	if _item == null:
 		self.empty = true
 		return
 	item = _item
+	$Bg/Sprite.show()
 	$Bg/Sprite.frame = item.frame
 	$Title.text = item.name
 	var skill = 0
 	if player != null:
 		skill = max(player.skill[item.sub_type] + int(player.prof[item.sub_type]), 0)
 		ap_cost = max(item.ap_cost - skill, 0)
-		if player.ap < ap_cost: self.available = false
+		if item.sub_type == Enum.SubItemType.TOOL: ap_cost = 0
 	ap_label.text = str(ap_cost)
 	disabled = false
 	if item.max_uses > 0:
 		uses.show()
 		self.uses_remain = item.uses
 		if uses_remain < 1: disabled = true
-	else:
-		uses.hide()
 	self.empty = false
 	self.selected = false
 	show()
@@ -51,20 +48,32 @@ func setup(_player: Player, _item: Item) -> void:
 func set_empty(value) -> void:
 	empty = value
 	if empty:
+		self.available = true
 		if item != null: pass
 		item = null
-		$Title.text = "[Empty Slot]"
+		$Title.text = ""
+		ap_label.hide()
+		$Bg/Sprite.hide()
 
 func set_selected(value) -> void:
 	selected = value
-	if selected: $Bg.modulate = gold
-	else: $Bg.modulate = default_color
+	if selected: $Bg.modulate = GameManager.gold
+	else: $Bg.modulate = GameManager.ui_color
 
 func set_available(value: bool):
 	available = value
 	if !selected:
-		if available: $Bg.modulate = default_color
-		else: $Bg.modulate = gray
+		if available: $Bg.modulate = GameManager.ui_color
+		else: $Bg.modulate = GameManager.gray
+
+func toggle(value) -> void:
+	if value: show()
+	else: hide()
+
+func set_uses_remain(value):
+	uses_remain = value
+	item.uses = value
+	uses.text = "*" + str(uses_remain)
 
 # DRAG AND DROP
 func get_drag_data(_pos: Vector2):
@@ -96,8 +105,3 @@ func drop_data(_position: Vector2, data) -> void:
 	player.swap_items(item, get_index(), data.item, data.origin.get_index())
 	data.origin.setup(player, item)
 	setup(player, data.item)
-
-func set_uses_remain(value):
-	uses_remain = value
-	item.uses = value
-	uses.text = "*" + str(uses_remain)
