@@ -1,11 +1,16 @@
 extends PressButton
-
+class_name ItemButton
 
 var empty: bool setget set_empty
 var selected: bool setget set_selected
+var uses_remain: int setget set_uses_remain
 var item: Item
 var player: Player
 var slot_type: int
+var ap_cost: = 0
+
+onready var ap_label = $ApCost
+onready var uses = $Uses
 
 func init(menu):
 	.init(menu)
@@ -18,10 +23,21 @@ func setup(_player: Player, _item: Item) -> void:
 		self.empty = true
 		return
 	item = _item
-	$Sprite.frame = item.frame
+	$Bg/Sprite.frame = item.frame
 	$Title.text = item.name
-	$Selected/Title.text = item.name
-	$ApCost.text = str(item.ap_cost)
+	var skill = 0
+	if player != null:
+		skill = max(player.skill[item.sub_type] + int(player.prof[item.sub_type]), 0)
+		ap_cost = max(item.ap_cost - skill, 0)
+		if player.ap < ap_cost: self.available = false
+	ap_label.text = str(ap_cost)
+	disabled = false
+	if item.max_uses > 0:
+		uses.show()
+		self.uses_remain = item.uses
+		if uses_remain < 1: disabled = true
+	else:
+		uses.hide()
 	self.empty = false
 	self.selected = false
 	show()
@@ -69,3 +85,8 @@ func drop_data(_position: Vector2, data) -> void:
 	player.swap_items(item, get_index(), data.item, data.origin.get_index())
 	data.origin.setup(player, item)
 	setup(player, data.item)
+
+func set_uses_remain(value):
+	uses_remain = value
+	item.uses = value
+	uses.text = "*" + str(uses_remain)

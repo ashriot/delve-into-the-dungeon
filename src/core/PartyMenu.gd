@@ -12,9 +12,9 @@ onready var actions_btn = $MainMenu/MenuButtons/ActionsBtn
 
 onready var items_panel = $Items
 onready var popup = $Items/PopupMenu
-onready var tab1 = $Items/BG/HBoxContainer/Tab1
-onready var tab2 = $Items/BG/HBoxContainer/Tab2
-onready var item_buttons = $Items/BG/Items
+onready var tab1 = $Items/Tabs/Tab1
+onready var tab2 = $Items/Tabs/Tab2
+onready var item_buttons = $Items/Items
 
 onready var inv_panel = $Inventory
 onready var inv_back = $Inventory/BG/InvBack/Label
