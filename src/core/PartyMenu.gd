@@ -36,7 +36,12 @@ var total_pages: int
 var cur_tab: int setget set_cur_tab
 var cur_btn: Button setget set_cur_btn
 
+var default_color: Color
+var gold = Color("#ffbe22")
+var gray = Color("#606060")
+
 func init(_game) -> void:
+	default_color = _game.default_color
 	hide()
 	tooltip.hide()
 	items_panel.hide()
@@ -131,8 +136,8 @@ func update_item_data():
 		else: child.setup(cur_player.unit, null)
 		i += 1
 	self.cur_tab = cur_player.tab
-	$Items/BG/HBoxContainer/Tab2/Label.text = cur_player.unit.job_tab
-	$Items/BG/HBoxContainer/Tab2/ColorRect/Label.text = cur_player.unit.job_tab
+	$Items/Tabs/Tab2/Label.text = cur_player.unit.job_tab
+	$Items/Tabs/Tab2/ColorRect/Label.text = cur_player.unit.job_tab
 
 func set_cur_tab(value) -> void:
 	cur_tab = value
@@ -143,11 +148,27 @@ func set_cur_tab(value) -> void:
 	for j in range((cur_tab * 4), (cur_tab * 4) + 4):
 		item_buttons.get_child(j).show()
 	if other_tab == 0:
-		$Items/BG/HBoxContainer/Tab1/ColorRect.hide()
-		$Items/BG/HBoxContainer/Tab2/ColorRect.show()
+		$Items/Tabs/Tab1/ColorRect.hide()
+		$Items/Tabs/Tab2/ColorRect.show()
 	else:
-		$Items/BG/HBoxContainer/Tab1/ColorRect.show()
-		$Items/BG/HBoxContainer/Tab2/ColorRect.hide()
+		$Items/Tabs/Tab1/ColorRect.show()
+		$Items/Tabs/Tab2/ColorRect.hide()
+
+func display_tabs() -> void:
+	tab1.show()
+	tab2.show()
+	var other_tab = (cur_tab + 1) % 2
+	if other_tab != 0: # Tab 1
+		$Tabs/Tab1.self_modulate = gold
+		$Tabs/Tab2.self_modulate = default_color
+	else:				# Tab 1
+		$Tabs/Tab1.self_modulate = default_color
+		$Tabs/Tab2.self_modulate = gold
+
+	for i in range((other_tab * 5), (other_tab * 5) + 5):
+		item_buttons.get_child(i).toggle(false)
+	for i in range((cur_tab * 5), (cur_tab * 5) + 5):
+		item_buttons.get_child(i).toggle(true)
 
 func _on_ActionsBtn_pressed() -> void:
 	AudioController.click()

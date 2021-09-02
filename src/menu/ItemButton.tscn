@@ -4,13 +4,12 @@
 [ext_resource path="res://assets/images/ui_btn.png" type="Texture" id=2]
 [ext_resource path="res://assets/images/sheets/ui_icons.png" type="Texture" id=3]
 
-[node name="ItemButton" type="Button"]
+[node name="ItemButton" type="TextureButton"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 10.0
 margin_right = 70.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 0, 9 )
-align = 0
+margin_bottom = 17.0
+rect_min_size = Vector2( 0, 7 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -21,8 +20,6 @@ modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
-margin_top = 1.0
-margin_bottom = -1.0
 texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,9 +37,8 @@ frame = 2
 [node name="Title" type="Label" parent="."]
 modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 margin_left = 8.0
-margin_top = 1.0
 margin_right = 63.0
-margin_bottom = 8.0
+margin_bottom = 7.0
 text = "Iron Sword"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -79,6 +75,3 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[connection signal="button_down" from="." to="." method="_on_Button_down"]
-[connection signal="button_up" from="." to="." method="_on_Button_up"]

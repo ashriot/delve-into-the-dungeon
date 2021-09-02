@@ -40,6 +40,7 @@ signal level_changed
 
 export var mute: bool setget set_mute
 export var skip_title: bool
+export var default_color: Color
 export var spd: = 1.0
 export(Dictionary) var players
 

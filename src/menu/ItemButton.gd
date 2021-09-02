@@ -4,6 +4,7 @@ class_name ItemButton
 var empty: bool setget set_empty
 var selected: bool setget set_selected
 var uses_remain: int setget set_uses_remain
+var available: bool setget set_available
 var item: Item
 var player: Player
 var slot_type: int
@@ -12,11 +13,16 @@ var ap_cost: = 0
 onready var ap_label = $ApCost
 onready var uses = $Uses
 
+var default_color: Color
+var gold = Color("#ffbe22")
+var gray = Color("#606060")
+
 func init(menu):
 	.init(menu)
 	var _err = connect("pressed", menu, "_on_ItemButton_pressed", [self])
 
 func setup(_player: Player, _item: Item) -> void:
+	default_color = $Bg.modulate
 	player = _player
 	slot_type = player.job_skill
 	if _item == null:
@@ -47,13 +53,18 @@ func set_empty(value) -> void:
 	if empty:
 		if item != null: pass
 		item = null
-		$Equip.show()
-	else: $Equip.hide()
+		$Title.text = "[Empty Slot]"
 
 func set_selected(value) -> void:
 	selected = value
-	if selected: $Selected.show()
-	else: $Selected.hide()
+	if selected: $Bg.modulate = gold
+	else: $Bg.modulate = default_color
+
+func set_available(value: bool):
+	available = value
+	if !selected:
+		if available: $Bg.modulate = default_color
+		else: $Bg.modulate = gray
 
 # DRAG AND DROP
 func get_drag_data(_pos: Vector2):

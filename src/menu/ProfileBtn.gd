@@ -22,6 +22,11 @@ var new: = false
 var slot_num: int
 
 func init(game: Game, slot: int) -> void:
+	self_modulate = game.default_color
+	$Deletion/ColorRect.color = game.default_color
+	slot_1.self_modulate = game.default_color
+	slot_2.self_modulate = game.default_color
+	slot_3.self_modulate = game.default_color
 	var _err = connect("create_new", game, "_on_ProfileBtn_create_new")
 	_err = connect("load_profile", game, "_on_ProfileBtn_load_profile")
 	_err = connect("delete_profile", game, "_on_ProfileBtn_delete_profile")
