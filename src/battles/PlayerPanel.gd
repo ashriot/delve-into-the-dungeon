@@ -71,8 +71,8 @@ func set_hp_cur(value):
 		hp_cur_display.bbcode_text = get_hp_str(hp_cur)
 
 func get_hp_str(value: int) -> String:
-	if value > 100: return "[right]" + str(value)
-	if value > 10: return "[color=#242428]0[/color]" + str(value)
+	if value > 99: return "[right]" + str(value)
+	if value > 9: return "[color=#242428]0[/color]" + str(value)
 	else: return "[color=#242428]00[/color]" + str(value)
 
 func set_ap(value: int) -> void:

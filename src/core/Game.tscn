@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -28,9 +28,11 @@
 [ext_resource path="res://assets/images/icons/hardcore.png" type="Texture" id=26]
 [ext_resource path="res://assets/images/icons/back.png" type="Texture" id=27]
 [ext_resource path="res://src/core/NewHero.tscn" type="PackedScene" id=28]
+[ext_resource path="res://assets/images/ui_ap_enemy.png" type="Texture" id=29]
 [ext_resource path="res://assets/images/icons/hardcore_off.png" type="Texture" id=30]
 [ext_resource path="res://assets/images/icons/check_dark.png" type="Texture" id=31]
 [ext_resource path="res://assets/images/icons/check.png" type="Texture" id=32]
+[ext_resource path="res://assets/images/ui_ap_enemy_bg.png" type="Texture" id=33]
 
 [sub_resource type="TileSet" id=1]
 0/name = "black_tile.png 0"
@@ -284,140 +286,314 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Faces" type="Control" parent="CanvasLayer/DungeonHUD"]
-margin_left = 2.0
-margin_top = 1.0
-margin_right = 71.0
-margin_bottom = 25.0
-mouse_filter = 2
+[node name="Faces" type="VBoxContainer" parent="CanvasLayer/DungeonHUD"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -37.0
+margin_right = 25.0
+margin_bottom = -1.0
+custom_constants/separation = 0
+alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
-position = Vector2( 59, 0 )
-texture = ExtResource( 9 )
-centered = false
-hframes = 10
-vframes = 20
-frame = 23
+[node name="Hero1" type="Control" parent="CanvasLayer/DungeonHUD/Faces"]
+margin_right = 24.0
+margin_bottom = 9.0
+rect_min_size = Vector2( 24, 9 )
 
-[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite"]
-margin_left = -20.0
-margin_top = -1.0
-margin_bottom = 6.0
-text = "999"
-align = 2
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DungeonHUD/Faces/Hero1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite"]
-margin_left = 9.0
-margin_right = 10.0
-margin_bottom = 5.0
-texture_under = ExtResource( 8 )
-texture_progress = ExtResource( 8 )
-fill_mode = 3
-tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
-tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
-nine_patch_stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite2" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
-position = Vector2( 59, 6 )
-texture = ExtResource( 9 )
-centered = false
-hframes = 10
-vframes = 20
-frame = 24
-
-[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite2"]
-margin_left = -20.0
-margin_top = -1.0
-margin_bottom = 6.0
-text = "999"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureProgress2" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite2"]
-margin_left = 9.0
-margin_right = 10.0
-margin_bottom = 5.0
-texture_under = ExtResource( 8 )
-texture_progress = ExtResource( 8 )
-fill_mode = 3
-tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
-tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
-nine_patch_stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite3" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
-position = Vector2( 59, 12 )
-texture = ExtResource( 9 )
-centered = false
-hframes = 10
-vframes = 20
-frame = 21
-
-[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite3"]
-margin_left = -20.0
-margin_top = -1.0
-margin_bottom = 6.0
-text = "999"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureProgress3" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite3"]
-margin_left = 9.0
-margin_right = 10.0
-margin_bottom = 5.0
-texture_under = ExtResource( 8 )
-texture_progress = ExtResource( 8 )
-fill_mode = 3
-tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
-tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
-nine_patch_stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite4" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces"]
-position = Vector2( 59, 18 )
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces/Hero1"]
+position = Vector2( 3, 1 )
 texture = ExtResource( 9 )
 centered = false
 hframes = 10
 vframes = 20
 frame = 28
 
-[node name="Label" type="Label" parent="CanvasLayer/DungeonHUD/Faces/Sprite4"]
-margin_left = -20.0
-margin_top = -1.0
-margin_bottom = 6.0
-text = "999"
-align = 2
+[node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero1"]
+margin_left = 12.0
+margin_right = 24.0
+margin_bottom = 7.0
+bbcode_enabled = true
+bbcode_text = "[right]009"
+meta_underlined = false
+text = "009"
+scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress4" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Sprite4"]
-margin_left = 9.0
-margin_right = 10.0
-margin_bottom = 5.0
+[node name="HpGauge" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Hero1"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 2.0
+margin_bottom = 8.0
+value = 50.0
 texture_under = ExtResource( 8 )
 texture_progress = ExtResource( 8 )
 fill_mode = 3
-tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
-tint_progress = Color( 0.313726, 0.760784, 0.227451, 1 )
+tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
+tint_progress = Color( 0.662745, 0.231373, 0.231373, 1 )
 nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero1"]
+margin_left = 3.0
+margin_top = 7.0
+margin_right = 12.0
+margin_bottom = 8.0
+texture = ExtResource( 29 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge2" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero1/ApGauge"]
+show_behind_parent = true
+margin_right = 18.0
+margin_bottom = 1.0
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hero2" type="Control" parent="CanvasLayer/DungeonHUD/Faces"]
+margin_top = 9.0
+margin_right = 24.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 24, 9 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DungeonHUD/Faces/Hero2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces/Hero2"]
+position = Vector2( 3, 1 )
+texture = ExtResource( 9 )
+centered = false
+hframes = 10
+vframes = 20
+frame = 28
+
+[node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero2"]
+margin_left = 12.0
+margin_right = 24.0
+margin_bottom = 7.0
+bbcode_enabled = true
+bbcode_text = "[right]009"
+meta_underlined = false
+text = "009"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpGauge" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Hero2"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 2.0
+margin_bottom = 8.0
+value = 50.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
+tint_progress = Color( 0.662745, 0.231373, 0.231373, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero2"]
+margin_left = 3.0
+margin_top = 7.0
+margin_right = 12.0
+margin_bottom = 8.0
+texture = ExtResource( 29 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge2" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero2/ApGauge"]
+show_behind_parent = true
+margin_right = 18.0
+margin_bottom = 1.0
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hero3" type="Control" parent="CanvasLayer/DungeonHUD/Faces"]
+margin_top = 18.0
+margin_right = 24.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 24, 9 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DungeonHUD/Faces/Hero3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces/Hero3"]
+position = Vector2( 3, 1 )
+texture = ExtResource( 9 )
+centered = false
+hframes = 10
+vframes = 20
+frame = 28
+
+[node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero3"]
+margin_left = 12.0
+margin_right = 24.0
+margin_bottom = 7.0
+bbcode_enabled = true
+bbcode_text = "[right]009"
+meta_underlined = false
+text = "009"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpGauge" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Hero3"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 2.0
+margin_bottom = 8.0
+value = 50.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
+tint_progress = Color( 0.662745, 0.231373, 0.231373, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero3"]
+margin_left = 3.0
+margin_top = 7.0
+margin_right = 12.0
+margin_bottom = 8.0
+texture = ExtResource( 29 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge2" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero3/ApGauge"]
+show_behind_parent = true
+margin_right = 18.0
+margin_bottom = 1.0
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hero4" type="Control" parent="CanvasLayer/DungeonHUD/Faces"]
+margin_top = 27.0
+margin_right = 24.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 24, 9 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DungeonHUD/Faces/Hero4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/DungeonHUD/Faces/Hero4"]
+position = Vector2( 3, 1 )
+texture = ExtResource( 9 )
+centered = false
+hframes = 10
+vframes = 20
+frame = 28
+
+[node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero4"]
+margin_left = 12.0
+margin_right = 24.0
+margin_bottom = 7.0
+bbcode_enabled = true
+bbcode_text = "[right]009"
+meta_underlined = false
+text = "009"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpGauge" type="TextureProgress" parent="CanvasLayer/DungeonHUD/Faces/Hero4"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 2.0
+margin_bottom = 8.0
+value = 50.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
+tint_progress = Color( 0.662745, 0.231373, 0.231373, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero4"]
+margin_left = 3.0
+margin_top = 7.0
+margin_right = 12.0
+margin_bottom = 8.0
+texture = ExtResource( 29 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge2" type="TextureRect" parent="CanvasLayer/DungeonHUD/Faces/Hero4/ApGauge"]
+show_behind_parent = true
+margin_right = 18.0
+margin_bottom = 1.0
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -518,7 +694,7 @@ __meta__ = {
 [node name="BlackBG" type="ColorRect" parent="CanvasLayer/Title"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -544,7 +720,7 @@ __meta__ = {
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 margin_bottom = 64.0
-color = Color( 1, 1, 0.921569, 1 )
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -606,7 +782,6 @@ __meta__ = {
 }
 
 [node name="Profiles" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 67.0
@@ -617,15 +792,17 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Profiles"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+margin_top = 3.0
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="CanvasLayer/Profiles"]
 anchor_right = 1.0
-margin_bottom = 7.0
-text = "SELECT A PROFILE"
+margin_top = 4.0
+margin_bottom = 11.0
+text = "Select a Profile"
 align = 1
 valign = 1
 __meta__ = {
@@ -636,10 +813,10 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
-margin_top = 9.0
+margin_top = 12.0
 margin_right = -1.0
-margin_bottom = 2.0
-custom_constants/separation = 2
+margin_bottom = -2.0
+custom_constants/separation = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -647,29 +824,30 @@ __meta__ = {
 [node name="Profile1" parent="CanvasLayer/Profiles/Profiles" instance=ExtResource( 25 )]
 
 [node name="Profile2" parent="CanvasLayer/Profiles/Profiles" instance=ExtResource( 25 )]
-margin_top = 17.0
-margin_bottom = 32.0
+margin_top = 16.0
+margin_bottom = 31.0
 
 [node name="Profile3" parent="CanvasLayer/Profiles/Profiles" instance=ExtResource( 25 )]
-margin_top = 34.0
-margin_bottom = 49.0
+margin_top = 32.0
+margin_bottom = 47.0
 
 [node name="NewProfile" type="ColorRect" parent="CanvasLayer/Profiles"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer/Profiles/NewProfile"]
 margin_left = 2.0
-margin_right = 60.0
+margin_right = 58.0
 margin_bottom = 11.0
 align = 1
-max_length = 10
+max_length = 11
 context_menu_enabled = false
-placeholder_text = "Profile"
+placeholder_text = "Profile Name"
 placeholder_alpha = 0.4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -723,7 +901,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -2.0
-custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
+custom_colors/font_color = Color( 0.713726, 0.835294, 0.235294, 1 )
 text = "Easy"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -753,9 +931,9 @@ __meta__ = {
 [node name="Color" type="Label" parent="CanvasLayer/Profiles/NewProfile/Difficulty/Normal"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 2.0
+margin_left = 1.0
 margin_right = -2.0
-custom_colors/font_color = Color( 0.858824, 0.713726, 0.258824, 1 )
+custom_colors/font_color = Color( 1, 0.745098, 0.133333, 1 )
 text = "Normal"
 align = 1
 __meta__ = {
@@ -787,7 +965,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
-custom_colors/font_color = Color( 0.8, 0.376471, 0.337255, 1 )
+custom_colors/font_color = Color( 0.662745, 0.231373, 0.231373, 1 )
 text = "Hard"
 align = 2
 __meta__ = {
@@ -799,7 +977,6 @@ margin_top = 19.0
 margin_right = 73.0
 margin_bottom = 38.0
 custom_colors/font_color = Color( 1, 1, 0.921569, 0.392157 )
-custom_constants/line_spacing = -1
 text = "Enemies are 25% stronger. Prices are increased."
 align = 1
 valign = 1
@@ -810,9 +987,9 @@ __meta__ = {
 
 [node name="Hardcore" type="TextureButton" parent="CanvasLayer/Profiles/NewProfile"]
 margin_left = 17.0
-margin_top = 40.0
+margin_top = 41.0
 margin_right = 55.0
-margin_bottom = 45.0
+margin_bottom = 46.0
 toggle_mode = true
 shortcut_in_tooltip = false
 action_mode = 0
@@ -838,8 +1015,8 @@ margin_top = 46.0
 margin_right = 73.0
 margin_bottom = 60.0
 custom_colors/font_color = Color( 1, 1, 0.921569, 0.392157 )
-custom_constants/line_spacing = -1
-text = "Fallen heroes can be revived in town."
+text = "Fallen heroes can
+be revived in town."
 align = 1
 valign = 1
 autowrap = true
@@ -848,6 +1025,7 @@ __meta__ = {
 }
 
 [node name="NewBack" type="TextureButton" parent="CanvasLayer/Profiles/NewProfile"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 margin_left = 2.0
 margin_top = -8.0
 margin_right = 11.0

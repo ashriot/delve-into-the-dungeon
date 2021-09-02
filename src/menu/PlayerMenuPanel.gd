@@ -1,8 +1,9 @@
 extends Control
 class_name PlayerMenuPanel
 
-onready var HPCur = $HPCur
-onready var HPPercent = $TextureProgress
+onready var HpCur = $HpCur
+onready var HpGauge = $HpGauge
+onready var ApGauge = $ApGauge
 onready var sprite = $Sprite
 onready var selector = $Selector
 
@@ -19,9 +20,15 @@ func init(menu) -> void:
 func setup(player: Player) -> void:
 	unit = player
 	sprite.frame = player.frame
-	HPCur.text = str(player.hp_cur)
-	HPPercent.max_value = player.hp_max
-	HPPercent.value = player.hp_cur
+	HpCur.bbcode_text = get_hp_str(player.hp_cur)
+	ApGauge.rect_size.x = player.ap * 4
+	HpGauge.max_value = player.hp_max
+	HpGauge.value = player.hp_cur
+
+func get_hp_str(value: int) -> String:
+	if value > 99: return "[right]" + str(value)
+	if value > 9: return "[color=#242428]0[/color]" + str(value)
+	else: return "[color=#242428]00[/color]" + str(value)
 
 func select(value) -> void:
 	if value: selector.show()

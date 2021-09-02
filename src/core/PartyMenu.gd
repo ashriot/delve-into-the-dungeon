@@ -8,6 +8,7 @@ onready var stats_panel = $Stats
 onready var gold_label = $Gold
 onready var options = $Options
 onready var opt_mute = $Options/Panel/Button
+onready var actions_btn = $MainMenu/MenuButtons/ActionsBtn
 
 onready var items_panel = $Items
 onready var popup = $Items/PopupMenu
@@ -61,10 +62,10 @@ func open_menu() -> void:
 	shopping = false
 	show()
 	if players.size() == 0:
-		$MainMenu/MenuButtons/Actions.disabled = true
+		actions_btn.disabled = true
 		$Recruit.show()
 	else:
-		$MainMenu/MenuButtons/Actions.disabled = false
+		actions_btn.disabled = false
 		$Recruit.hide()
 
 func swap_players(player1: Player, player2: Player) -> void:
@@ -148,7 +149,7 @@ func set_cur_tab(value) -> void:
 		$Items/BG/HBoxContainer/Tab1/ColorRect.show()
 		$Items/BG/HBoxContainer/Tab2/ColorRect.hide()
 
-func _on_Items_pressed() -> void:
+func _on_ActionsBtn_pressed() -> void:
 	AudioController.click()
 	cur_menu = items_panel
 	main_menu.hide()
@@ -229,7 +230,7 @@ func open_inv() -> void:
 	update_inv_data()
 	inv_panel.show()
 
-func _on_Inventory_pressed() -> void:
+func _on_InventoryBtn_pressed() -> void:
 	AudioController.click()
 	inv_back.text = "INVENTORY"
 	cur_menu = inv_panel
@@ -321,7 +322,7 @@ func _on_Right_pressed():
 func _on_OptMute_pressed():
 	game.mute = !game.mute
 
-func _on_Options_pressed():
+func _on_OptionsBtn_pressed():
 	AudioController.click()
 	cur_menu = options
 	options.show()

@@ -171,6 +171,7 @@ func take_healing(amt: int) -> void:
 	if amt != 0: emit_signal("show_text", "+" + str(amt), pos)
 
 func take_damage(amt: int) -> void:
+	if !enabled: return
 	self.hp_cur -= amt
 	if amt != 0: emit_signal("show_dmg", str(amt), pos)
 

@@ -56,7 +56,7 @@ var inventory: Inventory = _Inventory.new()
 var profile_id: int
 
 func _ready():
-	randomize()
+#	randomize()
 	profiles.hide()
 	new_profile.hide()
 	fade.show()
@@ -72,7 +72,6 @@ func _ready():
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Easy/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Easy"])
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Normal"])
 	$CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Btn.connect("pressed", self, "_on_DifficultyBtn_pressed", ["Hard"])
-	$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 0.25
 	yield(get_tree().create_timer(0.25), "timeout")
 	if skip_title: skip_title()
 	else: show_title()
@@ -150,7 +149,6 @@ func dungeon_complete() -> void:
 
 func battle_start(lv: int):
 	menu_button.hide()
-	#dungeon.active = false
 	var pos = AudioController.get_pos()
 	AudioController.play_bgm("battle")
 	fade.fade_to_black()
@@ -180,7 +178,7 @@ func get_enemies(max_lv: int) -> Dictionary:
 	var level_num = 10
 	var mod = int(min(level_num + 2, 6))
 	var mobs = randi() % mod + 1
-# warning-ignore:integer_division
+	mobs = 2
 # warning-ignore:integer_division
 	var min_lv = max(max_lv - 3, 1)
 	var encounter = {}
@@ -268,15 +266,21 @@ func update_hud():
 			continue
 		child.show()
 		var p = players[i]
-		child.frame = p.frame + 20
-		child.get_child(0).text = str(p.hp_cur)
-		child.get_child(1).max_value = p.hp_max
-		child.get_child(1).value = p.hp_cur
+		child.get_child(1).frame = p.frame + 20
+		child.get_child(2).bbcode_text = get_hp_str(p.hp_cur)
+		child.get_child(3).max_value = p.hp_max
+		child.get_child(3).value = p.hp_cur
+		child.get_child(4).rect_size.x = p.ap * 3
 		i += 1
 	gold.text = str(inventory.gold)
 	level.text = str(level_num)
 	hud.show()
 	hud_timer = 2.1
+
+func get_hp_str(value: int) -> String:
+	if value > 99: return "[right]" + str(value)
+	if value > 9: return "[color=#242428]0[/color]" + str(value)
+	else: return "[color=#242428]00[/color]" + str(value)
 
 func _on_DifficultyBtn_pressed(value: String) -> void:
 	AudioController.click()
@@ -322,6 +326,10 @@ func _on_ProfileBtn_load_profile(slot: int):
 	profile_id = slot
 	init()
 
+func _on_ProfileBtn_delete_profile(slot: int):
+	print("Deleting a save from slot: ", slot)
+	delete_profile(slot)
+
 func create_new_hero():
 	new_hero.show()
 
@@ -341,12 +349,12 @@ func _on_Hardcore_pressed():
 	hardcore_enabled = hardcore.pressed
 	if hardcore.pressed:
 		AudioController.click()
-		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 1.0
+		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate = Color("#a93b3b")
 		hard_desc.text = "Fallen heroes are permanently killed."
 	else:
 		AudioController.back()
-		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate.a = 0.25
-		hard_desc.text = "Fallen heroes can be revived in town."
+		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate = Color.white
+		hard_desc.text = "Fallen heroes can\nbe revived in town."
 
 func _on_LineEdit_text_changed(new_text):
 	var result = new_text.length() < 2
@@ -369,16 +377,25 @@ func _on_Check_pressed():
 	if slot_num == 2: profile2.setup(data)
 	if slot_num == 3: profile3.setup(data)
 	save_new_profile(slot_num, data)
+	line_edit.clear()
 	new_profile.hide()
 
 func save_new_profile(slot: int, save_data: SaveData):
 	var path = "user://profile" + str(slot)
 	var dir = Directory.new();
-	if dir.file_exists(path.plus_file("data.tres")):
-		dir.remove(path)
 	var file_path = path.plus_file("data.tres")
+	if dir.file_exists(file_path):
+		dir.remove(file_path)
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)
+
+func delete_profile(slot: int):
+	var path = "user://profile" + str(slot)
+	var dir = Directory.new();
+	var file_path = path.plus_file("data.tres")
+	if dir.file_exists(file_path):
+		print("Deleting!")
+		dir.remove(file_path)
 
 func check_error(error):
 	if error != OK:

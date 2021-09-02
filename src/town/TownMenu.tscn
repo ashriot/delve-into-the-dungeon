@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/images/sheets/backdrops.png" type="Texture" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
@@ -21,6 +21,8 @@
 [ext_resource path="res://resources/locales/ancient_ruins.tres" type="Resource" id=19]
 [ext_resource path="res://src/menu/PlayerBench.tscn" type="PackedScene" id=20]
 [ext_resource path="res://src/menu/PlayerBtn.tscn" type="PackedScene" id=21]
+[ext_resource path="res://assets/images/ui_btn.png" type="Texture" id=22]
+[ext_resource path="res://src/core/TexBtn.tscn" type="PackedScene" id=23]
 
 [node name="TownMenu" type="Control"]
 anchor_right = 1.0
@@ -41,7 +43,7 @@ locales = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -55,61 +57,114 @@ vframes = 6
 frame = 24
 
 [node name="TownMenu" type="VBoxContainer" parent="."]
-margin_left = 4.0
-margin_top = 49.0
-margin_right = 68.0
-margin_bottom = 118.0
+margin_left = 2.0
+margin_top = 50.0
+margin_right = 70.0
+margin_bottom = 119.0
+custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BlacksmithBtn" type="Button" parent="TownMenu"]
-margin_right = 64.0
-margin_bottom = 9.0
-rect_min_size = Vector2( 0, 9 )
-text = "Blacksmith"
+[node name="BlacksmithBtn" type="TextureButton" parent="TownMenu"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_right = 68.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 0, 7 )
+texture_normal = ExtResource( 22 )
+expand = true
 
-[node name="AlchemistBtn" type="Button" parent="TownMenu"]
-margin_top = 10.0
-margin_right = 64.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 0, 9 )
+[node name="Label" type="Label" parent="TownMenu/BlacksmithBtn"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+text = "Blacksmith"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlchemistBtn" parent="TownMenu" instance=ExtResource( 23 )]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_top = 9.0
+margin_right = 68.0
+margin_bottom = 16.0
 text = "Alchemist"
 
-[node name="MonestaryBtn" type="Button" parent="TownMenu"]
-margin_top = 20.0
-margin_right = 64.0
-margin_bottom = 29.0
-rect_min_size = Vector2( 0, 9 )
+[node name="MonestaryBtn" parent="TownMenu" instance=ExtResource( 23 )]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_top = 18.0
+margin_right = 68.0
+margin_bottom = 25.0
 text = "Monestary"
 
-[node name="WizBtn" type="Button" parent="TownMenu"]
-margin_top = 30.0
-margin_right = 64.0
-margin_bottom = 39.0
-rect_min_size = Vector2( 0, 9 )
+[node name="MageBtn" parent="TownMenu" instance=ExtResource( 23 )]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_top = 27.0
+margin_right = 68.0
+margin_bottom = 34.0
 text = "Mage Tower"
 
-[node name="TavernBtn" type="Button" parent="TownMenu"]
-margin_top = 40.0
-margin_right = 64.0
-margin_bottom = 49.0
-rect_min_size = Vector2( 0, 9 )
-text = "The Tavern"
+[node name="TavernBtn" type="TextureButton" parent="TownMenu"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 7 )
+texture_normal = ExtResource( 22 )
+expand = true
 
-[node name="DocksBtn" type="Button" parent="TownMenu"]
-margin_top = 50.0
-margin_right = 64.0
-margin_bottom = 59.0
-rect_min_size = Vector2( 0, 9 )
+[node name="Label" type="Label" parent="TownMenu/TavernBtn"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+text = "Tavern"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DocksBtn" type="TextureButton" parent="TownMenu"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_top = 45.0
+margin_right = 68.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 0, 7 )
+texture_normal = ExtResource( 22 )
+expand = true
+
+[node name="Label" type="Label" parent="TownMenu/DocksBtn"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
 text = "Docks"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="GatesBtn" type="Button" parent="TownMenu"]
-margin_top = 60.0
-margin_right = 64.0
-margin_bottom = 69.0
-rect_min_size = Vector2( 0, 9 )
-text = "Town Gates"
+[node name="GatesBtn" type="TextureButton" parent="TownMenu"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+margin_top = 54.0
+margin_right = 68.0
+margin_bottom = 61.0
+rect_min_size = Vector2( 0, 7 )
+texture_normal = ExtResource( 22 )
+expand = true
+
+[node name="Label" type="Label" parent="TownMenu/GatesBtn"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+text = "Gates"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="."]
 modulate = Color( 1, 0.984314, 0.937255, 1 )

@@ -119,6 +119,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/save_data.gd"
 }, {
+"base": "TextureButton",
+"class": "TexBtn",
+"language": "GDScript",
+"path": "res://src/core/TexBtn.gd"
+}, {
 "base": "TileMap",
 "class": "TileToggle",
 "language": "GDScript",
@@ -152,6 +157,7 @@ _global_script_class_icons={
 "PlayerPanel": "",
 "PressButton": "",
 "SaveData": "",
+"TexBtn": "",
 "TileToggle": "",
 "Unit": ""
 }
@@ -160,7 +166,7 @@ _global_script_class_icons={
 
 config/name="Delve into the Dungeon"
 run/main_scene="res://src/core/Game.tscn"
-boot_splash/bg_color=Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 config/Version="0.2"
 
@@ -241,6 +247,6 @@ quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 batching/precision/uv_contract=true
-environment/default_clear_color=Color( 0.384314, 0.384314, 0.384314, 1 )
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

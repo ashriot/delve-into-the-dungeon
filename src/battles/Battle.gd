@@ -147,7 +147,7 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 func start_players_turns() -> void:
 	if !battle_active: return
 	for child in player_panels.panels.get_children():
-		child.ap += 2
+		child.ap += 1
 	AudioController.play_sfx("player_turn")
 	get_next_player(false)
 
@@ -184,7 +184,6 @@ func enemy_take_action(panel: EnemyPanel):
 		panel.decrement_hexes("Start")
 		yield(panel, "done")
 	if not panel.alive:
-		panel.die()
 		call_deferred("emit_signal", "enemy_done")
 		return
 	var stunned = false
@@ -443,7 +442,9 @@ func finish_action(spend_turn: = true) -> void:
 func clear_selections() -> void:
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
-	cur_player.selected = false
+	if cur_player != null:
+		cur_player.selected = false
+		cur_player = null
 	if cur_btn != null:
 		cur_btn.selected = false
 		cur_btn = null
@@ -466,12 +467,9 @@ func _on_PlayerPanel_died(panel: PlayerPanel) -> void:
 	pass
 
 func victory() -> void:
+	print("VICTORY!!!")
 	AudioController.bgm.stop()
 	clear_selections()
-	if cur_player != null:
-		cur_player.selected = false
-		cur_player = null
-	if cur_btn != null: cur_btn = null
 	clear_buttons()
 	yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 	$Victory.show()
