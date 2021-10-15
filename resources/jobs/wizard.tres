@@ -1,21 +1,25 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/scrolls/icicle.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/scrolls/scorch.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/scrolls/chill.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/char.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=5]
-[ext_resource path="res://resources/equipment/chest/cloth_robes.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/silk_robes.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/hands/silk_gloves.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/silk_shoes.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/silk_hood.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
 name = "Orfus"
 frame = 8
 hp_cur = 0
-hp_max = 50
+hp_max = 30
 ap = 0
-strength = 5
-agility = 7
+strength = 4
+agility = 8
 intellect = 12
 defense = 0
 hp_bonus = 0
@@ -37,7 +41,7 @@ perks = {
 }
 job = "Wizard"
 job_tab = "Scrolls"
-job_skill = 25
+job_skill = 27
 job_perk = "Wizardry"
 perk_desc = "Can equip 4 extra scrolls.
 
@@ -50,19 +54,19 @@ xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
 0: ExtResource( 5 ),
-1: ExtResource( 2 ),
-2: ExtResource( 4 ),
-3: ExtResource( 3 ),
-4: null,
+1: ExtResource( 4 ),
+2: ExtResource( 2 ),
+3: ExtResource( 7 ),
+4: ExtResource( 3 ),
 5: null,
 6: null,
 7: null
 }
 equipment = {
-0: null,
+0: ExtResource( 10 ),
 1: ExtResource( 6 ),
-2: null,
-3: null,
+2: ExtResource( 8 ),
+3: ExtResource( 9 ),
 4: null,
 5: null
 }

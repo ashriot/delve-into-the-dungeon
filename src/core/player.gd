@@ -27,7 +27,7 @@ export(Array) var gains := [0, 0, 0, 0, 0]
 export(Dictionary) var items
 # Head, Chest, Hands, Feet, Trinket 1, Trinket 2
 export(Dictionary) var equipment := \
-	{0: null, 1: null, 2: null, 3: null, 4: null, 5: null}
+	{0: null, 1: null, 2: null, 3: null, 4: null}
 
 func changed():
 	emit_signal("player_changed", self)
@@ -55,6 +55,7 @@ func ready_equipment() -> void:
 
 func equip(item: Equipment) -> void:
 	if item == null: return
+	print(item.name, " -> ", item.equipment_type)
 	equipment[item.equipment_type] = item
 	hp_bonus += item.hp_bonus
 	heal(item.hp_bonus)

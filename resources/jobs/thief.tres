@@ -12,11 +12,11 @@ script = ExtResource( 1 )
 name = "Vayne"
 frame = 7
 hp_cur = 0
-hp_max = 70
+hp_max = 40
 ap = 0
 strength = 8
-agility = 10
-intellect = 5
+agility = 15
+intellect = 9
 defense = 0
 hp_bonus = 0
 str_bonus = 0
@@ -37,7 +37,7 @@ perks = {
 }
 job = "Thief"
 job_tab = "Knives"
-job_skill = 25
+job_skill = 27
 job_perk = "Knife Thrower"
 perk_desc = "Can equip 4 extra knives.
 

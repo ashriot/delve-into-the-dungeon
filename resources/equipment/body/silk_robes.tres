@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/equipment.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Silk Robes"
+description = ""
+tier = 1
+weight = 0
+hp_bonus = 8
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 2
+def_bonus = 5
+equipment_type = 1

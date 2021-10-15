@@ -124,7 +124,7 @@ func calc_xp(stat, mod = 1.0) -> void:
 	unit.xp_cut[id] *= 1 - 0.66 * mod
 	if unit.xp[id] > 1:
 		unit.xp[id] -= 1
-		var amt = randi() % 3 + 1 if stat != Enum.StatType.DEF else 1
+		var amt = randi() % 2 + 1 if stat != Enum.StatType.DEF else 1
 		unit.gains[id] += amt
 #	print(unit.name, " ", Enum.get_stat_name(stat), ": ", prev, " -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
 

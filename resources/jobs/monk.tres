@@ -8,13 +8,13 @@
 script = ExtResource( 1 )
 name = "Koh"
 frame = 4
-hp_cur = 75
-hp_max = 75
+hp_cur = 0
+hp_max = 45
 ap = 0
-strength = 8
-agility = 8
-intellect = 4
-defense = 8
+strength = 10
+agility = 10
+intellect = 6
+defense = 5
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -34,7 +34,7 @@ perks = {
 }
 job = "Monk"
 job_tab = "M. Arts"
-job_skill = 21
+job_skill = 23
 job_perk = "Unarmed Combatant"
 perk_desc = "Gain bonus DEF when unarmored.
 Can equip 4 Martial Arts skills.

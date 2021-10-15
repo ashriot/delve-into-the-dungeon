@@ -299,8 +299,8 @@ func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
 	if hit.stat_hit != Enum.StatType.NA:
-#		hit_roll = clamp(hit.hit_chance - get_stat(hit.stat_hit), 0, 100)
-		hit_roll = clamp(hit.hit_chance / (get_stat(hit.stat_hit)), 0, 100)
+		hit_roll = clamp(hit.hit_chance - get_stat(hit.stat_hit), 0, 100)
+#		hit_roll = clamp(hit.hit_chance / (get_stat(hit.stat_hit)), 0, 100)
 		crit_roll = hit.crit_chance
 	return [hit_roll, crit_roll]
 

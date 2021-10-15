@@ -11,11 +11,11 @@ script = ExtResource( 1 )
 name = "Senan"
 frame = 6
 hp_cur = 0
-hp_max = 60
+hp_max = 35
 ap = 0
-strength = 5
-agility = 6
-intellect = 9
+strength = 8
+agility = 11
+intellect = 14
 defense = 0
 hp_bonus = 0
 str_bonus = 0
@@ -36,7 +36,7 @@ perks = {
 }
 job = "Sorcerer"
 job_tab = "Sorcery"
-job_skill = 23
+job_skill = 25
 job_perk = "Sorcery"
 perk_desc = "Can equip 4 Sorcery skills.
 

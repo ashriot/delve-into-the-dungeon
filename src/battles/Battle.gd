@@ -210,10 +210,10 @@ func enemy_take_action(panel: EnemyPanel):
 				var dmg_mod = 0
 				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
 				var hit = Hit.new()
-				var hit_chance = 100 if !panel.has_perk("Precise") else 160
+				var hit_chance = 100 if !panel.has_perk("Precise") else 150
 				if action.item_type == Enum.ItemType.MARTIAL_SKILL or \
 					action.item_type == Enum.ItemType.WEAPON:
-					hit_chance = action.hit_chance * panel.get_stat(Enum.StatType.AGI)
+					hit_chance = action.hit_chance + panel.get_stat(Enum.StatType.AGI)
 				if panel.has_hex("Blind"): hit_chance /= 2
 				hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
 				if action.target_type < Enum.TargetType.ONE_ENEMY:
@@ -320,7 +320,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	else:
 		if button.item.stat_hit == Enum.StatType.AGI:
 			cur_hit_chance = int(cur_btn.item.hit_chance \
-				* cur_player.get_stat(Enum.StatType.AGI)) \
+				+ cur_player.get_stat(Enum.StatType.AGI)) \
 				 + (50 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enum.StatType.AGI
 # warning-ignore:integer_division

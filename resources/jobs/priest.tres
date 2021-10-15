@@ -12,11 +12,11 @@ script = ExtResource( 1 )
 name = "Cyrus"
 frame = 30
 hp_cur = 0
-hp_max = 50
+hp_max = 40
 ap = 0
 strength = 10
-agility = 8
-intellect = 12
+agility = 7
+intellect = 15
 defense = 0
 hp_bonus = 0
 str_bonus = 0
@@ -37,7 +37,7 @@ perks = {
 }
 job = "Priest"
 job_tab = "Staves"
-job_skill = 25
+job_skill = 27
 job_perk = "Staves"
 perk_desc = "Can equip 5 extra staves.
 

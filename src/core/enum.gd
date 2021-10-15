@@ -54,7 +54,6 @@ enum SubItemType {
 
 enum EquipmentType {
 	HEAD,
-	CHEST,
 	BODY,
 	HANDS,
 	FEET,
