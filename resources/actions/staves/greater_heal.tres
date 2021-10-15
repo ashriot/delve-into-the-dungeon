@@ -1,0 +1,34 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Greater Heal"
+description = "Heal {tgt} for {potency} + their INTx3."
+tier = 4
+ap_cost = 2
+item_type = 4
+sub_type = 15
+melee = false
+target_type = 1
+damage_type = 6
+stat_used = 4
+stat_vs = 4
+stat_hit = 6
+multiplier = 4.0
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "heal"
+use_fx = "cast"
+inflict_boons = [  ]
+inflict_hexes = [  ]
+gain_boons = [  ]
+gain_hexes = [  ]
+max_uses = 0
+uses = 0
+price = 0

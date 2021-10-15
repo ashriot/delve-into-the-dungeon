@@ -17,7 +17,7 @@ onready var tab2 = $Items/Tabs/Tab2
 onready var item_buttons = $Items/Items
 
 onready var inv_panel = $Inventory
-onready var inv_back = $Inventory/BG/InvBack/Label
+onready var inv_back = $Inventory/InvBack/Label
 onready var inv_preview = $Inventory/PreviewBtn
 onready var sell_panel = $Inventory/SellPanel
 onready var sell_price = $Inventory/SellPanel/Price

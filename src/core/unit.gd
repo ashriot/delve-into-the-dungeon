@@ -27,9 +27,9 @@ export(Array, float) var def_mods
 
 export(Dictionary) var perks
 
-func heal(amt: = 9999) -> void:
-# warning-ignore:narrowing_conversion
-	hp_cur = clamp(amt, 0, self.hp_max)
+func heal(amt := 9999) -> void:
+	# warning-ignore:narrowing_conversion
+	hp_cur = clamp(hp_cur + amt, 0, self.hp_max)
 
 func get_highest() -> int:
 	var highest = self.strength
@@ -92,6 +92,17 @@ func get_stat(stat) -> int:
 		Enum.StatType.AGI: return self.agility
 		Enum.StatType.INT: return self.intellect
 		Enum.StatType.DEF: return self.defense
+		Enum.StatType.NA: return 0
+	return -999
+
+func get_base_stat(stat) -> int:
+	match stat:
+		Enum.StatType.CurHP: return hp_cur
+		Enum.StatType.MaxHP: return hp_max
+		Enum.StatType.STR: return strength
+		Enum.StatType.AGI: return agility
+		Enum.StatType.INT: return intellect
+		Enum.StatType.DEF: return defense
 		Enum.StatType.NA: return 0
 	return -999
 

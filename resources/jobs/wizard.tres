@@ -1,10 +1,11 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/tomes/icicle.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/tomes/scorch.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/tomes/char.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/scrolls/icicle.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/scrolls/scorch.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/scrolls/char.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=5]
+[ext_resource path="res://resources/equipment/chest/cloth_robes.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
@@ -13,10 +14,10 @@ frame = 8
 hp_cur = 0
 hp_max = 50
 ap = 0
-strength = 3
-agility = 8
-intellect = 10
-defense = 4
+strength = 5
+agility = 7
+intellect = 12
+defense = 0
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -35,13 +36,12 @@ perks = {
 4: null
 }
 job = "Wizard"
-job_tab = "Tomes"
+job_tab = "Scrolls"
 job_skill = 25
-job_perk = "Memorization"
-perk_desc = "Can equip 4 extra tomes.
+job_perk = "Wizardry"
+perk_desc = "Can equip 4 extra scrolls.
 
-Equipped tomes lose half their uses, but become rechargable skills."
-prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+Equipped scrolls consume 2 less AP."
 skill = [ 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.0
@@ -57,4 +57,12 @@ items = {
 5: null,
 6: null,
 7: null
+}
+equipment = {
+0: null,
+1: ExtResource( 6 ),
+2: null,
+3: null,
+4: null,
+5: null
 }

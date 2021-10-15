@@ -478,24 +478,26 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="EnemyInfo"]
 margin_top = 1.0
 margin_right = 72.0
-margin_bottom = 55.0
+margin_bottom = 52.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="EnemyInfo/Panel"]
 anchor_right = 1.0
-margin_bottom = 9.0
-color = Color( 1, 1, 0.921569, 1 )
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = 7.0
+color = Color( 0.372549, 0.619608, 0.807843, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Title" type="Label" parent="EnemyInfo/Panel"]
 margin_left = 2.0
-margin_top = 2.0
 margin_right = 71.0
-margin_bottom = 9.0
+margin_bottom = 7.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 text = "Lv.XX Enemy Name"
 align = 1
@@ -507,9 +509,9 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
-margin_top = 8.0
-margin_bottom = 3.8147e-06
+margin_top = 6.0
 text = "Testing
+Testing
 Testing
 Testing
 Testing

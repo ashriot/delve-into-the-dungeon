@@ -16,8 +16,8 @@ hp_max = 70
 ap = 0
 strength = 8
 agility = 10
-intellect = 4
-defense = 7
+intellect = 5
+defense = 0
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -39,10 +39,9 @@ job = "Thief"
 job_tab = "Knives"
 job_skill = 25
 job_perk = "Knife Thrower"
-perk_desc = "Can equip 4 extra Daggers.
+perk_desc = "Can equip 4 extra knives.
 
-Can learn unique Thief passive traits."
-prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+Equipped knives are treated as ranged weapons and additional effects are doubled."
 skill = [ 1, 1, 1, 2, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
@@ -58,4 +57,12 @@ items = {
 5: null,
 6: null,
 7: null
+}
+equipment = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null,
+5: null
 }

@@ -51,8 +51,7 @@ func init(game):
 	battleMenu.get_child(2).setup(flee)
 	player_panels.init(self)
 	enemy_panels.init(self)
-	for button in buttons.get_children():
-		button.init(self)
+	for button in buttons.get_children(): button.init(self)
 	tab1.connect("pressed", self, "_on_Tab_Pressed", [tab1])
 	tab2.connect("pressed", self, "_on_Tab_Pressed", [tab2])
 	default_tab_color = tab1.self_modulate

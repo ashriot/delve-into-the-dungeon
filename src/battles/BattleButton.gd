@@ -31,7 +31,7 @@ func setup(_item: Item, unit: Player = null) -> void:
 	title.text = item.name
 	var skill = 0
 	if unit != null:
-		skill = max(unit.skill[item.sub_type] + int(unit.prof[item.sub_type]), 0)
+		skill = max(unit.skill[item.sub_type], 0)
 		ap_cost = max(item.ap_cost - skill, 0)
 		if unit.ap < ap_cost: self.available = false
 	ap_label.text = str(ap_cost)
@@ -63,7 +63,6 @@ func set_selected(value: bool):
 	else: $Bg.modulate = gray
 
 func set_available(value: bool):
-	print("avail: ", value)
 	available = value
 	if !selected:
 		if available: $Bg.modulate = default_color

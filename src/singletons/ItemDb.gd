@@ -3,6 +3,7 @@ extends Node
 
 var items: = Array()
 var perks: = Array()
+var equips: = Array()
 
 func _ready():
 	var item_files = get_dir_contents("res://resources/actions")
@@ -11,6 +12,9 @@ func _ready():
 	var perk_files = get_dir_contents("res://resources/perks")
 	for f in perk_files:
 		perks.append(load(f))
+	var equips_files = get_dir_contents("res://resources/equipment")
+	for f in equips_files:
+		equips.append(load(f))
 
 func get_item(item_name: String) -> Item:
 	for item in items:
@@ -20,6 +24,11 @@ func get_item(item_name: String) -> Item:
 func get_perk(perk_name: String) -> Item:
 	for perk in perks:
 		if perk.name == perk_name: return perk.duplicate()
+	return null
+
+func get_equip(equip_name: String) -> Equipment:
+	for equip in equips:
+		if equip.name == equip_name: return equip.duplicate()
 	return null
 
 func get_random_item(lv: int) -> Item:

@@ -44,15 +44,17 @@ func get_frame() -> int:
 			elif sub_type == Enum.SubItemType.SWORD: id += 8
 			elif sub_type == Enum.SubItemType.WAND: id += 9
 		Enum.ItemType.MARTIAL_SKILL:
-			id += 20
+			id = 20
 		Enum.ItemType.SPECIAL_SKILL:
-			id += 21
-		Enum.ItemType.TOME:
-			id += 10
+			id = 21
+		Enum.ItemType.SCROLL:
+			id = 10
 		Enum.ItemType.STAFF:
-			id += 11
+			id = 11
+		Enum.ItemType.TOME:
+			id = 12
 		Enum.ItemType.TOOL:
-			id += 12
+			id = 13
 	return id
 
 func get_desc() -> String:

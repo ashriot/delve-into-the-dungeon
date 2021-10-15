@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 	if delay < 0.1:
 		status_ptr = (status_ptr + 1) % statuses.size()
 		status.frame = statuses[status_ptr][1]
-		delay = float(1 * GameManager.spd)
+		delay = float(1.25 * GameManager.spd)
 	else: delay -= 1.0 * delta
 
 func _exit_tree() -> void:
@@ -147,7 +147,7 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 		self.hp_cur += dmg
 		dmg_text = str(dmg)
 	elif item.damage_type == Enum.DamageType.BLOCK:
-		dmg_text = "Block:" + str(dmg)
+		dmg_text = "Blk:" + str(dmg)
 		self.blocking = max(blocking, dmg)
 	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
 	if item.inflict_hexes.size() > 0:
@@ -299,7 +299,7 @@ func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
 	if hit.stat_hit != Enum.StatType.NA:
-#		hit_roll = clamp(hit.hit_chance - (get_stat(hit.stat_hit) * 3), 0, 100)
+#		hit_roll = clamp(hit.hit_chance - get_stat(hit.stat_hit), 0, 100)
 		hit_roll = clamp(hit.hit_chance / (get_stat(hit.stat_hit)), 0, 100)
 		crit_roll = hit.crit_chance
 	return [hit_roll, crit_roll]

@@ -115,19 +115,21 @@ func calc_xp(stat, mod = 1.0) -> void:
 	if stat < 2: return
 	var id = stat - 1
 	if id == 5: return
-	var stat_val = unit.get_stat(stat)
+	var stat_val = unit.get_base_stat(stat)
 	var threshold = float((enc_lv * 1) +  (15 * 1))
-	var xp = 1 - pow(0.85, threshold / (stat_val + unit.gains[0]))
+	if stat == Enum.StatType.DEF: threshold /= 2
+	var xp = 1 - pow(0.85, threshold / (max(stat_val, 1) + unit.gains[0]))
 	var prev = unit.xp[id]
 	unit.xp[id] += xp * unit.xp_cut[id] * mod
 	unit.xp_cut[id] *= 1 - 0.66 * mod
 	if unit.xp[id] > 1:
 		unit.xp[id] -= 1
-		unit.gains[id] += randi() % 3 + 1
+		var amt = randi() % 3 + 1 if stat != Enum.StatType.DEF else 1
+		unit.gains[id] += amt
 #	print(unit.name, " ", Enum.get_stat_name(stat), ": ", prev, " -> ", unit.xp[id], " cut: ", unit.xp_cut[id])
 
 func calc_hp_xp() -> void:
-	var stat_val = unit.get_stat(Enum.StatType.MaxHP)
+	var stat_val = unit.get_base_stat(Enum.StatType.MaxHP)
 	var threshold = float((enc_lv * 10) +  (15 * 10))
 	var xp = 1 - pow(0.85, threshold / (stat_val + unit.gains[0]))
 	var prev = unit.xp[0]

@@ -38,7 +38,6 @@ func init(game: Game, slot: int) -> void:
 	self.setup(data)
 
 func setup(data: SaveData) -> void:
-	print("Setting up! ", data)
 	deletion.hide()
 	slot_1.hide()
 	slot_2.hide()

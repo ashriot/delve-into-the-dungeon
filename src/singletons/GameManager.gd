@@ -86,12 +86,13 @@ func initialize_party():
 			new_player.intellect = player["int"]
 			new_player.defense = player["def"]
 			new_player.xp = player["xp"]
-			new_player.prof = player["prof"]
 			new_player.skill = player["skill"]
 			new_player.job_xp = player["job_xp"]
 			new_player.job_lv = player["job_lv"]
 			new_player.items = dict_to_items(player["items"])
 			new_player.perks = dict_to_perks(player["perks"])
+			new_player.equipment = dict_to_equips(player["equipment"])
+			new_player.ready_equipment()
 			players[new_player.slot] = new_player
 	game.dungeon_lvs = save_data.dungeon_lvs
 #	game.unlocked_heroes = save_data.unlocked_heroes
@@ -131,6 +132,14 @@ func perks_to_dict(perks: Dictionary) -> Dictionary:
 			dict[i] = perks[i].name
 	return dict
 
+func equips_to_dict(equips: Dictionary) -> Dictionary:
+	var dict = {}
+	for i in range(5):
+		if equips[i] == null: dict[i] = null
+		else:
+			dict[i] = equips[i].name
+	return dict
+
 func dict_to_perks(dict: Dictionary) -> Dictionary:
 	var perks = {}
 	for i in range(5):
@@ -140,6 +149,15 @@ func dict_to_perks(dict: Dictionary) -> Dictionary:
 				perks[i] = perk
 	return perks
 
+func dict_to_equips(dict: Dictionary) -> Dictionary:
+	var equips = {}
+	for i in range(5):
+			if dict[i] == null: equips[i] = null
+			else:
+				var equip = ItemDb.get_equip(dict[i])
+				equips[i] = equip
+	return equips
+
 func _on_player_changed(player: Player):
 	var new_player = {}
 	new_player["name"] = player.name
@@ -148,7 +166,7 @@ func _on_player_changed(player: Player):
 	new_player["job_skill"] = player.job_skill
 	new_player["slot"] = player.slot
 	new_player["tab"] = player.tab
-	new_player["hp_max"] = player.hp_max
+	new_player["hp_max"] = player.base_hp_max()
 	new_player["hp_cur"] = player.hp_cur
 	new_player["ap"] = player.ap
 	new_player["frame"] = player.frame
@@ -157,12 +175,12 @@ func _on_player_changed(player: Player):
 	new_player["int"] = player.base_int()
 	new_player["def"] = player.base_def()
 	new_player["xp"] = player.xp
-	new_player["prof"] = player.prof
 	new_player["skill"] = player.skill
 	new_player["job_xp"] = player.job_xp
 	new_player["job_lv"] = player.job_lv
 	new_player["items"] = items_to_dict(player.items)
 	new_player["perks"] = perks_to_dict(player.perks)
+	new_player["equipment"] = equips_to_dict(player.equipment)
 	save_data.players[player.slot] = new_player
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)

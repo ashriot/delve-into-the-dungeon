@@ -3,8 +3,8 @@
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/tomes/rumble.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/tomes/shock.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -16,7 +16,7 @@ ap = 0
 strength = 5
 agility = 6
 intellect = 9
-defense = 5
+defense = 0
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -41,7 +41,6 @@ job_perk = "Sorcery"
 perk_desc = "Can equip 4 Sorcery skills.
 
 After combat, you have a chance to learn a new Sorcery skill."
-prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
 skill = [ 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
@@ -57,4 +56,12 @@ items = {
 5: null,
 6: null,
 7: null
+}
+equipment = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null,
+5: null
 }

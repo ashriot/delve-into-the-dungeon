@@ -39,8 +39,7 @@ job_perk = "Unarmed Combatant"
 perk_desc = "Gain bonus DEF when unarmored.
 Can equip 4 Martial Arts skills.
 After combat, you have a chance to learn a new martial arts skill."
-prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
-skill = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+skill = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0
@@ -55,4 +54,12 @@ items = {
 5: null,
 6: null,
 7: null
+}
+equipment = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null,
+5: null
 }

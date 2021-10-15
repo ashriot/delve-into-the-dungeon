@@ -15,6 +15,7 @@ enum ItemType {
 	WEAPON,
 	MARTIAL_SKILL,
 	SPECIAL_SKILL,
+	SCROLL,
 	STAFF,
 	TOME,
 	TOOL
@@ -38,15 +39,26 @@ enum SubItemType {
 	WATER,
 	ABJURATION,
 	ENCHANTMENT,
-	HOLY,
+	DIVINE,
 	RESTORATION,
-	WITCHCRAFT,
+	JINX,
+	NECROMANCY,
+	FORBIDDEN,
 	DANCE,
 	MARTIAL_ARTS,
 	PERFORM,
 	SORCERY,
 	TOOL,
 	NA
+}
+
+enum EquipmentType {
+	HEAD,
+	CHEST,
+	BODY,
+	HANDS,
+	FEET,
+	TRINKET
 }
 
 enum TargetType {

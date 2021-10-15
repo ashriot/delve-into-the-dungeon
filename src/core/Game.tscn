@@ -685,7 +685,6 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -721,7 +720,7 @@ __meta__ = {
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 margin_bottom = 64.0
-color = Color( 0.941176, 0.917647, 0.890196, 1 )
+color = Color( 0.941176, 0.924847, 0.890196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

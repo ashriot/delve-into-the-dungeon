@@ -32,7 +32,7 @@ func setup(_player: Player, _item: Item) -> void:
 	$Title.text = item.name
 	var skill = 0
 	if player != null:
-		skill = max(player.skill[item.sub_type] + int(player.prof[item.sub_type]), 0)
+		skill = player.skill[item.sub_type]
 		ap_cost = max(item.ap_cost - skill, 0)
 		if item.sub_type == Enum.SubItemType.TOOL: ap_cost = 0
 	ap_label.text = str(ap_cost)

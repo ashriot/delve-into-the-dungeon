@@ -1,10 +1,12 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/iron_spear.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/weapons/iron_shield.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/iron_sword.tres" type="Resource" id=5]
+[ext_resource path="res://resources/equipment/head/helmet.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/chest/plate_mail.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -13,10 +15,10 @@ frame = 3
 hp_cur = 0
 hp_max = 80
 ap = 0
-strength = 10
+strength = 8
 agility = 6
-intellect = 2
-defense = 10
+intellect = 4
+defense = 0
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -41,7 +43,6 @@ job_perk = "Weapon Mastery"
 perk_desc = "Can equip 4 extra weapons.
 
 As you fight with weapons equipped, you gain passive effects for that weapon type."
-prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
 skill = [ 2, 0, 2, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
@@ -57,4 +58,12 @@ items = {
 5: null,
 6: null,
 7: null
+}
+equipment = {
+0: ExtResource( 6 ),
+1: ExtResource( 7 ),
+2: null,
+3: null,
+4: null,
+5: null
 }

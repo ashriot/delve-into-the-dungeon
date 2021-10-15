@@ -2,22 +2,22 @@
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/iron_shield.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/tomes/lesser_heal.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/staves/lesser_heal.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/weapons/iron_mace.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=5]
-[ext_resource path="res://resources/actions/tomes/deflect.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/staves/deflect.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
 name = "Cyrus"
 frame = 30
 hp_cur = 0
-hp_max = 60
+hp_max = 50
 ap = 0
-strength = 5
-agility = 7
-intellect = 9
-defense = 5
+strength = 10
+agility = 8
+intellect = 12
+defense = 0
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -42,8 +42,7 @@ job_perk = "Staves"
 perk_desc = "Can equip 5 extra staves.
 
 Equipped staves require 1 less AP to use."
-prof = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
-skill = [ 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0 ]
+skill = [ 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.0
 job_lv = 0
@@ -58,4 +57,12 @@ items = {
 5: null,
 6: null,
 7: null
+}
+equipment = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null,
+5: null
 }

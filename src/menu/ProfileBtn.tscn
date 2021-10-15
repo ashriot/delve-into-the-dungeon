@@ -95,7 +95,7 @@ __meta__ = {
 [node name="NewGame" type="Label" parent="."]
 visible = false
 margin_left = 2.0
-margin_right = 38.0
+margin_right = 53.0
 margin_bottom = 15.0
 custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
 text = "NEW GAME"
