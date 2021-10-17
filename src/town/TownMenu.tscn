@@ -178,6 +178,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Lv" type="Label" parent="."]
+margin_left = 29.0
+margin_top = 112.0
+margin_right = 45.0
+margin_bottom = 118.0
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Down" type="TextureButton" parent="Lv"]
+margin_left = -5.0
+margin_right = 2.0
+margin_bottom = 7.0
+texture_normal = ExtResource( 14 )
+
+[node name="Up" type="TextureButton" parent="Lv"]
+margin_left = 13.0
+margin_right = 20.0
+margin_bottom = 7.0
+texture_normal = ExtResource( 15 )
+
 [node name="Blacksmith" type="Control" parent="."]
 visible = false
 margin_right = 40.0
@@ -257,19 +281,19 @@ __meta__ = {
 
 [node name="BuyBS" type="Button" parent="Blacksmith/Panel/VBoxContainer"]
 margin_right = 64.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 text = "BUY"
 
 [node name="SellBS" type="Button" parent="Blacksmith/Panel/VBoxContainer"]
-margin_top = 12.0
+margin_top = 11.0
 margin_right = 64.0
-margin_bottom = 21.0
+margin_bottom = 19.0
 text = "SELL"
 
 [node name="CraftBS" type="Button" parent="Blacksmith/Panel/VBoxContainer"]
-margin_top = 24.0
+margin_top = 22.0
 margin_right = 64.0
-margin_bottom = 33.0
+margin_bottom = 30.0
 text = "CRAFT"
 
 [node name="Leave_BS" type="Button" parent="Blacksmith/Panel"]
@@ -322,6 +346,7 @@ margin_top = 50.0
 margin_bottom = 59.0
 
 [node name="WorldMap" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -737,26 +762,27 @@ __meta__ = {
 }
 
 [node name="PlayerBtn" parent="Tavern/BenchHero/BenchList" instance=ExtResource( 21 )]
+margin_bottom = 8.0
 
 [node name="PlayerBtn2" parent="Tavern/BenchHero/BenchList" instance=ExtResource( 21 )]
-margin_top = 11.0
-margin_bottom = 20.0
+margin_top = 10.0
+margin_bottom = 18.0
 
 [node name="PlayerBtn3" parent="Tavern/BenchHero/BenchList" instance=ExtResource( 21 )]
-margin_top = 22.0
-margin_bottom = 31.0
+margin_top = 20.0
+margin_bottom = 28.0
 
 [node name="PlayerBtn4" parent="Tavern/BenchHero/BenchList" instance=ExtResource( 21 )]
-margin_top = 33.0
-margin_bottom = 42.0
+margin_top = 30.0
+margin_bottom = 38.0
 
 [node name="PlayerBtn5" parent="Tavern/BenchHero/BenchList" instance=ExtResource( 21 )]
-margin_top = 44.0
-margin_bottom = 53.0
+margin_top = 40.0
+margin_bottom = 48.0
 
 [node name="PlayerBtn6" parent="Tavern/BenchHero/BenchList" instance=ExtResource( 21 )]
-margin_top = 55.0
-margin_bottom = 64.0
+margin_top = 50.0
+margin_bottom = 58.0
 
 [node name="LeaveBtn" type="Button" parent="Tavern/BenchHero"]
 margin_left = 4.0
@@ -768,34 +794,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Lv" type="Label" parent="."]
-margin_left = 29.0
-margin_top = 112.0
-margin_right = 45.0
-margin_bottom = 118.0
-text = "1"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Down" type="TextureButton" parent="Lv"]
-margin_left = -5.0
-margin_right = 2.0
-margin_bottom = 7.0
-texture_normal = ExtResource( 14 )
-
-[node name="Up" type="TextureButton" parent="Lv"]
-margin_left = 13.0
-margin_right = 20.0
-margin_bottom = 7.0
-texture_normal = ExtResource( 15 )
-
 [connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
 [connection signal="pressed" from="TownMenu/TavernBtn" to="." method="_on_TavernBtn_pressed"]
 [connection signal="pressed" from="TownMenu/DocksBtn" to="." method="_on_DocksBtn_pressed"]
 [connection signal="pressed" from="TownMenu/GatesBtn" to="." method="_on_TownGates_pressed"]
+[connection signal="pressed" from="Lv/Down" to="." method="_on_Down_pressed"]
+[connection signal="pressed" from="Lv/Up" to="." method="_on_Up_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/BuyBS" to="." method="_on_BuyBS_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/VBoxContainer/SellBS" to="." method="_on_SellBS_pressed"]
 [connection signal="pressed" from="Blacksmith/Panel/Leave_BS" to="." method="_on_Leave_BS_pressed"]
@@ -811,5 +815,3 @@ texture_normal = ExtResource( 15 )
 [connection signal="pressed" from="Tavern/BenchBtn" to="." method="_on_BenchBtn_pressed"]
 [connection signal="pressed" from="Tavern/TavernLeaveBtn" to="." method="_on_TavernLeaveBtn_pressed"]
 [connection signal="pressed" from="Tavern/BenchHero/LeaveBtn" to="." method="_on_LeaveBtn_pressed"]
-[connection signal="pressed" from="Lv/Down" to="." method="_on_Down_pressed"]
-[connection signal="pressed" from="Lv/Up" to="." method="_on_Up_pressed"]
