@@ -52,8 +52,8 @@ __meta__ = {
 position = Vector2( -4, 0 )
 texture = ExtResource( 1 )
 centered = false
-hframes = 21
 vframes = 6
+hframes = 21
 frame = 24
 
 [node name="TownMenu" type="VBoxContainer" parent="."]
@@ -207,8 +207,8 @@ __meta__ = {
 position = Vector2( 4, 6 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 30
 
 [node name="Quote" type="Label" parent="Blacksmith/Panel"]
@@ -341,8 +341,8 @@ __meta__ = {
 position = Vector2( -4, 0 )
 texture = ExtResource( 1 )
 centered = false
-hframes = 21
 vframes = 6
+hframes = 21
 frame = 2
 
 [node name="Title" type="Label" parent="WorldMap"]
@@ -619,8 +619,8 @@ align = 1
 position = Vector2( 3, 11 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 31
 
 [node name="ChatBtn" type="Button" parent="Tavern"]
@@ -768,7 +768,6 @@ text = "LEAVE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
 [connection signal="pressed" from="TownMenu/TavernBtn" to="." method="_on_TavernBtn_pressed"]
 [connection signal="pressed" from="TownMenu/DocksBtn" to="." method="_on_DocksBtn_pressed"]

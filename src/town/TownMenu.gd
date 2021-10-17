@@ -178,4 +178,4 @@ func _on_TavernLeaveBtn_pressed():
 
 
 func _on_DocksBtn_pressed():
-	game.battle_start(8)
+	game.battle_start(3)

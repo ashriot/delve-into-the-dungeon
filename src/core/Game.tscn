@@ -268,8 +268,8 @@ drag_margin_bottom = 0.0
 [node name="Sprite" type="Sprite" parent="Dungeon/Player"]
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Dungeon/Player/Sprite"]
@@ -317,8 +317,8 @@ __meta__ = {
 position = Vector2( 3, 1 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 28
 
 [node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero1"]
@@ -392,8 +392,8 @@ __meta__ = {
 position = Vector2( 3, 1 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 28
 
 [node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero2"]
@@ -467,8 +467,8 @@ __meta__ = {
 position = Vector2( 3, 1 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 28
 
 [node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero3"]
@@ -542,8 +542,8 @@ __meta__ = {
 position = Vector2( 3, 1 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 28
 
 [node name="HpValue" type="RichTextLabel" parent="CanvasLayer/DungeonHUD/Faces/Hero4"]
@@ -614,8 +614,8 @@ __meta__ = {
 position = Vector2( 34, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 130
 
 [node name="Level" type="Label" parent="CanvasLayer/DungeonHUD"]
@@ -633,8 +633,8 @@ __meta__ = {
 position = Vector2( 25, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 131
 
 [node name="TownMenu" parent="CanvasLayer" instance=ExtResource( 15 )]
@@ -678,8 +678,8 @@ __meta__ = {
 position = Vector2( 1, 0 )
 texture = ExtResource( 9 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
@@ -846,6 +846,7 @@ __meta__ = {
 margin_left = 2.0
 margin_right = 58.0
 margin_bottom = 11.0
+text = "Hero"
 align = 1
 max_length = 11
 context_menu_enabled = false
@@ -859,7 +860,6 @@ __meta__ = {
 margin_left = 59.0
 margin_right = 70.0
 margin_bottom = 11.0
-disabled = true
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 32 )
 texture_pressed = ExtResource( 32 )
@@ -1108,7 +1108,6 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Title/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="text_changed" from="CanvasLayer/Profiles/NewProfile/LineEdit" to="." method="_on_LineEdit_text_changed"]

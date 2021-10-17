@@ -42,6 +42,7 @@ margin_left = 2.0
 margin_top = 99.0
 margin_right = 60.0
 margin_bottom = 110.0
+text = "Hero"
 align = 1
 max_length = 12
 context_menu_enabled = false
@@ -141,8 +142,8 @@ __meta__ = {
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 10
 vframes = 20
+hframes = 10
 frame = 30
 __meta__ = {
 "_edit_lock_": true
@@ -348,7 +349,6 @@ stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="text_changed" from="LineEdit" to="." method="_on_LineEdit_text_changed"]
 [connection signal="pressed" from="LineEdit/CheckBtn" to="." method="_on_CheckBtn_pressed"]
 [connection signal="pressed" from="Banner/BackBtn" to="." method="_on_BackBtn_pressed"]
