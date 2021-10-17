@@ -324,7 +324,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 				 + (50 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enum.StatType.AGI
 # warning-ignore:integer_division
-			cur_crit_chance = int(cur_btn.item.crit_chance + (cur_hit_chance - 60) / 2)
+			cur_crit_chance = int(cur_btn.item.crit_chance)
 		else:
 			cur_hit_chance = 100
 			cur_crit_chance = 0

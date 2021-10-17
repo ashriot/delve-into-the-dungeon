@@ -4,23 +4,23 @@
 [ext_resource path="res://resources/actions/weapons/iron_spear.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/weapons/iron_shield.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/iron_sword.tres" type="Resource" id=5]
-[ext_resource path="res://resources/equipment/head/helmet.tres" type="Resource" id=6]
-[ext_resource path="res://resources/equipment/hands/chain_gloves.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/feet/sabatons.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/body/chain_mail.tres" type="Resource" id=9]
+[ext_resource path="res://resources/actions/weapons/swords/iron_sword.tres" type="Resource" id=5]
+[ext_resource path="res://resources/equipment/head/tin_helm.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/tin_armor.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/hands/tin_bracers.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/tin_boots.tres" type="Resource" id=9]
 
 [resource]
 script = ExtResource( 1 )
 name = "Asher"
 frame = 3
 hp_cur = 0
-hp_max = 50
+hp_max = 60
 ap = 0
-strength = 13
-agility = 10
-intellect = 2
-defense = 5
+strength = 9
+agility = 6
+intellect = 3
+defense = 0
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -63,8 +63,8 @@ items = {
 }
 equipment = {
 0: ExtResource( 6 ),
-1: ExtResource( 9 ),
-2: ExtResource( 7 ),
-3: ExtResource( 8 ),
+1: ExtResource( 7 ),
+2: ExtResource( 8 ),
+3: ExtResource( 9 ),
 4: null
 }

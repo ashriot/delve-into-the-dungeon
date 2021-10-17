@@ -228,7 +228,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-mute = true
 skip_title = true
 default_color = Color( 0.372549, 0.619608, 0.807843, 1 )
 players = {
@@ -279,6 +278,7 @@ anims/Hop = SubResource( 2 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DungeonHUD" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -660,11 +660,12 @@ margin_bottom = 128.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
 
 [node name="Label" type="Label" parent="CanvasLayer/MenuButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 2.0
 custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
 text = "Party Menu"
 align = 1
@@ -682,9 +683,9 @@ vframes = 20
 frame = 141
 
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
-visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -782,6 +783,7 @@ __meta__ = {
 }
 
 [node name="Profiles" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 67.0

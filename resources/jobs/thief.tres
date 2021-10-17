@@ -1,22 +1,26 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/short_bow.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/weapons/iron_knife.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/knives/iron_knife.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/snake_knife.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/weapons/knives/snake_knife.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/boomerang.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/tan_vest.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/hands/tan_gloves.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/tan_boots.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/tan_hat.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
 name = "Vayne"
 frame = 7
 hp_cur = 0
-hp_max = 40
+hp_max = 50
 ap = 0
-strength = 8
-agility = 15
-intellect = 9
+strength = 6
+agility = 10
+intellect = 4
 defense = 0
 hp_bonus = 0
 str_bonus = 0
@@ -59,10 +63,10 @@ items = {
 7: null
 }
 equipment = {
-0: null,
-1: null,
-2: null,
-3: null,
+0: ExtResource( 10 ),
+1: ExtResource( 7 ),
+2: ExtResource( 8 ),
+3: ExtResource( 9 ),
 4: null,
 5: null
 }

@@ -57,6 +57,7 @@ margin_right = 70.0
 margin_bottom = 28.0
 
 [node name="CloseButton" type="TextureButton" parent="."]
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_left = -1.0
 margin_top = 121.0
 margin_right = 73.0
@@ -73,7 +74,7 @@ anchor_bottom = 1.0
 margin_left = 2.0
 margin_bottom = -2.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "Close Menu"
+text = "Party Menu"
 align = 1
 valign = 1
 __meta__ = {
@@ -110,7 +111,6 @@ texture = ExtResource( 12 )
 centered = false
 
 [node name="Stats" type="ColorRect" parent="."]
-visible = false
 margin_top = 30.0
 margin_right = 72.0
 margin_bottom = 120.0
@@ -137,7 +137,7 @@ __meta__ = {
 margin_left = 31.0
 margin_right = 71.0
 margin_bottom = 7.0
-custom_colors/font_color = Color( 0.486275, 0.490196, 0.501961, 1 )
+custom_colors/font_color = Color( 0.32549, 0.321569, 0.313726, 1 )
 text = "Artificer"
 align = 2
 __meta__ = {
@@ -145,10 +145,10 @@ __meta__ = {
 }
 
 [node name="HpLabel" type="ColorRect" parent="Stats"]
-margin_left = 5.0
-margin_top = 9.0
-margin_right = 14.0
-margin_bottom = 16.0
+margin_left = 3.0
+margin_top = 8.0
+margin_right = 12.0
+margin_bottom = 15.0
 color = Color( 0.662745, 0.231373, 0.231373, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -178,10 +178,10 @@ __meta__ = {
 }
 
 [node name="ApLabel" type="ColorRect" parent="Stats"]
-margin_left = 58.0
-margin_top = 9.0
-margin_right = 67.0
-margin_bottom = 16.0
+margin_left = 60.0
+margin_top = 8.0
+margin_right = 69.0
+margin_bottom = 15.0
 color = Color( 0.713726, 0.835294, 0.235294, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -211,18 +211,18 @@ __meta__ = {
 }
 
 [node name="Stats" type="Panel" parent="Stats"]
-margin_left = 5.0
-margin_top = 18.0
-margin_right = 67.0
-margin_bottom = 35.0
+margin_left = 4.0
+margin_top = 17.0
+margin_right = 68.0
+margin_bottom = 34.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="STR" type="Label" parent="Stats/Stats"]
-margin_left = 3.0
+margin_left = 4.0
 margin_top = 1.0
-margin_right = 15.0
+margin_right = 16.0
 margin_bottom = 8.0
 custom_colors/font_color = Color( 0.901961, 0.282353, 0.180392, 1 )
 text = "STR"
@@ -251,9 +251,9 @@ align = 1
 valign = 1
 
 [node name="AGI" type="Label" parent="Stats/Stats"]
-margin_left = 18.0
+margin_left = 19.0
 margin_top = 1.0
-margin_right = 30.0
+margin_right = 31.0
 margin_bottom = 8.0
 custom_colors/font_color = Color( 1, 0.745098, 0.133333, 1 )
 text = "AGI"
@@ -282,9 +282,9 @@ align = 1
 valign = 1
 
 [node name="INT" type="Label" parent="Stats/Stats"]
-margin_left = 33.0
+margin_left = 34.0
 margin_top = 1.0
-margin_right = 45.0
+margin_right = 47.0
 margin_bottom = 8.0
 custom_colors/font_color = Color( 0.380392, 0.768627, 0.854902, 1 )
 text = "INT"
@@ -313,9 +313,9 @@ align = 1
 valign = 1
 
 [node name="DEF" type="Label" parent="Stats/Stats"]
-margin_left = 48.0
+margin_left = 49.0
 margin_top = 1.0
-margin_right = 60.0
+margin_right = 61.0
 margin_bottom = 8.0
 custom_colors/font_color = Color( 0.705882, 0.705882, 0.682353, 1 )
 text = "DEF"
@@ -400,6 +400,7 @@ __meta__ = {
 }
 
 [node name="ActionsLabel" type="Label" parent="Items"]
+visible = false
 self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 anchor_right = 1.0
 margin_top = -6.0
@@ -547,6 +548,7 @@ __meta__ = {
 }
 
 [node name="PopupMenu" type="ColorRect" parent="Items"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 21.0
@@ -655,6 +657,7 @@ __meta__ = {
 }
 
 [node name="Inventory" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
@@ -665,7 +668,7 @@ __meta__ = {
 [node name="BG" type="ColorRect" parent="Inventory"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 72.0
+margin_top = 29.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -772,10 +775,13 @@ __meta__ = {
 
 [node name="Items" type="VBoxContainer" parent="Inventory/BG"]
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-margin_left = -36.0
-margin_right = 34.0
-margin_bottom = 41.0
+anchor_bottom = 1.0
+margin_left = -35.0
+margin_top = -49.0
+margin_right = 35.0
+margin_bottom = -8.0
 custom_constants/separation = -1
 __meta__ = {
 "_edit_use_anchors_": false

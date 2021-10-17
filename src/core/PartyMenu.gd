@@ -231,7 +231,7 @@ func _on_Swap_pressed() -> void:
 func open_inv() -> void:
 	shopping = true
 	sell_panel.hide()
-	inv_back.text = "SELLING"
+	inv_back.text = "Selling"
 	self.show()
 	cur_menu = inv_panel
 	update_inv_data()
@@ -239,7 +239,7 @@ func open_inv() -> void:
 
 func _on_InventoryBtn_pressed() -> void:
 	AudioController.click()
-	inv_back.text = "INVENTORY"
+	inv_back.text = "Inventory"
 	cur_menu = inv_panel
 	update_inv_data()
 	inv_panel.show()

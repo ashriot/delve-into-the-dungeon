@@ -1,22 +1,26 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/iron_shield.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/staves/lesser_heal.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/weapons/iron_mace.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/weapons/wands/wood_wand.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/staves/deflect.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/cloth_shirt.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/hands/cloth_gloves.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/cloth_shoes.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/cloth_hat.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
 name = "Cyrus"
 frame = 30
 hp_cur = 0
-hp_max = 40
+hp_max = 50
 ap = 0
-strength = 10
-agility = 7
-intellect = 15
+strength = 4
+agility = 6
+intellect = 10
 defense = 0
 hp_bonus = 0
 str_bonus = 0
@@ -59,10 +63,10 @@ items = {
 7: null
 }
 equipment = {
-0: null,
-1: null,
-2: null,
-3: null,
+0: ExtResource( 10 ),
+1: ExtResource( 7 ),
+2: ExtResource( 8 ),
+3: ExtResource( 9 ),
 4: null,
 5: null
 }

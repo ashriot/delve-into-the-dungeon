@@ -4,22 +4,22 @@
 [ext_resource path="res://resources/actions/scrolls/chill.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/char.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/wood_wand.tres" type="Resource" id=5]
-[ext_resource path="res://resources/equipment/body/silk_robes.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/weapons/wands/wood_wand.tres" type="Resource" id=5]
+[ext_resource path="res://resources/equipment/body/cloth_shirt.tres" type="Resource" id=6]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/hands/silk_gloves.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/feet/silk_shoes.tres" type="Resource" id=9]
-[ext_resource path="res://resources/equipment/head/silk_hood.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/hands/cloth_gloves.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/cloth_shoes.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/cloth_hat.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
 name = "Orfus"
 frame = 8
 hp_cur = 0
-hp_max = 30
+hp_max = 40
 ap = 0
-strength = 4
-agility = 8
+strength = 3
+agility = 7
 intellect = 12
 defense = 0
 hp_bonus = 0

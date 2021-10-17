@@ -25,7 +25,9 @@ func setup(_player: Player, _item: Item) -> void:
 	self.available = true
 	if _item == null:
 		self.empty = true
+		modulate.a = 0.25
 		return
+	modulate.a = 1.0
 	item = _item
 	$Bg/Sprite.show()
 	$Bg/Sprite.frame = item.frame
