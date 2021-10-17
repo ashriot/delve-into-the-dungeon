@@ -176,6 +176,15 @@ func _on_TavernLeaveBtn_pressed():
 	AudioController.back()
 	tavern.hide()
 
+var docks_lv := 1
 
 func _on_DocksBtn_pressed():
-	game.battle_start(3)
+	game.battle_start(docks_lv)
+
+func _on_Down_pressed():
+	docks_lv = max(docks_lv - 1, 0)
+	$Lv.text = str(docks_lv)
+
+func _on_Up_pressed():
+	docks_lv = min(docks_lv + 1, 99)
+	$Lv.text = str(docks_lv)

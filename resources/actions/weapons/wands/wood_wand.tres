@@ -8,7 +8,7 @@ name = "Wood Wand"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
-ap_cost = 1
+ap_cost = 2
 item_type = 0
 sub_type = 9
 melee = false

@@ -89,14 +89,14 @@ func take_hit(hit) -> bool:
 	if hit_roll > hit_chance: miss = true
 	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
-	var def_mod = float(def * 0.75) * item.multiplier
+	var def_mod = float(def * 0.5) * item.multiplier
 	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", item.multiplier, " = ", dmg)
 	dmg = max(int((dmg - def_mod) * (1 + hit.dmg_mod)), 0)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .75) * item.multiplier, " DMG: ", dmg)
+	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * item.multiplier, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:
-		if hit.item.damage_type == Enum.DamageType.MARTIAL and blocking > 0:
+		if blocking > 0:
 			if blocking >= dmg:
 				blocking -= dmg
 				dmg = 0

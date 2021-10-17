@@ -9,12 +9,12 @@ script = ExtResource( 1 )
 name = "Kraken"
 frame = 27
 hp_cur = 0
-hp_max = 70
+hp_max = 42
 ap = 0
-strength = 8
-agility = 14
-intellect = 7
-defense = 11
+strength = 6
+agility = 7
+intellect = 4
+defense = 6
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -26,7 +26,6 @@ agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
 perks = {
-
 }
 desc = "BOOGIE"
 level = 1

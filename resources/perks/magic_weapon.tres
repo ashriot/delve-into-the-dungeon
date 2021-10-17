@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Precise"
-desc = "Increase your base hit chance by 60%."
+name = "Magic Weapon"
+desc = "Weapon attacks deal additional damage equal to INTx0.5 [+0.25/rk.]"
 rank = 1

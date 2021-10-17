@@ -50,6 +50,11 @@ func reset_xp() -> void:
 	gains = [0, 0, 0, 0, 0]
 
 func ready_equipment() -> void:
+	hp_bonus = 0
+	str_bonus = 0
+	agi_bonus = 0
+	int_bonus = 0
+	def_bonus = 0
 	for item in equipment.values():
 		equip(item)
 

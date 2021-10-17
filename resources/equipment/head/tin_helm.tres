@@ -12,5 +12,5 @@ hp_bonus = 5
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
-def_bonus = 3
+def_bonus = 2
 equipment_type = 0

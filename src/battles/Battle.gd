@@ -311,9 +311,11 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	cur_btn.selected = true
 	var target_type = cur_btn.item.target_type
 	print(cur_player.unit.job_tab, " -> ", cur_btn.item.sub_type)
+	var melee_penalty = button.item.melee and cur_player.melee_penalty
 	if (cur_player.unit.job_tab == "Knives" and \
 		cur_btn.item.sub_type == Enum.SubItemType.DAGGER):
 			target_type = Enum.TargetType.ONE_ENEMY
+			melee_penalty = false
 	if target_type >= Enum.TargetType.MYSELF \
 		and target_type <= Enum.TargetType.RANDOM_ALLY:
 		player_panels.show_selectors(cur_player, button.item.target_type)
@@ -330,7 +332,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_crit_chance = 0
 			cur_stat_type = Enum.StatType.NA
 		var dmg_mod = 0
-		if button.item.melee and cur_player.melee_penalty: dmg_mod -= 0.50
+		if melee_penalty: dmg_mod -= 0.50
 		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
@@ -364,7 +366,9 @@ func execute_vs_enemy(panel) -> void:
 	var user = cur_player as PlayerPanel
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
-	AudioController.play_sfx(item.use_fx)
+	if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enum.SubItemType.DAGGER):
+		AudioController.play_sfx("shoot")
+	else: AudioController.play_sfx(item.use_fx)
 	finish_action()
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
@@ -386,8 +390,14 @@ func execute_vs_enemy(panel) -> void:
 		for target in targets:
 			if not target.alive: continue
 			var dmg_mod = 0.0
-			if item.melee and cur_player.melee_penalty: dmg_mod -= 0.50
+			var melee_penalty = item.melee and cur_player.melee_penalty
+			if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enum.SubItemType.DAGGER):
+					melee_penalty = false
+			if melee_penalty: dmg_mod -= 0.50
 			var atk = user.get_stat(item.stat_used)
+			if user.has_perk("Magic Weapon") and item.sub_type != Enum.SubItemType.WAND:
+				atk += int(user.unit.intellect * 0.5)
+				cur_hit_chance += 25
 			var hit = Hit.new()
 			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
 			gained_xp = target.take_hit(hit)

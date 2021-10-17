@@ -52,15 +52,15 @@ __meta__ = {
 position = Vector2( -4, 0 )
 texture = ExtResource( 1 )
 centered = false
-vframes = 6
 hframes = 21
+vframes = 6
 frame = 24
 
 [node name="TownMenu" type="VBoxContainer" parent="."]
 margin_left = 2.0
 margin_top = 50.0
 margin_right = 70.0
-margin_bottom = 119.0
+margin_bottom = 111.0
 custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -207,8 +207,8 @@ __meta__ = {
 position = Vector2( 4, 6 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 30
 
 [node name="Quote" type="Label" parent="Blacksmith/Panel"]
@@ -322,7 +322,6 @@ margin_top = 50.0
 margin_bottom = 59.0
 
 [node name="WorldMap" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -341,8 +340,8 @@ __meta__ = {
 position = Vector2( -4, 0 )
 texture = ExtResource( 1 )
 centered = false
-vframes = 6
 hframes = 21
+vframes = 6
 frame = 2
 
 [node name="Title" type="Label" parent="WorldMap"]
@@ -484,25 +483,25 @@ __meta__ = {
 
 [node name="Enter" type="Button" parent="WorldMap/Buttons"]
 margin_right = 64.0
-margin_bottom = 9.0
+margin_bottom = 8.0
 text = "ENTER"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Scout" type="Button" parent="WorldMap/Buttons"]
-margin_top = 10.0
+margin_top = 9.0
 margin_right = 64.0
-margin_bottom = 19.0
+margin_bottom = 17.0
 text = "SCOUT AREA"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Back" type="Button" parent="WorldMap/Buttons"]
-margin_top = 20.0
+margin_top = 18.0
 margin_right = 64.0
-margin_bottom = 29.0
+margin_bottom = 26.0
 text = "BACK TO TOWN"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -619,8 +618,8 @@ align = 1
 position = Vector2( 3, 11 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 31
 
 [node name="ChatBtn" type="Button" parent="Tavern"]
@@ -768,6 +767,31 @@ text = "LEAVE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Lv" type="Label" parent="."]
+margin_left = 29.0
+margin_top = 112.0
+margin_right = 45.0
+margin_bottom = 118.0
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Down" type="TextureButton" parent="Lv"]
+margin_left = -5.0
+margin_right = 2.0
+margin_bottom = 7.0
+texture_normal = ExtResource( 14 )
+
+[node name="Up" type="TextureButton" parent="Lv"]
+margin_left = 13.0
+margin_right = 20.0
+margin_bottom = 7.0
+texture_normal = ExtResource( 15 )
+
 [connection signal="pressed" from="TownMenu/BlacksmithBtn" to="." method="_on_Blacksmith_pressed"]
 [connection signal="pressed" from="TownMenu/TavernBtn" to="." method="_on_TavernBtn_pressed"]
 [connection signal="pressed" from="TownMenu/DocksBtn" to="." method="_on_DocksBtn_pressed"]
@@ -787,3 +811,5 @@ __meta__ = {
 [connection signal="pressed" from="Tavern/BenchBtn" to="." method="_on_BenchBtn_pressed"]
 [connection signal="pressed" from="Tavern/TavernLeaveBtn" to="." method="_on_TavernLeaveBtn_pressed"]
 [connection signal="pressed" from="Tavern/BenchHero/LeaveBtn" to="." method="_on_LeaveBtn_pressed"]
+[connection signal="pressed" from="Lv/Down" to="." method="_on_Down_pressed"]
+[connection signal="pressed" from="Lv/Up" to="." method="_on_Up_pressed"]
