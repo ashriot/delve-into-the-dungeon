@@ -16,6 +16,9 @@ onready var tab1 = $Items/Tabs/Tab1
 onready var tab2 = $Items/Tabs/Tab2
 onready var item_buttons = $Items/Items
 
+onready var equip_panel = $Equip
+onready var equip_buttons = $Equip/Equips
+
 onready var inv_panel = $Inventory
 onready var inv_back = $Inventory/InvBack/Label
 onready var inv_preview = $Inventory/PreviewBtn
@@ -139,6 +142,16 @@ func update_item_data():
 	self.cur_tab = cur_player.tab
 	$Items/Tabs/Tab2/Label.text = cur_player.unit.job_tab
 
+func update_equip_data():
+	var i = 0
+	for child in item_buttons.get_children():
+		if cur_player.unit.items.has(i):
+			child.setup(cur_player.unit, cur_player.unit.items[i])
+		else: child.setup(cur_player.unit, null)
+		i += 1
+	self.cur_tab = cur_player.tab
+	$Items/Tabs/Tab2/Label.text = cur_player.unit.job_tab
+
 func set_cur_tab(value) -> void:
 	cur_tab = value
 	cur_player.tab = value
@@ -163,6 +176,15 @@ func _on_ActionsBtn_pressed() -> void:
 	update_stat_data()
 	update_item_data()
 	items_panel.show()
+
+func _on_EquipBtn_pressed() -> void:
+	AudioController.click()
+	cur_menu = equip_panel
+	main_menu.hide()
+	popup.hide()
+	update_stat_data()
+	update_equip_data()
+	equip_panel.show()
 
 func _on_PlayerMenuPanel_pressed(panel) -> void:
 	if cur_player != null and cur_player == panel: return

@@ -60,7 +60,6 @@ func ready_equipment() -> void:
 
 func equip(item: Equipment) -> void:
 	if item == null: return
-	print(item.name, " -> ", item.equipment_type)
 	equipment[item.equipment_type] = item
 	hp_bonus += item.hp_bonus
 	heal(item.hp_bonus)

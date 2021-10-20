@@ -64,5 +64,7 @@ func _on_LineEdit_text_changed(new_text):
 
 func _on_CheckBtn_pressed():
 	AudioController.confirm()
-	emit_signal("add_player", units[index].duplicate())
+	var new_player = units[index].duplicate() as Player
+	new_player.ready_equipment()
+	emit_signal("add_player", new_player)
 	hide()

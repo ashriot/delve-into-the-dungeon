@@ -377,16 +377,22 @@ __meta__ = {
 margin_right = 68.0
 text = "Actions"
 
-[node name="InventoryBtn" parent="MainMenu/MenuButtons" instance=ExtResource( 14 )]
+[node name="EquipBtn" parent="MainMenu/MenuButtons" instance=ExtResource( 14 )]
 margin_top = 9.0
 margin_right = 68.0
 margin_bottom = 16.0
-text = "Inventory"
+text = "Equipment"
 
-[node name="OptionsBtn" parent="MainMenu/MenuButtons" instance=ExtResource( 14 )]
+[node name="InventoryBtn" parent="MainMenu/MenuButtons" instance=ExtResource( 14 )]
 margin_top = 18.0
 margin_right = 68.0
 margin_bottom = 25.0
+text = "Inventory"
+
+[node name="OptionsBtn" parent="MainMenu/MenuButtons" instance=ExtResource( 14 )]
+margin_top = 27.0
+margin_right = 68.0
+margin_bottom = 34.0
 text = "Options"
 
 [node name="Items" type="Control" parent="."]
@@ -646,6 +652,180 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Items/PopupMenu/HBoxContainer/Use"]
+self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+text = "Use"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Equip" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 72.0
+margin_bottom = -7.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActionsLabel" type="Label" parent="Equip"]
+visible = false
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+margin_top = -6.0
+text = "Actions"
+align = 1
+
+[node name="Back" type="ColorRect" parent="Equip"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_bottom = 8.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Equip/Back"]
+margin_left = -7.0
+margin_right = 62.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.152941, 0.152941, 0.152941, 1 )
+text = "Equipment"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Equips" type="VBoxContainer" parent="Equip"]
+margin_right = 70.0
+margin_bottom = 41.0
+custom_constants/separation = -1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemButton1" parent="Equip/Equips" instance=ExtResource( 5 )]
+
+[node name="ItemButton2" parent="Equip/Equips" instance=ExtResource( 5 )]
+margin_top = 8.0
+margin_bottom = 17.0
+
+[node name="ItemButton3" parent="Equip/Equips" instance=ExtResource( 5 )]
+margin_top = 16.0
+margin_bottom = 25.0
+
+[node name="ItemButton4" parent="Equip/Equips" instance=ExtResource( 5 )]
+margin_top = 24.0
+margin_bottom = 33.0
+
+[node name="ItemButton5" parent="Equip/Equips" instance=ExtResource( 5 )]
+margin_top = 32.0
+margin_bottom = 41.0
+
+[node name="PopupMenu" type="ColorRect" parent="Equip"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 21.0
+margin_top = -24.0
+margin_right = -20.0
+margin_bottom = -48.0
+color = Color( 1, 0.745098, 0.133333, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Equip/PopupMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -6.0
+custom_constants/separation = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Remove" type="TextureButton" parent="Equip/PopupMenu/HBoxContainer"]
+margin_right = 29.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 29, 7 )
+
+[node name="TextureRect" type="NinePatchRect" parent="Equip/PopupMenu/HBoxContainer/Remove"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 16 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Label" type="Label" parent="Equip/PopupMenu/HBoxContainer/Remove"]
+self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+text = "Remove"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Swap" type="TextureButton" parent="Equip/PopupMenu/HBoxContainer"]
+margin_top = 8.0
+margin_right = 29.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 29, 7 )
+
+[node name="TextureRect" type="NinePatchRect" parent="Equip/PopupMenu/HBoxContainer/Swap"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 16 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Label" type="Label" parent="Equip/PopupMenu/HBoxContainer/Swap"]
+self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+text = "Swap"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Use" type="TextureButton" parent="Equip/PopupMenu/HBoxContainer"]
+margin_top = 16.0
+margin_right = 29.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 29, 7 )
+
+[node name="TextureRect" type="NinePatchRect" parent="Equip/PopupMenu/HBoxContainer/Use"]
+self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 16 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Equip/PopupMenu/HBoxContainer/Use"]
 self_modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1136,6 +1316,7 @@ __meta__ = {
 [connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Stats/InfoButton" to="." method="_on_InfoButton_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/ActionsBtn" to="." method="_on_ActionsBtn_pressed"]
+[connection signal="pressed" from="MainMenu/MenuButtons/EquipBtn" to="." method="_on_EquipBtn_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/InventoryBtn" to="." method="_on_InventoryBtn_pressed"]
 [connection signal="pressed" from="MainMenu/MenuButtons/OptionsBtn" to="." method="_on_OptionsBtn_pressed"]
 [connection signal="pressed" from="Items/Tabs/Tab1" to="." method="_on_Tab1_pressed"]
@@ -1143,6 +1324,9 @@ __meta__ = {
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Swap" to="." method="_on_Swap_pressed"]
 [connection signal="pressed" from="Items/PopupMenu/HBoxContainer/Use" to="." method="_on_Swap_pressed"]
+[connection signal="pressed" from="Equip/PopupMenu/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="pressed" from="Equip/PopupMenu/HBoxContainer/Swap" to="." method="_on_Swap_pressed"]
+[connection signal="pressed" from="Equip/PopupMenu/HBoxContainer/Use" to="." method="_on_Swap_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Left" to="." method="_on_Left_pressed"]
 [connection signal="pressed" from="Inventory/BG/Pages/Right" to="." method="_on_Right_pressed"]
 [connection signal="pressed" from="Inventory/SellPanel/Sell" to="." method="_on_Sell_pressed"]

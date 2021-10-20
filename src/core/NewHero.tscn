@@ -142,8 +142,8 @@ __meta__ = {
 position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
-vframes = 20
 hframes = 10
+vframes = 20
 frame = 30
 __meta__ = {
 "_edit_lock_": true
@@ -349,6 +349,7 @@ stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="text_changed" from="LineEdit" to="." method="_on_LineEdit_text_changed"]
 [connection signal="pressed" from="LineEdit/CheckBtn" to="." method="_on_CheckBtn_pressed"]
 [connection signal="pressed" from="Banner/BackBtn" to="." method="_on_BackBtn_pressed"]

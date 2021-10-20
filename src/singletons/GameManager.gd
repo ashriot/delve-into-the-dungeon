@@ -65,6 +65,7 @@ func initialize_party():
 		for player in game.players.values():
 			player.slot = i
 			_on_player_changed(player)
+			player.ready_equipment()
 			player.heal()
 			players[i] = player
 			i += 1
@@ -182,7 +183,6 @@ func _on_player_changed(player: Player):
 	new_player["perks"] = perks_to_dict(player.perks)
 	new_player["equipment"] = equips_to_dict(player.equipment)
 	save_data.players[player.slot] = new_player
-	player.ready_equipment()
 	var error = ResourceSaver.save(file_path, save_data)
 	check_error(error)
 
