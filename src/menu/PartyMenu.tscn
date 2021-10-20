@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
 [ext_resource path="res://src/core/PartyMenu.gd" type="Script" id=3]
+[ext_resource path="res://src/menu/EquipBtn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/menu/ItemButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/images/icons/check_pressed.png" type="Texture" id=6]
 [ext_resource path="res://src/menu/Tooltip.gd" type="Script" id=7]
@@ -709,23 +710,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemButton1" parent="Equip/Equips" instance=ExtResource( 5 )]
-
-[node name="ItemButton2" parent="Equip/Equips" instance=ExtResource( 5 )]
-margin_top = 8.0
-margin_bottom = 17.0
-
-[node name="ItemButton3" parent="Equip/Equips" instance=ExtResource( 5 )]
-margin_top = 16.0
-margin_bottom = 25.0
-
-[node name="ItemButton4" parent="Equip/Equips" instance=ExtResource( 5 )]
-margin_top = 24.0
-margin_bottom = 33.0
-
-[node name="ItemButton5" parent="Equip/Equips" instance=ExtResource( 5 )]
-margin_top = 32.0
-margin_bottom = 41.0
+[node name="EquipBtn" parent="Equip/Equips" instance=ExtResource( 4 )]
 
 [node name="PopupMenu" type="ColorRect" parent="Equip"]
 visible = false
