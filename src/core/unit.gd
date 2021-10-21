@@ -86,41 +86,41 @@ func base_def() -> int:
 
 func get_stat(stat) -> int:
 	match stat:
-		Enum.StatType.CurHP: return self.hp_cur
-		Enum.StatType.MaxHP: return self.hp_max
-		Enum.StatType.STR: return self.strength
-		Enum.StatType.AGI: return self.agility
-		Enum.StatType.INT: return self.intellect
-		Enum.StatType.DEF: return self.defense
-		Enum.StatType.NA: return 0
+		Enums.StatType.CurHP: return self.hp_cur
+		Enums.StatType.MaxHP: return self.hp_max
+		Enums.StatType.STR: return self.strength
+		Enums.StatType.AGI: return self.agility
+		Enums.StatType.INT: return self.intellect
+		Enums.StatType.DEF: return self.defense
+		Enums.StatType.NA: return 0
 	return -999
 
 func get_base_stat(stat) -> int:
 	match stat:
-		Enum.StatType.CurHP: return hp_cur
-		Enum.StatType.MaxHP: return hp_max
-		Enum.StatType.STR: return strength
-		Enum.StatType.AGI: return agility
-		Enum.StatType.INT: return intellect
-		Enum.StatType.DEF: return defense
-		Enum.StatType.NA: return 0
+		Enums.StatType.CurHP: return hp_cur
+		Enums.StatType.MaxHP: return hp_max
+		Enums.StatType.STR: return strength
+		Enums.StatType.AGI: return agility
+		Enums.StatType.INT: return intellect
+		Enums.StatType.DEF: return defense
+		Enums.StatType.NA: return 0
 	return -999
 
 func increase_base_stat(stat, amt: int) -> void:
 	match stat:
-		Enum.StatType.MaxHP:
+		Enums.StatType.MaxHP:
 			hp_max += amt
 			return
-		Enum.StatType.STR:
+		Enums.StatType.STR:
 			strength += amt
 			return
-		Enum.StatType.AGI:
+		Enums.StatType.AGI:
 			agility += amt
 			return
-		Enum.StatType.INT:
+		Enums.StatType.INT:
 			intellect += amt
 			return
-		Enum.StatType.DEF:
+		Enums.StatType.DEF:
 			defense += amt
 			return
 

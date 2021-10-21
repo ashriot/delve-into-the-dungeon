@@ -78,7 +78,7 @@ func get_stat(stat) -> int:
 func take_hit(hit) -> bool:
 	var gained_xp = false
 	var item = hit.item as Action
-	var effect_only = item.damage_type == Enum.DamageType.EFFECT_ONLY
+	var effect_only = item.damage_type == Enums.DamageType.EFFECT_ONLY
 	var fx = item.sound_fx
 	var hit_and_crit = get_hit_and_crit_chance(hit)
 	var hit_chance = hit_and_crit[0]
@@ -114,9 +114,9 @@ func take_hit(hit) -> bool:
 	if lifesteal_heal > 0:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 		hit.user.take_healing(lifesteal_heal)
-	if item.target_type >= Enum.TargetType.ONE_ENEMY \
-		and item.target_type <= Enum.TargetType.ONE_BACK \
-		or item.target_type == Enum.TargetType.RANDOM_ENEMY:
+	if item.target_type >= Enums.TargetType.ONE_ENEMY \
+		and item.target_type <= Enums.TargetType.ONE_BACK \
+		or item.target_type == Enums.TargetType.RANDOM_ENEMY:
 		AudioController.play_sfx(fx)
 	if item.inflict_hexes.size() > 0 and not miss and self.alive:
 		for hex in item.inflict_hexes:
@@ -138,15 +138,15 @@ func take_hit(hit) -> bool:
 
 func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)
-	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enum.StatType.NA else 0
+	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enums.StatType.NA else 0
 	if item.name == "Healing Haka":
 		def = int(float(hp_max - hp_cur) * 0.33)
 	var dmg_text = ""
-	if item.damage_type == Enum.DamageType.HEAL:
+	if item.damage_type == Enums.DamageType.HEAL:
 		dmg += def
 		self.hp_cur += dmg
 		dmg_text = str(dmg)
-	elif item.damage_type == Enum.DamageType.BLOCK:
+	elif item.damage_type == Enums.DamageType.BLOCK:
 		dmg_text = "Blk:" + str(dmg)
 		self.blocking = max(blocking, dmg)
 	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
@@ -298,7 +298,7 @@ func targetable(value: bool, display = true):
 func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
-	if hit.stat_hit != Enum.StatType.NA:
+	if hit.stat_hit != Enums.StatType.NA:
 		hit_roll = clamp(hit.hit_chance - get_stat(hit.stat_hit), 0, 100)
 #		hit_roll = clamp(hit.hit_chance / (get_stat(hit.stat_hit)), 0, 100)
 		crit_roll = hit.crit_chance

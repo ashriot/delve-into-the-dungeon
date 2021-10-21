@@ -73,23 +73,23 @@ func back_row_active() -> bool:
 	return false
 
 func show_selectors(target_type):
-	if target_type == Enum.TargetType.ONE_ENEMY:
+	if target_type == Enums.TargetType.ONE_ENEMY:
 		show_front_row_selectors()
 		show_back_row_selectors()
-	elif target_type == Enum.TargetType.ONE_FRONT:
+	elif target_type == Enums.TargetType.ONE_FRONT:
 		show_front_row_selectors()
-	elif target_type == Enum.TargetType.ONE_BACK:
+	elif target_type == Enums.TargetType.ONE_BACK:
 		show_back_row_selectors()
-	elif target_type == Enum.TargetType.ANY_ROW:
+	elif target_type == Enums.TargetType.ANY_ROW:
 		show_front_row_selector()
 		show_back_row_selector()
-	elif target_type == Enum.TargetType.FRONT_ROW:
+	elif target_type == Enums.TargetType.FRONT_ROW:
 		show_front_row_selector()
-	elif target_type == Enum.TargetType.BACK_ROW:
+	elif target_type == Enums.TargetType.BACK_ROW:
 		show_back_row_selector()
-	elif target_type == Enum.TargetType.ALL_ENEMIES:
+	elif target_type == Enums.TargetType.ALL_ENEMIES:
 		show_all_selector()
-	elif target_type == Enum.TargetType.RANDOM_ENEMY:
+	elif target_type == Enums.TargetType.RANDOM_ENEMY:
 		show_all_selector()
 
 func show_front_row_selector():

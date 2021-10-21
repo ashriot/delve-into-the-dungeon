@@ -49,10 +49,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/battles/EnemyPanel.gd"
 }, {
-"base": "Resource",
-"class": "Enum",
+"base": "Reference",
+"class": "Enums",
 "language": "GDScript",
 "path": "res://src/core/enum.gd"
+}, {
+"base": "PressButton",
+"class": "EquipBtn",
+"language": "GDScript",
+"path": "res://src/menu/EquipBtn.gd"
 }, {
 "base": "Resource",
 "class": "Equipment",
@@ -158,7 +163,8 @@ _global_script_class_icons={
 "Enemy": "",
 "EnemyAction": "",
 "EnemyPanel": "",
-"Enum": "",
+"Enums": "",
+"EquipBtn": "",
 "Equipment": "",
 "Game": "",
 "Hit": "",

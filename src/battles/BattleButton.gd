@@ -12,15 +12,11 @@ var uses_remain: int setget set_uses_remain
 var selected: bool setget set_selected
 var available: bool setget set_available
 var enabled: = false
-var default_color: Color
-var gold = Color("#ffbe22")
-var gray = Color("#606060")
 
 func init(battle) -> void:
-	.init(battle)
-	default_color = $Bg.modulate
-# warning-ignore:return_value_discarded
-	connect("pressed", battle, "_on_BattleButton_pressed", [self])
+	var err = connect("long_pressed", battle, "_on_BattleButton_long_pressed", [self])
+	err = connect("pressed", battle, "_on_BattleButton_pressed", [self])
+	if err: print("There was an error connecting: ", err)
 
 func setup(_item: Item, unit: Player = null) -> void:
 	enabled = true
@@ -58,12 +54,12 @@ func set_uses_remain(value):
 
 func set_selected(value: bool):
 	selected = value
-	if selected: $Bg.modulate = gold
-	elif available: $Bg.modulate = default_color
-	else: $Bg.modulate = gray
+	if selected: $Bg.modulate = Enums.yellow_color
+	elif available: $Bg.modulate = Enums.default_color
+	else: $Bg.modulate = Enums.gray_color
 
 func set_available(value: bool):
 	available = value
 	if !selected:
-		if available: $Bg.modulate = default_color
-		else: $Bg.modulate = gray
+		if available: $Bg.modulate = Enums.default_color
+		else: $Bg.modulate = Enums.gray_color

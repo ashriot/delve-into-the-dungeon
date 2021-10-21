@@ -35,17 +35,17 @@ func get_child(index: int):
 	return panels.get_child(index)
 
 func show_selectors(player: PlayerPanel, target_type):
-	if target_type == Enum.TargetType.MYSELF:
+	if target_type == Enums.TargetType.MYSELF:
 		player.targetable(true, true)
-	elif target_type == Enum.TargetType.ANY_ALLY:
+	elif target_type == Enums.TargetType.ANY_ALLY:
 		show_all_selectors()
-	elif target_type == Enum.TargetType.OTHER_ALLIES_ONLY:
+	elif target_type == Enums.TargetType.OTHER_ALLIES_ONLY:
 		show_all_selector()
-	elif target_type == Enum.TargetType.OTHER_ALLY:
+	elif target_type == Enums.TargetType.OTHER_ALLY:
 		show_all_except_self(player)
-	elif target_type == Enum.TargetType.ALL_ALLIES:
+	elif target_type == Enums.TargetType.ALL_ALLIES:
 		show_all_selector()
-	elif target_type == Enum.TargetType.RANDOM_ALLY:
+	elif target_type == Enums.TargetType.RANDOM_ALLY:
 		show_all_selectors()
 
 func show_all_except_self(player):

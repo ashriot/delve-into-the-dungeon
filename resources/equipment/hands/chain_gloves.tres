@@ -6,8 +6,8 @@
 script = ExtResource( 1 )
 name = "Chain Gloves"
 description = ""
-tier = 1
-weight = 0
+quality = 3
+rank = 4
 hp_bonus = 0
 str_bonus = 1
 agi_bonus = 1

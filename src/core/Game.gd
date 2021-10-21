@@ -40,7 +40,6 @@ signal level_changed
 
 export var mute: bool setget set_mute
 export var skip_title: bool
-export var default_color: Color
 export var spd: = 1.0
 export(Dictionary) var players
 
@@ -196,7 +195,7 @@ func _on_Chest_opened() -> void:
 	var lv = int(level_num / 5) + 2
 	var item = ItemDb.get_random_item(lv)
 	var text = item.name
-	if item.item_type == Enum.ItemType.TOME: text = text.insert(0,"Tome of ")
+	if item.item_type == Enums.ItemType.TOME: text = text.insert(0,"Tome of ")
 	found(text)
 	inventory.add_item(item.name)
 

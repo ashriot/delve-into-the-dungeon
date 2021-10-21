@@ -67,7 +67,7 @@ __meta__ = {
 }
 
 [node name="BlacksmithBtn" type="TextureButton" parent="TownMenu"]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_right = 68.0
 margin_bottom = 7.0
 rect_min_size = Vector2( 0, 7 )
@@ -86,28 +86,28 @@ __meta__ = {
 }
 
 [node name="AlchemistBtn" parent="TownMenu" instance=ExtResource( 23 )]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 9.0
 margin_right = 68.0
 margin_bottom = 16.0
 text = "Alchemist"
 
 [node name="MonestaryBtn" parent="TownMenu" instance=ExtResource( 23 )]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 18.0
 margin_right = 68.0
 margin_bottom = 25.0
 text = "Monestary"
 
 [node name="MageBtn" parent="TownMenu" instance=ExtResource( 23 )]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 27.0
 margin_right = 68.0
 margin_bottom = 34.0
 text = "Mage Tower"
 
 [node name="TavernBtn" type="TextureButton" parent="TownMenu"]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 36.0
 margin_right = 68.0
 margin_bottom = 43.0
@@ -127,7 +127,7 @@ __meta__ = {
 }
 
 [node name="DocksBtn" type="TextureButton" parent="TownMenu"]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 45.0
 margin_right = 68.0
 margin_bottom = 52.0
@@ -147,7 +147,7 @@ __meta__ = {
 }
 
 [node name="GatesBtn" type="TextureButton" parent="TownMenu"]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 54.0
 margin_right = 68.0
 margin_bottom = 61.0

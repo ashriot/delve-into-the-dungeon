@@ -6,8 +6,8 @@
 script = ExtResource( 1 )
 name = "Tan Vest"
 description = "A simple vest made of animal skins."
-tier = 0
-weight = 0
+quality = 0
+rank = 0
 hp_bonus = 8
 str_bonus = 0
 agi_bonus = 1

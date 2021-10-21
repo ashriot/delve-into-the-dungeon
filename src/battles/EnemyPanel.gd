@@ -86,7 +86,7 @@ func update_hit_chance(hit) -> void:
 	if hit == null: return
 	if not (enabled or self.alive or valid_target): return
 	var value = 100
-	if hit.stat_hit != Enum.StatType.NA:
+	if hit.stat_hit != Enums.StatType.NA:
 		value = get_hit_and_crit_chance(hit)[0]
 	hit_display.text = str(int(value)) + "%"
 	update_dmg_display(hit)

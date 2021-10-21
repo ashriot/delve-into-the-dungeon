@@ -14,8 +14,9 @@ onready var ap_label = $ApCost
 onready var uses = $Uses
 
 func init(menu) -> void:
-	.init(menu)
-	var _err = connect("pressed", menu, "_on_InvButton_pressed", [self])
+	var err = connect("long_pressed", menu, "_on_InvButton_long_pressed", [self])
+	err = connect("pressed", menu, "_on_InvButton_pressed", [self])
+	if err: print("There was an error connecting: ", err)
 
 func setup(_item: Item, _slot: = -1) -> void:
 	item = _item
@@ -33,7 +34,7 @@ func setup(_item: Item, _slot: = -1) -> void:
 	if player != null:
 		skill = max(player.skill[item.sub_type] + int(player.prof[item.sub_type]), 0)
 		ap_cost = max(item.ap_cost - skill, 0)
-		if item.sub_type == Enum.SubItemType.TOOL: ap_cost = 0
+		if item.sub_type == Enums.SubItemType.TOOL: ap_cost = 0
 	ap_label.text = str(ap_cost)
 	disabled = false
 	if item.max_uses > 0:

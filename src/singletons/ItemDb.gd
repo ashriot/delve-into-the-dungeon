@@ -32,7 +32,7 @@ func get_equip(equip_name: String) -> Equipment:
 	return null
 
 func get_random_item(lv: int) -> Item:
-	var types = [Enum.ItemType.WEAPON, Enum.ItemType.WEAPON, Enum.ItemType.WEAPON, Enum.ItemType.TOME, Enum.ItemType.TOME]
+	var types = [Enums.ItemType.WEAPON, Enums.ItemType.WEAPON, Enums.ItemType.WEAPON, Enums.ItemType.TOME, Enums.ItemType.TOME]
 	var type = types[randi() % types.size()]
 	var rand_items = range(0, items.size())
 	rand_items.shuffle()

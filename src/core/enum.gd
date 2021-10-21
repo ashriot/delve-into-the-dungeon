@@ -1,5 +1,15 @@
-extends Resource
-class_name Enum
+class_name Enums
+
+const default_color := Color("#f0eae3")
+const yellow_color := Color("#f4b41b")
+const gray_color := Color("#7d7071")
+
+const worn := Color("#a0938e")
+const common := Color("#f0eae3")
+const fine := Color("#71aa34")
+const exquisite := Color("#3978a8")
+const masterwork := Color("#8e478c")
+const artefact := Color("#e6482e")
 
 enum StatType {
 	CurHP,

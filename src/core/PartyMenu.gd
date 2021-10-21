@@ -39,15 +39,11 @@ var total_pages: int
 var cur_tab: int setget set_cur_tab
 var cur_btn: Button setget set_cur_btn
 
-var default_color: Color
-var gold = Color("#ffbe22")
-var gray = Color("#606060")
-
 func init(_game) -> void:
-	default_color = _game.default_color
 	hide()
 	tooltip.hide()
 	items_panel.hide()
+	equip_panel.hide()
 	stats_panel.hide()
 	inv_panel.hide()
 	options.hide()
@@ -58,6 +54,7 @@ func init(_game) -> void:
 	opt_mute.pressed = game.mute
 	for child in player_panels.get_children(): child.init(self)
 	for child in item_buttons.get_children(): child.init(self)
+	for child in equip_buttons.get_children(): child.init(self)
 	for child in inv_buttons.get_children(): child.init(self)
 
 func open_menu() -> void:
@@ -144,24 +141,22 @@ func update_item_data():
 
 func update_equip_data():
 	var i = 0
-	for child in item_buttons.get_children():
-		if cur_player.unit.items.has(i):
-			child.setup(cur_player.unit, cur_player.unit.items[i])
-		else: child.setup(cur_player.unit, null)
+	for child in equip_buttons.get_children():
+		if cur_player.unit.equipment.has(i):
+			child.setup(cur_player.unit.equipment[i], i)
+		else: child.setup(null, i)
 		i += 1
-	self.cur_tab = cur_player.tab
-	$Items/Tabs/Tab2/Label.text = cur_player.unit.job_tab
 
 func set_cur_tab(value) -> void:
 	cur_tab = value
 	cur_player.tab = value
 	var other_tab = (cur_tab + 1) % 2
 	if other_tab != 0: # Tab 1
-		$Items/Tabs/Tab1.self_modulate = gold
-		$Items/Tabs/Tab2.self_modulate = default_color
+		$Items/Tabs/Tab1.self_modulate = Enums.yellow_color
+		$Items/Tabs/Tab2.self_modulate = Enums.default_color
 	else:				# Tab 1
-		$Items/Tabs/Tab1.self_modulate = default_color
-		$Items/Tabs/Tab2.self_modulate = gold
+		$Items/Tabs/Tab1.self_modulate = Enums.default_color
+		$Items/Tabs/Tab2.self_modulate = Enums.yellow_color
 
 	for i in range((other_tab * 5), (other_tab * 5) + 5):
 		item_buttons.get_child(i).toggle(false)
@@ -197,15 +192,23 @@ func select_player(panel: PlayerMenuPanel) -> void:
 	cur_player.select(true)
 	update_stat_data()
 	if cur_menu == items_panel: update_item_data()
+	if cur_menu == equip_panel: update_equip_data()
 
 func _on_ItemButton_pressed(button) -> void:
 	if button.tooltip: return
 	if button.empty:
-		if (button.get_index() < 4 or button.slot_type == Enum.SubItemType.NA):
+		if (button.get_index() < 4 or button.slot_type == Enums.SubItemType.NA):
 			AudioController.select()
 			equip_item(button)
 	else:
 		self.cur_btn = button
+
+func _on_EquipButton_pressed(button) -> void:
+	if button.tooltip: return
+	if button.empty:
+		if (button.get_index() < 4 or button.slot_type == Enums.SubItemType.NA):
+			AudioController.select()
+			equip_item(button)
 
 func equip_item(button) -> void:
 	cur_btn = button
@@ -220,6 +223,11 @@ func _on_ItemButton_long_pressed(button) -> void:
 		print("Equip new item!")
 	else:
 		tooltip.setup(button.item.name, button.item.desc)
+
+func _on_EquipButton_long_pressed(button: EquipBtn) -> void:
+	AudioController.click()
+	if not button.empty:
+		tooltip.setup(button.equip.name, button.equip.description, button.equip.quality)
 
 func _on_InfoButton_pressed() -> void:
 	pass # Replace with function body.

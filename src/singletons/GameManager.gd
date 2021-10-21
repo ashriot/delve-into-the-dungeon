@@ -34,7 +34,7 @@ func init() -> void:
 
 func initialize_game_data(_game):
 	game = _game
-	ui_color = _game.default_color
+	ui_color = Enums.default_color
 	profile_id = str(game.profile_id)
 	path = "user://profile" + profile_id;
 	file_path = path.plus_file("data.tres")

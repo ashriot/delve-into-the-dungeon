@@ -6,8 +6,8 @@
 script = ExtResource( 1 )
 name = "Helmet"
 description = "A simple, metal helmet."
-tier = 1
-weight = 0
+quality = 2
+rank = 3
 hp_bonus = 6
 str_bonus = 0
 agi_bonus = 0

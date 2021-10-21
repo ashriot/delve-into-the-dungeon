@@ -364,7 +364,7 @@ __meta__ = {
 }
 
 [node name="MenuButtons" type="VBoxContainer" parent="MainMenu"]
-modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_left = 2.0
 margin_top = 18.0
 margin_right = 70.0
@@ -703,7 +703,8 @@ __meta__ = {
 }
 
 [node name="Equips" type="VBoxContainer" parent="Equip"]
-margin_right = 70.0
+margin_left = 1.0
+margin_right = 71.0
 margin_bottom = 41.0
 custom_constants/separation = -1
 __meta__ = {
@@ -711,6 +712,22 @@ __meta__ = {
 }
 
 [node name="EquipBtn" parent="Equip/Equips" instance=ExtResource( 4 )]
+margin_right = 70.0
+
+[node name="EquipBtn2" parent="Equip/Equips" instance=ExtResource( 4 )]
+margin_top = 8.0
+margin_right = 70.0
+margin_bottom = 17.0
+
+[node name="EquipBtn3" parent="Equip/Equips" instance=ExtResource( 4 )]
+margin_top = 16.0
+margin_right = 70.0
+margin_bottom = 25.0
+
+[node name="EquipBtn4" parent="Equip/Equips" instance=ExtResource( 4 )]
+margin_top = 24.0
+margin_right = 70.0
+margin_bottom = 33.0
 
 [node name="PopupMenu" type="ColorRect" parent="Equip"]
 visible = false
@@ -1124,7 +1141,6 @@ __meta__ = {
 }
 
 [node name="Tooltip" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 1.0
@@ -1165,9 +1181,11 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="Tooltip/Container/Panel"]
+margin_left = 1.0
+margin_top = 1.0
 margin_right = 71.0
 margin_bottom = 9.0
-color = Color( 1, 1, 0.921569, 1 )
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1184,6 +1202,16 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Quality" type="Label" parent="Tooltip/Container/Panel"]
+modulate = Color( 0.627451, 0.576471, 0.556863, 1 )
+margin_left = 3.0
+margin_top = 52.0
+margin_right = 71.0
+margin_bottom = 58.0
+text = "Worn"
+align = 2
+valign = 2
 
 [node name="Blind" type="Panel" parent="Tooltip/Container"]
 visible = false

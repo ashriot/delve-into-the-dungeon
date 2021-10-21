@@ -199,7 +199,7 @@ func enemy_take_action(panel: EnemyPanel):
 		var randoms = [] # Fix random targeting
 		var rand_targets = false
 		var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
-		if action.target_type == Enum.TargetType.RANDOM_ENEMY: rand_targets = true
+		if action.target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 		for hit_num in hits:
 			if rand_targets:
 				targets = player_panels.get_random()
@@ -211,15 +211,15 @@ func enemy_take_action(panel: EnemyPanel):
 				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
 				var hit = Hit.new()
 				var hit_chance = 100 if !panel.has_perk("Precise") else 150
-				if action.item_type == Enum.ItemType.MARTIAL_SKILL or \
-					action.item_type == Enum.ItemType.WEAPON:
-					hit_chance = action.hit_chance + panel.get_stat(Enum.StatType.AGI)
+				if action.item_type == Enums.ItemType.MARTIAL_SKILL or \
+					action.item_type == Enums.ItemType.WEAPON:
+					hit_chance = action.hit_chance + panel.get_stat(Enums.StatType.AGI)
 				if panel.has_hex("Blind"): hit_chance /= 2
 				hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
-				if action.target_type < Enum.TargetType.ONE_ENEMY:
+				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(hit)
 				else: target.take_hit(hit)
-#			if action.target_type >= Enum.TargetType.ANY_ROW:
+#			if action.target_type >= Enums.TargetType.ANY_ROW:
 #				AudioController.play_sfx(action.sound_fx)
 			if hit_num < hits - 1:
 				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
@@ -231,31 +231,31 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 	var targets = []
 	var choices = []
 	var choice = 0
-	if action.target_type == Enum.TargetType.MYSELF:
+	if action.target_type == Enums.TargetType.MYSELF:
 		return [panel]
-	if action.target_type == Enum.TargetType.ONE_ENEMY:
+	if action.target_type == Enums.TargetType.ONE_ENEMY:
 		for i in range(player_targets.size()):
 			if player_targets[i]: choices.append(i)
 		choice = randi() % player_targets.size()
 		targets.append(player_panels.get_child(choice))
-	if action.target_type == Enum.TargetType.ONE_FRONT:
+	if action.target_type == Enums.TargetType.ONE_FRONT:
 		for i in range(2):
 			if player_targets[i]: choices.append(i)
 		if choices.size() == 2: choice = choices[0] if roll() < 51 else choices[1]
 		else: choice = choices[0]
 		targets.append(player_panels.get_child(choice))
-	if action.target_type == Enum.TargetType.FRONT_ROW:
+	if action.target_type == Enums.TargetType.FRONT_ROW:
 		if player_targets[0] or player_targets[1]:
 			for i in range(2): if player_targets[i]: choices.append(i)
 		else: for i in range(2, 4): if player_targets[i]: choices.append(i)
 		for target in choices: targets.append(player_panels.get_child(target))
-	if action.target_type == Enum.TargetType.ANY_ROW:
+	if action.target_type == Enums.TargetType.ANY_ROW:
 		var roll = randi() % 2
 		if player_targets[0] or player_targets[1] and roll == 0:
 			for i in range(2): if player_targets[i]: choices.append(i)
 		else: for i in range(2, 4): if player_targets[i]: choices.append(i)
 		for target in choices: targets.append(player_panels.get_child(target))
-	if action.target_type == Enum.TargetType.RANDOM_ENEMY:
+	if action.target_type == Enums.TargetType.RANDOM_ENEMY:
 		for i in range(player_targets.size()):
 			if player_targets[i]: choices.append(i)
 			targets.append(player_panels.get_child(choice))
@@ -278,7 +278,7 @@ func learned_text(text: String, pos: Vector2) -> void:
 	damage_text.rect_global_position = pos
 	damage_text.learned(self, text)
 
-func _on_ItemButton_long_pressed(button: BattleButton) -> void:
+func _on_BattleButton_long_pressed(button: BattleButton) -> void:
 	AudioController.click()
 	$EnemyInfo/Panel.rect_position.y = 1
 	enemy_title.text = button.item.name
@@ -313,24 +313,24 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	print(cur_player.unit.job_tab, " -> ", cur_btn.item.sub_type)
 	var melee_penalty = button.item.melee and cur_player.melee_penalty
 	if (cur_player.unit.job_tab == "Knives" and \
-		cur_btn.item.sub_type == Enum.SubItemType.DAGGER):
-			target_type = Enum.TargetType.ONE_ENEMY
+		cur_btn.item.sub_type == Enums.SubItemType.DAGGER):
+			target_type = Enums.TargetType.ONE_ENEMY
 			melee_penalty = false
-	if target_type >= Enum.TargetType.MYSELF \
-		and target_type <= Enum.TargetType.RANDOM_ALLY:
+	if target_type >= Enums.TargetType.MYSELF \
+		and target_type <= Enums.TargetType.RANDOM_ALLY:
 		player_panels.show_selectors(cur_player, button.item.target_type)
 	else:
-		if button.item.stat_hit == Enum.StatType.AGI:
+		if button.item.stat_hit == Enums.StatType.AGI:
 			cur_hit_chance = int(cur_btn.item.hit_chance \
-				+ cur_player.get_stat(Enum.StatType.AGI)) \
+				+ cur_player.get_stat(Enums.StatType.AGI)) \
 				 + (50 if cur_player.has_perk("Precise") else 0)
-			cur_stat_type = Enum.StatType.AGI
+			cur_stat_type = Enums.StatType.AGI
 # warning-ignore:integer_division
 			cur_crit_chance = int(cur_btn.item.crit_chance)
 		else:
 			cur_hit_chance = 100
 			cur_crit_chance = 0
-			cur_stat_type = Enum.StatType.NA
+			cur_stat_type = Enums.StatType.NA
 		var dmg_mod = 0
 		if melee_penalty: dmg_mod -= 0.50
 		var atk = cur_player.get_stat(button.item.stat_used)
@@ -353,7 +353,7 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 	if !battle_active: return
-	if cur_btn and cur_btn.item.target_type <= Enum.TargetType.RANDOM_ALLY:
+	if cur_btn and cur_btn.item.target_type <= Enums.TargetType.RANDOM_ALLY:
 		if not panel.valid_target: return
 		execute_vs_player(panel)
 	else:
@@ -366,7 +366,7 @@ func execute_vs_enemy(panel) -> void:
 	var user = cur_player as PlayerPanel
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
-	if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enum.SubItemType.DAGGER):
+	if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enums.SubItemType.DAGGER):
 		AudioController.play_sfx("shoot")
 	else: AudioController.play_sfx(item.use_fx)
 	finish_action()
@@ -375,14 +375,14 @@ func execute_vs_enemy(panel) -> void:
 	var targets = [panel]
 	var randoms = []
 	var rand_targets = false
-	if item.target_type >= Enum.TargetType.ANY_ROW \
-		and item.target_type <= Enum.TargetType.BACK_ROW:
+	if item.target_type >= Enums.TargetType.ANY_ROW \
+		and item.target_type <= Enums.TargetType.BACK_ROW:
 		targets = enemy_panels.get_row(panel)
-	if item.target_type == Enum.TargetType.ALL_ENEMIES or \
-		item.target_type == Enum.TargetType.RANDOM_ENEMY:
+	if item.target_type == Enums.TargetType.ALL_ENEMIES or \
+		item.target_type == Enums.TargetType.RANDOM_ENEMY:
 		targets = enemy_panels.get_all()
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
-	if item.target_type == Enum.TargetType.RANDOM_ENEMY: rand_targets = true
+	if item.target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
@@ -391,18 +391,18 @@ func execute_vs_enemy(panel) -> void:
 			if not target.alive: continue
 			var dmg_mod = 0.0
 			var melee_penalty = item.melee and cur_player.melee_penalty
-			if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enum.SubItemType.DAGGER):
+			if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enums.SubItemType.DAGGER):
 					melee_penalty = false
 			if melee_penalty: dmg_mod -= 0.50
 			var atk = user.get_stat(item.stat_used)
-			if user.has_perk("Magic Weapon") and item.sub_type != Enum.SubItemType.WAND:
+			if user.has_perk("Magic Weapon") and item.sub_type != Enums.SubItemType.WAND:
 				atk += int(user.unit.intellect * 0.5)
 				cur_hit_chance += 25
 			var hit = Hit.new()
 			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
-		if item.target_type >= Enum.TargetType.ANY_ROW:
+		if item.target_type >= Enums.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
@@ -417,14 +417,14 @@ func execute_vs_player(panel) -> void:
 	user.ap -= cur_btn.ap_cost
 	AudioController.play_sfx(item.use_fx)
 	var turn_spent = true
-	if item.sub_type == Enum.SubItemType.SHIELD:
+	if item.sub_type == Enums.SubItemType.SHIELD:
 		if user.has_perk("Quick Block"):
 			turn_spent = false
 	finish_action(turn_spent)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	var targets = [panel]
-	if item.target_type == Enum.TargetType.ALL_ALLIES:
+	if item.target_type == Enums.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()
 	cur_player.calc_xp(item.stat_used)
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
@@ -490,13 +490,13 @@ func victory() -> void:
 			if panel.unit.gains[i] > 0:
 				var amt = panel.unit.gains[i]
 				panel.unit.increase_base_stat(i + 1, int(amt))
-				show_text(Enum.get_stat_name(i + 1) + "+" + str(amt), panel.pos)
-				print(panel.unit.name, " -> ", Enum.get_stat_name(i + 1), " increased by ", amt, "!")
+				show_text(Enums.get_stat_name(i + 1) + "+" + str(amt), panel.pos)
+				print(panel.unit.name, " -> ", Enums.get_stat_name(i + 1), " increased by ", amt, "!")
 				AudioController.play_sfx("statup")
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 		var ranks_up = panel.calc_job_xp()
 		for _r in range(ranks_up):
-			if panel.unit.job_skill == Enum.SubItemType.NA: break
+			if panel.unit.job_skill == Enums.SubItemType.NA: break
 			game.learned_skill(panel.unit)
 			var skill_name = yield(game, "done_learned_skill")
 			AudioController.play_sfx("skillup")

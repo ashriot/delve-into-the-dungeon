@@ -20,7 +20,7 @@ __meta__ = {
 }
 
 [node name="Outline" type="TextureRect" parent="."]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -36,6 +36,9 @@ margin_bottom = 9.0
 bbcode_enabled = true
 bbcode_text = "006"
 text = "006"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HpGauge" type="TextureProgress" parent="."]
 anchor_left = 1.0
@@ -50,7 +53,7 @@ mouse_filter = 2
 value = 50.0
 texture_under = ExtResource( 3 )
 texture_progress = ExtResource( 3 )
-tint_under = Color( 0.141176, 0.141176, 0.156863, 1 )
+tint_under = Color( 0.352941, 0.32549, 0.32549, 1 )
 tint_progress = Color( 0.662745, 0.231373, 0.231373, 1 )
 nine_patch_stretch = true
 __meta__ = {

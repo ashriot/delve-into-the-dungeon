@@ -10,18 +10,16 @@ func _ready():
 	add_child(timer)
 	timer.connect("timeout", self, "_on_Timer_timeout")
 
-func init(menu):
-	var err = connect("long_pressed", menu, "_on_ItemButton_long_pressed", [self])
-	if err: print("There was an error connecting: ", err)
-
 func _on_Button_up() -> void:
 	tooltip = false
 	timer.stop()
 
 func _on_Button_down():
+	print("Starting timer...")
 	timer.start(.33)
 
 func _on_Timer_timeout() -> void:
+	print("Show Tooltip!")
 	timer.stop()
 	tooltip = true
 	emit_signal("long_pressed")

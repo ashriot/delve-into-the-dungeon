@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/images/sheets/ui_icons.png" type="Texture" id=1]
-[ext_resource path="res://src/menu/ItemButton.gd" type="Script" id=2]
+[ext_resource path="res://src/menu/EquipBtn.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/ui_btn.png" type="Texture" id=3]
 
 [node name="EquipBtn" type="Button"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_right = 70.0
+margin_right = 72.0
 margin_bottom = 9.0
 rect_min_size = Vector2( 0, 9 )
 script = ExtResource( 2 )
@@ -15,12 +15,12 @@ __meta__ = {
 }
 
 [node name="Bg" type="TextureRect" parent="."]
-modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
+margin_left = 1.0
 margin_top = 1.0
-margin_right = -2.0
+margin_right = -1.0
 margin_bottom = -1.0
 texture = ExtResource( 3 )
 expand = true
@@ -33,16 +33,18 @@ modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 margin_left = 2.0
 margin_right = 57.0
 margin_bottom = 7.0
-text = "Cloth Hood"
+text = "Cloth Hood+5"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Sprite" type="Sprite" parent="Bg"]
 modulate = Color( 0.776471, 0.776471, 0.776471, 1 )
-position = Vector2( 45, 0 )
+position = Vector2( 51, 0 )
 texture = ExtResource( 1 )
 centered = false
 hframes = 10
 vframes = 10
-frame = 2
+frame = 30
+
+[connection signal="button_down" from="." to="." method="_on_Button_down"]

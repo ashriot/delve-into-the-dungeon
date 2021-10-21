@@ -7,7 +7,7 @@ var slot: int
 var tab: int
 export var job: String
 export var job_tab: String
-export(Enum.SubItemType) var job_skill
+export(Enums.SubItemType) var job_skill
 export var job_perk: String
 export(String, MULTILINE) var perk_desc
 
