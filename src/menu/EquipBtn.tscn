@@ -48,3 +48,4 @@ vframes = 10
 frame = 30
 
 [connection signal="button_down" from="." to="." method="_on_Button_down"]
+[connection signal="button_up" from="." to="." method="_on_Button_up"]

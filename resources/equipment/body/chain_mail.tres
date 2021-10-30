@@ -5,12 +5,13 @@
 [resource]
 script = ExtResource( 1 )
 name = "Chain Mail"
-description = ""
-tier = 1
-weight = 10
+description = "Simple chainmail."
+quality = 1
+rank = 0
 hp_bonus = 14
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 0
 def_bonus = 3
 equipment_type = 1
+perks = [  ]

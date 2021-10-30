@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Chain Gloves"
-description = ""
+description = "Lightweight, chainmail gloves."
 quality = 3
 rank = 4
 hp_bonus = 0
@@ -14,3 +14,4 @@ agi_bonus = 1
 int_bonus = 0
 def_bonus = 0
 equipment_type = 2
+perks = [  ]

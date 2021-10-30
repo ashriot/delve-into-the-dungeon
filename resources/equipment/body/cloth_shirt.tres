@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Cloth Shirt"
-description = ""
+description = "A basic, cloth shirt."
 quality = 0
 rank = 0
 hp_bonus = 6
@@ -14,3 +14,4 @@ agi_bonus = 0
 int_bonus = 1
 def_bonus = 2
 equipment_type = 1
+perks = [  ]

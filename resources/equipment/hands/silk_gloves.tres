@@ -6,11 +6,12 @@
 script = ExtResource( 1 )
 name = "Silk Gloves"
 description = "Fine gloves made of silk."
-tier = 1
-weight = 0
+quality = 1
+rank = 0
 hp_bonus = 2
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 1
 def_bonus = 0
 equipment_type = 2
+perks = [  ]

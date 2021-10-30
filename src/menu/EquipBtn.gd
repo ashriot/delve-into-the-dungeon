@@ -22,9 +22,7 @@ func setup(equipment: Equipment, slot: int) -> void:
 		return
 	equip = equipment
 	empty = false
-	title.text = equipment.name
-	if equipment.rank > 0:
-		title.text += "+" + str(equipment.rank)
+	title.text = equipment.get_name()
 	modulate = colorize(equipment.quality)
 
 func colorize(quality: int) -> Color:

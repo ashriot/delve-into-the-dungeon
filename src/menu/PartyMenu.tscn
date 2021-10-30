@@ -366,9 +366,9 @@ __meta__ = {
 [node name="MenuButtons" type="VBoxContainer" parent="MainMenu"]
 modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_left = 2.0
-margin_top = 18.0
+margin_top = 20.0
 margin_right = 70.0
-margin_bottom = 72.0
+margin_bottom = 74.0
 custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -664,6 +664,7 @@ __meta__ = {
 }
 
 [node name="Equip" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 72.0
@@ -1159,7 +1160,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="Tooltip/Container"]
+[node name="Tooltip" type="Panel" parent="Tooltip/Container"]
 margin_right = 72.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 72, 60 )
@@ -1167,11 +1168,11 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Label" type="Label" parent="Tooltip/Container/Panel"]
+[node name="Label" type="Label" parent="Tooltip/Container/Tooltip"]
 margin_left = 1.0
 margin_top = 9.0
 margin_right = 71.0
-margin_bottom = 59.0
+margin_bottom = 54.0
 text = "UNINITIALIZED!!!!! "
 align = 1
 valign = 1
@@ -1180,7 +1181,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Tooltip/Container/Panel"]
+[node name="BannerBg" type="ColorRect" parent="Tooltip/Container/Tooltip"]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 71.0
@@ -1190,7 +1191,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Tooltip/Container/Panel"]
+[node name="Title" type="Label" parent="Tooltip/Container/Tooltip"]
 margin_left = 2.0
 margin_top = 1.0
 margin_right = 70.0
@@ -1203,7 +1204,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Quality" type="Label" parent="Tooltip/Container/Panel"]
+[node name="Quality" type="Label" parent="Tooltip/Container/Tooltip"]
 modulate = Color( 0.627451, 0.576471, 0.556863, 1 )
 margin_left = 3.0
 margin_top = 52.0
@@ -1251,6 +1252,23 @@ margin_right = 72.0
 margin_bottom = 19.0
 text = "POISON. Lose 10% HP per turn."
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Perk1" type="Panel" parent="Tooltip/Container"]
+margin_top = 62.0
+margin_right = 72.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 72, 9 )
+
+[node name="Label" type="Label" parent="Tooltip/Container/Perk1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_bottom = -1.0
+text = "Assassin III"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

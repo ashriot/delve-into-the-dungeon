@@ -11,6 +11,7 @@ func _ready():
 	timer.connect("timeout", self, "_on_Timer_timeout")
 
 func _on_Button_up() -> void:
+	print("Button up.. stop timer!")
 	tooltip = false
 	timer.stop()
 

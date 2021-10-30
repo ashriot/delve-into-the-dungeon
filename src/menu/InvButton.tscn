@@ -4,7 +4,7 @@
 [ext_resource path="res://src/menu/InvButton.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/sheets/ui_icons.png" type="Texture" id=3]
 
-[node name="ItemButton" type="Button"]
+[node name="InvButton" type="Button"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_right = 70.0
 margin_bottom = 9.0

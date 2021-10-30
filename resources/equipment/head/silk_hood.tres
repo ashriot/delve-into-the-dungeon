@@ -5,12 +5,13 @@
 [resource]
 script = ExtResource( 1 )
 name = "Silk Hood"
-description = "A basic, cloth hood."
-tier = 1
-weight = 0
+description = "The standard magic-user's hood."
+quality = 1
+rank = 0
 hp_bonus = 2
 str_bonus = 0
 agi_bonus = 0
 int_bonus = 1
 def_bonus = 0
 equipment_type = 0
+perks = [  ]

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Tin Armor"
-description = "Simple armor made from tin."
+description = "Basic armor made from tin."
 quality = 0
 rank = 0
 hp_bonus = 10
@@ -14,3 +14,4 @@ agi_bonus = 0
 int_bonus = 0
 def_bonus = 4
 equipment_type = 1
+perks = [  ]

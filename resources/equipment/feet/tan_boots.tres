@@ -14,3 +14,4 @@ agi_bonus = 1
 int_bonus = 0
 def_bonus = 1
 equipment_type = 3
+perks = [  ]

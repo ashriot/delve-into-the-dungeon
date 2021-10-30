@@ -227,7 +227,7 @@ func _on_ItemButton_long_pressed(button) -> void:
 func _on_EquipButton_long_pressed(button: EquipBtn) -> void:
 	AudioController.click()
 	if not button.empty:
-		tooltip.setup(button.equip.name, button.equip.description, button.equip.quality)
+		tooltip.setup(button.equip.get_name(), button.equip.get_desc(), button.equip.quality)
 
 func _on_InfoButton_pressed() -> void:
 	pass # Replace with function body.

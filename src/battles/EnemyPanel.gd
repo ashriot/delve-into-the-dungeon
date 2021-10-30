@@ -23,7 +23,7 @@ func setup(_unit):
 	level_up()
 	.setup(unit)
 	self.hp_cur = hp_max
-	self.hp_cur = 1 # DEBUG MODE
+#	self.hp_cur = 1 # DEBUG MODE
 	self.ap = unit.ap_init
 	actions = unit.actions
 	targetable(false)
