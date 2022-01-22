@@ -1,8 +1,8 @@
 extends ColorRect
 
-onready var header = $Container/Panel/Title
-onready var label = $Container/Panel/Label
-onready var quality_label = $Container/Panel/Quality
+onready var header = $Container/Tooltip/Title
+onready var label = $Container/Tooltip/Label
+onready var quality_label = $Container/Tooltip/Quality
 
 func setup(title: String, text: String, quality := -1) -> void:
 	header.text = title

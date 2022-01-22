@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/weapons/iron_spear.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/weapons/spears/iron_spear.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/weapons/iron_shield.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/weapons/shields/iron_shield.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/swords/iron_sword.tres" type="Resource" id=5]
 [ext_resource path="res://resources/equipment/head/tin_helm.tres" type="Resource" id=6]
 [ext_resource path="res://resources/equipment/body/tin_armor.tres" type="Resource" id=7]

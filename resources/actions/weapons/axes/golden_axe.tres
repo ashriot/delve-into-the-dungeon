@@ -4,32 +4,32 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Iron Knife"
+name = "Golden Axe"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
-tier = 1
-ap_cost = 1
+tier = 5
+ap_cost = 5
 item_type = 0
-sub_type = 3
+sub_type = 0
 melee = true
 target_type = 7
 damage_type = 0
-stat_used = 3
+stat_used = 2
 stat_vs = 5
 stat_hit = 3
-multiplier = 2.0
+multiplier = 4.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
 lifesteal = 0.0
-hit_chance = 80
+hit_chance = 70
 crit_chance = 20
-sound_fx = "dagger"
+sound_fx = "impact"
 use_fx = "melee"
 inflict_boons = [  ]
 inflict_hexes = [  ]
 gain_boons = [  ]
 gain_hexes = [  ]
-max_uses = 0
-uses = 0
+max_uses = 50
+uses = 50
 price = 0

@@ -1090,7 +1090,7 @@ mouse_filter = 2
 [node name="NewHero" parent="CanvasLayer" instance=ExtResource( 28 )]
 visible = false
 
-[node name="WhiteShader" type="ColorRect" parent="."]
+[node name="WhiteShader" type="ColorRect" parent="CanvasLayer"]
 visible = false
 material = SubResource( 6 )
 anchor_right = 1.0
@@ -1099,7 +1099,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SepiaShader" type="ColorRect" parent="."]
+[node name="SepiaShader" type="ColorRect" parent="CanvasLayer"]
 visible = false
 material = SubResource( 8 )
 anchor_right = 1.0

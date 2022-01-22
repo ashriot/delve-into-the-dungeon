@@ -2,7 +2,7 @@ extends Node2D
 class_name Game
 # GAME.gd
 
-var DamageText = preload("res://src/battles/DamageText.tscn")
+const DamageText = preload("res://src/battles/DamageText.tscn")
 
 onready var title = $CanvasLayer/Title
 onready var title_anim = $CanvasLayer/Title/AnimationPlayer
@@ -32,7 +32,6 @@ onready var hard_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Color
 onready var hardcore: = $CanvasLayer/Profiles/NewProfile/Hardcore
 onready var hard_desc = $CanvasLayer/Profiles/NewProfile/HardcoreDesc
 onready var line_edit = $CanvasLayer/Profiles/NewProfile/LineEdit
-
 
 signal done_fading
 signal done_learned_skill

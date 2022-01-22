@@ -8,7 +8,7 @@ name = "Flame Edge"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 3
-ap_cost = 2
+ap_cost = 3
 item_type = 0
 sub_type = 8
 melee = true

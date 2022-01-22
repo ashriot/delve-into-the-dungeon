@@ -9,7 +9,7 @@ name = "Armor Crusher"
 description = "Deal {potency} {dmg} damage to {tgt}. {vs}
 {aim}"
 tier = 3
-ap_cost = 2
+ap_cost = 3
 item_type = 0
 sub_type = 0
 melee = false

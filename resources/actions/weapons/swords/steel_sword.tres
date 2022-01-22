@@ -8,7 +8,7 @@ name = "Steel Sword"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 2
-ap_cost = 4
+ap_cost = 2
 item_type = 0
 sub_type = 8
 melee = true
