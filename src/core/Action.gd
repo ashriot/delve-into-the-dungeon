@@ -15,9 +15,9 @@ export(Enums.StatType) var stat_vs
 export(Enums.StatType) var stat_hit = Enums.StatType.NA
 export var multiplier: float
 export var bonus_damage: int
-export var min_hits:= 1
-export var max_hits:= 1
-export var split:= false
+export var min_hits: = 1
+export var max_hits: = 1
+export var split: = false
 export var lifesteal: = 0.0
 export var hit_chance: int
 export var crit_chance: int

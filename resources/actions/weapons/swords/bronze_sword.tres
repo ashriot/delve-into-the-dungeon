@@ -4,18 +4,18 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Short Bow"
-description = "Deal {potency} {dmg} damage to {tgt}. {vs}
+name = "Bronze Sword"
+description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
-ap_cost = 2
+ap_cost = 1
 item_type = 0
-sub_type = 2
-melee = false
-target_type = 6
+sub_type = 8
+melee = true
+target_type = 7
 damage_type = 0
-stat_used = 3
-stat_vs = 3
+stat_used = 2
+stat_vs = 5
 stat_hit = 3
 multiplier = 1.0
 bonus_damage = 0
@@ -23,10 +23,10 @@ min_hits = 1
 max_hits = 1
 split = false
 lifesteal = 0.0
-hit_chance = 80
+hit_chance = 90
 crit_chance = 15
-sound_fx = "hit_arrow"
-use_fx = "shoot"
+sound_fx = "wooden"
+use_fx = "melee"
 inflict_boons = [  ]
 inflict_banes = [  ]
 gain_boons = [  ]

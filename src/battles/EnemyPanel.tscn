@@ -213,6 +213,7 @@ autoplay = "Blink"
 anims/Blink = SubResource( 4 )
 
 [node name="ApGauge" type="TextureRect" parent="."]
+visible = false
 margin_top = 18.0
 margin_right = 8.0
 margin_bottom = 19.0

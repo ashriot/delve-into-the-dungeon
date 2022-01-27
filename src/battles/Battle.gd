@@ -400,6 +400,7 @@ func execute_vs_enemy(panel) -> void:
 				atk += int(user.unit.intellect * 0.5)
 				cur_hit_chance += 25
 			var hit = Hit.new()
+			if item.split: atk /= targets.count
 			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)

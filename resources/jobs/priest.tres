@@ -14,7 +14,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Cyrus"
-frame = 30
+frame = 7
 hp_cur = 0
 hp_max = 40
 ap = 0

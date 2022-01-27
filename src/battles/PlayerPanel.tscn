@@ -116,7 +116,7 @@ value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.352941, 0.32549, 0.32549, 1 )
-tint_progress = Color( 0.8, 0.376471, 0.337255, 1 )
+tint_progress = Color( 0.901961, 0.282353, 0.180392, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -163,6 +163,7 @@ anims/Hit = SubResource( 1 )
 anims/Victory = SubResource( 2 )
 
 [node name="ApGauge" type="TextureRect" parent="."]
+self_modulate = Color( 0.964706, 0.670588, 0.0784314, 1 )
 margin_left = 5.0
 margin_top = 11.0
 margin_right = 29.0

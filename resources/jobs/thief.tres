@@ -14,7 +14,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Vayne"
-frame = 7
+frame = 32
 hp_cur = 0
 hp_max = 40
 ap = 0

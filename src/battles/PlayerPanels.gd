@@ -27,7 +27,7 @@ func get_random() -> Array:
 	var array = get_all()
 	if array == []: return []
 	return [array[randi() % array.size()]]
-	
+
 func get_children():
 	return panels.get_children()
 
