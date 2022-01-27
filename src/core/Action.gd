@@ -17,15 +17,16 @@ export var multiplier: float
 export var bonus_damage: int
 export var min_hits:= 1
 export var max_hits:= 1
+export var split:= false
 export var lifesteal: = 0.0
 export var hit_chance: int
 export var crit_chance: int
 export var sound_fx: String
 export var use_fx: String
 export(Array, Array) var inflict_boons
-export(Array, Array) var inflict_hexes
+export(Array, Array) var inflict_banes
 export(Array, Array) var gain_boons
-export(Array, Array) var gain_hexes
+export(Array, Array) var gain_banes
 
 var frame setget , get_frame
 var desc setget , get_desc

@@ -52,7 +52,7 @@ func set_ready(value: bool):
 		outline.modulate.a = 1
 		if blocking > 0: self.blocking = 0
 		decrement_boons("Start")
-		decrement_hexes("Start")
+		decrement_banes("Start")
 	else:
 		sprite.frame = unit.frame + 10
 		outline.modulate.a = 0.15
@@ -84,6 +84,11 @@ func die() -> void:
 
 func victory() -> void:
 	if !ready: self.ready = true
+	unit.hp_mods.clear()
+	unit.str_mods.clear()
+	unit.agi_mods.clear()
+	unit.int_mods.clear()
+	unit.def_mods.clear()
 	print(unit.name, " ", unit.gains)
 	anim.play("Victory")
 

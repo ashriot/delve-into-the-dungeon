@@ -5,6 +5,13 @@ export(String, MULTILINE) var desc
 export var level:= 1
 export var ap_init: int
 export var gold: int
+
+export var hp_rating: int
+export var str_rating: int
+export var agi_rating: int
+export var int_rating: int
+export var def_rating: int
+
 export(Dictionary) var actions
 
 var hp_growth: int

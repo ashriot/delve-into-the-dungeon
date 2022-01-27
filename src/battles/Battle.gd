@@ -179,14 +179,14 @@ func enemy_turns():
 	start_players_turns()
 
 func enemy_take_action(panel: EnemyPanel):
-	if panel.hexes.size() > 0:
-		panel.decrement_hexes("Start")
+	if panel.banes.size() > 0:
+		panel.decrement_banes("Start")
 		yield(panel, "done")
 	if not panel.alive:
 		call_deferred("emit_signal", "enemy_done")
 		return
 	var stunned = false
-	if panel.has_hex("Stun"):
+	if panel.has_bane("Stun"):
 		stunned = true
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	if !stunned:
@@ -213,9 +213,11 @@ func enemy_take_action(panel: EnemyPanel):
 				var hit_chance = 100 if !panel.has_perk("Precise") else 150
 				if action.item_type == Enums.ItemType.MARTIAL_SKILL or \
 					action.item_type == Enums.ItemType.WEAPON:
-					hit_chance = action.hit_chance + panel.get_stat(Enums.StatType.AGI)
-				if panel.has_hex("Blind"): hit_chance /= 2
+					hit_chance = panel.get_stat(Enums.StatType.AGI)
 				hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
+				if panel.has_bane("Blind"):
+					hit.hit_chance /= 2
+					hit.item.hit_chance /= 2
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(hit)
 				else: target.take_hit(hit)
@@ -224,7 +226,7 @@ func enemy_take_action(panel: EnemyPanel):
 			if hit_num < hits - 1:
 				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 		for target in targets: target.gained_xp = false
-	panel.decrement_hexes("End")
+	panel.decrement_banes("End")
 	emit_signal("enemy_done")
 
 func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
@@ -321,8 +323,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		player_panels.show_selectors(cur_player, button.item.target_type)
 	else:
 		if button.item.stat_hit == Enums.StatType.AGI:
-			cur_hit_chance = int(cur_btn.item.hit_chance \
-				+ cur_player.get_stat(Enums.StatType.AGI)) \
+			cur_hit_chance = int(cur_player.get_stat(Enums.StatType.AGI)) \
 				 + (50 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enums.StatType.AGI
 # warning-ignore:integer_division

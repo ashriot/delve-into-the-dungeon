@@ -12,6 +12,6 @@ hp_bonus = 4
 str_bonus = 0
 agi_bonus = 1
 int_bonus = 0
-def_bonus = 1
+def_bonus = 0
 equipment_type = 2
 perks = [  ]

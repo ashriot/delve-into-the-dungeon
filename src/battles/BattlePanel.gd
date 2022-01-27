@@ -25,7 +25,7 @@ var valid_target: bool
 var melee_penalty: bool setget, get_melee_penalty
 var pos: Vector2
 
-var hexes: Array
+var banes: Array
 var boons: Array
 var statuses: = []
 var delay: = 0.0
@@ -52,7 +52,7 @@ func setup(_unit):
 	hp_gauge.max_value = hp_max
 	hp_gauge.value = hp_max
 	blocking = 0
-	hexes.clear()
+	banes.clear()
 	boons.clear()
 	statuses.clear()
 	update_status()
@@ -118,13 +118,13 @@ func take_hit(hit) -> bool:
 		and item.target_type <= Enums.TargetType.ONE_BACK \
 		or item.target_type == Enums.TargetType.RANDOM_ENEMY:
 		AudioController.play_sfx(fx)
-	if item.inflict_hexes.size() > 0 and not miss and self.alive:
-		for hex in item.inflict_hexes:
-			if randi() % 100 + 1 > hex[2]: continue
+	if item.inflict_banes.size() > 0 and not miss and self.alive:
+		for bane in item.inflict_banes:
+			if randi() % 100 + 1 > bane[2]: continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-			var success = gain_hex(hex[0], hex[1])
+			var success = gain_bane(bane[0], bane[1])
 			if success:
-				emit_signal("show_text", "+" + hex[0].name, pos)
+				emit_signal("show_text", "+" + bane[0].name, pos)
 				gained_xp = true
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	if item.gain_boons.size() > 0 and not miss:
@@ -150,11 +150,11 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 		dmg_text = "Blk:" + str(dmg)
 		self.blocking = max(blocking, dmg)
 	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
-	if item.inflict_hexes.size() > 0:
-		for hex in item.inflict_hexes:
-			if randi() % 100 + 1 > hex[2]: continue
-			var success = gain_hex(hex[0], hex[1])
-			if success: emit_signal("show_text", "+" + hex[0].name, pos)
+	if item.inflict_banes.size() > 0:
+		for bane in item.inflict_banes:
+			if randi() % 100 + 1 > bane[2]: continue
+			var success = gain_bane(bane[0], bane[1])
+			if success: emit_signal("show_text", "+" + bane[0].name, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	if item.inflict_boons.size() > 0:
 		for boon in item.inflict_boons:
@@ -175,24 +175,57 @@ func take_damage(amt: int) -> void:
 	self.hp_cur -= amt
 	if amt != 0: emit_signal("show_dmg", str(amt), pos)
 
-func gain_hex(hex: Effect, duration: int) -> bool:
+func gain_bane(bane: Effect, duration: int) -> bool:
 	var found = false
-	for h in hexes: if h[0].name == hex.name:
+	for h in banes: if h[0].name == bane.name:
 		found = true
 		if h[1] < duration: h[1] = duration
 		else: return false
 	if not found:
-		hexes.append([hex, duration])
-		add_status([hex.name, hex.frame])
-		if hex.name == "Dull": unit.int_mods.append(0.75)
-		elif hex.name == "Frail": unit.def_mods.append(0.75)
-		elif hex.name == "Slow": unit.agi_mods.append(0.75)
-		elif hex.name == "Weak": unit.str_mods.append(0.75)
+		var applied = true
+		if bane.name == "Dull":
+			if has_boon("Wise"):
+				remove_boon(get_boon("Wise"))
+				applied = false
+			else: unit.int_mods.append(0.75)
+		elif bane.name == "Frail":
+			if has_boon("Safe"):
+				remove_boon(get_boon("Safe"))
+				applied = false
+			else: unit.def_mods.append(0.75)
+		elif bane.name == "Slow":
+			if has_boon("Fast"):
+				remove_boon(get_boon("Fast"))
+				applied = false
+			else: unit.agi_mods.append(0.75)
+		elif bane.name == "Weak":
+			if has_boon("Bold"):
+				remove_boon(get_boon("Bold"))
+				applied = false
+			else: unit.str_mods.append(0.75)
+		if applied:
+			add_status([bane.name, bane.frame])
+			banes.append([bane, duration])
 	return true
 
-func has_hex(hex_name: String) -> bool:
-	for hex in hexes:
-		if hex[0].name == hex_name: return true
+func has_bane(bane_name: String) -> bool:
+	for bane in banes:
+		if bane[0].name == bane_name: return true
+	return false
+
+func get_bane(bane_name:String) -> Effect:
+	for bane in banes:
+		if bane[0].name == bane_name: return bane[0]
+	return null
+
+func get_boon(boon_name:String) -> Effect:
+	for boon in boons:
+		if boon[0].name == boon_name: return boon[0]
+	return null
+
+func has_boon(boon_name: String) -> bool:
+	for boon in boons:
+		if boon[0].name == boon_name: return true
 	return false
 
 func gain_boon(boon: Effect, duration: int) -> bool:
@@ -202,12 +235,30 @@ func gain_boon(boon: Effect, duration: int) -> bool:
 		if b[1] < duration: b[1] = duration
 		else: return false
 	if not found:
-		boons.append([boon, duration])
-		add_status([boon.name, boon.frame])
-		if boon.name == "Bold": unit.str_mods.append(1.25)
-		elif boon.name == "Fast": unit.agi_mods.append(1.25)
-		elif boon.name == "Safe": unit.def_mods.append(1.25)
-		elif boon.name == "Wise": unit.int_mods.append(1.25)
+		var applied = true
+		if boon.name == "Bold":
+			if has_bane("Weak"):
+				remove_bane(get_bane("Weak"))
+				applied = false
+			else: unit.str_mods.append(1.25)
+		elif boon.name == "Fast":
+			if has_bane("Slow"):
+				remove_bane(get_bane("Slow"))
+				applied = false
+			else: unit.agi_mods.append(1.25)
+		elif boon.name == "Safe":
+			if has_bane("Frail"):
+				remove_bane(get_bane("Frail"))
+				applied = false
+			else: unit.def_mods.append(1.25)
+		elif boon.name == "Wise":
+			if has_bane("Dull"):
+				remove_bane(get_bane("Dull"))
+				applied = false
+			else: unit.int_mods.append(1.25)
+		if applied:
+			add_status([boon.name, boon.frame])
+			boons.append([boon, duration])
 	return true
 
 func decrement_boons(timing: String) -> void:
@@ -220,26 +271,26 @@ func decrement_boons(timing: String) -> void:
 					remove_boon(boon[0])
 	emit_signal("done")
 
-func decrement_hexes(timing: String) -> void:
-	for hex in hexes:
-		if (hex[0].turn_end and timing == "End") or \
-			(hex[0].turn_start and timing == "Start"):
-				hex[1] -= 1
-				if hex[0].triggered:
-					trigger_hex(hex[0].name)
+func decrement_banes(timing: String) -> void:
+	for bane in banes:
+		if (bane[0].turn_end and timing == "End") or \
+			(bane[0].turn_start and timing == "Start"):
+				bane[1] -= 1
+				if bane[0].triggered:
+					trigger_bane(bane[0].name)
 					yield(get_tree().create_timer(0.25, true), "timeout")
-				if hex[1] == 0:
-					remove_hex(hex[0])
+				if bane[1] == 0:
+					remove_bane(bane[0])
 	call_deferred("emit_signal", "done")
 
-func trigger_hex(hex_name: String) -> void:
-	if hex_name == "Bleed":
+func trigger_bane(bane_name: String) -> void:
+	if bane_name == "Bleed":
 		AudioController.play_sfx("gash")
 		take_damage(int(float(hp_max) * 0.1))
-	if hex_name == "Burn":
+	if bane_name == "Burn":
 		AudioController.play_sfx("fire")
 		take_damage(unit.get_highest())
-	if hex_name == "Poison":
+	if bane_name == "Poison":
 		AudioController.play_sfx("poison")
 		take_damage(max(int(float(hp_cur) * 0.2), 1))
 
@@ -257,10 +308,10 @@ func remove_boon(find: Effect) -> void:
 	elif find.name == "Safe": unit.def_mods.remove(unit.def_mods.find(1.25))
 	elif find.name == "Wise": unit.int_mods.remove(unit.int_mods.find(1.25))
 
-func remove_hex(find: Effect) -> void:
-	for hex in hexes:
-		if hex[0] == find:
-			hexes.remove(hexes.find(hex))
+func remove_bane(find: Effect) -> void:
+	for bane in banes:
+		if bane[0] == find:
+			banes.remove(banes.find(bane))
 			break
 	for s in statuses:
 		if s[0] == find.name:
@@ -299,7 +350,7 @@ func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
 	var crit_roll = 0
 	if hit.stat_hit != Enums.StatType.NA:
-		hit_roll = clamp(hit.hit_chance - get_stat(hit.stat_hit), 0, 100)
+		hit_roll = clamp(hit.item.hit_chance + float((hit.hit_chance) / float(get_stat(hit.stat_hit)) * 50 - 50), 0, 100)
 #		hit_roll = clamp(hit.hit_chance / (get_stat(hit.stat_hit)), 0, 100)
 		crit_roll = hit.crit_chance
 	return [hit_roll, crit_roll]
