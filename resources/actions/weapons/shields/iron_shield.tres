@@ -8,6 +8,7 @@ name = "Iron Shield"
 description = "Block up to {potency} Martial damage until your next turn."
 tier = 1
 ap_cost = 2
+quick = false
 item_type = 0
 sub_type = 6
 melee = false

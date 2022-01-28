@@ -9,6 +9,7 @@ var tab: int setget set_tab
 
 var ready:= true setget set_ready
 var selected:= false setget set_selected
+var quick_used := false
 
 var enc_lv: float
 var gained_xp: bool

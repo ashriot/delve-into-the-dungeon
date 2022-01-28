@@ -8,6 +8,7 @@ name = "Potion"
 description = "Heal {tgt} for 50."
 tier = 1
 ap_cost = 2
+quick = false
 item_type = 6
 sub_type = 24
 melee = false

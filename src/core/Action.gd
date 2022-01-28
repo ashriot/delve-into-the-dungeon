@@ -5,6 +5,7 @@ export var name: String
 export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}.\n{aim}"
 export var tier: = 1
 export var ap_cost: = 2
+export var quick: = false
 export(Enums.ItemType) var item_type
 export(Enums.SubItemType) var sub_type
 export var melee: bool

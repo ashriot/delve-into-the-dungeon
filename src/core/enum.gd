@@ -1,8 +1,10 @@
 class_name Enums
 
 const default_color := Color("#f0eae3")
-const yellow_color := Color("#f4b41b")
+const yellow_color := Color("#4d9be6")
 const gray_color := Color("#7d7071")
+const black_color := Color("#202020")
+const ap_color := Color("f79617")
 
 const worn := Color("#a0938e")
 const common := Color("#f0eae3")

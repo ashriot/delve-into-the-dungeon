@@ -58,7 +58,7 @@ func initialize_party():
 	if !loading:
 		save_data.discovered = 1
 		save_data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
-		save_data.unlocked_heroes = ["Fighter", "Thief", "Wizard", "Sorcerer"]
+		save_data.unlocked_heroes = ["Fighter", "Thief", "Wizard", "Sorcerer", "Dancer"]
 		save_data.bench = {}
 		print('initializing save data')
 		var i = 0

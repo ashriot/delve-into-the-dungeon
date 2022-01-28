@@ -6,7 +6,7 @@ onready var all_select = $AllSelect
 onready var front_select = $FrontSelect
 onready var back_select = $BackSelect
 
-var projected_hit = null
+var projected_hit: Hit
 var hit_stat: int
 
 func init(battle) -> void:
@@ -72,6 +72,18 @@ func back_row_active() -> bool:
 			return true
 	return false
 
+func get_front_count() -> int:
+	var count = 0
+	for child in front_row.get_children():
+		if child.alive: count += 1
+	return count
+
+func get_back_count() -> int:
+	var count = 0
+	for child in back_row.get_children():
+		if child.alive: count += 1
+	return count
+
 func show_selectors(target_type):
 	if target_type == Enums.TargetType.ONE_ENEMY:
 		show_front_row_selectors()
@@ -97,6 +109,8 @@ func show_front_row_selector():
 		show_back_row_selector()
 		return
 	front_select.show()
+	if projected_hit.item.split:
+		projected_hit.split = get_front_count()
 	for child in front_row.get_children():
 		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
@@ -104,6 +118,8 @@ func show_front_row_selector():
 func show_back_row_selector():
 	if !back_row_active(): return
 	back_select.show()
+	if projected_hit.item.split:
+		projected_hit.split = get_back_count()
 	for child in back_row.get_children():
 		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)
@@ -124,6 +140,8 @@ func show_back_row_selectors():
 
 func show_all_selector():
 	all_select.show()
+	if projected_hit.item.split:
+		projected_hit.split = get_front_count() + get_back_count()
 	for child in front_row.get_children():
 		child.update_hit_chance(projected_hit)
 		child.targetable(true, false)

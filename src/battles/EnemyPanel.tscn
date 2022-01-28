@@ -84,7 +84,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "Blink"
-length = 0.7
+length = 0.8
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -93,10 +93,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="EnemyPanel" type="Control"]
@@ -118,7 +118,7 @@ value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
-tint_progress = Color( 0.8, 0.376471, 0.337255, 1 )
+tint_progress = Color( 0.572549, 0.662745, 0.517647, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -202,7 +202,7 @@ mouse_filter = 2
 value = 90.0
 texture_progress = ExtResource( 2 )
 fill_mode = 1
-tint_progress = Color( 0.145098, 0.145098, 0.164706, 1 )
+tint_progress = Color( 0.152941, 0.152941, 0.152941, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false

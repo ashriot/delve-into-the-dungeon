@@ -685,7 +685,6 @@ frame = 141
 [node name="PartyMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
 
 [node name="Title" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -706,6 +705,7 @@ position = Vector2( 36, 38 )
 texture = ExtResource( 14 )
 
 [node name="Adam" type="Label" parent="CanvasLayer/Title/BlackBG"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 7.0
 margin_right = 72.0
 margin_bottom = 21.0
@@ -718,7 +718,6 @@ __meta__ = {
 }
 
 [node name="WhiteBG" type="ColorRect" parent="CanvasLayer/Title/BlackBG"]
-modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 margin_bottom = 64.0
 color = Color( 0.941176, 0.924847, 0.890196, 1 )
@@ -727,16 +726,13 @@ __meta__ = {
 }
 
 [node name="Title" type="Label" parent="CanvasLayer/Title/BlackBG/WhiteBG"]
-modulate = Color( 1, 1, 1, 0 )
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 60.0
-margin_bottom = 26.0
-custom_fonts/font = ExtResource( 17 )
+margin_left = 4.0
+margin_right = 68.0
+margin_bottom = 24.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "Delve
-into the
-Dungeon"
+custom_fonts/font = ExtResource( 17 )
+text = "DELVE
+Quest"
 valign = 1
 uppercase = true
 __meta__ = {
@@ -748,12 +744,10 @@ position = Vector2( 36, 44 )
 texture = ExtResource( 16 )
 
 [node name="Sprite2" type="Sprite" parent="CanvasLayer/Title"]
-modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 36, 44 )
 texture = ExtResource( 12 )
 
 [node name="TapToStart" type="Label" parent="CanvasLayer/Title"]
-modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

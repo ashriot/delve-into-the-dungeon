@@ -30,7 +30,6 @@ var battle_active: bool
 
 var enc_lv: float
 var game: Game
-var gold: = Color("#ffbe22")
 
 # warning-ignore:shadowed_variable
 func init(game):
@@ -82,7 +81,7 @@ func setup_buttons() -> void:
 			if item == null:
 				button.clear()
 				continue
-			button.setup(item, cur_player.unit)
+			button.setup(item, cur_player.unit, !cur_player.quick_used)
 			button.toggle(true)
 	$Tabs/Tab1/Label.text = "Actions"
 	$Tabs/Tab2/Label.text = cur_player.unit.job_tab
@@ -93,11 +92,11 @@ func display_tabs() -> void:
 	tab2.show()
 	var other_tab = (cur_tab + 1) % 2
 	if other_tab != 0: # Tab 1
-		$Tabs/Tab1.self_modulate = gold
+		$Tabs/Tab1.self_modulate = Enums.yellow_color
 		$Tabs/Tab2.self_modulate = default_tab_color
 	else:				# Tab 1
 		$Tabs/Tab1.self_modulate = default_tab_color
-		$Tabs/Tab2.self_modulate = gold
+		$Tabs/Tab2.self_modulate = Enums.yellow_color
 
 	for i in range((other_tab * 5), (other_tab * 5) + 5):
 		buttons.get_child(i).toggle(false)
@@ -365,12 +364,13 @@ func execute_vs_enemy(panel) -> void:
 	var gained_xp = false
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel
+	var quick = item.quick and not cur_player.quick_used
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
 	if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enums.SubItemType.DAGGER):
 		AudioController.play_sfx("shoot")
 	else: AudioController.play_sfx(item.use_fx)
-	finish_action()
+	finish_action(!quick)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	var targets = [panel]
@@ -400,8 +400,9 @@ func execute_vs_enemy(panel) -> void:
 				atk += int(user.unit.intellect * 0.5)
 				cur_hit_chance += 25
 			var hit = Hit.new()
-			if item.split: atk /= targets.count
-			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
+			var split = 1
+			if item.split: split = targets.size()
+			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player, split)
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if item.target_type >= Enums.TargetType.ANY_ROW:
@@ -410,7 +411,7 @@ func execute_vs_enemy(panel) -> void:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	if gained_xp: cur_player.calc_xp(item.stat_used)
 	cur_player.calc_xp(item.stat_hit, 0.25)
-	get_next_player()
+	if not quick: get_next_player()
 
 func execute_vs_player(panel) -> void:
 	var user = cur_player
@@ -418,11 +419,11 @@ func execute_vs_player(panel) -> void:
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
 	AudioController.play_sfx(item.use_fx)
-	var turn_spent = true
+	var quick = false
 	if item.sub_type == Enums.SubItemType.SHIELD:
 		if user.has_perk("Quick Block"):
-			turn_spent = false
-	finish_action(turn_spent)
+			quick = true
+	finish_action(not quick)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
 	var targets = [panel]
@@ -437,18 +438,23 @@ func execute_vs_player(panel) -> void:
 			target.take_friendly_hit(user, item)
 		if hit_num > hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
-	get_next_player()
+	if not quick: get_next_player()
 
 func finish_action(spend_turn: = true) -> void:
 	chose_next = false
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if cur_btn == null: return
-	clear_buttons()
-	cur_player.selected = false
+	else: cur_btn.selected = false
 	if spend_turn:
+		cur_player.quick_used = false
+		cur_player.selected = false
+		clear_buttons()
 		cur_player.ready = false
 		cur_player.decrement_boons("End")
+	else:
+		cur_player.quick_used = true
+		setup_buttons()
 
 func clear_selections() -> void:
 	enemy_panels.hide_all_selectors()

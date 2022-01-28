@@ -92,6 +92,7 @@ func take_hit(hit) -> bool:
 	var def_mod = float(def * 0.5) * item.multiplier
 	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", item.multiplier, " = ", dmg)
 	dmg = max(int((dmg - def_mod) * (1 + hit.dmg_mod)), 0)
+	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * item.multiplier, " DMG: ", dmg)
 	var dmg_text = ""
