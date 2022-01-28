@@ -36,12 +36,11 @@ func setup(_item: Item, unit: Player = null, quick := false) -> void:
 	if unit != null:
 		skill = max(unit.skill[item.sub_type], 0)
 		ap_cost = max(item.ap_cost - skill, 0)
-		if ap_cost == 0: ap_label.self_modulate.a = 0.5
-		else: ap_label.self_modulate.a = 1.0
 		if unit.ap < ap_cost: self.available = false
 	ap_label.text = str(ap_cost)
 	disabled = false
 	if item.max_uses > 0:
+		print(item.name, " max uses: ", item.max_uses)
 		uses.show()
 		self.uses_remain = item.uses
 		if uses_remain < 1: disabled = true

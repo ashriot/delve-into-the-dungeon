@@ -245,6 +245,9 @@ func learned_skill(unit: Player) -> void:
 		else: excluding.append(unit.items[i].name)
 
 	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
+	if skill == null:
+		print("WARNING: No more skills to learn for ", unit.name, "!")
+		return
 	unit.items[next] = skill
 	var skill_name = skill.name
 	call_deferred("emit_signal", "done_learned_skill", skill_name) #emit_signal(, skill.name)

@@ -1,11 +1,12 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/weapons/wands/wood_wand.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/wands/worn_wand.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/skills/undertow.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/skills/mana_dart.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -42,7 +43,7 @@ job_perk = "Sorcery"
 perk_desc = "Can equip 4 Sorcery skills.
 
 After combat, you have a chance to learn a new Sorcery skill."
-skill = [ 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ]
+skill = [ 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0
@@ -55,7 +56,7 @@ items = {
 3: ExtResource( 2 ),
 4: null,
 5: ExtResource( 6 ),
-6: null,
+6: ExtResource( 7 ),
 7: null,
 8: null,
 9: null

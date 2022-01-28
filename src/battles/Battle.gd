@@ -419,7 +419,7 @@ func execute_vs_player(panel) -> void:
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
 	AudioController.play_sfx(item.use_fx)
-	var quick = false
+	var quick = item.quick and not cur_player.quick_used
 	if item.sub_type == Enums.SubItemType.SHIELD:
 		if user.has_perk("Quick Block"):
 			quick = true

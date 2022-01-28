@@ -4,29 +4,30 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Healing Haka"
-description = "Heal the party for 33% of their missing HP."
+name = "Nuke"
+description = "Deal 50 Piercing damage to {tgt}.
+{aim}"
 tier = 1
-ap_cost = 2
+ap_cost = 0
 quick = false
-item_type = 2
-sub_type = 22
+item_type = 0
+sub_type = 4
 melee = false
-target_type = 4
-damage_type = 6
+target_type = 6
+damage_type = 0
 stat_used = 6
 stat_vs = 6
 stat_hit = 6
-multiplier = 0.33
-bonus_damage = 0
+multiplier = 0.0
+bonus_damage = 999
 min_hits = 1
 max_hits = 1
 split = false
 lifesteal = 0.0
-hit_chance = 0
-crit_chance = 0
-sound_fx = "heal"
-use_fx = "dance"
+hit_chance = 110
+crit_chance = 20
+sound_fx = "gun"
+use_fx = "melee_step"
 inflict_boons = [  ]
 inflict_banes = [  ]
 gain_boons = [  ]
