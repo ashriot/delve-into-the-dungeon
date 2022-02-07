@@ -14,6 +14,11 @@ onready var battleMenu = $BattleMenu
 onready var enemy_info = $EnemyInfo
 onready var enemy_title = $EnemyInfo/Panel/Title
 onready var enemy_desc = $EnemyInfo/Panel/Desc
+onready var cp_panel = $CurrentPlayer
+onready var cp_portrait = $CurrentPlayer/Portrait
+onready var cp_name = $CurrentPlayer/Name
+onready var cp_ap = $CurrentPlayer/ApValue
+onready var cp_quick = $CurrentPlayer/QuickIcon
 
 var cur_player: PlayerPanel
 var cur_btn = null
@@ -37,6 +42,7 @@ func init(game):
 	self.game = game
 	battle_active = false
 	battleMenu.hide()
+	cp_panel.hide()
 #	for child in buttons.get_children():
 #		child.init(self)
 	var inspect = load("res://resources/battleCommands/inspect.tres")
@@ -71,7 +77,16 @@ func start(players: Dictionary, enemies: Dictionary) -> void:
 	yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	start_players_turns()
 
+func setup_cur_player_panel() -> void:
+	cp_portrait.frame = cur_player.unit.frame + 20
+	cp_name.text = cur_player.unit.name
+	cp_ap.bbcode_text = "[color=#6e2727]" + str(cur_player.ap) + "[color=#6e2727].0"
+	var quick_color = "#c32454" if !cur_player.quick_used else "#625565"
+	cp_quick.modulate = quick_color
+	cp_panel.show()
+
 func setup_buttons() -> void:
+	setup_cur_player_panel()
 	cur_tab = cur_player.tab
 	var i = 0
 	for button in buttons.get_children():
@@ -113,6 +128,7 @@ func toggle_tabs(value) -> void:
 	display_tabs()
 
 func clear_buttons() -> void:
+	cp_panel.hide()
 	battleMenu.hide()
 	tab1.hide()
 	tab2.hide()
@@ -126,6 +142,7 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 		cur_player.selected = false
 		cur_player = null
 		buttons.hide()
+		cp_panel.hide()
 		tab1.hide()
 		tab2.hide()
 		battleMenu.show()
@@ -465,6 +482,7 @@ func clear_selections() -> void:
 	if cur_btn != null:
 		cur_btn.selected = false
 		cur_btn = null
+	cp_panel.hide()
 
 func roll() -> int:
 	return randi() % 100 + 1

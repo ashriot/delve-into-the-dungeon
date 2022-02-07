@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/battles/EnemyPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/battles/EnemyPanels.gd" type="Script" id=2]
@@ -8,10 +8,12 @@
 [ext_resource path="res://src/battles/Battle.gd" type="Script" id=6]
 [ext_resource path="res://src/battles/BattleButton.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/images/ui_tab.png" type="Texture" id=8]
+[ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=9]
+[ext_resource path="res://assets/images/icons/quick.png" type="Texture" id=10]
 
 [node name="Battle" type="Control"]
 margin_right = 72.0
-margin_bottom = 128.0
+margin_bottom = 130.0
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -28,9 +30,9 @@ __meta__ = {
 
 [node name="EnemyPanels" type="Control" parent="."]
 margin_left = 3.0
-margin_top = 4.0
+margin_top = 3.0
 margin_right = 69.0
-margin_bottom = 47.0
+margin_bottom = 46.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,9 +42,8 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -2.0
-margin_top = -3.0
+margin_top = -2.0
 margin_right = 2.0
-margin_bottom = 3.0
 texture = ExtResource( 3 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -54,9 +55,9 @@ __meta__ = {
 
 [node name="BackSelect" type="NinePatchRect" parent="EnemyPanels"]
 margin_left = -2.0
-margin_top = -3.0
+margin_top = -2.0
 margin_right = 68.0
-margin_bottom = 21.0
+margin_bottom = 20.0
 texture = ExtResource( 3 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -72,9 +73,8 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -35.0
-margin_top = -21.0
+margin_top = -22.0
 margin_right = 35.0
-margin_bottom = 3.0
 texture = ExtResource( 3 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -127,8 +127,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -32.0
-margin_top = -18.0
+margin_top = -20.0
 margin_right = 32.0
+margin_bottom = -2.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -162,17 +163,17 @@ margin_bottom = 9.0
 
 [node name="PlayerPanels" type="Control" parent="."]
 margin_left = 2.0
-margin_top = 51.0
+margin_top = 47.0
 margin_right = 70.0
-margin_bottom = 77.0
+margin_bottom = 72.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panels" type="Control" parent="PlayerPanels"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -183,25 +184,25 @@ margin_right = 33.0
 [node name="PlayerPanel2" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -5.0
-margin_right = 28.0
+margin_left = -33.0
+margin_right = 0.0
 
 [node name="PlayerPanel3" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -26.0
+margin_top = -12.0
 margin_right = 33.0
-margin_bottom = -14.0
+margin_bottom = 0.0
 
 [node name="PlayerPanel4" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -5.0
-margin_top = -26.0
-margin_right = 28.0
-margin_bottom = -14.0
+margin_left = -33.0
+margin_top = -12.0
+margin_right = 0.0
+margin_bottom = 0.0
 
 [node name="AllSelector" type="NinePatchRect" parent="PlayerPanels"]
 visible = false
@@ -218,13 +219,70 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CurrentPlayer" type="Control" parent="."]
+margin_left = 2.0
+margin_top = 75.0
+margin_right = 71.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Portrait" type="Sprite" parent="CurrentPlayer"]
+texture = ExtResource( 9 )
+centered = false
+hframes = 10
+vframes = 20
+frame = 23
+
+[node name="Name" type="RichTextLabel" parent="CurrentPlayer"]
+margin_left = 9.0
+margin_top = -1.0
+margin_right = 43.0
+margin_bottom = 6.0
+text = "Druid"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApValue" type="RichTextLabel" parent="CurrentPlayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -18.0
+margin_top = -1.0
+margin_right = -8.0
+margin_bottom = 1.0
+bbcode_enabled = true
+bbcode_text = "[color=#f79617]3[color=#6e2727].4"
+text = "3.4"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuickIcon" type="TextureRect" parent="CurrentPlayer"]
+modulate = Color( 0.188235, 0.172549, 0.180392, 1 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -8.0
+margin_top = -3.5
+margin_bottom = 4.5
+texture = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Buttons" type="VBoxContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -50.0
+margin_top = -49.0
 margin_right = -2.0
-margin_bottom = -10.0
+margin_bottom = -8.0
 custom_constants/separation = -1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -277,9 +335,9 @@ margin_bottom = 39.0
 
 [node name="Tabs" type="Control" parent="."]
 margin_left = 1.0
-margin_top = 118.0
+margin_top = 121.0
 margin_right = 71.0
-margin_bottom = 127.0
+margin_bottom = 130.0
 rect_min_size = Vector2( 70, 9 )
 __meta__ = {
 "_edit_use_anchors_": false

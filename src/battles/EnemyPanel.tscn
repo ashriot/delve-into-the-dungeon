@@ -112,13 +112,12 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.0
-margin_right = 1.0
 mouse_filter = 2
 value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
-tint_progress = Color( 0.572549, 0.662745, 0.517647, 1 )
+tint_progress = Color( 0.568627, 0.858824, 0.411765, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -136,17 +135,6 @@ anims/Attack = SubResource( 1 )
 anims/Hit = SubResource( 2 )
 "anims/Hit (copy)" = SubResource( 3 )
 
-[node name="StatusBG" type="ColorRect" parent="."]
-margin_left = 11.0
-margin_top = 8.0
-margin_right = 20.0
-margin_bottom = 17.0
-mouse_filter = 2
-color = Color( 0, 0, 0, 0.784314 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Status" type="Sprite" parent="."]
 position = Vector2( 12, 9 )
 texture = ExtResource( 5 )
@@ -155,11 +143,23 @@ hframes = 10
 vframes = 20
 frame = 107
 
+[node name="StatusBG" type="ColorRect" parent="Status"]
+show_behind_parent = true
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 8.0
+margin_bottom = 8.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Target" type="NinePatchRect" parent="."]
 margin_left = -3.0
-margin_top = -3.0
+margin_top = -2.0
 margin_right = 19.0
-margin_bottom = 21.0
+margin_bottom = 20.0
 texture = ExtResource( 4 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -169,24 +169,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HitBG" type="ColorRect" parent="."]
-margin_top = -3.0
-margin_right = 16.0
-margin_bottom = 2.0
-mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
+[node name="Hit" type="Label" parent="."]
+margin_left = 1.0
+margin_top = -4.0
+margin_right = 17.0
+margin_bottom = 3.0
+text = "100%"
+align = 1
+valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Hit" type="Label" parent="."]
-margin_left = 1.0
-margin_top = -5.0
-margin_right = 17.0
-margin_bottom = 2.0
-text = "100%"
-align = 1
-valign = 2
+[node name="HitBG" type="ColorRect" parent="Hit"]
+show_behind_parent = true
+margin_left = -1.0
+margin_top = 2.0
+margin_right = 15.0
+margin_bottom = 7.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -64,11 +64,9 @@ func targetable(value: bool, display = true):
 	.targetable(value, display)
 	if valid_target:
 		hit_display.show()
-		$HitBG.show()
 		dmg_display.show()
 	else:
 		hit_display.hide()
-		$HitBG.hide()
 		dmg_display.hide()
 
 func update_dmg_display(hit):
@@ -94,12 +92,8 @@ func update_hit_chance(hit) -> void:
 
 func update_status() -> void:
 	.update_status()
-	if statuses.size() == 0:
-		status.hide()
-		$StatusBG.hide()
-	else:
-		status.show()
-		$StatusBG.show()
+	if statuses.size() == 0: status.hide()
+	else: status.show()
 
 func set_ap(value: int) -> void:
 	.set_ap(value)

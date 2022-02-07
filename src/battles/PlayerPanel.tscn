@@ -116,7 +116,7 @@ value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.352941, 0.32549, 0.32549, 1 )
-tint_progress = Color( 0.572549, 0.662745, 0.517647, 1 )
+tint_progress = Color( 0.568627, 0.858824, 0.411765, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
