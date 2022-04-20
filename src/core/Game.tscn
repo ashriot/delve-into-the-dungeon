@@ -651,9 +651,10 @@ locales = {
 visible = false
 
 [node name="MenuButton" type="TextureButton" parent="CanvasLayer"]
-margin_top = 121.0
-margin_right = 72.0
-margin_bottom = 128.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -7.0
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/MenuButton"]
 anchor_right = 1.0
@@ -731,8 +732,8 @@ modulate = Color( 1, 1, 1, 0 )
 margin_left = 4.0
 margin_right = 68.0
 margin_bottom = 24.0
-custom_fonts/font = ExtResource( 17 )
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+custom_fonts/font = ExtResource( 17 )
 text = "DELVE
  Quest"
 valign = 1

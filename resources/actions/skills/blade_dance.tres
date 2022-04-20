@@ -22,6 +22,7 @@ multiplier = 1.5
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
+grant_ap = 0
 split = true
 lifesteal = 0.0
 hit_chance = 80
