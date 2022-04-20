@@ -80,7 +80,7 @@ func start(players: Dictionary, enemies: Dictionary) -> void:
 func setup_cur_player_panel() -> void:
 	cp_portrait.frame = cur_player.unit.frame + 20
 	cp_name.text = cur_player.unit.name
-	cp_ap.bbcode_text = "[color=#6e2727]" + str(cur_player.ap) + "[color=#6e2727].0"
+	cp_ap.bbcode_text = str(cur_player.ap)
 	var quick_color = "#c32454" if !cur_player.quick_used else "#625565"
 	cp_quick.modulate = quick_color
 	cp_panel.show()
