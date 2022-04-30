@@ -228,8 +228,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-mute = true
-skip_title = true
 players = {
 0: ExtResource( 18 ),
 1: ExtResource( 19 ),
