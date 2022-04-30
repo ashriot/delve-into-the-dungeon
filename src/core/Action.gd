@@ -18,6 +18,7 @@ export var multiplier: float
 export var bonus_damage: int
 export var min_hits: = 1
 export var max_hits: = 1
+export var grant_ap: = 0
 export var split: = false
 export var lifesteal: = 0.0
 export var hit_chance: int

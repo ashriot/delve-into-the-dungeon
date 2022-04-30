@@ -99,7 +99,8 @@ enum DamageType {
 	PURE,
 	HEAL,
 	EFFECT_ONLY,
-	BLOCK
+	BLOCK,
+	AP
 }
 
 static func get_stat_name(stat) -> String:
