@@ -1,0 +1,37 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/fast.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Fan of Flames"
+description = "Deal {potency} {dmg} damage to {tgt}."
+tier = 1
+ap_cost = 3
+quick = false
+item_type = 2
+sub_type = 25
+melee = false
+target_type = 10
+damage_type = 3
+stat_used = 4
+stat_vs = 4
+stat_hit = 6
+multiplier = 2.0
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+split = false
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "flames"
+use_fx = "sorcery"
+inflict_boons = [ [ ExtResource( 2 ), 3, 100 ] ]
+inflict_banes = [  ]
+gain_boons = [  ]
+gain_banes = [  ]
+max_uses = 20
+uses = 20
+price = 0

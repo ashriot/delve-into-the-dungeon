@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Poison"
 desc = ""
-frame = 99
+frame = 30
 permanent = true
 turn_start = true
 turn_end = false

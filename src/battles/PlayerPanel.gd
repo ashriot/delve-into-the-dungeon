@@ -37,7 +37,8 @@ func setup(_unit):
 	self.ready = true
 
 func update_status() -> void:
-	if statuses.size() == 0: status.frame = 90
+	if statuses.size() == 0: status.hide()
+	else: status.show()
 	.update_status()
 
 func set_selected(value: bool):
@@ -65,11 +66,13 @@ func set_hp_cur(value):
 # warning-ignore:narrowing_conversion
 	unit.hp_cur = clamp(value, 0, hp_max)
 	if blocking > 0:
-		hp_cur_display.modulate = Color.slategray
+		hp_cur_display.modulate = Enums.block_color
 		hp_cur_display.bbcode_text = get_hp_str(blocking)
+		$Health.frame = 41
 	else:
-		hp_cur_display.modulate = Color.white
+		hp_cur_display.modulate = Enums.off_white
 		hp_cur_display.bbcode_text = get_hp_str(hp_cur)
+		$Health.frame = 40
 
 func get_hp_str(value: int) -> String:
 	if value > 99: return "[right]" + str(value)
@@ -78,7 +81,7 @@ func get_hp_str(value: int) -> String:
 
 func set_ap(value: int) -> void:
 	.set_ap(value)
-	ap_gauge.rect_size.x = ap * 4
+	ap_gauge.rect_size.x = ap * 2
 
 func die() -> void:
 	.die()

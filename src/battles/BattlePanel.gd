@@ -371,9 +371,6 @@ func set_ap(value: int) -> void:
 
 func set_blocking(value: int) -> void:
 	blocking = value
-	if blocking > 0:
-		add_status(["Block", 129])
-	else: remove_status("Block")
 	self.hp_cur = hp_cur
 
 func get_alive() -> bool:

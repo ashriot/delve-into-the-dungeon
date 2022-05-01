@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Bleed"
 desc = "Lose 10% Max HP each turn and suffer 10% increased martial damage."
-frame = 118
+frame = 20
 permanent = true
 turn_start = true
 turn_end = false

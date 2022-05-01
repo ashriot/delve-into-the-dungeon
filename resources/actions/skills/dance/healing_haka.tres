@@ -1,0 +1,36 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Healing Haka"
+description = "Heal the party for 33% of their missing HP."
+tier = 1
+ap_cost = 2
+quick = false
+item_type = 2
+sub_type = 22
+melee = false
+target_type = 4
+damage_type = 6
+stat_used = 6
+stat_vs = 6
+stat_hit = 6
+multiplier = 0.33
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+split = false
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "heal"
+use_fx = "dance"
+inflict_boons = [  ]
+inflict_banes = [  ]
+gain_boons = [  ]
+gain_banes = [  ]
+max_uses = 0
+uses = 0
+price = 0

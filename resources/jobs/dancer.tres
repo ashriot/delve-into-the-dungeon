@@ -1,11 +1,12 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/bows/short_bow.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/weapons/boomerangs/boomerang.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/skills/blade_dance.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/skills/dance/blade_dance.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/knives/worn_knife.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/skills/dance/fan_strike.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -55,8 +56,10 @@ items = {
 3: ExtResource( 3 ),
 4: null,
 5: ExtResource( 5 ),
-6: null,
-7: null
+6: ExtResource( 7 ),
+7: null,
+8: null,
+9: null
 }
 equipment = {
 0: null,

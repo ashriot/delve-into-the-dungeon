@@ -60,7 +60,9 @@ items = {
 4: ExtResource( 4 ),
 5: null,
 6: null,
-7: null
+7: null,
+8: null,
+9: null
 }
 equipment = {
 0: ExtResource( 10 ),

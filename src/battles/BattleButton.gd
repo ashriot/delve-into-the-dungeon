@@ -28,7 +28,7 @@ func setup(_item: Item, unit: Player = null, quick := false) -> void:
 	title.text = item.name
 	if item.quick and quick:
 		quick_icon.show()
-		ap_label.modulate = Enums.yellow_color
+		ap_label.modulate = Enums.quick_color
 	else:
 		quick_icon.hide()
 		ap_label.modulate = Enums.ap_color

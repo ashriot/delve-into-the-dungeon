@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Bold"
 desc = "Increases STR by 5."
-frame = 91
+frame = 3
 permanent = false
 turn_start = false
 turn_end = true

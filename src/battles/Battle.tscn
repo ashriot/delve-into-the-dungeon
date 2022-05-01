@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/battles/EnemyPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/battles/EnemyPanels.gd" type="Script" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://src/battles/PlayerPanel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/battles/Battle.gd" type="Script" id=6]
 [ext_resource path="res://src/battles/BattleButton.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/images/ui_tab.png" type="Texture" id=8]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=9]
 [ext_resource path="res://assets/images/icons/quick.png" type="Texture" id=10]
 [ext_resource path="res://assets/images/icons/ap.png" type="Texture" id=11]
@@ -180,7 +179,7 @@ __meta__ = {
 }
 
 [node name="PlayerPanel" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
-margin_right = 33.0
+margin_left = -1.0
 
 [node name="PlayerPanel2" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
 anchor_left = 1.0
@@ -191,8 +190,8 @@ margin_right = 0.0
 [node name="PlayerPanel3" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
+margin_left = -1.0
 margin_top = -12.0
-margin_right = 33.0
 margin_bottom = 0.0
 
 [node name="PlayerPanel4" parent="PlayerPanels/Panels" instance=ExtResource( 5 )]
@@ -251,8 +250,8 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -19.0
-margin_right = -9.0
+margin_left = -18.0
+margin_right = -7.0
 margin_bottom = 2.0
 custom_colors/default_color = Color( 0.968627, 0.588235, 0.0901961, 1 )
 bbcode_enabled = true
@@ -263,21 +262,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Ap" type="Sprite" parent="CurrentPlayer"]
+[node name="Ap" type="Sprite" parent="CurrentPlayer/ApValue"]
 modulate = Color( 0.968627, 0.588235, 0.0901961, 1 )
-position = Vector2( 54, 2 )
+position = Vector2( 4, 2 )
 texture = ExtResource( 11 )
 centered = false
 
 [node name="QuickIcon" type="TextureRect" parent="CurrentPlayer"]
-modulate = Color( 0.188235, 0.172549, 0.180392, 1 )
+modulate = Color( 0.764706, 0.141176, 0.329412, 1 )
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -8.0
-margin_top = -3.5
-margin_bottom = 4.5
+margin_left = -6.0
+margin_top = -1.5
+margin_right = -2.0
+margin_bottom = 3.5
 texture = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -350,16 +350,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tab1" type="TextureButton" parent="Tabs"]
+[node name="Tab1" type="Button" parent="Tabs"]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 1.0
-margin_top = -3.5
+margin_left = -2.0
+margin_top = -2.5
 margin_right = 34.0
-margin_bottom = 3.5
+margin_bottom = 5.5
 rect_min_size = Vector2( 33, 7 )
-texture_normal = ExtResource( 8 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -370,6 +369,8 @@ self_modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
 text = "Items"
 align = 1
 valign = 1
@@ -377,19 +378,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tab2" type="TextureButton" parent="Tabs"]
+[node name="Tab2" type="Button" parent="Tabs"]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 36.0
-margin_top = -3.5
-margin_right = 69.0
-margin_bottom = 3.5
+margin_top = -2.5
+margin_right = 72.0
+margin_bottom = 5.5
 rect_min_size = Vector2( 33, 7 )
-texture_normal = ExtResource( 8 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 
 [node name="Label" type="Label" parent="Tabs/Tab2"]
@@ -397,6 +396,8 @@ self_modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
 text = "Items"
 align = 1
 valign = 1

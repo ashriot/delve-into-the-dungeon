@@ -36,7 +36,7 @@ texture = ExtResource( 3 )
 centered = false
 hframes = 10
 vframes = 10
-frame = 2
+frame = 10
 
 [node name="Title" type="Label" parent="."]
 modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
@@ -66,9 +66,11 @@ __meta__ = {
 }
 
 [node name="Quick" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 0.764706, 0.141176, 0.329412, 1 )
-position = Vector2( 66, 5 )
+position = Vector2( 65, 2 )
 texture = ExtResource( 4 )
+centered = false
 
 [node name="Uses" type="Label" parent="."]
 visible = false

@@ -429,6 +429,7 @@ func execute_vs_enemy(panel) -> void:
 	if gained_xp: cur_player.calc_xp(item.stat_used)
 	cur_player.calc_xp(item.stat_hit, 0.25)
 	if not quick: get_next_player()
+	else: cur_btn = null
 
 func execute_vs_player(panel) -> void:
 	var user = cur_player
@@ -456,6 +457,7 @@ func execute_vs_player(panel) -> void:
 		if hit_num > hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
 	if not quick: get_next_player()
+	else: cur_btn = null
 
 func finish_action(spend_turn: = true) -> void:
 	chose_next = false

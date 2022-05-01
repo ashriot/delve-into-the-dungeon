@@ -5,8 +5,8 @@
 [ext_resource path="res://resources/actions/weapons/wands/worn_wand.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
-[ext_resource path="res://resources/actions/skills/undertow.tres" type="Resource" id=6]
-[ext_resource path="res://resources/actions/skills/mana_dart.tres" type="Resource" id=7]
+[ext_resource path="res://resources/actions/skills/sorcery/undertow.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/skills/sorcery/mana_dart.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )

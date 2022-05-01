@@ -6,7 +6,8 @@
 script = ExtResource( 1 )
 name = "Weak"
 desc = "Increases STR by 5."
-frame = 101
+frame = 36
 permanent = false
 turn_start = false
 turn_end = true
+triggered = false
