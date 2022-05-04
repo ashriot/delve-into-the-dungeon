@@ -732,9 +732,9 @@ modulate = Color( 1, 1, 1, 0 )
 margin_left = 4.0
 margin_right = 68.0
 margin_bottom = 24.0
-custom_fonts/font = ExtResource( 17 )
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "DELVE
+custom_fonts/font = ExtResource( 17 )
+text = "Pico
  Quest"
 valign = 1
 uppercase = true
@@ -782,7 +782,6 @@ __meta__ = {
 }
 
 [node name="Profiles" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 67.0
@@ -1006,7 +1005,7 @@ margin_left = 6.0
 margin_top = -1.0
 margin_right = 54.0
 margin_bottom = 6.0
-text = "Hardcore"
+text = "Softcore"
 __meta__ = {
 "_edit_use_anchors_": false
 }

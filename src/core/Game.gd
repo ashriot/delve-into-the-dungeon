@@ -31,6 +31,7 @@ onready var norm_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Normal/Colo
 onready var hard_color = $CanvasLayer/Profiles/NewProfile/Difficulty/Hard/Color
 onready var hardcore: = $CanvasLayer/Profiles/NewProfile/Hardcore
 onready var hard_desc = $CanvasLayer/Profiles/NewProfile/HardcoreDesc
+onready var hardcore_label = $CanvasLayer/Profiles/NewProfile/Hardcore/Label
 onready var line_edit = $CanvasLayer/Profiles/NewProfile/LineEdit
 
 signal done_fading
@@ -350,10 +351,12 @@ func _on_Hardcore_pressed():
 	hardcore_enabled = hardcore.pressed
 	if hardcore.pressed:
 		AudioController.click()
+		hardcore_label.text = "Hardcore"
 		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate = Color("#a93b3b")
 		hard_desc.text = "Fallen heroes are permanently killed."
 	else:
 		AudioController.back()
+		hardcore_label.text = "Softcore"
 		$CanvasLayer/Profiles/NewProfile/Hardcore/Label.modulate = Color.white
 		hard_desc.text = "Fallen heroes can\nbe revived in town."
 
