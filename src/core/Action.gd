@@ -18,6 +18,7 @@ export var multiplier: float
 export var bonus_damage: int
 export var min_hits: = 1
 export var max_hits: = 1
+export var gain_ap: = 0
 export var grant_ap: = 0
 export var split: = false
 export var lifesteal: = 0.0
@@ -39,7 +40,7 @@ func get_frame() -> int:
 		Enums.ItemType.WEAPON:
 			if sub_type == Enums.SubItemType.BOOMERANG: id += 1
 			elif sub_type == Enums.SubItemType.BOW: id += 2
-			elif sub_type == Enums.SubItemType.DAGGER: id += 3
+			elif sub_type == Enums.SubItemType.KNIFE: id += 3
 			elif sub_type == Enums.SubItemType.GUN: id += 4
 			elif sub_type == Enums.SubItemType.MACE: id += 5
 			elif sub_type == Enums.SubItemType.SPEAR: id += 6

@@ -331,7 +331,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	print(cur_player.unit.job_tab, " -> ", cur_btn.item.sub_type)
 	var melee_penalty = button.item.melee and cur_player.melee_penalty
 	if (cur_player.unit.job_tab == "Knives" and \
-		cur_btn.item.sub_type == Enums.SubItemType.DAGGER):
+		cur_btn.item.sub_type == Enums.SubItemType.KNIFE):
 			target_type = Enums.TargetType.ONE_ENEMY
 			melee_penalty = false
 	if target_type >= Enums.TargetType.MYSELF \
@@ -384,12 +384,11 @@ func execute_vs_enemy(panel) -> void:
 	var quick = item.quick and not cur_player.quick_used
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
-	if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enums.SubItemType.DAGGER):
-		AudioController.play_sfx("shoot")
-	else: AudioController.play_sfx(item.use_fx)
+	AudioController.play_sfx(item.use_fx)
 	finish_action(!quick)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	user.ap += item.gain_ap	
 	var targets = [panel]
 	var randoms = []
 	var rand_targets = false
@@ -409,8 +408,8 @@ func execute_vs_enemy(panel) -> void:
 			if not target.alive: continue
 			var dmg_mod = 0.0
 			var melee_penalty = item.melee and cur_player.melee_penalty
-			if (cur_player.unit.job_tab == "Knives" and item.sub_type == Enums.SubItemType.DAGGER):
-					melee_penalty = false
+			if (cur_player.unit.job == "Thief" and item.sub_type == Enums.SubItemType.KNIFE):
+				melee_penalty = false
 			if melee_penalty: dmg_mod -= 0.50
 			var atk = user.get_stat(item.stat_used)
 			if user.has_perk("Magic Weapon") and item.sub_type != Enums.SubItemType.WAND:
@@ -444,6 +443,7 @@ func execute_vs_player(panel) -> void:
 	finish_action(not quick)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
+	panel.ap += item.gain_ap
 	var targets = [panel]
 	if item.target_type == Enums.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()

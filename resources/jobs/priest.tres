@@ -4,7 +4,7 @@
 [ext_resource path="res://resources/actions/weapons/shields/iron_shield.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/staves/lesser_heal.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/staves/quell.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/wands/wood_wand.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/staves/deflect.tres" type="Resource" id=6]
 [ext_resource path="res://resources/equipment/body/cloth_shirt.tres" type="Resource" id=7]
 [ext_resource path="res://resources/equipment/hands/cloth_gloves.tres" type="Resource" id=8]
@@ -46,7 +46,7 @@ job_perk = "Staves"
 perk_desc = "Can equip 5 extra staves.
 
 Equipped staves require 1 less AP to use."
-skill = [ 0, 0, 1, 0, 0, 1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+skill = [ 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.0
 job_lv = 0

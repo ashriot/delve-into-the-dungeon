@@ -1,0 +1,39 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Bronze Spear"
+description = "Deal {potency} {dmg} damage to {tgt}.
+{aim}"
+tier = 2
+ap_cost = 1
+quick = false
+item_type = 0
+sub_type = 7
+melee = true
+target_type = 6
+damage_type = 0
+stat_used = 2
+stat_vs = 5
+stat_hit = 3
+multiplier = 1.0
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+gain_ap = 0
+grant_ap = 0
+split = false
+lifesteal = 0.0
+hit_chance = 90
+crit_chance = 10
+sound_fx = "wooden"
+use_fx = "melee"
+inflict_boons = [  ]
+inflict_banes = [  ]
+gain_boons = [  ]
+gain_banes = [  ]
+max_uses = 0
+uses = 0
+price = 0

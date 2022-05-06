@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 name = "Iron Shield"
-description = "Block up to {potency} Martial damage until your next turn."
-tier = 1
+description = "Gain up to {potency} Block."
+tier = 3
 ap_cost = 2
 quick = false
 item_type = 0
@@ -17,10 +17,11 @@ damage_type = 8
 stat_used = 2
 stat_vs = 6
 stat_hit = 6
-multiplier = 2.0
+multiplier = 2.5
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
+gain_ap = 0
 grant_ap = 0
 split = false
 lifesteal = 0.0

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/weapons/wands/worn_wand.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/skills/sorcery/undertow.tres" type="Resource" id=6]
@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Senan"
-frame = 30
+frame = 31
 hp_cur = 0
 hp_max = 32
 ap = 0

@@ -87,14 +87,19 @@ func take_hit(hit) -> bool:
 	var miss = false
 	var hit_roll = randi() % 100 + 1
 	if hit_roll > hit_chance: miss = true
-	var dmg = float((item.multiplier * hit.atk) + hit.bonus_dmg)
+	var multi = item.multiplier
+	if item.name == "Fireball":
+		if has_bane("Burn"):
+			print("Fireball!!!")
+			multi *= 2
+	var dmg = float((multi * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
-	var def_mod = float(def * 0.5) * item.multiplier
-	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", item.multiplier, " = ", dmg)
+	var def_mod = float(def * 0.5) * multi
+	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", multi, " = ", dmg)
 	dmg = max(int((dmg - def_mod) * (1 + hit.dmg_mod)), 0)
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * item.multiplier, " DMG: ", dmg)
+	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * multi, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:
 		if blocking > 0:
@@ -151,6 +156,7 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 		dmg_text = "Blk:" + str(dmg)
 		self.blocking = max(blocking, dmg)
 	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
+	self.ap += item.grant_ap
 	if item.inflict_banes.size() > 0:
 		for bane in item.inflict_banes:
 			if randi() % 100 + 1 > bane[2]: continue

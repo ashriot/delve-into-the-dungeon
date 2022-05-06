@@ -686,7 +686,6 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -732,10 +731,10 @@ modulate = Color( 1, 1, 1, 0 )
 margin_left = 4.0
 margin_right = 68.0
 margin_bottom = 24.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 custom_fonts/font = ExtResource( 17 )
-text = "Pico
- Quest"
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "Fort
+    Pico"
 valign = 1
 uppercase = true
 __meta__ = {
@@ -782,6 +781,7 @@ __meta__ = {
 }
 
 [node name="Profiles" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 67.0

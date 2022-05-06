@@ -40,7 +40,7 @@ enum SubItemType {
 	AXE,		#0
 	BOOMERANG,
 	BOW,
-	DAGGER,
+	KNIFE,
 	GUN,
 	MACE,		#5
 	SHIELD,

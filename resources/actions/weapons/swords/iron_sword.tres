@@ -7,7 +7,7 @@ script = ExtResource( 1 )
 name = "Iron Sword"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
-tier = 1
+tier = 3
 ap_cost = 3
 quick = false
 item_type = 0
@@ -22,6 +22,7 @@ multiplier = 1.5
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
+gain_ap = 0
 grant_ap = 0
 split = false
 lifesteal = 0.0
