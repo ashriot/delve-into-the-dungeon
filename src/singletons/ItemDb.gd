@@ -4,17 +4,22 @@ extends Node
 var items: = Array()
 var perks: = Array()
 var equips: = Array()
+var arcana: = Array()
 
 func _ready():
-	var item_files = get_dir_contents("res://resources/actions")
-	for f in item_files:
+	var files = get_dir_contents("res://resources/actions")
+	for f in files:
 		items.append(load(f))
-	var perk_files = get_dir_contents("res://resources/perks")
-	for f in perk_files:
+	files = get_dir_contents("res://resources/perks")
+	for f in files:
 		perks.append(load(f))
-	var equips_files = get_dir_contents("res://resources/equipment")
-	for f in equips_files:
+	files = get_dir_contents("res://resources/equipment")
+	for f in files:
 		equips.append(load(f))
+	files = get_dir_contents("res://resources/actions/skills/arcana")
+	for f in files:
+		if not "arcanum" in f and not "draw_arcana" in f:
+			arcana.append(load(f))
 
 func get_item(item_name: String) -> Item:
 	for item in items:
@@ -31,6 +36,14 @@ func get_equip(equip_name: String) -> Equipment:
 		if equip.name == equip_name: return equip.duplicate()
 	return null
 
+func get_random_arcana() -> Item:
+	var rand = randi() % arcana.size()
+	return arcana[rand]
+	
+func get_five_arcana() -> Array:
+	arcana.shuffle()
+	return arcana.slice(0, 4)
+
 func get_random_item(lv: int) -> Item:
 	var types = [Enums.ItemType.WEAPON, Enums.ItemType.WEAPON, Enums.ItemType.WEAPON, Enums.ItemType.TOME, Enums.ItemType.TOME]
 	var type = types[randi() % types.size()]
@@ -39,7 +52,7 @@ func get_random_item(lv: int) -> Item:
 	print("Getting an item of type: ", type, " and tier: ", lv)
 	for i in rand_items:
 		if items[i].item_type == type and items[i].tier <= lv \
-		and !items[i].name.begins_with("Wooden"):
+		and !items[i].name.begins_with("Worn"):
 			return items[i].duplicate()
 	return null
 

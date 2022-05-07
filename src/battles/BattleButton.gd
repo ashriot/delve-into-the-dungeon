@@ -8,6 +8,7 @@ onready var ap_label = $ApCost
 onready var uses = $Uses
 
 var item: Item
+var item_index := 0
 var ap_cost: = 0
 var uses_remain: int setget set_uses_remain
 var selected: bool setget set_selected
@@ -19,7 +20,8 @@ func init(battle) -> void:
 	err = connect("pressed", battle, "_on_BattleButton_pressed", [self])
 	if err: print("There was an error connecting: ", err)
 
-func setup(_item: Item, unit: Player = null, quick := false) -> void:
+func setup(_item: Item, index: int,  unit: Player = null, quick := false) -> void:
+	item_index = index
 	enabled = true
 	self.selected = false
 	self.available = true
@@ -36,6 +38,8 @@ func setup(_item: Item, unit: Player = null, quick := false) -> void:
 	if unit != null:
 		skill = max(unit.skill[item.sub_type], 0)
 		ap_cost = max(item.ap_cost - skill, 0)
+		if item.name == "Draw Arcana":
+			ap_cost -= unit.job_data["Arcana"]
 		if unit.ap < ap_cost: self.available = false
 	ap_label.text = str(ap_cost)
 	disabled = false

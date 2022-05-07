@@ -117,7 +117,7 @@ value = 50.0
 texture_under = ExtResource( 2 )
 texture_progress = ExtResource( 2 )
 tint_under = Color( 0.152941, 0.152941, 0.152941, 1 )
-tint_progress = Color( 0.568627, 0.858824, 0.411765, 1 )
+tint_progress = Color( 0.909804, 0.231373, 0.231373, 1 )
 nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -182,13 +182,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Block" type="ColorRect" parent="."]
+margin_top = 17.0
+margin_bottom = 18.0
+color = Color( 0.607843, 0.670588, 0.698039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DmgDisplay" type="TextureProgress" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.0
-margin_right = 1.0
 mouse_filter = 2
 value = 90.0
 texture_progress = ExtResource( 2 )

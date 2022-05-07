@@ -31,7 +31,7 @@ func setup(_unit):
 		if actions[i] == null: continue
 		var action = actions[i]
 		var cd = 0
-		if action.starting_cd > 0:
+		if action.cooldown > 0:
 			cd = randi() % (1 + action.starting_cd - action.starting_min) + action.starting_min
 		cooldowns[i] = cd
 	emit_signal("show_text", "Lv." + str(unit.level), pos, true)
@@ -44,18 +44,19 @@ func level_up() -> void:
 	unit.int_growth = int(float(8 + unit.int_rating) * float(8 + unit.level) / 12)
 	unit.def_growth = int(float(8 + unit.def_rating) * float(8 + unit.level) / 12)
 	var cap = int((unit.level + 5) / 10)
+	cap = 10
 	for key in unit.actions:
 		if key > cap: unit.actions[key] = null
 
 func get_action() -> Action:
 	var action = null
-	for i in range(actions.size()):
+	for i in range(actions.size() - 1, 0, -1):
 		if actions[i] == null: continue
-		if actions[i].cooldown > 0:
-			if cooldowns[i] < actions[i].cooldown: cooldowns[i] += 1
-			elif action == null:
-				cooldowns[i] = 0
-				action = actions[i]
+		if cooldowns[i] == 0:
+			cooldowns[i] = actions[i].cooldown
+			return actions[i]
+		elif cooldowns[i] > 0:
+			cooldowns[i] -= 1
 		else: continue
 	if action == null: action = actions[0]
 	return action
@@ -97,8 +98,15 @@ func update_status() -> void:
 
 func set_ap(value: int) -> void:
 	.set_ap(value)
-	print(unit.name, " AP: ", ap)
 	ap_gauge.rect_size.x = ap * 3
+
+func set_blocking(value: int) -> void:
+	AudioController.play_sfx("block")
+	.set_blocking(value)
+	if value > 0:
+		$Block.rect_size.x = (float(value) / hp_max) * 10
+	else:
+		$Block.rect_size.x = 0
 
 func die():
 	.die()

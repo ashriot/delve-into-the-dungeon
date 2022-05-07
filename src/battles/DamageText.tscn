@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/battles/DamageText.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/icons/tiny_shield.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Bounce"
@@ -245,3 +246,9 @@ __meta__ = {
 anims/Bounce = SubResource( 1 )
 anims/Display = SubResource( 2 )
 anims/Up = SubResource( 3 )
+
+[node name="Block" type="Sprite" parent="."]
+visible = false
+position = Vector2( -4, 2 )
+texture = ExtResource( 2 )
+centered = false

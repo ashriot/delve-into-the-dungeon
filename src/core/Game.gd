@@ -375,7 +375,7 @@ func _on_Check_pressed():
 	data.difficulty = difficulty
 	data.discovered = 1
 	data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
-	data.unlocked_heroes = ["Fighter", "Thief", "Priest", "Wizard", "Sorcerer", "Dancer"]
+	data.unlocked_heroes = ["Fighter", "Thief", "Priest", "Wizard", "Sorcerer", "Dancer", "Seer"]
 	data.gold = 0
 	if slot_num == 1: profile1.setup(data)
 	if slot_num == 2: profile2.setup(data)

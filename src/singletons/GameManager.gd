@@ -56,9 +56,6 @@ func initialize_game_data(_game):
 func initialize_party():
 	var players = {}
 	if !loading:
-		save_data.discovered = 1
-		save_data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
-		save_data.unlocked_heroes = ["Fighter", "Thief", "Wizard", "Sorcerer", "Dancer"]
 		save_data.bench = {}
 		print('initializing save data')
 		var i = 0
@@ -90,6 +87,7 @@ func initialize_party():
 			new_player.skill = player["skill"]
 			new_player.job_xp = player["job_xp"]
 			new_player.job_lv = player["job_lv"]
+			new_player.job_data = player["job_data"]
 			new_player.items = dict_to_items(player["items"])
 			new_player.perks = dict_to_perks(player["perks"])
 			new_player.equipment = dict_to_equips(player["equipment"])
@@ -179,6 +177,7 @@ func _on_player_changed(player: Player):
 	new_player["skill"] = player.skill
 	new_player["job_xp"] = player.job_xp
 	new_player["job_lv"] = player.job_lv
+	new_player["job_data"] = player.job_data
 	new_player["items"] = items_to_dict(player.items)
 	new_player["perks"] = perks_to_dict(player.perks)
 	new_player["equipment"] = equips_to_dict(player.equipment)

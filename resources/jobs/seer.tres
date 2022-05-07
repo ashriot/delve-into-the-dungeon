@@ -1,23 +1,22 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
-[ext_resource path="res://resources/actions/skills/sorcery/undertow.tres" type="Resource" id=6]
-[ext_resource path="res://resources/actions/skills/sorcery/mana_dart.tres" type="Resource" id=7]
+[ext_resource path="res://resources/actions/skills/arcana/arcanum.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
-name = "Senan"
-frame = 31
+name = "Cassandra"
+frame = 30
 hp_cur = 0
-hp_max = 32
+hp_max = 18
 ap = 0
-strength = 11
-agility = 9
-intellect = 14
+strength = 8
+agility = 10
+intellect = 13
 defense = 0
 hp_bonus = 0
 str_bonus = 0
@@ -36,14 +35,13 @@ perks = {
 3: null,
 4: null
 }
-job = "Sorcerer"
-job_tab = "Sorcery"
-job_skill = 25
-job_perk = "Sorcery"
-perk_desc = "Can equip 4 Sorcery skills.
-
-After combat, you have a chance to learn a new Sorcery skill."
+job = "Seer"
+job_tab = "Augur"
+job_skill = 22
+job_perk = "Augury"
+perk_desc = "Can draw 5 Arcana. After an arcanum is used, you must redraw your hand."
 job_data = {
+"Arcana": 0
 }
 skill = [ 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
@@ -58,10 +56,10 @@ items = {
 3: ExtResource( 2 ),
 4: null,
 5: ExtResource( 6 ),
-6: ExtResource( 7 ),
-7: null,
-8: null,
-9: null
+6: ExtResource( 6 ),
+7: ExtResource( 6 ),
+8: ExtResource( 6 ),
+9: ExtResource( 6 )
 }
 equipment = {
 0: null,

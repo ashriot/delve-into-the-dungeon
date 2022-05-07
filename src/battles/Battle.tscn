@@ -229,7 +229,7 @@ __meta__ = {
 }
 
 [node name="Portrait" type="Sprite" parent="CurrentPlayer"]
-position = Vector2( 0, 1 )
+position = Vector2( -1, 1 )
 texture = ExtResource( 9 )
 centered = false
 hframes = 10
@@ -237,10 +237,10 @@ vframes = 20
 frame = 23
 
 [node name="Name" type="RichTextLabel" parent="CurrentPlayer"]
-margin_left = 9.0
+margin_left = 8.0
 margin_right = 43.0
 margin_bottom = 7.0
-text = "Druid"
+text = "Cassandra"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false

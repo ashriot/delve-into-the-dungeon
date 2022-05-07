@@ -6,6 +6,8 @@ signal died(panel)
 signal show_dmg(text)
 signal show_text(text, pos, display)
 
+var arcanum = preload("res://resources/actions/skills/arcana/arcanum.tres")
+
 onready var button: = $Button
 onready var hp_gauge: = $HpGauge
 onready var ap_gauge = $ApGauge
@@ -90,7 +92,6 @@ func take_hit(hit) -> bool:
 	var multi = item.multiplier
 	if item.name == "Fireball":
 		if has_bane("Burn"):
-			print("Fireball!!!")
 			multi *= 2
 	var dmg = float((multi * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
@@ -104,7 +105,7 @@ func take_hit(hit) -> bool:
 	if not miss and !effect_only:
 		if blocking > 0:
 			if blocking >= dmg:
-				blocking -= dmg
+				self.blocking -= dmg
 				dmg = 0
 			else:
 				dmg -= blocking
@@ -142,7 +143,11 @@ func take_hit(hit) -> bool:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	return gained_xp
 
-func take_friendly_hit(user: BattlePanel, item: Item) -> void:
+func take_friendly_hit(user: BattlePanel, item: Action) -> void:
+	if item.name == "Draw Arcana":
+		user.unit.job_data["Arcana"] = 0
+		for i in range(5, 10):
+			user.unit.items[i] = arcanum
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)
 	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enums.StatType.NA else 0
 	if item.name == "Healing Haka":
@@ -153,9 +158,11 @@ func take_friendly_hit(user: BattlePanel, item: Item) -> void:
 		self.hp_cur += dmg
 		dmg_text = str(dmg)
 	elif item.damage_type == Enums.DamageType.BLOCK:
-		dmg_text = "Blk:" + str(dmg)
+		dmg_text = str(dmg)
 		self.blocking = max(blocking, dmg)
-	if dmg > 0: emit_signal("show_text", "+" + dmg_text, pos)
+	if dmg > 0:
+		emit_signal("show_text", "+" + dmg_text, pos)
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	self.ap += item.grant_ap
 	if item.inflict_banes.size() > 0:
 		for bane in item.inflict_banes:
@@ -294,12 +301,15 @@ func trigger_bane(bane_name: String) -> void:
 	if bane_name == "Bleed":
 		AudioController.play_sfx("gash")
 		take_damage(int(float(hp_max) * 0.1))
+		yield(get_tree().create_timer(0.15, true), "timeout")
 	if bane_name == "Burn":
 		AudioController.play_sfx("fire")
-		take_damage(unit.get_highest())
+		take_damage(unit.get_highest() * 0.5)
+		yield(get_tree().create_timer(0.15, true), "timeout")
 	if bane_name == "Poison":
 		AudioController.play_sfx("poison")
 		take_damage(max(int(float(hp_cur) * 0.2), 1))
+		yield(get_tree().create_timer(0.15, true), "timeout")
 
 func remove_boon(find: Effect) -> void:
 	for boon in boons:

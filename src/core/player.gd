@@ -10,6 +10,7 @@ export var job_tab: String
 export(Enums.SubItemType) var job_skill
 export var job_perk: String
 export(String, MULTILINE) var perk_desc
+export var job_data := {}
 
 export(Array) var skill := [
 	0, 0, 0, 0, 0,

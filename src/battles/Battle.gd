@@ -1,6 +1,7 @@
 extends Control
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
+var draw_arcana = preload("res://resources/actions/skills/arcana/draw_arcana.tres")
 
 signal enemy_done
 signal battle_done
@@ -49,11 +50,11 @@ func init(game):
 	var end_turn = load("res://resources/battleCommands/end_turn.tres")
 	var flee = load("res://resources/battleCommands/flee.tres")
 	battleMenu.get_child(0).init(self)
-	battleMenu.get_child(0).setup(inspect)
+	battleMenu.get_child(0).setup(inspect, 0)
 	battleMenu.get_child(1).init(self)
-	battleMenu.get_child(1).setup(end_turn)
+	battleMenu.get_child(1).setup(end_turn, 0)
 	battleMenu.get_child(2).init(self)
-	battleMenu.get_child(2).setup(flee)
+	battleMenu.get_child(2).setup(flee, 0)
 	player_panels.init(self)
 	enemy_panels.init(self)
 	for button in buttons.get_children(): button.init(self)
@@ -87,20 +88,29 @@ func setup_cur_player_panel() -> void:
 
 func setup_buttons() -> void:
 	setup_cur_player_panel()
+	var arcana = []
+	if cur_player.unit.job == "Seer":
+		arcana = ItemDb.get_five_arcana()
 	cur_tab = cur_player.tab
 	var i = 0
 	for button in buttons.get_children():
 		if i < cur_player.unit.items.size():
-			var item = cur_player.unit.items[i]
-			i += 1
-			if item == null:
+			if cur_player.unit.items[i] == null:
+				i += 1
 				button.clear()
 				continue
-			button.setup(item, cur_player.unit, !cur_player.quick_used)
+			print(cur_player.unit.items[i].name)
+			if cur_player.unit.items[i].name == "Arcanum":
+				var arcanum = arcana.pop_front()
+				cur_player.unit.items[i] = arcanum
+			button.setup(cur_player.unit.items[i], i, cur_player.unit, !cur_player.quick_used)
 			button.toggle(true)
+		i += 1
+
 	$Tabs/Tab1/Label.text = "Actions"
 	$Tabs/Tab2/Label.text = cur_player.unit.job_tab
 	display_tabs()
+	buttons.show()
 
 func display_tabs() -> void:
 	tab1.show()
@@ -109,7 +119,7 @@ func display_tabs() -> void:
 	if other_tab != 0: # Tab 1
 		$Tabs/Tab1.self_modulate = Enums.yellow_color
 		$Tabs/Tab2.self_modulate = default_tab_color
-	else:				# Tab 1
+	else:				# Tab 2
 		$Tabs/Tab1.self_modulate = default_tab_color
 		$Tabs/Tab2.self_modulate = Enums.yellow_color
 
@@ -154,7 +164,6 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 		enemy_panels.hide_all_selectors()
 	if beep: AudioController.select()
 	battleMenu.hide()
-	buttons.show()
 	cur_player = panel
 	panel.selected = true
 	setup_buttons()
@@ -186,6 +195,7 @@ func end_turn():
 func enemy_turns():
 	for enemy in enemy_panels.get_children():
 		if enemy.enabled and enemy.alive:
+			if enemy.blocking > 0: enemy.blocking = 0
 			enemy_take_action(enemy)
 			yield(self, "enemy_done")
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
@@ -235,13 +245,15 @@ func enemy_take_action(panel: EnemyPanel):
 					hit.hit_chance /= 2
 					hit.item.hit_chance /= 2
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
-					target.take_friendly_hit(hit)
+					target.take_friendly_hit(panel, action)
 				else: target.take_hit(hit)
 #			if action.target_type >= Enums.TargetType.ANY_ROW:
 #				AudioController.play_sfx(action.sound_fx)
 			if hit_num < hits - 1:
 				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
-		for target in targets: target.gained_xp = false
+		for target in targets:
+			if target is Player:
+				target.gained_xp = false
 	panel.decrement_banes("End")
 	emit_signal("enemy_done")
 
@@ -427,6 +439,9 @@ func execute_vs_enemy(panel) -> void:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	if gained_xp: cur_player.calc_xp(item.stat_used)
 	cur_player.calc_xp(item.stat_hit, 0.25)
+	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA and cur_btn.item.name != "Draw Arcana":
+		cur_player.unit.items[cur_btn.item_index] = draw_arcana
+		cur_player.unit.job_data["Arcana"] += 1
 	if not quick: get_next_player()
 	else: cur_btn = null
 
@@ -456,6 +471,9 @@ func execute_vs_player(panel) -> void:
 			target.take_friendly_hit(user, item)
 		if hit_num > hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
+	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA and cur_btn.item.name != "Draw Arcana":
+		cur_player.unit.items[cur_btn.item_index] = draw_arcana
+		cur_player.unit.job_data["Arcana"] += 1
 	if not quick: get_next_player()
 	else: cur_btn = null
 
