@@ -97,7 +97,7 @@ func setup_cur_player_panel() -> void:
 		var sp_cur = unit.job_data["sp_cur"]
 		var sp_max = unit.job_data["sp_max"]
 		cp_sp_cur.rect_size.x = sp_cur * 3
-		cp_sp_cur.rect_position.x = 17 - sp_cur * 3
+		cp_sp_cur.rect_position.x = 17 - sp_max * 3
 		cp_sp_max.rect_size.x = sp_max * 3
 		cp_sp_max.rect_position.x = 17 - sp_max * 3
 		cp_sorcery.show()
@@ -106,10 +106,10 @@ func setup_cur_player_panel() -> void:
 	if unit.job == "Bard":
 		var bp_cur = unit.job_data["bp_cur"]
 		var bp_max = unit.job_data["bp_max"]
-		cp_bp_cur.rect_size.x = (bp_cur * 2 + bp_cur % 2)
-		cp_bp_cur.rect_position.x = 16 - (bp_cur * 2 + bp_cur % 2)
-		cp_bp_max.rect_size.x = (bp_max * 2 + bp_max % 2)
-		cp_bp_max.rect_position.x = 16 - (bp_max * 2 + bp_max % 2)
+		cp_bp_cur.rect_size.x = (bp_cur * 2 + (1 if bp_cur > 0 else 0))
+		cp_bp_cur.rect_position.x = 16 - (bp_max * 2 + 1)
+		cp_bp_max.rect_size.x = (bp_max * 2 + 1)
+		cp_bp_max.rect_position.x = 16 - (bp_max * 2 + 1)
 		cp_perform.show()
 	else:
 		cp_perform.hide()
@@ -433,6 +433,7 @@ func execute_vs_enemy(panel) -> void:
 	if item.sub_type == Enums.SubItemType.PERFORM:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
 		user.unit.job_data["bp_cur"] -= bp
+		print("BP Cur: ", user.unit.job_data["bp_cur"])
 		ap_cost -= bp
 		if quick: setup_cur_player_panel()
 	user.ap -= ap_cost
@@ -454,7 +455,7 @@ func execute_vs_enemy(panel) -> void:
 	finish_action(!quick)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-	user.ap += item.gain_ap	
+	user.ap += item.gain_ap
 	var targets = [panel]
 	var randoms = []
 	var rand_targets = false
