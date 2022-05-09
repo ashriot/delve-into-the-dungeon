@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Tan Hat"
-description = "A simple hat made from animal hide."
+name = "Worn Helm"
+description = "A worn, iron helm."
 quality = 0
 rank = 0
-hp_bonus = 4
-str_bonus = 0
-agi_bonus = 1
+hp_bonus = 3
+str_bonus = 1
+agi_bonus = 0
 int_bonus = 0
 def_bonus = 0
 equipment_type = 0

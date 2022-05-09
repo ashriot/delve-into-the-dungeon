@@ -1,27 +1,26 @@
-[gd_resource type="Resource" load_steps=11 format=2]
+[gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/scrolls/chill.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/scrolls/clarity.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/sear.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=5]
-[ext_resource path="res://resources/equipment/body/cloth_shirt.tres" type="Resource" id=6]
-[ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/hands/cloth_gloves.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/feet/cloth_shoes.tres" type="Resource" id=9]
-[ext_resource path="res://resources/equipment/head/cloth_hat.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/body/worn_robe.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/hands/worn_bracelet.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/head/worn_hood.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/worn_shoes.tres" type="Resource" id=9]
 
 [resource]
 script = ExtResource( 1 )
 name = "Orfus"
 frame = 35
 hp_cur = 0
-hp_max = 28
+hp_max = 18
 ap = 0
 strength = 7
-agility = 13
-intellect = 15
-defense = 0
+agility = 12
+intellect = 13
+defense = 1
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -46,6 +45,8 @@ job_perk = "Wizardry"
 perk_desc = "Can equip 4 extra scrolls.
 
 Equipped scrolls consume 2 less AP."
+job_data = {
+}
 skill = [ 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.0
@@ -56,8 +57,8 @@ items = {
 0: ExtResource( 5 ),
 1: ExtResource( 4 ),
 2: ExtResource( 2 ),
-3: ExtResource( 7 ),
-4: ExtResource( 3 ),
+3: ExtResource( 3 ),
+4: null,
 5: null,
 6: null,
 7: null,
@@ -65,9 +66,9 @@ items = {
 9: null
 }
 equipment = {
-0: ExtResource( 10 ),
+0: ExtResource( 8 ),
 1: ExtResource( 6 ),
-2: ExtResource( 8 ),
+2: ExtResource( 7 ),
 3: ExtResource( 9 ),
 4: null,
 5: null

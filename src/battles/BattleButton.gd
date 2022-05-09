@@ -31,6 +31,10 @@ func setup(_item: Item, index: int,  _unit: Player = null, quick := false) -> vo
 	self.available = true
 	sprite.frame = item.frame
 	title.text = item.name
+	if item.sub_type == Enums.SubItemType.SORCERY:
+		var sp_cur = unit.job_data["sp_cur"]
+		if sp_cur > 0:
+			title.text += "+" + str(sp_cur)
 	if item.quick and quick:
 		quick_icon.show()
 		ap_label.modulate = Enums.quick_color
@@ -54,7 +58,7 @@ func update_ap_cost() -> void:
 	skill = max(unit.skill[item.sub_type], 0)
 	ap_cost = max(item.ap_cost - skill, 0)
 	if item.name == "Draw Arcana":
-		ap_cost = max(ap_cost - unit.job_data["Arcana"], 0)
+		ap_cost = max(ap_cost - unit.job_data["arcana"], 0)
 	self.available = not (unit.ap < ap_cost)
 
 func toggle(value) -> void:

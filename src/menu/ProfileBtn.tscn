@@ -9,7 +9,6 @@
 [ext_resource path="res://assets/images/icons/ok.png" type="Texture" id=8]
 
 [node name="ProfileBtn" type="Button"]
-self_modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
 margin_right = 70.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 68, 15 )
@@ -106,7 +105,6 @@ __meta__ = {
 }
 
 [node name="Deletion" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -117,18 +115,18 @@ __meta__ = {
 margin_left = 1.0
 margin_right = 69.0
 margin_bottom = 15.0
-color = Color( 0.372549, 0.619608, 0.807843, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Deletion/ColorRect"]
+[node name="Delete Prompt" type="Label" parent="Deletion/ColorRect"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -26.0
 margin_top = 7.0
 margin_right = 28.0
 margin_bottom = 13.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Delete Profile?"
 align = 1
 valign = 1

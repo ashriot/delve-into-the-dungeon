@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=12 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/bows/bronze_bow.tres" type="Resource" id=2]
@@ -7,22 +7,22 @@
 [ext_resource path="res://resources/actions/skills/dance/blade_dance.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/knives/worn_knife.tres" type="Resource" id=6]
 [ext_resource path="res://resources/actions/skills/dance/fan_strike.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/body/tan_vest.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/hands/tan_gloves.tres" type="Resource" id=9]
-[ext_resource path="res://resources/equipment/feet/tan_boots.tres" type="Resource" id=10]
-[ext_resource path="res://resources/equipment/head/tan_hat.tres" type="Resource" id=11]
+[ext_resource path="res://resources/equipment/body/worn_vest.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/worn_boots.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/worn_hat.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/hands/worn_gloves.tres" type="Resource" id=11]
 
 [resource]
 script = ExtResource( 1 )
 name = "Shay"
 frame = 2
 hp_cur = 0
-hp_max = 32
+hp_max = 24
 ap = 0
-strength = 9
-agility = 14
-intellect = 11
-defense = 0
+strength = 8
+agility = 12
+intellect = 10
+defense = 2
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -41,7 +41,7 @@ perks = {
 4: null
 }
 job = "Dancer"
-job_tab = "Dances"
+job_tab = "Dance"
 job_skill = 22
 job_perk = "Dance"
 perk_desc = "Can equip 4 Dance actions.
@@ -68,10 +68,10 @@ items = {
 9: null
 }
 equipment = {
-0: ExtResource( 11 ),
+0: ExtResource( 10 ),
 1: ExtResource( 8 ),
-2: ExtResource( 9 ),
-3: ExtResource( 10 ),
+2: ExtResource( 11 ),
+3: ExtResource( 9 ),
 4: null,
 5: null
 }

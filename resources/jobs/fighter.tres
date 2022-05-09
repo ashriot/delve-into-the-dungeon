@@ -1,26 +1,26 @@
 [gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/weapons/spears/iron_spear.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/weapons/swords/bronze_sword.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/weapons/shields/iron_shield.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/swords/iron_sword.tres" type="Resource" id=5]
-[ext_resource path="res://resources/equipment/head/tin_helm.tres" type="Resource" id=6]
-[ext_resource path="res://resources/equipment/body/tin_armor.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/hands/tin_bracers.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/feet/tin_boots.tres" type="Resource" id=9]
+[ext_resource path="res://resources/actions/weapons/spears/bronze_spear.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/weapons/shields/bronze_shield.tres" type="Resource" id=5]
+[ext_resource path="res://resources/equipment/head/worn_helm.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/worn_mail.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/feet/worn_greaves.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/hands/worn_gauntlet.tres" type="Resource" id=9]
 
 [resource]
 script = ExtResource( 1 )
 name = "Asher"
 frame = 4
 hp_cur = 0
-hp_max = 44
+hp_max = 30
 ap = 0
 strength = 13
-agility = 10
-intellect = 8
-defense = 0
+agility = 9
+intellect = 6
+defense = 4
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -40,25 +40,25 @@ perks = {
 }
 job = "Fighter"
 job_tab = "Weapons"
-job_skill = 27
+job_skill = 28
 job_perk = "Weapon Mastery"
 perk_desc = "Can equip 4 extra weapons.
 
 As you fight with weapons equipped, you gain passive effects for that weapon type."
 job_data = {
 }
-skill = [ 2, 0, 2, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+skill = [ 2, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
 job_lv = 0
 xp_cut = [ 1, 1, 1, 1, 1 ]
 gains = [ 0, 0, 0, 0, 0 ]
 items = {
-0: ExtResource( 5 ),
-1: ExtResource( 2 ),
-2: ExtResource( 4 ),
-3: ExtResource( 3 ),
-4: null,
+0: ExtResource( 2 ),
+1: ExtResource( 4 ),
+2: ExtResource( 5 ),
+3: null,
+4: ExtResource( 3 ),
 5: null,
 6: null,
 7: null,
@@ -68,7 +68,7 @@ items = {
 equipment = {
 0: ExtResource( 6 ),
 1: ExtResource( 7 ),
-2: ExtResource( 8 ),
-3: ExtResource( 9 ),
+2: ExtResource( 9 ),
+3: ExtResource( 8 ),
 4: null
 }

@@ -17,7 +17,6 @@ var user_pos: Vector2
 func init(_item, _hit_chance, _crit_chance, _bonus_dmg, _dmg_mod, _atk, _user, _split = 1):
 	item = _item as Action
 	hit_chance = _hit_chance
-	print("New Hit Chance: ", hit_chance)
 	crit_chance = _crit_chance
 	bonus_dmg = _bonus_dmg + item.bonus_damage
 	dmg_mod = _dmg_mod

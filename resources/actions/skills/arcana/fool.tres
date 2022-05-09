@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Fool"
+name = "The Fool"
 description = "Grant 2 AP."
 tier = 1
 ap_cost = 0

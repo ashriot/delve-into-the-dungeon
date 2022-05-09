@@ -26,7 +26,7 @@ func init(battle):
 	connect("died", battle, "_on_PlayerPanel_died", [self])
 
 func setup(_unit):
-	unit = _unit
+	unit = _unit as Player
 	unit.reset_xp()
 	tab = unit.tab
 	.setup(_unit)
@@ -35,6 +35,8 @@ func setup(_unit):
 	sprite.position.y = 2
 	self.selected = false
 	self.ready = true
+	if unit.job == "Sorcerer":
+		unit.job_data["sp_cur"] = unit.job_data["sp_max"]
 
 func update_status() -> void:
 	if statuses.size() == 0: status.hide()

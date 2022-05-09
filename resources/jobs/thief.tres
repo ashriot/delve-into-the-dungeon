@@ -1,15 +1,14 @@
-[gd_resource type="Resource" load_steps=11 format=2]
+[gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/bows/bronze_bow.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/weapons/knives/iron_knife.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/knives/bronze_knife.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
-[ext_resource path="res://resources/actions/weapons/knives/snake_knife.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/boomerangs/boomerang.tres" type="Resource" id=6]
-[ext_resource path="res://resources/equipment/body/tan_vest.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/hands/tan_gloves.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/feet/tan_boots.tres" type="Resource" id=9]
-[ext_resource path="res://resources/equipment/head/tan_hat.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/body/worn_vest.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/feet/worn_boots.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/head/worn_hat.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/hands/worn_gloves.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
@@ -19,9 +18,9 @@ hp_cur = 0
 hp_max = 24
 ap = 0
 strength = 8
-agility = 15
+agility = 13
 intellect = 9
-defense = 0
+defense = 2
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -46,6 +45,8 @@ job_perk = "Backstab"
 perk_desc = "Can equip 5 extra knives.
 
 Knives can target either row and have no back-row penalty."
+job_data = {
+}
 skill = [ 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.5
@@ -56,7 +57,7 @@ items = {
 0: ExtResource( 3 ),
 1: ExtResource( 2 ),
 2: ExtResource( 6 ),
-3: ExtResource( 5 ),
+3: null,
 4: ExtResource( 4 ),
 5: null,
 6: null,
@@ -65,10 +66,10 @@ items = {
 9: null
 }
 equipment = {
-0: ExtResource( 10 ),
+0: ExtResource( 9 ),
 1: ExtResource( 7 ),
-2: ExtResource( 8 ),
-3: ExtResource( 9 ),
+2: ExtResource( 10 ),
+3: ExtResource( 8 ),
 4: null,
 5: null
 }

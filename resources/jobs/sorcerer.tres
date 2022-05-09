@@ -1,24 +1,27 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
-[ext_resource path="res://resources/actions/skills/sorcery/undertow.tres" type="Resource" id=6]
-[ext_resource path="res://resources/actions/skills/sorcery/mana_dart.tres" type="Resource" id=7]
+[ext_resource path="res://resources/actions/skills/sorcery/flare.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/worn_robe.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/hands/worn_bracelet.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/worn_hood.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/feet/worn_shoes.tres" type="Resource" id=11]
 
 [resource]
 script = ExtResource( 1 )
 name = "Senan"
 frame = 31
 hp_cur = 0
-hp_max = 32
+hp_max = 21
 ap = 0
-strength = 11
+strength = 10
 agility = 9
-intellect = 14
-defense = 0
+intellect = 12
+defense = 2
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -44,6 +47,8 @@ perk_desc = "Can equip 4 Sorcery skills.
 
 After combat, you have a chance to learn a new Sorcery skill."
 job_data = {
+"sp_cur": 0,
+"sp_max": 1
 }
 skill = [ 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
@@ -58,16 +63,16 @@ items = {
 3: ExtResource( 2 ),
 4: null,
 5: ExtResource( 6 ),
-6: ExtResource( 7 ),
+6: null,
 7: null,
 8: null,
 9: null
 }
 equipment = {
-0: null,
-1: null,
-2: null,
-3: null,
+0: ExtResource( 10 ),
+1: ExtResource( 8 ),
+2: ExtResource( 9 ),
+3: ExtResource( 11 ),
 4: null,
 5: null
 }

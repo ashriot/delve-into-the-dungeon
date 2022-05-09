@@ -4,14 +4,14 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Tan Gloves"
-description = "Simple gloves made from animal hide."
+name = "Worn Bracelet"
+description = "A worn, simple bracelet."
 quality = 0
 rank = 0
-hp_bonus = 4
+hp_bonus = 1
 str_bonus = 0
-agi_bonus = 1
-int_bonus = 0
+agi_bonus = 0
+int_bonus = 1
 def_bonus = 0
 equipment_type = 2
 perks = [  ]

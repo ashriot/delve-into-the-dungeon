@@ -4,14 +4,14 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Cloth Shoes"
-description = "Simple, cotton shoes."
-quality = 0
+name = "Silk Robe"
+description = "The standard outfit for magic-users."
+quality = 1
 rank = 0
-hp_bonus = 3
+hp_bonus = 8
 str_bonus = 0
 agi_bonus = 0
-int_bonus = 1
-def_bonus = 0
-equipment_type = 3
+int_bonus = 2
+def_bonus = 5
+equipment_type = 1
 perks = [  ]

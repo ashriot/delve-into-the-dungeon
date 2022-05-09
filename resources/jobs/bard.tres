@@ -1,0 +1,78 @@
+[gd_resource type="Resource" load_steps=12 format=2]
+
+[ext_resource path="res://src/core/player.gd" type="Script" id=1]
+[ext_resource path="res://resources/actions/weapons/bows/bronze_bow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/weapons/knives/bronze_knife.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/skills/perform/whistle.tres" type="Resource" id=5]
+[ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=6]
+[ext_resource path="res://resources/actions/skills/perform/warn.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/body/worn_vest.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/worn_boots.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/worn_hat.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/hands/worn_gloves.tres" type="Resource" id=11]
+
+[resource]
+script = ExtResource( 1 )
+name = "Elan"
+frame = 1
+hp_cur = 0
+hp_max = 24
+ap = 0
+strength = 9
+agility = 10
+intellect = 11
+defense = 3
+hp_bonus = 0
+str_bonus = 0
+agi_bonus = 0
+int_bonus = 0
+def_bonus = 0
+hp_mods = [  ]
+str_mods = [  ]
+agi_mods = [  ]
+int_mods = [  ]
+def_mods = [  ]
+perks = {
+0: null,
+1: null,
+2: null,
+3: null,
+4: null
+}
+job = "Bard"
+job_tab = "Perform"
+job_skill = 25
+job_perk = "Perform"
+perk_desc = "Can equip 4 Perform actions.
+Gain BP as you use weapons and spells. BP is spent before AP on Perform actions."
+job_data = {
+"bp_cur": 1,
+"bp_max": 1
+}
+skill = [ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+job_xp = 0.0
+job_lv = 0
+xp_cut = [ 1, 1, 1, 1, 1 ]
+gains = [ 0, 0, 0, 0, 0 ]
+items = {
+0: ExtResource( 4 ),
+1: ExtResource( 2 ),
+2: ExtResource( 6 ),
+3: ExtResource( 3 ),
+4: null,
+5: ExtResource( 5 ),
+6: ExtResource( 7 ),
+7: null,
+8: null,
+9: null
+}
+equipment = {
+0: ExtResource( 10 ),
+1: ExtResource( 8 ),
+2: ExtResource( 11 ),
+3: ExtResource( 9 ),
+4: null,
+5: null
+}

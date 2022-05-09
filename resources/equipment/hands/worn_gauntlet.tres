@@ -4,14 +4,14 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Tan Vest"
-description = "A simple vest made of animal skins."
+name = "Worn Gauntlet"
+description = "A worn, iron gauntlet."
 quality = 0
 rank = 0
-hp_bonus = 8
-str_bonus = 0
-agi_bonus = 1
+hp_bonus = 3
+str_bonus = 1
+agi_bonus = 0
 int_bonus = 0
-def_bonus = 2
-equipment_type = 1
+def_bonus = 0
+equipment_type = 2
 perks = [  ]

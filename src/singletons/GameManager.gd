@@ -109,8 +109,11 @@ func items_to_dict(items: Dictionary) -> Dictionary:
 	for i in range(10):
 		if items[i] == null: dict[i] = null
 		else:
-			var item = items[i]
-			dict[i] = [item.name, item.uses]
+			var item = items[i] as Item
+			var item_name = item.name
+			if item.sub_type == Enums.SubItemType.ARCANA:
+				item_name == "Arcanum"
+			dict[i] = [item_name, item.uses]
 	return dict
 
 func dict_to_items(dict: Dictionary) -> Dictionary:

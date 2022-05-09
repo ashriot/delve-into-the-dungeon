@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Emperor"
-description = "Grant {tgt} Aegis and Safe."
+name = "The Emperor"
+description = "Grant {tgt} Aegis."
 tier = 3
 ap_cost = 1
 quick = true
@@ -28,7 +28,7 @@ split = false
 lifesteal = 0.0
 hit_chance = 0
 crit_chance = 0
-sound_fx = ""
+sound_fx = "aegis"
 use_fx = "arcana"
 inflict_boons = [ [ ExtResource( 2 ), 5, 100 ] ]
 inflict_banes = [  ]

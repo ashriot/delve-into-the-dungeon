@@ -4,14 +4,14 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Tan Boots"
-description = "Basic boots made from animal hides."
+name = "Worn Shoes"
+description = "Worn, cotton shoes."
 quality = 0
 rank = 0
-hp_bonus = 4
+hp_bonus = 1
 str_bonus = 0
-agi_bonus = 1
-int_bonus = 0
+agi_bonus = 0
+int_bonus = 1
 def_bonus = 0
 equipment_type = 3
 perks = [  ]

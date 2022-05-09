@@ -1,0 +1,39 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/banes/stun.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Judgment"
+description = "Inflict Stun."
+tier = 3
+ap_cost = 1
+quick = true
+item_type = 2
+sub_type = 22
+melee = false
+target_type = 6
+damage_type = 7
+stat_used = 6
+stat_vs = 6
+stat_hit = 6
+multiplier = 0.0
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+gain_ap = 0
+grant_ap = 0
+split = false
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "sheen"
+use_fx = "arcana"
+inflict_boons = [  ]
+inflict_banes = [ [ ExtResource( 2 ), 1, 100 ] ]
+gain_boons = [  ]
+gain_banes = [  ]
+max_uses = 0
+uses = 0
+price = 0

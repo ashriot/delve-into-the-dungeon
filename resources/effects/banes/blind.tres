@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource( 1 )
 name = "Blind"
-desc = ""
+desc = "Hit chance cut in half; cannot critically hit."
 frame = 21
 permanent = false
 turn_start = false
-turn_end = true
-triggered = false
+turn_end = false
+triggered = true

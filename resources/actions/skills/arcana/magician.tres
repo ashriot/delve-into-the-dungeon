@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Magician"
-description = "Grant 2 AP."
+name = "The Magician"
+description = "Deal {potency} {dmg} damage split between {tgt}."
 tier = 2
 ap_cost = 1
 quick = true

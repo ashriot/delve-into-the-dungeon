@@ -1,7 +1,6 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=2 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/boons/fast.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
@@ -18,7 +17,7 @@ damage_type = 3
 stat_used = 4
 stat_vs = 4
 stat_hit = 6
-multiplier = 2.0
+multiplier = 1.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -30,7 +29,7 @@ hit_chance = 0
 crit_chance = 0
 sound_fx = "flames"
 use_fx = "sorcery"
-inflict_boons = [ [ ExtResource( 2 ), 3, 100 ] ]
+inflict_boons = [  ]
 inflict_banes = [  ]
 gain_boons = [  ]
 gain_banes = [  ]

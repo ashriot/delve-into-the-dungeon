@@ -90,14 +90,15 @@ func take_hit(hit) -> bool:
 	var hit_roll = randi() % 100 + 1
 	if hit_roll > hit_chance: miss = true
 	var multi = item.multiplier
+	var dmg_mod = 1 + hit.dmg_mod
 	if item.name == "Fireball":
 		if has_bane("Burn"):
-			multi *= 2
+			dmg_mod += 1
 	var dmg = float((multi * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
 	var def_mod = float(def * 0.5) * multi
-	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", multi, " = ", dmg)
-	dmg = max(int((dmg - def_mod) * (1 + hit.dmg_mod)), 0)
+	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", multi, " x ", dmg_mod, "% = ", dmg)
+	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * multi, " DMG: ", dmg)
@@ -156,18 +157,21 @@ func take_hit(hit) -> bool:
 
 func take_friendly_hit(user: BattlePanel, item: Action) -> void:
 	if item.name == "Draw Arcana":
-		user.unit.job_data["Arcana"] = 0
+		user.unit.job_data["arcana"] = 0
 		for i in range(5, 10):
 			user.unit.items[i] = arcanum
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)
 	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enums.StatType.NA else 0
+	var dmg_mod = 1.0
 	if item.name == "Healing Haka":
 		def = int(float(hp_max - hp_cur) * 0.5)
-	elif item.name == "High Priestess":
-		def = int(float(hp_max) * 0.15)
 	var dmg_text = ""
+	if item.sub_type == Enums.SubItemType.SORCERY:
+		dmg_mod += user.unit.job_data["sp_cur"] * 0.33
+		user.unit.job_data["sp_cur"] = 0
 	if item.damage_type == Enums.DamageType.HEAL:
 		dmg += def
+		dmg = int(dmg * dmg_mod)
 		self.hp_cur += dmg
 		dmg_text = str(dmg)
 	elif item.damage_type == Enums.DamageType.BLOCK:
@@ -317,7 +321,6 @@ func decrement_banes(timing: String) -> void:
 
 func trigger_boon(boon_name: String) -> void:
 	if boon_name == "Mend":
-		AudioController.play_sfx("heal")
 		take_healing(int(float(hp_max) * 0.1))
 		yield(get_tree().create_timer(0.15, true), "timeout")
 	if boon_name == "Shield":
@@ -327,15 +330,12 @@ func trigger_boon(boon_name: String) -> void:
 
 func trigger_bane(bane_name: String) -> void:
 	if bane_name == "Bleed":
-		AudioController.play_sfx("gash")
 		take_damage(int(float(hp_max) * 0.1))
 		yield(get_tree().create_timer(0.15, true), "timeout")
 	if bane_name == "Burn":
-		AudioController.play_sfx("fire")
 		take_damage(unit.get_highest() * 0.5)
 		yield(get_tree().create_timer(0.15, true), "timeout")
 	if bane_name == "Poison":
-		AudioController.play_sfx("poison")
 		take_damage(max(int(float(hp_cur) * 0.2), 1))
 		yield(get_tree().create_timer(0.15, true), "timeout")
 
@@ -348,10 +348,10 @@ func remove_boon(find: Effect) -> void:
 		if s[0] == find.name:
 			remove_status(find.name)
 			break
-	if find.name == "Bold": unit.str_mods.remove(unit.str_mods.find(1.25))
-	elif find.name == "Fast": unit.agi_mods.remove(unit.agi_mods.find(1.25))
-	elif find.name == "Safe": unit.def_mods.remove(unit.def_mods.find(1.25))
-	elif find.name == "Wise": unit.int_mods.remove(unit.int_mods.find(1.25))
+	if find.name == "Bold": unit.str_mods.remove(unit.str_mods.find(1.2))
+	elif find.name == "Fast": unit.agi_mods.remove(unit.agi_mods.find(1.2))
+	elif find.name == "Safe": unit.def_mods.remove(unit.def_mods.find(1.2))
+	elif find.name == "Wise": unit.int_mods.remove(unit.int_mods.find(1.2))
 
 func remove_bane(find: Effect) -> void:
 	for bane in banes:
@@ -362,10 +362,10 @@ func remove_bane(find: Effect) -> void:
 		if s[0] == find.name:
 			remove_status(find.name)
 			break
-	if find.name == "Weak": unit.str_mods.remove(unit.str_mods.find(0.75))
-	elif find.name == "Slow": unit.agi_mods.remove(unit.agi_mods.find(0.75))
-	elif find.name == "Frail": unit.def_mods.remove(unit.def_mods.find(0.75))
-	elif find.name == "Dull": unit.int_mods.remove(unit.int_mods.find(0.75))
+	if find.name == "Weak": unit.str_mods.remove(unit.str_mods.find(0.8))
+	elif find.name == "Slow": unit.agi_mods.remove(unit.agi_mods.find(0.8))
+	elif find.name == "Frail": unit.def_mods.remove(unit.def_mods.find(0.8))
+	elif find.name == "Dull": unit.int_mods.remove(unit.int_mods.find(0.8))
 
 func add_status(value: Array) -> void:
 	statuses.append(value)

@@ -6,22 +6,22 @@
 [ext_resource path="res://resources/actions/staves/quell.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/staves/deflect.tres" type="Resource" id=6]
-[ext_resource path="res://resources/equipment/body/cloth_shirt.tres" type="Resource" id=7]
-[ext_resource path="res://resources/equipment/hands/cloth_gloves.tres" type="Resource" id=8]
-[ext_resource path="res://resources/equipment/feet/cloth_shoes.tres" type="Resource" id=9]
-[ext_resource path="res://resources/equipment/head/cloth_hat.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/body/worn_robe.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/hands/worn_bracelet.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/head/worn_hood.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/feet/worn_shoes.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
 name = "Cyrus"
 frame = 7
 hp_cur = 0
-hp_max = 40
+hp_max = 27
 ap = 0
-strength = 10
+strength = 9
 agility = 8
-intellect = 14
-defense = 0
+intellect = 12
+defense = 2
 hp_bonus = 0
 str_bonus = 0
 agi_bonus = 0
@@ -46,6 +46,8 @@ job_perk = "Staves"
 perk_desc = "Can equip 5 extra staves.
 
 Equipped staves require 1 less AP to use."
+job_data = {
+}
 skill = [ 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 xp = [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
 job_xp = 0.0
@@ -65,10 +67,10 @@ items = {
 9: null
 }
 equipment = {
-0: ExtResource( 10 ),
+0: ExtResource( 9 ),
 1: ExtResource( 7 ),
 2: ExtResource( 8 ),
-3: ExtResource( 9 ),
+3: ExtResource( 10 ),
 4: null,
 5: null
 }

@@ -241,12 +241,12 @@ func learned_skill(unit: Player) -> void:
 	var next = 7
 	var excluding = []
 	for i in range(4, 8):
-		if unit.items[i] == null:
+		if not unit.items[i]:
 			if next == 7: next = i
 		else: excluding.append(unit.items[i].name)
 
 	var skill = ItemDb.get_item_by_type(unit.job_skill, 1, excluding)
-	if skill == null:
+	if not skill:
 		print("WARNING: No more skills to learn for ", unit.name, "!")
 		return
 	unit.items[next] = skill
@@ -375,7 +375,7 @@ func _on_Check_pressed():
 	data.difficulty = difficulty
 	data.discovered = 1
 	data.dungeon_lvs = [1, 1, 1, 1, 1, 1, 1]
-	data.unlocked_heroes = ["Fighter", "Thief", "Priest", "Wizard", "Sorcerer", "Dancer", "Seer"]
+	data.unlocked_heroes = ["Fighter", "Thief", "Priest", "Wizard", "Sorcerer", "Dancer", "Seer", "Bard"]
 	data.gold = 0
 	if slot_num == 1: profile1.setup(data)
 	if slot_num == 2: profile2.setup(data)
