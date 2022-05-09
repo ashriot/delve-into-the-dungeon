@@ -111,6 +111,14 @@ func take_hit(hit) -> bool:
 				dmg -= blocking
 				self.blocking = 0
 		if dmg > 0: gained_xp = true
+		if item.damage_type == Enums.DamageType.MARTIAL:
+			if has_boon("Aegis"):
+				remove_boon(get_boon("Aegis"))
+				dmg = int(0.5 * dmg)
+		if item.damage_type != Enums.DamageType.MARTIAL:
+			if has_boon("Barrier"):
+				remove_boon(get_boon("Barrier"))
+				dmg = int(0.5 * dmg)
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
 		anim.play("Hit")
@@ -127,7 +135,10 @@ func take_hit(hit) -> bool:
 		AudioController.play_sfx(fx)
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
 		for bane in item.inflict_banes:
-			if randi() % 100 + 1 > bane[2]: continue
+			var chance = bane[2]
+			if item.sub_type == Enums.SubItemType.KNIFE and hit.user.unit.job == "Thief":
+				chance = 100
+			if randi() % 100 + 1 > chance: continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_bane(bane[0], bane[1])
 			if success:
@@ -151,7 +162,9 @@ func take_friendly_hit(user: BattlePanel, item: Action) -> void:
 	var dmg = int(item.multiplier * user.get_stat(item.stat_used) + item.bonus_damage)
 	var def = int(get_stat(item.stat_vs) * item.multiplier) if item.stat_vs != Enums.StatType.NA else 0
 	if item.name == "Healing Haka":
-		def = int(float(hp_max - hp_cur) * 0.33)
+		def = int(float(hp_max - hp_cur) * 0.5)
+	elif item.name == "High Priestess":
+		def = int(float(hp_max) * 0.15)
 	var dmg_text = ""
 	if item.damage_type == Enums.DamageType.HEAL:
 		dmg += def
@@ -163,7 +176,9 @@ func take_friendly_hit(user: BattlePanel, item: Action) -> void:
 	if dmg > 0:
 		emit_signal("show_text", "+" + dmg_text, pos)
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-	self.ap += item.grant_ap
+	if item.grant_ap != 0:
+		emit_signal("show_text", "+" + str(item.grant_ap) + "AP", pos)
+		self.ap += item.grant_ap
 	if item.inflict_banes.size() > 0:
 		for bane in item.inflict_banes:
 			if randi() % 100 + 1 > bane[2]: continue
@@ -281,6 +296,9 @@ func decrement_boons(timing: String) -> void:
 			(boon[0].turn_start and timing == "Start"):
 				print(boon[0].name, " -> ", boon[1])
 				boon[1] -= 1
+				if boon[0].triggered:
+					trigger_boon(boon[0].name)
+					yield(get_tree().create_timer(0.25, true), "timeout")
 				if boon[1] == 0:
 					remove_boon(boon[0])
 	emit_signal("done")
@@ -296,6 +314,16 @@ func decrement_banes(timing: String) -> void:
 				if bane[1] == 0:
 					remove_bane(bane[0])
 	call_deferred("emit_signal", "done")
+
+func trigger_boon(boon_name: String) -> void:
+	if boon_name == "Mend":
+		AudioController.play_sfx("heal")
+		take_healing(int(float(hp_max) * 0.1))
+		yield(get_tree().create_timer(0.15, true), "timeout")
+	if boon_name == "Shield":
+		AudioController.play_sfx("block")
+		self.blocking = (int(float(unit.get_highest())))
+		yield(get_tree().create_timer(0.15, true), "timeout")
 
 func trigger_bane(bane_name: String) -> void:
 	if bane_name == "Bleed":

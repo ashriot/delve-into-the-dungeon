@@ -6,6 +6,10 @@
 [ext_resource path="res://resources/actions/scrolls/rumble.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/scrolls/shock.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/skills/arcana/arcanum.tres" type="Resource" id=6]
+[ext_resource path="res://resources/equipment/body/cloth_shirt.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/hands/cloth_gloves.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/feet/cloth_shoes.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/head/cloth_hat.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
@@ -62,10 +66,10 @@ items = {
 9: ExtResource( 6 )
 }
 equipment = {
-0: null,
-1: null,
-2: null,
-3: null,
+0: ExtResource( 10 ),
+1: ExtResource( 7 ),
+2: ExtResource( 8 ),
+3: ExtResource( 9 ),
 4: null,
 5: null
 }

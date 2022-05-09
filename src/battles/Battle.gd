@@ -99,7 +99,6 @@ func setup_buttons() -> void:
 				i += 1
 				button.clear()
 				continue
-			print(cur_player.unit.items[i].name)
 			if cur_player.unit.items[i].name == "Arcanum":
 				var arcanum = arcana.pop_front()
 				cur_player.unit.items[i] = arcanum
@@ -200,6 +199,8 @@ func enemy_turns():
 			yield(self, "enemy_done")
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
+	if not battle_active: return
+	
 	for panel in player_panels.get_children():
 		if panel.alive: panel.ready = true
 	start_players_turns()
@@ -396,6 +397,11 @@ func execute_vs_enemy(panel) -> void:
 	var quick = item.quick and not cur_player.quick_used
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
+	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA:
+		if cur_btn.item.name != "Draw Arcana":
+			cur_player.unit.items[cur_btn.item_index] = draw_arcana
+			cur_player.unit.job_data["Arcana"] += 1
+		setup_buttons()
 	AudioController.play_sfx(item.use_fx)
 	finish_action(!quick)
 	show_text(item.name, user.pos)
@@ -439,9 +445,6 @@ func execute_vs_enemy(panel) -> void:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	if gained_xp: cur_player.calc_xp(item.stat_used)
 	cur_player.calc_xp(item.stat_hit, 0.25)
-	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA and cur_btn.item.name != "Draw Arcana":
-		cur_player.unit.items[cur_btn.item_index] = draw_arcana
-		cur_player.unit.job_data["Arcana"] += 1
 	if not quick: get_next_player()
 	else: cur_btn = null
 
@@ -450,6 +453,11 @@ func execute_vs_player(panel) -> void:
 	var item = cur_btn.item as Item
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	user.ap -= cur_btn.ap_cost
+	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA:
+		if cur_btn.item.name != "Draw Arcana":
+			cur_player.unit.items[cur_btn.item_index] = draw_arcana
+			cur_player.unit.job_data["Arcana"] += 1
+		setup_buttons()
 	AudioController.play_sfx(item.use_fx)
 	var quick = item.quick and not cur_player.quick_used
 	if item.sub_type == Enums.SubItemType.SHIELD:
@@ -471,9 +479,9 @@ func execute_vs_player(panel) -> void:
 			target.take_friendly_hit(user, item)
 		if hit_num > hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
-	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA and cur_btn.item.name != "Draw Arcana":
-		cur_player.unit.items[cur_btn.item_index] = draw_arcana
-		cur_player.unit.job_data["Arcana"] += 1
+	if user == panel:
+		setup_cur_player_panel()
+		get_tree().call_group("battle_btns", "update_ap_cost")
 	if not quick: get_next_player()
 	else: cur_btn = null
 

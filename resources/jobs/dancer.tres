@@ -7,6 +7,10 @@
 [ext_resource path="res://resources/actions/skills/dance/blade_dance.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/knives/worn_knife.tres" type="Resource" id=6]
 [ext_resource path="res://resources/actions/skills/dance/fan_strike.tres" type="Resource" id=7]
+[ext_resource path="res://resources/equipment/body/tan_vest.tres" type="Resource" id=8]
+[ext_resource path="res://resources/equipment/hands/tan_gloves.tres" type="Resource" id=9]
+[ext_resource path="res://resources/equipment/feet/tan_boots.tres" type="Resource" id=10]
+[ext_resource path="res://resources/equipment/head/tan_hat.tres" type="Resource" id=11]
 
 [resource]
 script = ExtResource( 1 )
@@ -64,10 +68,10 @@ items = {
 9: null
 }
 equipment = {
-0: null,
-1: null,
-2: null,
-3: null,
+0: ExtResource( 11 ),
+1: ExtResource( 8 ),
+2: ExtResource( 9 ),
+3: ExtResource( 10 ),
 4: null,
 5: null
 }

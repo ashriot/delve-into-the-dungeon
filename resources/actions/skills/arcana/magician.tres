@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/fast.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/boons/fast.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
@@ -9,11 +9,11 @@ name = "Magician"
 description = "Grant 2 AP."
 tier = 2
 ap_cost = 1
-quick = false
+quick = true
 item_type = 2
 sub_type = 22
 melee = false
-target_type = 9
+target_type = 12
 damage_type = 5
 stat_used = 4
 stat_vs = 4

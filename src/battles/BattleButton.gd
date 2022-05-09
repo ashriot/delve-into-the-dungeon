@@ -8,6 +8,7 @@ onready var ap_label = $ApCost
 onready var uses = $Uses
 
 var item: Item
+var unit: Player
 var item_index := 0
 var ap_cost: = 0
 var uses_remain: int setget set_uses_remain
@@ -20,12 +21,14 @@ func init(battle) -> void:
 	err = connect("pressed", battle, "_on_BattleButton_pressed", [self])
 	if err: print("There was an error connecting: ", err)
 
-func setup(_item: Item, index: int,  unit: Player = null, quick := false) -> void:
+func setup(_item: Item, index: int,  _unit: Player = null, quick := false) -> void:
+	item = _item
+	unit = _unit
+	disabled = false
 	item_index = index
 	enabled = true
 	self.selected = false
 	self.available = true
-	item = _item
 	sprite.frame = item.frame
 	title.text = item.name
 	if item.quick and quick:
@@ -34,15 +37,9 @@ func setup(_item: Item, index: int,  unit: Player = null, quick := false) -> voi
 	else:
 		quick_icon.hide()
 		ap_label.modulate = Enums.ap_color
-	var skill = 0
 	if unit != null:
-		skill = max(unit.skill[item.sub_type], 0)
-		ap_cost = max(item.ap_cost - skill, 0)
-		if item.name == "Draw Arcana":
-			ap_cost -= unit.job_data["Arcana"]
-		if unit.ap < ap_cost: self.available = false
+		update_ap_cost()
 	ap_label.text = str(ap_cost)
-	disabled = false
 	if item.max_uses > 0:
 		print(item.name, " max uses: ", item.max_uses)
 		uses.show()
@@ -50,6 +47,15 @@ func setup(_item: Item, index: int,  unit: Player = null, quick := false) -> voi
 		if uses_remain < 1: disabled = true
 	else:
 		uses.hide()
+
+func update_ap_cost() -> void:
+	if not unit: return
+	var skill = 0
+	skill = max(unit.skill[item.sub_type], 0)
+	ap_cost = max(item.ap_cost - skill, 0)
+	if item.name == "Draw Arcana":
+		ap_cost = max(ap_cost - unit.job_data["Arcana"], 0)
+	self.available = not (unit.ap < ap_cost)
 
 func toggle(value) -> void:
 	if value and enabled: show()
