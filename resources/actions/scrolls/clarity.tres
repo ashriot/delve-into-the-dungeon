@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 2 )
 name = "Clarity"
-description = "Grant {tgt} WISE for 5 turns."
+description = "Grant {tgt} Wise."
 tier = 2
 ap_cost = 1
 quick = true

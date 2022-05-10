@@ -45,7 +45,6 @@ func setup(_item: Item, index: int,  _unit: Player = null, quick := false) -> vo
 		update_ap_cost()
 	ap_label.text = str(ap_cost)
 	if item.max_uses > 0:
-		print(item.name, " max uses: ", item.max_uses)
 		uses.show()
 		self.uses_remain = item.uses
 		if uses_remain < 1: disabled = true

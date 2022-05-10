@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=10 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/swords/bronze_sword.tres" type="Resource" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://resources/equipment/body/worn_mail.tres" type="Resource" id=7]
 [ext_resource path="res://resources/equipment/feet/worn_greaves.tres" type="Resource" id=8]
 [ext_resource path="res://resources/equipment/hands/worn_gauntlet.tres" type="Resource" id=9]
+[ext_resource path="res://resources/actions/weapons/swords/iron_sword.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
@@ -59,7 +60,7 @@ items = {
 2: ExtResource( 5 ),
 3: null,
 4: ExtResource( 3 ),
-5: null,
+5: ExtResource( 10 ),
 6: null,
 7: null,
 8: null,

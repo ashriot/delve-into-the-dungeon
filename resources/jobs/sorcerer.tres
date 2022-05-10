@@ -41,7 +41,7 @@ perks = {
 }
 job = "Sorcerer"
 job_tab = "Sorcery"
-job_skill = 25
+job_skill = 26
 job_perk = "Sorcery"
 perk_desc = "Can equip 4 Sorcery skills.
 

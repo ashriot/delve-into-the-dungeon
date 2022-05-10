@@ -272,6 +272,7 @@ func enemy_take_action(panel: EnemyPanel):
 				if panel.has_bane("Blind"):
 					hit.hit_chance /= 2
 					hit.item.hit_chance /= 2
+					hit.crit_chance = 0
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(panel, action)
 				else: target.take_hit(hit)
@@ -344,7 +345,7 @@ func _on_BattleButton_long_pressed(button: BattleButton) -> void:
 	enemy_info.show()
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
-	if cur_player != null:
+	if cur_player:
 		if button.ap_cost > cur_player.ap: return
 	if button.tooltip: return
 	if !battle_active: return

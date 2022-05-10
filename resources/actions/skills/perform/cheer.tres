@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource( 1 )
 name = "Cheer"
-description = "Grant each other ally 1 AP."
+description = "Grant each other ally 2 AP."
 tier = 1
-ap_cost = 1
+ap_cost = 3
 quick = true
 item_type = 2
 sub_type = 25
@@ -22,7 +22,7 @@ bonus_damage = 0
 min_hits = 1
 max_hits = 1
 gain_ap = 0
-grant_ap = 1
+grant_ap = 2
 split = false
 lifesteal = 0.0
 hit_chance = 0

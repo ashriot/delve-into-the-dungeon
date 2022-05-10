@@ -77,7 +77,7 @@ func _exit_tree() -> void:
 func get_stat(stat) -> int:
 	return unit.get_stat(stat)
 
-func take_hit(hit) -> bool:
+func take_hit(hit: Hit) -> bool:
 	var gained_xp = false
 	var item = hit.item as Action
 	var effect_only = item.damage_type == Enums.DamageType.EFFECT_ONLY
@@ -97,10 +97,11 @@ func take_hit(hit) -> bool:
 	var dmg = float((multi * hit.atk) + hit.bonus_dmg)
 	var def = get_stat(item.stat_vs)
 	var def_mod = float(def * 0.5) * multi
-	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", multi, " x ", dmg_mod, "% = ", dmg)
+	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", multi, " x ", (dmg_mod * 100), "% = ", dmg)
 	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
+	print(" -> Hit Chance: ", hit_chance, "% roll: ", hit_roll, " Crit chance: ", crit_chance, "%")
 	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * multi, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:
@@ -126,6 +127,8 @@ func take_hit(hit) -> bool:
 	elif miss:
 		dmg_text = "MISS"
 		fx = "miss"
+		if hit.user.has_bane("Blind"):
+			hit.user.remove_bane(hit.user.get_bane("Blind"))
 	emit_signal("show_dmg", dmg_text, pos)
 	if lifesteal_heal > 0:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
@@ -349,6 +352,7 @@ func remove_boon(find: Effect) -> void:
 			remove_status(find.name)
 			break
 	if find.name == "Bold": unit.str_mods.remove(unit.str_mods.find(1.2))
+# BUG: OUT OF BOUNDS AT THE END OF A BATTLE
 	elif find.name == "Fast": unit.agi_mods.remove(unit.agi_mods.find(1.2))
 	elif find.name == "Safe": unit.def_mods.remove(unit.def_mods.find(1.2))
 	elif find.name == "Wise": unit.int_mods.remove(unit.int_mods.find(1.2))
