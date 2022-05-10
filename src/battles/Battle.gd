@@ -228,7 +228,7 @@ func enemy_turns():
 			enemy_take_action(enemy)
 			yield(self, "enemy_done")
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
-	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
+	yield(get_tree().create_timer(1 * GameManager.spd), "timeout")
 	if not battle_active: return
 	start_players_turns()
 
@@ -582,7 +582,7 @@ func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
 		if enemy.enabled and enemy.alive:
 			done = false
 	if done: battle_active = false
-	yield(get_tree().create_timer(0.5 * GameManager.spd, true), "timeout")
+	yield(get_tree().create_timer(0.25 * GameManager.spd, true), "timeout")
 	AudioController.play_sfx("die")
 	panel.clear()
 	if done: victory()

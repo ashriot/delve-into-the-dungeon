@@ -89,12 +89,17 @@ func die() -> void:
 	.die()
 
 func victory() -> void:
-	if !ready: self.ready = true
+	blocking = 0
+	banes.clear()
+	boons.clear()
+	statuses.clear()
 	unit.hp_mods.clear()
 	unit.str_mods.clear()
 	unit.agi_mods.clear()
 	unit.int_mods.clear()
 	unit.def_mods.clear()
+	if not ready: self.ready = true
+	
 	print(unit.name, " ", unit.gains)
 	anim.play("Victory")
 

@@ -108,8 +108,5 @@ func set_blocking(value: int) -> void:
 	else:
 		$Block.rect_size.x = 0
 
-func die():
-	.die()
-
 func get_melee_penalty() -> bool:
 	return get_index() > 2
