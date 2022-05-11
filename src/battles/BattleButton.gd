@@ -56,9 +56,12 @@ func update_ap_cost() -> void:
 	var skill = 0
 	skill = max(unit.skill[item.sub_type], 0)
 	ap_cost = max(item.ap_cost - skill, 0)
+	var bp = 0
+	if unit.job == "Bard":
+		bp = min(ap_cost, unit.job_data["bp_cur"])
 	if item.name == "Draw Arcana":
 		ap_cost = max(ap_cost - unit.job_data["arcana"], 0)
-	self.available = not (unit.ap < ap_cost)
+	self.available = not (unit.ap < (ap_cost - bp))
 
 func toggle(value) -> void:
 	if value and enabled: show()

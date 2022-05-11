@@ -130,19 +130,24 @@ func take_hit(hit: Hit) -> bool:
 		if hit.user.has_bane("Blind"):
 			hit.user.remove_bane(hit.user.get_bane("Blind"))
 	emit_signal("show_dmg", dmg_text, pos)
-	if lifesteal_heal > 0:
-		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-		hit.user.take_healing(lifesteal_heal)
 	if item.target_type >= Enums.TargetType.ONE_ENEMY \
 		and item.target_type <= Enums.TargetType.ONE_BACK \
 		or item.target_type == Enums.TargetType.RANDOM_ENEMY:
 		AudioController.play_sfx(fx)
+	if has_bane("Sleep"):
+		remove_bane(get_bane("Sleep"))
+	if lifesteal_heal > 0:
+		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+		hit.user.take_healing(lifesteal_heal)
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
 		for bane in item.inflict_banes:
 			var chance = bane[2]
 			if item.sub_type == Enums.SubItemType.KNIFE and hit.user.unit.job == "Thief":
 				chance = 100
-			if randi() % 100 + 1 > chance: continue
+			if randi() % 100 + 1 > chance: # resisted
+				if effect_only:
+					emit_signal("show_text", "RESIST", pos)
+				continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_bane(bane[0], bane[1])
 			if success:
@@ -341,6 +346,8 @@ func trigger_bane(bane_name: String) -> void:
 	if bane_name == "Poison":
 		take_damage(max(int(float(hp_cur) * 0.2), 1))
 		yield(get_tree().create_timer(0.15, true), "timeout")
+	if bane_name == "Sleep":
+		emit_signal("show_text", "Asleep", pos)
 
 func remove_boon(find: Effect) -> void:
 	for boon in boons:

@@ -242,8 +242,16 @@ func enemy_take_action(panel: EnemyPanel):
 	var stunned = false
 	if panel.has_bane("Stun"):
 		stunned = true
-		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-	if !stunned:
+	if panel.has_bane("Sleep"):
+		var roll = randi() % 100
+		if roll < 20:
+			panel.remove_bane(panel.get_bane("Sleep"))
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+		else:
+			panel.trigger_bane("Sleep")
+			stunned = true
+	if stunned: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	else:
 		var action = panel.get_action()
 		AudioController.play_sfx(action.use_fx)
 		show_text(action.name, panel.pos)
@@ -347,7 +355,7 @@ func _on_BattleButton_long_pressed(button: BattleButton) -> void:
 
 func _on_BattleButton_pressed(button: BattleButton) -> void:
 	if cur_player:
-		if button.ap_cost > cur_player.ap: return
+		if not button.available: return
 	if button.tooltip: return
 	if !battle_active: return
 	if button.item.name == "End Turn":
