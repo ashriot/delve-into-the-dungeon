@@ -493,8 +493,8 @@ func execute_vs_enemy(panel) -> void:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
-	if gained_xp: cur_player.calc_xp(item.stat_used)
-	cur_player.calc_xp(item.stat_hit, 0.25)
+	if gained_xp: user.calc_xp(item.stat_used)
+	user.calc_xp(item.stat_hit, 0.25)
 	if quick:
 		if user == panel:
 			setup_cur_player_panel()

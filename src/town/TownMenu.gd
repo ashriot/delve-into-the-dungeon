@@ -179,6 +179,7 @@ func _on_TavernLeaveBtn_pressed():
 var docks_lv := 1
 
 func _on_DocksBtn_pressed():
+	if not game.players: return
 	game.battle_start(docks_lv)
 
 func _on_Down_pressed():
