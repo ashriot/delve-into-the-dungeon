@@ -1,14 +1,17 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/boons/shield.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/boons/bold.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/boons/safe.tres" type="Resource" id=3]
+[ext_resource path="res://resources/effects/boons/fast.tres" type="Resource" id=4]
+[ext_resource path="res://resources/effects/boons/wise.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
 name = "Hierophant"
-description = "Grant {tgt} Shield."
+description = "Grant {tgt} Bold, Fast, Safe, and Wise."
 tier = 3
-ap_cost = 1
+ap_cost = 2
 quick = true
 item_type = 2
 sub_type = 22
@@ -30,7 +33,7 @@ hit_chance = 0
 crit_chance = 0
 sound_fx = "block"
 use_fx = "arcana"
-inflict_boons = [ [ ExtResource( 2 ), 100, 100 ] ]
+inflict_boons = [ [ ExtResource( 2 ), 100, 100 ], [ ExtResource( 4 ), 100, 100 ], [ ExtResource( 3 ), 100, 100 ], [ ExtResource( 5 ), 100, 100 ] ]
 inflict_banes = [  ]
 gain_boons = [  ]
 gain_banes = [  ]

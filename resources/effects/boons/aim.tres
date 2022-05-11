@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/effect.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Aim"
+desc = "Next attack cannot miss and has +30% crit chance."
+frame = 1
+permanent = false
+turn_start = false
+turn_end = false
+triggered = true

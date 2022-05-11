@@ -265,9 +265,10 @@ func enemy_take_action(panel: EnemyPanel):
 				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
 				var hit = Hit.new()
 				var hit_chance = 100 if !panel.has_perk("Precise") else 150
-				if action.item_type == Enums.ItemType.MARTIAL_SKILL or \
-					action.item_type == Enums.ItemType.WEAPON:
-					hit_chance = panel.get_stat(Enums.StatType.AGI)
+				if (action.item_type == Enums.ItemType.MARTIAL_SKILL or \
+					action.item_type == Enums.ItemType.WEAPON) and \
+					not panel.has_boon("Aim"):
+						hit_chance = panel.get_stat(Enums.StatType.AGI)
 				hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
 				if panel.has_bane("Blind"):
 					hit.hit_chance /= 2
@@ -378,7 +379,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		and target_type <= Enums.TargetType.RANDOM_ALLY:
 		player_panels.show_selectors(cur_player, button.item.target_type)
 	else:
-		if button.item.stat_hit == Enums.StatType.AGI:
+		if button.item.stat_hit == Enums.StatType.AGI and not cur_player.has_boon("Aim"):
 			cur_hit_chance = int(cur_player.get_stat(Enums.StatType.AGI)) \
 				 + (50 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enums.StatType.AGI
@@ -468,6 +469,8 @@ func execute_vs_enemy(panel) -> void:
 		targets = enemy_panels.get_all()
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
 	if item.target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
+	if cur_player.has_boon("Aim"):
+		cur_player.remove_boon(cur_player.get_boon("Aim"))
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
