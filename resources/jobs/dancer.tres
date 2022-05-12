@@ -18,6 +18,7 @@ name = "Shay"
 frame = 2
 hp_cur = 0
 hp_max = 24
+hp_percent = 0.0
 ap = 0
 strength = 8
 agility = 12

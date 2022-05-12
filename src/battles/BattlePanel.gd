@@ -101,7 +101,7 @@ func take_hit(hit: Hit) -> bool:
 	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(" -> Hit Chance: ", hit_chance, "% roll: ", hit_roll, " Crit chance: ", crit_chance, "%")
+	print(" -> Hit: ", hit_roll, " > ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit chance: ", crit_chance, "%")
 	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * multi, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:

@@ -92,7 +92,7 @@ func setup_cur_player_panel() -> void:
 	cp_ap.bbcode_text = str(cur_player.ap)
 	var quick_color = "#c32454" if !cur_player.quick_used else "#625565"
 	cp_quick.modulate = quick_color
-	var unit = cur_player.unit as Player
+	var unit = cur_player.unit
 	if unit.job == "Sorcerer":
 		var sp_cur = unit.job_data["sp_cur"]
 		var sp_max = unit.job_data["sp_max"]
@@ -244,7 +244,7 @@ func enemy_take_action(panel: EnemyPanel):
 		stunned = true
 	if panel.has_bane("Sleep"):
 		var roll = randi() % 100
-		if roll < 20:
+		if roll < 25:
 			panel.remove_bane(panel.get_bane("Sleep"))
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		else:
@@ -257,6 +257,7 @@ func enemy_take_action(panel: EnemyPanel):
 		show_text(action.name, panel.pos)
 		panel.anim.play("Hit")
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+		# TODO: Add friendly targeting.
 		var targets = get_enemy_targets(panel, action)
 		var randoms = [] # Fix random targeting
 		var rand_targets = false
@@ -271,6 +272,8 @@ func enemy_take_action(panel: EnemyPanel):
 				var atk = panel.get_stat(action.stat_used)
 				var dmg_mod = 0
 				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
+				if action.name == "Drown":
+					dmg_mod += (1 - target.unit.hp_percent)
 				var hit = Hit.new()
 				var hit_chance = 100 if !panel.has_perk("Precise") else 150
 				if (action.item_type == Enums.ItemType.MARTIAL_SKILL or \

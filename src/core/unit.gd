@@ -7,6 +7,7 @@ export var frame: int
 export var hp_cur: int
 
 export var hp_max: int setget, get_hp_max
+export var hp_percent: float setget, get_hp_percent
 export var ap: int
 export var strength: int setget, get_strength
 export var agility: int setget, get_agility
@@ -44,6 +45,10 @@ func get_hp_max() -> int:
 	for mod in hp_mods:
 		hp_mod *= mod
 	return int((hp_max + hp_bonus) * (hp_mod))
+
+func get_hp_percent() -> float:
+	if self.hp_max < 1: return 0.0
+	return float(self.hp_cur) / self.hp_max
 
 func get_strength() -> int:
 	var str_mod = 1.0

@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
 [ext_resource path="res://resources/enemy actions/slap.tres" type="Resource" id=2]
 [ext_resource path="res://resources/enemy actions/shell_guard.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemy actions/drown.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -39,7 +40,7 @@ def_rating = 4
 actions = {
 0: ExtResource( 2 ),
 1: ExtResource( 3 ),
-2: null,
+2: ExtResource( 4 ),
 3: null,
 4: null
 }
