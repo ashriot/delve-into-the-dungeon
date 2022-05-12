@@ -43,7 +43,7 @@ perks = {
 }
 job = "Dancer"
 job_tab = "Dance"
-job_skill = 22
+job_skill = 23
 job_perk = "Dance"
 perk_desc = "Can equip 4 Dance actions.
 

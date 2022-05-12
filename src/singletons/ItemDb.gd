@@ -26,7 +26,7 @@ func get_item(item_name: String) -> Item:
 		if item.name == item_name: return item.duplicate()
 	return null
 
-func get_perk(perk_name: String) -> Item:
+func get_perk(perk_name: String) -> Perk:
 	for perk in perks:
 		if perk.name == perk_name: return perk.duplicate()
 	return null

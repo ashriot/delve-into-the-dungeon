@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=11 format=2]
+[gd_resource type="Resource" load_steps=12 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/swords/bronze_sword.tres" type="Resource" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://resources/equipment/feet/worn_greaves.tres" type="Resource" id=8]
 [ext_resource path="res://resources/equipment/hands/worn_gauntlet.tres" type="Resource" id=9]
 [ext_resource path="res://resources/actions/weapons/swords/iron_sword.tres" type="Resource" id=10]
+[ext_resource path="res://resources/perks/sword_mastery.tres" type="Resource" id=11]
 
 [resource]
 script = ExtResource( 1 )
@@ -34,7 +35,7 @@ agi_mods = [  ]
 int_mods = [  ]
 def_mods = [  ]
 perks = {
-0: null,
+0: ExtResource( 11 ),
 1: null,
 2: null,
 3: null,

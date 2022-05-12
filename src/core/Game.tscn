@@ -733,8 +733,8 @@ margin_right = 68.0
 margin_bottom = 24.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
 custom_fonts/font = ExtResource( 17 )
-text = "Fort
-    Pico"
+text = "   Pico
+Quest"
 valign = 1
 uppercase = true
 __meta__ = {

@@ -5,6 +5,7 @@ signal done
 signal died(panel)
 signal show_dmg(text)
 signal show_text(text, pos, display)
+signal dmg_dealt(dmg, user, action)
 
 var arcanum = preload("res://resources/actions/skills/arcana/arcanum.tres")
 
@@ -43,6 +44,7 @@ func init(battle) -> void:
 	connect("show_dmg", battle, "show_dmg_text")
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
+	connect("dmg_dealt", battle, "dmg_dealt")
 
 func setup(_unit):
 	anim.stop()
@@ -124,6 +126,7 @@ func take_hit(hit: Hit) -> bool:
 		self.hp_cur -= dmg
 		dmg_text = str(dmg)
 		anim.play("Hit")
+		emit_signal("dmg_dealt", dmg, hit.user, hit.item)
 	elif miss:
 		dmg_text = "MISS"
 		fx = "miss"
@@ -435,3 +438,6 @@ func get_melee_penalty() -> bool:
 
 func has_perk(perk_name: String) -> bool:
 	return unit.has_perk(perk_name)
+
+func get_perk(perk_name: String) -> int:
+	return unit.get_perk(perk_name)

@@ -135,3 +135,10 @@ func has_perk(perk_name) -> bool:
 		if perks[i].name == perk_name:
 			return true
 	return false
+
+func get_perk(perk_name) -> int:
+	for i in perks.size():
+		if not perks[i]: continue
+		elif perks[i].name == perk_name:
+			return perks[i].rank
+	return -1

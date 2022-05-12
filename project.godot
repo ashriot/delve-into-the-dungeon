@@ -188,7 +188,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Fort Pico"
+config/name="Pico Quest"
 config/description="A party-based dungeon crawler!"
 run/main_scene="res://src/core/Game.tscn"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )

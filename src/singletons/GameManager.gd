@@ -107,7 +107,7 @@ func initialize_party():
 func items_to_dict(items: Dictionary) -> Dictionary:
 	var dict = {}
 	for i in range(10):
-		if items[i] == null: dict[i] = null
+		if not items[i]: dict[i] = null
 		else:
 			var item = items[i] as Item
 			var item_name = item.name
@@ -121,17 +121,17 @@ func dict_to_items(dict: Dictionary) -> Dictionary:
 	for i in range(10):
 		if dict[i] == null: items[i] = null
 		else:
-			var item = ItemDb.get_item(dict[i][0])
-			item.uses = dict[i][1]
+			var item = ItemDb.get_item(dict[i][0]) as Item
 			items[i] = item
+			item.uses = dict[i][1]
 	return items
 
 func perks_to_dict(perks: Dictionary) -> Dictionary:
 	var dict = {}
 	for i in range(5):
-		if perks[i] == null: dict[i] = null
+		if not perks[i]: dict[i] = null
 		else:
-			dict[i] = perks[i].name
+			dict[i] = [perks[i].name, perks[i].rank]
 	return dict
 
 func equips_to_dict(equips: Dictionary) -> Dictionary:
@@ -145,10 +145,11 @@ func equips_to_dict(equips: Dictionary) -> Dictionary:
 func dict_to_perks(dict: Dictionary) -> Dictionary:
 	var perks = {}
 	for i in range(5):
-			if dict[i] == null: perks[i] = null
+			if not dict[i]: perks[i] = null
 			else:
-				var perk = ItemDb.get_perk(dict[i])
+				var perk = ItemDb.get_perk(dict[i][0]) as Perk
 				perks[i] = perk
+				perk.rank = dict[i][1]
 	return perks
 
 func dict_to_equips(dict: Dictionary) -> Dictionary:

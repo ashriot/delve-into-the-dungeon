@@ -274,7 +274,8 @@ func enemy_take_action(panel: EnemyPanel):
 			for target in targets:
 				if not target.alive: continue
 				var atk = panel.get_stat(action.stat_used)
-				var dmg_mod = 0
+				var dmg_mod = 0.0
+				var dmg_add = 0
 				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
 				if action.name == "Drown":
 					dmg_mod += (1 - target.unit.hp_percent)
@@ -284,7 +285,7 @@ func enemy_take_action(panel: EnemyPanel):
 					action.item_type == Enums.ItemType.WEAPON) and \
 					not panel.has_boon("Aim"):
 						hit_chance = panel.get_stat(Enums.StatType.AGI)
-				hit.init(action, hit_chance, action.crit_chance, 0, dmg_mod, atk, panel)
+				hit.init(action, hit_chance, action.crit_chance, dmg_add, dmg_mod, atk, panel)
 				if panel.has_bane("Blind"):
 					hit.hit_chance /= 2
 					hit.item.hit_chance /= 2
@@ -348,6 +349,13 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	if display: damage_text.display(self, text)
 	else: damage_text.text(self, text)
 
+func dmg_dealt(dmg: int, user: BattlePanel, action: Action) -> void:
+	if user.has_perk("Deflection") and action.melee:
+		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+		var amt = int(dmg * user.get_perk("Deflection") * 0.05)
+		show_dmg_text("+" + str(amt), user.pos)
+		user.blocking = amt
+
 func learned_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
 	damage_text.rect_global_position = pos
@@ -404,13 +412,14 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_hit_chance = 100
 			cur_crit_chance = 0
 			cur_stat_type = Enums.StatType.NA
-		var dmg_mod = 0
+		var dmg_mod = 0.0
+		var dmg_add = 0
 		if melee_penalty: dmg_mod -= 0.50
 		if cur_btn.item.sub_type == Enums.SubItemType.SORCERY:
 			dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.33
 		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
-		hit.init(button.item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player)
+		hit.init(button.item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player)
 		enemy_panels.update_item_stats(hit)
 		enemy_panels.show_selectors(target_type)
 
@@ -442,6 +451,7 @@ func execute_vs_enemy(panel) -> void:
 	var quick = item.quick and not cur_player.quick_used
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var dmg_mod = 0.0
+	var dmg_add = 0
 	if item.sub_type == Enums.SubItemType.SORCERY:
 		print("SP Cur: ", user.unit.job_data["sp_cur"])
 		dmg_mod += user.unit.job_data["sp_cur"] * 0.33
@@ -486,25 +496,26 @@ func execute_vs_enemy(panel) -> void:
 	if item.target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
+	var atk = user.get_stat(item.stat_used)
+	var melee_penalty = item.melee and cur_player.melee_penalty
+	if (cur_player.unit.job == "Thief" and item.sub_type == Enums.SubItemType.KNIFE):
+		melee_penalty = false
+	if melee_penalty: dmg_mod -= 0.50
+	if user.has_perk("Magic Weapon") and item.sub_type != Enums.SubItemType.WAND:
+		atk += int(user.unit.intellect * (user.get_perk("Magic Weapon") * 0.5))
+		cur_hit_chance += 25
+	if item.sub_type == Enums.SubItemType.SWORD and user.has_perk("Sword Mastery"):
+		atk += int(user.unit.agility * (user.get_perk("Sword Mastery") * 0.05))
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
 			if targets == []: break
 		for target in targets:
 			if not target.alive: continue
-			var melee_penalty = item.melee and cur_player.melee_penalty
-			if (cur_player.unit.job == "Thief" and item.sub_type == Enums.SubItemType.KNIFE):
-				melee_penalty = false
-			if melee_penalty: dmg_mod -= 0.50
-			var atk = user.get_stat(item.stat_used)
-			if user.has_perk("Magic Weapon") and item.sub_type != Enums.SubItemType.WAND:
-				atk += int(user.unit.intellect * 0.5)
-				cur_hit_chance += 25
 			var hit = Hit.new()
 			var split = 1
 			if item.split: split = targets.size()
-			print("Damage Mod: ", dmg_mod)
-			hit.init(item, cur_hit_chance, cur_crit_chance, 0, dmg_mod, atk, cur_player, split)
+			hit.init(item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player, split)
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if item.target_type >= Enums.TargetType.ANY_ROW:

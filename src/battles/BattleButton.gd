@@ -29,6 +29,7 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 	self.selected = false
 	self.available = true
 	sprite.frame = item.frame
+	title.text = item.name
 	if panel:
 		unit = panel.unit
 		if item.sub_type == Enums.SubItemType.SORCERY:
@@ -45,7 +46,6 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 		if item.item_type == Enums.ItemType.MARTIAL_SKILL or \
 			item.item_type == Enums.ItemType.WEAPON:
 				self.available = not panel.has_bane("Pain")
-	title.text = item.name
 	ap_label.text = str(ap_cost)
 	if item.max_uses > 0:
 		uses.show()
