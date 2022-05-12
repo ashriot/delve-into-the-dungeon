@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/core/enemy.gd" type="Script" id=1]
 [ext_resource path="res://resources/enemy actions/goop.tres" type="Resource" id=2]
-[ext_resource path="res://resources/enemy actions/gob_bow.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemy actions/toxic_sludge.tres" type="Resource" id=3]
+[ext_resource path="res://resources/enemy actions/disarm.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,6 +11,7 @@ name = "Slime"
 frame = 20
 hp_cur = 0
 hp_max = 0
+hp_percent = 0.0
 ap = 0
 strength = 0
 agility = 0
@@ -39,7 +41,7 @@ def_rating = 10
 actions = {
 0: ExtResource( 2 ),
 1: ExtResource( 3 ),
-2: null,
+2: ExtResource( 4 ),
 3: null,
 4: null
 }

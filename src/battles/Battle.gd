@@ -131,7 +131,7 @@ func setup_buttons() -> void:
 			if cur_player.unit.items[i].name == "Arcanum":
 				var arcanum = arcana.pop_front()
 				cur_player.unit.items[i] = arcanum
-			button.setup(cur_player.unit.items[i], i, cur_player.unit, !cur_player.quick_used)
+			button.setup(cur_player.unit.items[i], i, cur_player)
 			button.toggle(true)
 		i += 1
 
@@ -218,7 +218,11 @@ func get_next_player(delay: = true) -> void:
 
 func end_turn():
 	chose_next = false
-	yield(get_tree().create_timer(0.75 * GameManager.spd), "timeout")
+	yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+	for panel in player_panels.get_children():
+		panel.decrement_boons("End")
+		panel.decrement_banes("End")
+	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	enemy_turns()
 
 func enemy_turns():
@@ -572,7 +576,6 @@ func finish_action(spend_turn: = true) -> void:
 		cur_player.selected = false
 		clear_buttons()
 		cur_player.ready = false
-		cur_player.decrement_boons("End")
 	else:
 		cur_player.quick_used = true
 		setup_buttons()

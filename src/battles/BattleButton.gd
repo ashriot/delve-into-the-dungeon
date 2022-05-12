@@ -21,28 +21,31 @@ func init(battle) -> void:
 	err = connect("pressed", battle, "_on_BattleButton_pressed", [self])
 	if err: print("There was an error connecting: ", err)
 
-func setup(_item: Item, index: int,  _unit: Player = null, quick := false) -> void:
+func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 	item = _item
-	unit = _unit
-	disabled = false
 	item_index = index
 	enabled = true
+	disabled = false
 	self.selected = false
 	self.available = true
 	sprite.frame = item.frame
-	title.text = item.name
-	if item.sub_type == Enums.SubItemType.SORCERY:
-		var sp_cur = unit.job_data["sp_cur"]
-		if sp_cur > 0:
-			title.text += "+" + str(sp_cur)
-	if item.quick and quick:
-		quick_icon.show()
-		ap_label.modulate = Enums.quick_color
-	else:
-		quick_icon.hide()
-		ap_label.modulate = Enums.ap_color
-	if unit != null:
+	if panel:
+		unit = panel.unit
+		if item.sub_type == Enums.SubItemType.SORCERY:
+			var sp_cur = unit.job_data["sp_cur"]
+			if sp_cur > 0:
+				title.text += "+" + str(sp_cur)
+		if item.quick and not panel.quick_used:
+			quick_icon.show()
+			ap_label.modulate = Enums.quick_color
+		else:
+			quick_icon.hide()
+			ap_label.modulate = Enums.ap_color
 		update_ap_cost()
+		if item.item_type == Enums.ItemType.MARTIAL_SKILL or \
+			item.item_type == Enums.ItemType.WEAPON:
+				self.available = not panel.has_bane("Pain")
+	title.text = item.name
 	ap_label.text = str(ap_cost)
 	if item.max_uses > 0:
 		uses.show()

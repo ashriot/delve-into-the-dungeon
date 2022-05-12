@@ -1,12 +1,12 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/enemy_action.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/banes/slow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/banes/poison.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Goop"
-description = "Deal {potency} {dmg} damage to {tgt}.
+name = "Toxic Sludge"
+description = "Deal {potency} {dmg} damage to {tgt}; inflict Poison.
 {aim}"
 tier = 1
 ap_cost = 2
@@ -14,12 +14,12 @@ quick = false
 item_type = 1
 sub_type = 28
 melee = false
-target_type = 7
-damage_type = 0
+target_type = 6
+damage_type = 2
 stat_used = 2
-stat_vs = 3
+stat_vs = 5
 stat_hit = 3
-multiplier = 1.0
+multiplier = 2.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -27,14 +27,14 @@ gain_ap = 0
 grant_ap = 0
 split = false
 lifesteal = 0.0
-hit_chance = 110
+hit_chance = 90
 crit_chance = 0
-sound_fx = "down1"
+sound_fx = "splash"
 use_fx = "toss"
 inflict_boons = [  ]
-inflict_banes = [ [ ExtResource( 2 ), 100, 33 ] ]
+inflict_banes = [ [ ExtResource( 2 ), 100, 75 ] ]
 gain_boons = [  ]
 gain_banes = [  ]
-cooldown = 0
+cooldown = 2
 starting_cd = 0
 starting_min = 0
