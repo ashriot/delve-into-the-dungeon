@@ -106,10 +106,10 @@ func setup_cur_player_panel() -> void:
 	if unit.job == "Bard":
 		var bp_cur = unit.job_data["bp_cur"]
 		var bp_max = unit.job_data["bp_max"]
-		cp_bp_cur.rect_size.x = (bp_cur * 2 + (1 if bp_cur > 0 else 0))
-		cp_bp_cur.rect_position.x = 16 - (bp_max * 2 + 1)
-		cp_bp_max.rect_size.x = (bp_max * 2 + 1)
-		cp_bp_max.rect_position.x = 16 - (bp_max * 2 + 1)
+		cp_bp_cur.rect_size.x = (bp_cur * 3 - (1 if bp_cur > 1 else 0))
+		cp_bp_cur.rect_position.x = 16 - (bp_max * 3 - (1 if bp_max > 1 else 0))
+		cp_bp_max.rect_size.x = (bp_max * 3 - (1 if bp_max > 1 else 0))
+		cp_bp_max.rect_position.x = 16 - (bp_max * 3 - (1 if bp_max > 1 else 0))
 		cp_perform.show()
 	else:
 		cp_perform.hide()
@@ -190,7 +190,7 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 	if cur_btn != null:
 		cur_btn.selected = false
 		enemy_panels.hide_all_selectors()
-	if beep: AudioController.select()
+	if beep: AudioController.confirm()
 	battleMenu.hide()
 	cur_player = panel
 	panel.selected = true
@@ -416,7 +416,11 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		var dmg_add = 0
 		if melee_penalty: dmg_mod -= 0.50
 		if cur_btn.item.sub_type == Enums.SubItemType.SORCERY:
-			dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.33
+			if cur_btn.item.name == "Mana Darts":
+				cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
+				cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
+			else:
+				dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.33
 		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player)
@@ -453,8 +457,11 @@ func execute_vs_enemy(panel) -> void:
 	var dmg_mod = 0.0
 	var dmg_add = 0
 	if item.sub_type == Enums.SubItemType.SORCERY:
-		print("SP Cur: ", user.unit.job_data["sp_cur"])
-		dmg_mod += user.unit.job_data["sp_cur"] * 0.33
+		if cur_btn.item.name == "Mana Darts":
+			cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
+			cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
+		else:
+			dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.33
 		user.unit.job_data["sp_cur"] = 0
 	var ap_cost = cur_btn.ap_cost
 	if item.sub_type == Enums.SubItemType.PERFORM:

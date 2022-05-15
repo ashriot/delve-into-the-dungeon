@@ -5,7 +5,9 @@
 [ext_resource path="res://assets/images/sheets/ui_icons.png" type="Texture" id=3]
 [ext_resource path="res://assets/images/icons/quick.png" type="Texture" id=4]
 
-[node name="BattleButton" type="Button" groups=["battle_btns"]]
+[node name="BattleButton" type="Button" groups=[
+"battle_btns",
+]]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_top = 10.0
 margin_right = 70.0

@@ -7,6 +7,7 @@ const block_color := Color("#9babb2")
 const black_color := Color("#202020")
 const off_white := Color("#ffffeb")
 const quick_color := Color("#c32454")
+const light_quick := Color("#ed8099")
 const ap_color := Color("f79617")
 
 const worn := Color("#a0938e")

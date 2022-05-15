@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/booboop.wav-ac03d2a7133a62651939af3beb4c6492.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/booboop.wav"
+dest_files=[ "res://.import/booboop.wav-ac03d2a7133a62651939af3beb4c6492.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
