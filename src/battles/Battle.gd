@@ -293,8 +293,8 @@ func enemy_take_action(panel: EnemyPanel):
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(panel, action)
 				else: target.take_hit(hit)
-#			if action.target_type >= Enums.TargetType.ANY_ROW:
-#				AudioController.play_sfx(action.sound_fx)
+			if action.target_type >= Enums.TargetType.ANY_ROW:
+				AudioController.play_sfx(action.sound_fx)
 			if hit_num < hits - 1:
 				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 		for target in targets:
@@ -424,6 +424,10 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player)
+		if cur_player.has_bane("Blind"):
+			hit.hit_chance /= 2
+			hit.item.hit_chance /= 2
+			hit.crit_chance = 0
 		enemy_panels.update_item_stats(hit)
 		enemy_panels.show_selectors(target_type)
 
@@ -522,6 +526,10 @@ func execute_vs_enemy(panel) -> void:
 			var split = 1
 			if item.split: split = targets.size()
 			hit.init(item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player, split)
+			if cur_player.has_bane("Blind"):
+				hit.hit_chance /= 2
+				hit.item.hit_chance /= 2
+				hit.crit_chance = 0
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if item.target_type >= Enums.TargetType.ANY_ROW:
@@ -565,7 +573,10 @@ func execute_vs_player(panel) -> void:
 	finish_action(not quick)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd, false), "timeout")
-	panel.ap += item.gain_ap
+	if item.gain_ap > 0:
+		panel.ap += item.gain_ap
+		var ap_text = "+" + str(item.gain_ap) + "AP"
+		show_text(ap_text, user.pos)
 	var targets = [panel]
 	if item.target_type == Enums.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()

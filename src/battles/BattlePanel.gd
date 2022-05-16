@@ -129,7 +129,7 @@ func take_hit(hit: Hit) -> bool:
 		anim.play("Hit")
 		emit_signal("dmg_dealt", dmg, hit.user, hit.item)
 	elif miss:
-		dmg_text = "MISS"
+		dmg_text = "Miss"
 		fx = "miss"
 		if hit.user.has_bane("Blind"):
 			hit.user.remove_bane(hit.user.get_bane("Blind"))
@@ -143,6 +143,15 @@ func take_hit(hit: Hit) -> bool:
 	if lifesteal_heal > 0:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 		hit.user.take_healing(lifesteal_heal)
+	if item.name == "Freeze Ray":
+		if not has_bane("Slow"): return gained_xp
+		else: remove_bane(get_bane("Slow"))
+	if item.name == "Disintegrate":
+		if hp_cur <= hit.user.unit.intellect * 3:
+			var slay = load("res://resources/effects/banes/slay.tres")
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+			emit_signal("show_text", "+" + slay.name, pos)
+			gain_bane(slay, 1)
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
 		for bane in item.inflict_banes:
 			var chance = bane[2]
@@ -150,7 +159,7 @@ func take_hit(hit: Hit) -> bool:
 				chance = 100
 			if randi() % 100 + 1 > chance: # resisted
 				if effect_only:
-					emit_signal("show_text", "RESIST", pos)
+					emit_signal("show_text", "Resist", pos)
 				continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_bane(bane[0], bane[1])
@@ -232,22 +241,24 @@ func gain_bane(bane: Effect, duration: int) -> bool:
 			if has_boon("Wise"):
 				remove_boon(get_boon("Wise"))
 				applied = false
-			else: unit.int_mods.append(0.75)
+			else: unit.int_mods.append(0.8)
 		elif bane.name == "Frail":
 			if has_boon("Safe"):
 				remove_boon(get_boon("Safe"))
 				applied = false
-			else: unit.def_mods.append(0.75)
+			else: unit.def_mods.append(0.8)
 		elif bane.name == "Slow":
 			if has_boon("Fast"):
 				remove_boon(get_boon("Fast"))
 				applied = false
-			else: unit.agi_mods.append(0.75)
+			else: unit.agi_mods.append(0.8)
 		elif bane.name == "Weak":
 			if has_boon("Bold"):
 				remove_boon(get_boon("Bold"))
 				applied = false
-			else: unit.str_mods.append(0.75)
+			else: unit.str_mods.append(0.8)
+		elif bane.name == "Slay":
+			self.hp_cur = 0
 		if applied:
 			add_status([bane.name, bane.frame])
 			banes.append([bane, duration])
@@ -285,22 +296,22 @@ func gain_boon(boon: Effect, duration: int) -> bool:
 			if has_bane("Weak"):
 				remove_bane(get_bane("Weak"))
 				applied = false
-			else: unit.str_mods.append(1.25)
+			else: unit.str_mods.append(1.2)
 		elif boon.name == "Fast":
 			if has_bane("Slow"):
 				remove_bane(get_bane("Slow"))
 				applied = false
-			else: unit.agi_mods.append(1.25)
+			else: unit.agi_mods.append(1.2)
 		elif boon.name == "Safe":
 			if has_bane("Frail"):
 				remove_bane(get_bane("Frail"))
 				applied = false
-			else: unit.def_mods.append(1.25)
+			else: unit.def_mods.append(1.2)
 		elif boon.name == "Wise":
 			if has_bane("Dull"):
 				remove_bane(get_bane("Dull"))
 				applied = false
-			else: unit.int_mods.append(1.25)
+			else: unit.int_mods.append(1.2)
 		if applied:
 			add_status([boon.name, boon.frame])
 			boons.append([boon, duration])
@@ -365,11 +376,6 @@ func remove_boon(find: Effect) -> void:
 		if s[0] == find.name:
 			remove_status(find.name)
 			break
-	if find.name == "Bold": unit.str_mods.remove(unit.str_mods.find(1.2))
-# BUG: OUT OF BOUNDS AT THE END OF A BATTLE
-	elif find.name == "Fast": unit.agi_mods.remove(unit.agi_mods.find(1.2))
-	elif find.name == "Safe": unit.def_mods.remove(unit.def_mods.find(1.2))
-	elif find.name == "Wise": unit.int_mods.remove(unit.int_mods.find(1.2))
 
 func remove_bane(find: Effect) -> void:
 	for bane in banes:

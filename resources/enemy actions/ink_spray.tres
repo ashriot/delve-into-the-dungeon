@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/enemy_action.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/banes/blind.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
@@ -31,7 +32,7 @@ crit_chance = 0
 sound_fx = "splash"
 use_fx = "skill"
 inflict_boons = [  ]
-inflict_banes = [  ]
+inflict_banes = [ [ ExtResource( 2 ), 100, 50 ] ]
 gain_boons = [  ]
 gain_banes = [  ]
 cooldown = 3

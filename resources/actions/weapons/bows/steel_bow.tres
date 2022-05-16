@@ -4,19 +4,20 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Deflect"
-description = "Grant {tgt} {potency} Block until next turn."
-tier = 1
-ap_cost = 1
+name = "Steel Bow"
+description = "Deal {potency} {dmg} damage to {tgt}. {vs}
+{aim}"
+tier = 4
+ap_cost = 3
 quick = false
-item_type = 4
-sub_type = 15
+item_type = 0
+sub_type = 2
 melee = false
-target_type = 1
-damage_type = 8
-stat_used = 4
-stat_vs = 4
-stat_hit = 6
+target_type = 6
+damage_type = 0
+stat_used = 3
+stat_vs = 3
+stat_hit = 3
 multiplier = 2.0
 bonus_damage = 0
 min_hits = 1
@@ -25,10 +26,10 @@ gain_ap = 0
 grant_ap = 0
 split = false
 lifesteal = 0.0
-hit_chance = 0
-crit_chance = 0
-sound_fx = "block"
-use_fx = "staff"
+hit_chance = 65
+crit_chance = 30
+sound_fx = "hit_arrow"
+use_fx = "shoot"
 inflict_boons = [  ]
 inflict_banes = [  ]
 gain_boons = [  ]

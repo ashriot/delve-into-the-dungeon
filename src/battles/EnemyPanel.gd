@@ -65,7 +65,7 @@ func get_action() -> Action:
 func targetable(value: bool, display = true):
 	.targetable(value, display)
 	if valid_target:
-		hit_display.show()
+		if hit_display.text != "": hit_display.show()
 		dmg_display.show()
 	else:
 		hit_display.hide()
@@ -84,12 +84,13 @@ func update_dmg_display(hit):
 	dmg_display.show()
 
 func update_hit_chance(hit) -> void:
-	if hit == null: return
+	if not hit: return
 	if not (enabled or self.alive or valid_target): return
 	var value = 100
 	if hit.stat_hit != Enums.StatType.NA:
 		value = get_hit_and_crit_chance(hit)[0]
-	hit_display.text = str(int(value)) + "%"
+		hit_display.text = str(int(value)) + "%"
+	else: hit_display.text = ""
 	update_dmg_display(hit)
 
 func update_status() -> void:
