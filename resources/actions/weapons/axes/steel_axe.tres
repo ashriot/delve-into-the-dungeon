@@ -4,21 +4,21 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Cleaver"
+name = "Steel Axe"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
-tier = 3
+tier = 4
 ap_cost = 3
 quick = false
 item_type = 0
 sub_type = 0
 melee = true
-target_type = 10
+target_type = 7
 damage_type = 0
 stat_used = 2
 stat_vs = 5
 stat_hit = 3
-multiplier = 1.75
+multiplier = 2.5
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -26,8 +26,8 @@ gain_ap = 0
 grant_ap = 0
 split = false
 lifesteal = 0.0
-hit_chance = 70
-crit_chance = 20
+hit_chance = 75
+crit_chance = 30
 sound_fx = "impact"
 use_fx = "melee"
 inflict_boons = [  ]
