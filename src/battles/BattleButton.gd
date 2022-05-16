@@ -36,7 +36,7 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 			var sp_cur = unit.job_data["sp_cur"]
 			if sp_cur > 0:
 				title.text += "+" + str(sp_cur)
-		if item.quick and not panel.quick_used:
+		if (item.quick or panel.hasted) and panel.quick_actions > 0:
 			quick_icon.show()
 			ap_label.modulate = Enums.quick_color
 		else:
@@ -45,7 +45,7 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 		update_ap_cost()
 		if item.item_type == Enums.ItemType.MARTIAL_SKILL or \
 			item.item_type == Enums.ItemType.WEAPON:
-				self.available = not panel.has_bane("Pain")
+				self.available = not panel.has_bane("Pain") and available
 	ap_label.text = str(ap_cost)
 	if item.max_uses > 0:
 		uses.show()
@@ -60,7 +60,7 @@ func update_ap_cost() -> void:
 	skill = max(unit.skill[item.sub_type], 0)
 	ap_cost = max(item.ap_cost - skill, 0)
 	var bp = 0
-	if unit.job == "Bard":
+	if item.sub_type == Enums.SubItemType.PERFORM:
 		bp = min(ap_cost, unit.job_data["bp_cur"])
 	if item.name == "Draw Arcana":
 		ap_cost = max(ap_cost - unit.job_data["arcana"], 0)

@@ -38,7 +38,8 @@ func setup(_unit):
 	show()
 
 func level_up() -> void:
-	unit.hp_growth = int(float(5 + unit.hp_rating) * float(4 + unit.level) * float(1 + unit.level / 100))
+	unit.hp_growth = int((5 + unit.hp_rating) * (4 + unit.level) * (float(unit.level) / 100 + 1))
+	print(unit.name, ": ", (5 + unit.hp_rating), " x ", (4 + unit.level), " x ", (float(unit.level) / 100 + 1))
 	unit.str_growth = int(float(8 + unit.str_rating) * float(8 + unit.level) / 10)
 	unit.agi_growth = int(float(8 + unit.agi_rating) * float(8 + unit.level) / 10)
 	unit.int_growth = int(float(8 + unit.int_rating) * float(8 + unit.level) / 10)

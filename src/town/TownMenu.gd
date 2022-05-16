@@ -176,7 +176,7 @@ func _on_TavernLeaveBtn_pressed():
 	AudioController.back()
 	tavern.hide()
 
-var docks_lv := 1
+var docks_lv := 50
 
 func _on_DocksBtn_pressed():
 	if not game.players: return

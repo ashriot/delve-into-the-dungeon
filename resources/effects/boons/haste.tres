@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/effect.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Haste"
+desc = "Gain 1 additional AP each round; gain 1 additional action each turn; all actions are quick."
+frame = 6
+permanent = false
+turn_start = true
+turn_end = false
+triggered = true

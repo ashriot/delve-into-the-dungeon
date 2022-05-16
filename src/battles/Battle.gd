@@ -90,7 +90,7 @@ func setup_cur_player_panel() -> void:
 	cp_portrait.frame = cur_player.unit.frame + 20
 	cp_name.text = cur_player.unit.name
 	cp_ap.bbcode_text = str(cur_player.ap)
-	var quick_color = "#c32454" if !cur_player.quick_used else "#625565"
+	var quick_color = "#c32454" if cur_player.quick_actions > 0 else "#625565"
 	cp_quick.modulate = quick_color
 	var unit = cur_player.unit
 	if unit.job == "Sorcerer":
@@ -420,7 +420,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 				cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
 				cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
 			else:
-				dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.33
+				dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.34
 		var atk = cur_player.get_stat(button.item.stat_used)
 		var hit = Hit.new()
 		hit.init(button.item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player)
@@ -452,7 +452,7 @@ func execute_vs_enemy(panel) -> void:
 	var gained_xp = false
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel
-	var quick = item.quick and not cur_player.quick_used
+	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var dmg_mod = 0.0
 	var dmg_add = 0
@@ -461,13 +461,12 @@ func execute_vs_enemy(panel) -> void:
 			cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
 			cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
 		else:
-			dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.33
+			dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.34
 		user.unit.job_data["sp_cur"] = 0
 	var ap_cost = cur_btn.ap_cost
 	if item.sub_type == Enums.SubItemType.PERFORM:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
 		user.unit.job_data["bp_cur"] -= bp
-		print("BP Cur: ", user.unit.job_data["bp_cur"])
 		ap_cost -= bp
 		if quick: setup_cur_player_panel()
 	user.ap -= ap_cost
@@ -541,7 +540,7 @@ func execute_vs_enemy(panel) -> void:
 func execute_vs_player(panel) -> void:
 	var user = cur_player
 	var item = cur_btn.item as Item
-	var quick = item.quick and not cur_player.quick_used
+	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var ap_cost = cur_btn.ap_cost
 	if item.sub_type == Enums.SubItemType.PERFORM:
@@ -555,6 +554,10 @@ func execute_vs_player(panel) -> void:
 			cur_player.unit.items[cur_btn.item_index] = draw_arcana
 			cur_player.unit.job_data["arcana"] += 1
 			if quick: setup_buttons()
+	if user.unit.job == "Bard" and item.sub_type != Enums.SubItemType.PERFORM:
+		var bp_max = user.unit.job_data["bp_max"]
+		user.unit.job_data["bp_cur"] = min(user.unit.job_data["bp_cur"] + 1, user.unit.job_data["bp_max"])
+		if quick: setup_cur_player_panel()
 	AudioController.play_sfx(item.use_fx)
 	if item.sub_type == Enums.SubItemType.SHIELD:
 		if user.has_perk("Quick Block"):
@@ -566,6 +569,9 @@ func execute_vs_player(panel) -> void:
 	var targets = [panel]
 	if item.target_type == Enums.TargetType.ALL_ALLIES:
 		targets = player_panels.get_children()
+	if item.target_type == Enums.TargetType.OTHER_ALLIES_ONLY:
+		targets = player_panels.get_children()
+		targets.remove(targets.find(user))
 	cur_player.calc_xp(item.stat_used)
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
 	AudioController.play_sfx(item.sound_fx)
@@ -590,12 +596,12 @@ func finish_action(spend_turn: = true) -> void:
 	if cur_btn == null: return
 	else: cur_btn.selected = false
 	if spend_turn:
-		cur_player.quick_used = false
+		cur_player.quick_actions = 0
 		cur_player.selected = false
 		clear_buttons()
 		cur_player.ready = false
 	else:
-		cur_player.quick_used = true
+		cur_player.quick_actions -= 1
 		setup_buttons()
 
 func clear_selections() -> void:

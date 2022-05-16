@@ -9,7 +9,7 @@ var tab: int setget set_tab
 
 var ready:= true setget set_ready
 var selected:= false setget set_selected
-var quick_used := false
+var quick_actions := 1
 
 var enc_lv: float
 var gained_xp: bool
@@ -55,6 +55,7 @@ func set_ready(value: bool):
 		sprite.frame = unit.frame
 		outline.modulate.a = 1
 		if blocking > 0: self.blocking = 0
+		quick_actions = 1
 		decrement_boons("Start")
 		decrement_banes("Start")
 	else:

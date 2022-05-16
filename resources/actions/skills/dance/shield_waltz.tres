@@ -1,13 +1,11 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=2 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/boons/fast.tres" type="Resource" id=2]
-[ext_resource path="res://resources/effects/boons/safe.tres" type="Resource" id=3]
 
 [resource]
 script = ExtResource( 1 )
-name = "Wind Waltz"
-description = "Grant Fast."
+name = "Shield Waltz"
+description = "Grant Block to the party."
 tier = 1
 ap_cost = 2
 quick = true
@@ -15,11 +13,11 @@ item_type = 2
 sub_type = 23
 melee = false
 target_type = 4
-damage_type = 7
-stat_used = 6
+damage_type = 8
+stat_used = 3
 stat_vs = 6
 stat_hit = 6
-multiplier = 0.0
+multiplier = 1.75
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -29,9 +27,9 @@ split = false
 lifesteal = 0.0
 hit_chance = 0
 crit_chance = 0
-sound_fx = "wind"
+sound_fx = "block"
 use_fx = "dance"
-inflict_boons = [ [ ExtResource( 2 ), 10, 100 ], [ ExtResource( 3 ), 100, 100 ] ]
+inflict_boons = [  ]
 inflict_banes = [  ]
 gain_boons = [  ]
 gain_banes = [  ]

@@ -177,7 +177,7 @@ func get_enemies(max_lv: int) -> Dictionary:
 	var enemy_picker = load("res://resources/locales/sea_caves.tres").enemies
 	var level_num = max_lv
 	var mod = int(min(level_num + 2, 6))
-	var mobs = randi() % mod + 1
+	var mobs = 6
 # warning-ignore:integer_division
 	var min_lv = max(max_lv - 3, 1)
 	var encounter = {}

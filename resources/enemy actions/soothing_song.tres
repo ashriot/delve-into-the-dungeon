@@ -35,5 +35,5 @@ inflict_banes = [  ]
 gain_boons = [ [ ExtResource( 2 ), 10, 75 ] ]
 gain_banes = [  ]
 cooldown = 4
-starting_cd = 0
-starting_min = 0
+starting_cd = 3
+starting_min = 2

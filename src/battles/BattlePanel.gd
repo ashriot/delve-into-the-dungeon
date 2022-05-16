@@ -34,6 +34,7 @@ var statuses: = []
 var delay: = 0.0
 var status_ptr: int
 var blocking: int setget set_blocking
+var hasted: bool setget, get_hasted
 
 func init(battle) -> void:
 	anim.playback_speed = 1 / GameManager.spd
@@ -103,7 +104,7 @@ func take_hit(hit: Hit) -> bool:
 	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(" -> Hit: ", hit_roll, " > ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit chance: ", crit_chance, "%")
+	print(" -> Hit: ", hit_roll, " < ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit chance: ", crit_chance, "%")
 	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * multi, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:
@@ -178,7 +179,7 @@ func take_friendly_hit(user: BattlePanel, item: Action) -> void:
 		def = int(float(hp_max - hp_cur) * 0.5)
 	var dmg_text = ""
 	if item.sub_type == Enums.SubItemType.SORCERY:
-		dmg_mod += user.unit.job_data["sp_cur"] * 0.33
+		dmg_mod += user.unit.job_data["sp_cur"] * 0.34
 		user.unit.job_data["sp_cur"] = 0
 	if item.damage_type == Enums.DamageType.HEAL:
 		dmg += def
@@ -335,8 +336,11 @@ func trigger_boon(boon_name: String) -> void:
 		take_healing(int(float(hp_max) * 0.1))
 		yield(get_tree().create_timer(0.15, true), "timeout")
 	if boon_name == "Shield":
-		AudioController.play_sfx("block")
 		self.blocking = (int(float(unit.get_highest())))
+		yield(get_tree().create_timer(0.15, true), "timeout")
+	if boon_name == "Haste":
+		self.ap += 1
+		if (randi() % 100) < 25: remove_boon(get_boon("Haste"))
 		yield(get_tree().create_timer(0.15, true), "timeout")
 
 func trigger_bane(bane_name: String) -> void:
@@ -441,3 +445,6 @@ func has_perk(perk_name: String) -> bool:
 
 func get_perk(perk_name: String) -> int:
 	return unit.get_perk(perk_name)
+
+func get_hasted() -> bool:
+	return self.has_boon("Haste")
