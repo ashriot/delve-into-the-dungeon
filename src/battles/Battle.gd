@@ -379,8 +379,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		clear_buttons()
 		end_turn()
 		return
-	if button.item.name == "Inspect":
-		return
+	if button.item.name == "Inspect": return
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
 	if button.selected:
@@ -388,11 +387,12 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		button.selected = false
 		cur_btn = null
 		return
-	if cur_btn != null: cur_btn.selected = false
+	if cur_btn: cur_btn.selected = false
 	AudioController.click()
 	cur_btn = button
 	cur_btn.selected = true
 	var target_type = cur_btn.item.target_type
+	if "Siphon" in cur_btn.item.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 	var melee_penalty = button.item.melee and cur_player.melee_penalty
 	if (cur_player.unit.job_tab == "Knives" and \
 		cur_btn.item.sub_type == Enums.SubItemType.KNIFE):
@@ -460,6 +460,8 @@ func execute_vs_enemy(panel) -> void:
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var dmg_mod = 0.0
 	var dmg_add = 0
+	var target_type = item.target_type
+	if "Siphon" in item.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 	if item.sub_type == Enums.SubItemType.SORCERY:
 		if cur_btn.item.name == "Mana Darts":
 			cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
@@ -496,14 +498,14 @@ func execute_vs_enemy(panel) -> void:
 	var targets = [panel]
 	var randoms = []
 	var rand_targets = false
-	if item.target_type >= Enums.TargetType.ANY_ROW \
-		and item.target_type <= Enums.TargetType.BACK_ROW:
+	if target_type >= Enums.TargetType.ANY_ROW \
+		and target_type <= Enums.TargetType.BACK_ROW:
 		targets = enemy_panels.get_row(panel)
-	if item.target_type == Enums.TargetType.ALL_ENEMIES or \
-		item.target_type == Enums.TargetType.RANDOM_ENEMY:
+	if target_type == Enums.TargetType.ALL_ENEMIES or \
+		target_type == Enums.TargetType.RANDOM_ENEMY:
 		targets = enemy_panels.get_all()
 	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
-	if item.target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
+	if target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
 	var atk = user.get_stat(item.stat_used)
@@ -532,7 +534,7 @@ func execute_vs_enemy(panel) -> void:
 				hit.crit_chance = 0
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
-		if item.target_type >= Enums.TargetType.ANY_ROW:
+		if target_type >= Enums.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
@@ -551,6 +553,8 @@ func execute_vs_player(panel) -> void:
 	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var ap_cost = cur_btn.ap_cost
+	if user.unit.job == "Sorcerer" and item.sub_type != Enums.SubItemType.SORCERY:
+		user.unit.job_data["sp_cur"] = min(user.unit.job_data["sp_cur"] + 1, user.unit.job_data["sp_max"])
 	if item.sub_type == Enums.SubItemType.PERFORM:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
 		user.unit.job_data["bp_cur"] -= bp
@@ -596,7 +600,7 @@ func execute_vs_player(panel) -> void:
 		if user == panel:
 			setup_cur_player_panel()
 			get_tree().call_group("battle_btns", "update_ap_cost")
-		if cur_btn.item.name == "Draw Arcana": setup_buttons()
+		setup_buttons()
 		cur_btn = null
 	else: get_next_player()
 

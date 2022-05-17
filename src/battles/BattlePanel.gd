@@ -105,7 +105,7 @@ func take_hit(hit: Hit) -> bool:
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	print(" -> Hit: ", hit_roll, " < ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit chance: ", crit_chance, "%")
-	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .8) * multi, " DMG: ", dmg)
+	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .5) * multi, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:
 		if blocking > 0:
@@ -155,6 +155,9 @@ func take_hit(hit: Hit) -> bool:
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
 		for bane in item.inflict_banes:
 			var chance = bane[2]
+			if item.name == "Hypnotize":
+				chance *= dmg_mod
+				print("Hypno chance: ", chance)
 			if item.sub_type == Enums.SubItemType.KNIFE and hit.user.unit.job == "Thief":
 				chance = 100
 			if randi() % 100 + 1 > chance: # resisted
@@ -166,8 +169,9 @@ func take_hit(hit: Hit) -> bool:
 			if success:
 				emit_signal("show_text", "+" + bane[0].name, pos)
 				gained_xp = true
-		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-	if item.gain_boons.size() > 0 and not miss:
+		if not item.gain_boons:
+			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	if item.gain_boons and not miss:
 		for boon in item.gain_boons:
 			if randi() % 100 + 1 > boon[2]: continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
@@ -196,6 +200,7 @@ func take_friendly_hit(user: BattlePanel, item: Action) -> void:
 		self.hp_cur += dmg
 		dmg_text = str(dmg)
 	elif item.damage_type == Enums.DamageType.BLOCK:
+		dmg = int(dmg * dmg_mod)
 		dmg_text = str(dmg)
 		self.blocking = max(blocking, dmg)
 	if dmg > 0:

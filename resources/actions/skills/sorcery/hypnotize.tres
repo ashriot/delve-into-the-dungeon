@@ -1,0 +1,39 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/banes/sleep.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Hypnotize"
+description = "Deal {potency} {dmg} damage to {tgt}; +Sleep (50%)."
+tier = 3
+ap_cost = 2
+quick = false
+item_type = 2
+sub_type = 26
+melee = false
+target_type = 10
+damage_type = 1
+stat_used = 4
+stat_vs = 4
+stat_hit = 6
+multiplier = 1.0
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+gain_ap = 0
+grant_ap = 0
+split = true
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "wind"
+use_fx = "sorcery"
+inflict_boons = [  ]
+inflict_banes = [ [ ExtResource( 2 ), 100, 50 ] ]
+gain_boons = [  ]
+gain_banes = [  ]
+max_uses = 0
+uses = 0
+price = 0

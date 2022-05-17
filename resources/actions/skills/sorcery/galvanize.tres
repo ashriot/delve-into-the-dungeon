@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource( 1 )
 name = "Galvanize"
-description = "Gain {potency} Block until next turn."
+description = "Gain {potency} Block."
 tier = 1
 ap_cost = 3
-quick = false
+quick = true
 item_type = 2
 sub_type = 26
 melee = false
@@ -17,7 +17,7 @@ damage_type = 8
 stat_used = 4
 stat_vs = 6
 stat_hit = 6
-multiplier = 6.0
+multiplier = 2.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1

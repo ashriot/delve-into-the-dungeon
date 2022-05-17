@@ -119,9 +119,10 @@ func items_to_dict(items: Dictionary) -> Dictionary:
 func dict_to_items(dict: Dictionary) -> Dictionary:
 	var items = {}
 	for i in range(10):
-		if dict[i] == null: items[i] = null
+		if not dict[i]: items[i] = null
 		else:
 			var item = ItemDb.get_item(dict[i][0]) as Item
+			assert(item, dict[i][0] + " is missing!")
 			items[i] = item
 			item.uses = dict[i][1]
 	return items
