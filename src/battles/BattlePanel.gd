@@ -169,6 +169,7 @@ func take_hit(hit: Hit) -> bool:
 			if success:
 				emit_signal("show_text", "+" + bane[0].name, pos)
 				gained_xp = true
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		if not item.gain_boons:
 			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	if item.gain_boons and not miss:
@@ -177,7 +178,8 @@ func take_hit(hit: Hit) -> bool:
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = hit.user.gain_boon(boon[0], boon[1])
 			if success: emit_signal("show_text", "+" + boon[0].name, hit.user_pos)
-		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	return gained_xp
 
 func take_friendly_hit(user: BattlePanel, item: Action) -> void:

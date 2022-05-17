@@ -246,6 +246,8 @@ func enemy_take_action(panel: EnemyPanel):
 	var stunned = false
 	if panel.has_bane("Stun"):
 		stunned = true
+		panel.remove_bane(panel.get_bane("Stun"))
+		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	if panel.has_bane("Sleep"):
 		var roll = randi() % 100
 		if roll < 25:

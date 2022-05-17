@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/tome.wav-9c9034e4be2f5c1fd5918f7e6b6241e2.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/tome.wav"
+dest_files=[ "res://.import/tome.wav-9c9034e4be2f5c1fd5918f7e6b6241e2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
