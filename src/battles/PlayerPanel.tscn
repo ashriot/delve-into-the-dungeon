@@ -89,10 +89,12 @@ __meta__ = {
 
 [node name="HPCur" type="RichTextLabel" parent="."]
 anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
+anchor_bottom = 0.5
 margin_left = -12.0
-margin_top = 2.0
-margin_bottom = 9.0
+margin_top = -4.0
+margin_bottom = 3.0
 bbcode_enabled = true
 bbcode_text = "[right][color=#242428]0[/color]23[/right]"
 text = "023"
@@ -146,6 +148,7 @@ vframes = 10
 frame = 4
 
 [node name="Selector" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 0.301961, 0.607843, 0.901961, 1 )
 texture = ExtResource( 4 )
 centered = false

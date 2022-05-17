@@ -21,7 +21,7 @@ func setup(player: Player) -> void:
 	unit = player
 	sprite.frame = player.frame
 	HpCur.bbcode_text = get_hp_str(player.hp_cur)
-	ApGauge.rect_size.x = player.ap * 4
+	ApGauge.rect_size.x = player.ap * 2
 	HpGauge.max_value = player.hp_max
 	HpGauge.value = player.hp_cur
 
