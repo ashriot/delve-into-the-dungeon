@@ -400,6 +400,9 @@ func delete_profile(slot: int):
 	if dir.file_exists(file_path):
 		print("Deleting!")
 		dir.remove(file_path)
+		if slot == 1: GameManager.profile1 = null
+		elif slot == 2: GameManager.profile2 = null
+		elif slot == 3: GameManager.profile3 = null
 
 func check_error(error):
 	if error != OK:

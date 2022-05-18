@@ -24,7 +24,9 @@ enum StatType {
 	AGI,
 	INT,
 	DEF,
-	NA
+	NA,
+	CRIT,
+	POW
 }
 
 enum ItemType {

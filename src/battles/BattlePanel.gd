@@ -90,8 +90,11 @@ func take_hit(hit: Hit) -> bool:
 	var crit_chance = hit_and_crit[1]
 	var lifesteal = hit.item.lifesteal
 	var miss = false
+	var crit = false
 	var hit_roll = randi() % 100 + 1
+	var crit_roll = randi() % 100 + 1
 	if hit_roll > hit_chance: miss = true
+	if crit_roll <= crit_chance: crit = true
 	var multi = item.multiplier
 	var dmg_mod = 1 + hit.dmg_mod
 	if item.name == "Fireball":
@@ -104,7 +107,7 @@ func take_hit(hit: Hit) -> bool:
 	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
 	dmg /= hit.split
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(" -> Hit: ", hit_roll, " < ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit chance: ", crit_chance, "%")
+	print(" -> Hit: ", hit_roll, " < ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit: ", crit_roll, " < ", crit_chance, "% ", crit) 
 	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .5) * multi, " DMG: ", dmg)
 	var dmg_text = ""
 	if not miss and !effect_only:

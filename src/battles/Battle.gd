@@ -124,7 +124,7 @@ func setup_buttons() -> void:
 	var i = 0
 	for button in buttons.get_children():
 		if i < cur_player.unit.items.size():
-			if cur_player.unit.items[i] == null:
+			if not cur_player.unit.items[i]:
 				i += 1
 				button.clear()
 				continue
@@ -157,7 +157,7 @@ func display_tabs() -> void:
 		buttons.get_child(i).toggle(true)
 
 func toggle_tabs(value) -> void:
-	if cur_btn != null:
+	if cur_btn:
 		cur_btn.selected = false
 		enemy_panels.hide_all_selectors()
 		player_panels.hide_all_selectors()
@@ -174,8 +174,11 @@ func clear_buttons() -> void:
 		child.clear()
 
 func select_player(panel: PlayerPanel, beep = false) -> void:
-	if panel == null: return
+	if not panel: return
 	if !panel.ready: return
+	if cur_btn:
+		cur_btn = null
+		enemy_panels.hide_all_selectors()
 	if cur_player == panel:
 		cur_player.selected = false
 		cur_player = null
@@ -186,10 +189,7 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 		battleMenu.show()
 		AudioController.back()
 		return
-	if cur_player != null: cur_player.selected = false
-	if cur_btn != null:
-		cur_btn.selected = false
-		enemy_panels.hide_all_selectors()
+	if cur_player: cur_player.selected = false
 	if beep: AudioController.confirm()
 	battleMenu.hide()
 	cur_player = panel
@@ -287,7 +287,8 @@ func enemy_take_action(panel: EnemyPanel):
 					action.item_type == Enums.ItemType.WEAPON) and \
 					not panel.has_boon("Aim"):
 						hit_chance = panel.get_stat(Enums.StatType.AGI)
-				hit.init(action, hit_chance, action.crit_chance, dmg_add, dmg_mod, atk, panel)
+				var crit_chance = action.crit_chance + panel.get_stat(Enums.StatType.CRIT)
+				hit.init(action, hit_chance, crit_chance, dmg_add, dmg_mod, atk, panel)
 				if panel.has_bane("Blind"):
 					hit.hit_chance /= 2
 					hit.item.hit_chance /= 2
@@ -408,8 +409,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 			cur_hit_chance = int(cur_player.get_stat(Enums.StatType.AGI)) \
 				 + (50 if cur_player.has_perk("Precise") else 0)
 			cur_stat_type = Enums.StatType.AGI
-# warning-ignore:integer_division
-			cur_crit_chance = int(cur_btn.item.crit_chance)
+			cur_crit_chance = cur_btn.item.crit_chance + cur_player.get_stat(Enums.StatType.CRIT)
 		else:
 			cur_hit_chance = 100
 			cur_crit_chance = 0
@@ -610,7 +610,7 @@ func finish_action(spend_turn: = true) -> void:
 	chose_next = false
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
-	if cur_btn == null: return
+	if not cur_btn: return
 	else: cur_btn.selected = false
 	if spend_turn:
 		cur_player.quick_actions = 0
@@ -624,10 +624,10 @@ func finish_action(spend_turn: = true) -> void:
 func clear_selections() -> void:
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
-	if cur_player != null:
+	if cur_player:
 		cur_player.selected = false
 		cur_player = null
-	if cur_btn != null:
+	if cur_btn:
 		cur_btn.selected = false
 		cur_btn = null
 	cp_panel.hide()

@@ -107,16 +107,15 @@ frame = 40
 [node name="Selector" type="Sprite" parent="."]
 visible = false
 modulate = Color( 0.301961, 0.607843, 0.901961, 1 )
-position = Vector2( -2, -2 )
 texture = ExtResource( 4 )
 centered = false
 
 [node name="Target" type="NinePatchRect" parent="."]
 visible = false
-margin_left = -1.0
-margin_top = -1.0
-margin_right = 9.0
-margin_bottom = 9.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 11.0
+margin_bottom = 11.0
 texture = ExtResource( 2 )
 patch_margin_left = 3
 patch_margin_top = 3

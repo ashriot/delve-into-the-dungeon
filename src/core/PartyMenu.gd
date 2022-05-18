@@ -128,6 +128,8 @@ func update_stat_data() -> void:
 	$Stats/Stats/AGI/Value.text = str(cur_player.unit.agility)
 	$Stats/Stats/INT/Value.text = str(cur_player.unit.intellect)
 	$Stats/Stats/DEF/Value.text = str(cur_player.unit.defense)
+	$Stats/Stats/Crit/Chance.text = str(cur_player.unit.crit_chance) + "%"
+	$Stats/Stats/Crit/Power.text = "+" + str(cur_player.unit.crit_power)
 
 func update_item_data():
 	var i = 0

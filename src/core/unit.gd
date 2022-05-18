@@ -14,6 +14,7 @@ export var agility: int setget, get_agility
 export var intellect: int setget, get_intellect
 export var defense: int setget, get_defense
 export var crit_chance: int setget, get_crit_chance
+export var crit_power: int setget, get_crit_power
 
 export var hp_bonus: int
 export var str_bonus: int
@@ -21,6 +22,7 @@ export var agi_bonus: int
 export var int_bonus: int
 export var def_bonus: int
 export var crit_bonus: int
+export var power_bonus: int
 
 export(Array, float) var hp_mods
 export(Array, float) var str_mods
@@ -79,6 +81,12 @@ func get_defense() -> int:
 func get_crit_chance() -> int:
 	return crit_chance + crit_bonus
 
+func get_crit_power() -> int:
+	var total = 0
+	total += float(self.strength) * 0.5
+	total += power_bonus
+	return int(total)
+
 func base_hp_max() -> int:
 	return hp_max
 
@@ -113,6 +121,8 @@ func get_base_stat(stat) -> int:
 		Enums.StatType.AGI: return agility
 		Enums.StatType.INT: return intellect
 		Enums.StatType.DEF: return defense
+		Enums.StatType.CRIT: return crit_chance
+		Enums.StatType.POW: return crit_power
 		Enums.StatType.NA: return 0
 	return -999
 

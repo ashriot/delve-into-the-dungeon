@@ -364,6 +364,7 @@ __meta__ = {
 }
 
 [node name="Buttons" type="VBoxContainer" parent="."]
+visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -486,14 +487,13 @@ __meta__ = {
 }
 
 [node name="BattleMenu" type="VBoxContainer" parent="."]
-visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = -50.0
-margin_right = -1.0
-margin_bottom = -1.0
+margin_top = -49.0
+margin_right = -2.0
+margin_bottom = -8.0
+custom_constants/separation = -1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -503,10 +503,12 @@ margin_top = 0.0
 margin_bottom = 9.0
 
 [node name="BattleButton2" parent="BattleMenu" instance=ExtResource( 7 )]
+margin_top = 8.0
+margin_bottom = 17.0
 
 [node name="BattleButton3" parent="BattleMenu" instance=ExtResource( 7 )]
-margin_top = 20.0
-margin_bottom = 29.0
+margin_top = 16.0
+margin_bottom = 25.0
 
 [node name="TopPanel" type="ColorRect" parent="."]
 visible = false
