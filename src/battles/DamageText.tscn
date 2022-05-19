@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/battles/DamageText.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/icons/tiny_shield.png" type="Texture" id=2]
@@ -33,7 +33,35 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "Display"
+resource_name = "Crit"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Text:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Text:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.65, 0.8 ),
+"transitions": PoolRealArray( 0.5, 0.5, 2, 2, 2 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, -10 ), Vector2( 0, -5 ) ]
+}
+
+[sub_resource type="Animation" id=3]
 length = 1.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Text:rect_position")
@@ -60,7 +88,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -70,7 +98,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.5, 0.7 ),
+"times": PoolRealArray( 0, 0.15, 0.45, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -82,10 +110,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.55, 0.7 ),
-"transitions": PoolRealArray( 0.5, 2, 2, 2 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.5, 2 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, -13 ), Vector2( 0, -13 ), Vector2( 0, -6 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, -13 ) ]
 }
 
 [node name="DamageText" type="Control"]
@@ -100,11 +128,16 @@ __meta__ = {
 
 [node name="Text" type="Control" parent="."]
 modulate = Color( 1, 1, 1, 0 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -6.0
-margin_bottom = -6.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -32.0
+margin_top = -8.5
+margin_right = 32.0
+margin_bottom = -1.5001
 grow_horizontal = 2
+rect_pivot_offset = Vector2( 32, 0 )
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -244,8 +277,9 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Bounce = SubResource( 1 )
-anims/Display = SubResource( 2 )
-anims/Up = SubResource( 3 )
+anims/Crit = SubResource( 2 )
+anims/Display = SubResource( 3 )
+anims/Up = SubResource( 4 )
 
 [node name="Block" type="Sprite" parent="."]
 visible = false

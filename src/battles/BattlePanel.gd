@@ -3,9 +3,9 @@ class_name BattlePanel
 
 signal done
 signal died(panel)
-signal show_dmg(text)
+signal show_dmg(text, pos, crit)
 signal show_text(text, pos, display)
-signal dmg_dealt(dmg, user, action)
+signal dmg_dealt(dmg, user, action, crit)
 
 var arcanum = preload("res://resources/actions/skills/arcana/arcanum.tres")
 
@@ -23,6 +23,7 @@ var alive: bool setget, get_alive
 var unit: Unit = null
 var hp_cur: int setget set_hp_cur
 var hp_max: int
+var hp_percent: float setget, get_hp_percent
 var ap: int setget set_ap
 var valid_target: bool
 var melee_penalty: bool setget, get_melee_penalty
@@ -82,41 +83,34 @@ func get_stat(stat) -> int:
 
 func take_hit(hit: Hit) -> bool:
 	var gained_xp = false
-	var item = hit.item as Action
+	var item = hit.action as Action
 	var effect_only = item.damage_type == Enums.DamageType.EFFECT_ONLY
 	var fx = item.sound_fx
-	var hit_and_crit = get_hit_and_crit_chance(hit)
-	var hit_chance = hit_and_crit[0]
-	var crit_chance = hit_and_crit[1]
-	var lifesteal = hit.item.lifesteal
+	var lifesteal = hit.action.lifesteal
 	var miss = false
 	var crit = false
 	var hit_roll = randi() % 100 + 1
 	var crit_roll = randi() % 100 + 1
-	if hit_roll > hit_chance: miss = true
-	if crit_roll <= crit_chance: crit = true
+	if hit_roll > hit.hit_chance:
+		miss = true
+	elif crit_roll <= hit.crit_chance: crit = true
 	var multi = item.multiplier
-	var dmg_mod = 1 + hit.dmg_mod
-	if item.name == "Fireball":
-		if has_bane("Burn"):
-			dmg_mod += 1
-	var dmg = float((multi * hit.atk) + hit.bonus_dmg)
-	var def = get_stat(item.stat_vs)
-	var def_mod = float(def * 0.5) * multi
-	print(hit.user.unit.name, " uses ", hit.item.name, " -> Base ATK: ", hit.atk, " x ", multi, " x ", (dmg_mod * 100), "% = ", dmg)
-	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
-	dmg /= hit.split
+	var dmg = hit.dmg if not crit else hit.crit_dmg
+	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(" -> Hit: ", hit_roll, " < ", hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit: ", crit_roll, " < ", crit_chance, "% ", crit) 
-	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(def * .5) * multi, " DMG: ", dmg)
+	print(" -> Hit: ", hit_roll, " < ", hit.hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit: ", crit_roll, " < ", hit.crit_chance, "% ", crit) 
+	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(hit.def / 2) * hit.action.multiplier, " DMG: ", dmg)
 	var dmg_text = ""
+	var blocked = 0
 	if not miss and !effect_only:
 		if blocking > 0:
 			if blocking >= dmg:
 				self.blocking -= dmg
+				blocked = dmg
 				dmg = 0
 			else:
 				dmg -= blocking
+				blocked = blocking
 				self.blocking = 0
 		if dmg > 0: gained_xp = true
 		if item.damage_type == Enums.DamageType.MARTIAL:
@@ -128,15 +122,16 @@ func take_hit(hit: Hit) -> bool:
 				remove_boon(get_boon("Barrier"))
 				dmg = int(0.5 * dmg)
 		self.hp_cur -= dmg
-		dmg_text = str(dmg)
+		dmg_text = str(dmg) + ("!" if crit else "")
+		if blocked: dmg_text += "{" + str(blocked) + "}"
 		anim.play("Hit")
-		emit_signal("dmg_dealt", dmg, hit.user, hit.item)
+		emit_signal("dmg_dealt", dmg, hit.panel, hit.action, crit)
 	elif miss:
 		dmg_text = "Miss"
 		fx = "miss"
-		if hit.user.has_bane("Blind"):
-			hit.user.remove_bane(hit.user.get_bane("Blind"))
-	emit_signal("show_dmg", dmg_text, pos)
+		if hit.panel.has_bane("Blind"):
+			hit.panel.remove_bane(hit.panel.get_bane("Blind"))
+	emit_signal("show_dmg", dmg_text, pos, crit)
 	if item.target_type >= Enums.TargetType.ONE_ENEMY \
 		and item.target_type <= Enums.TargetType.ONE_BACK \
 		or item.target_type == Enums.TargetType.RANDOM_ENEMY:
@@ -145,12 +140,12 @@ func take_hit(hit: Hit) -> bool:
 		remove_bane(get_bane("Sleep"))
 	if lifesteal_heal > 0:
 		yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-		hit.user.take_healing(lifesteal_heal)
+		hit.panel.take_healing(lifesteal_heal)
 	if item.name == "Freeze Ray":
 		if not has_bane("Slow"): return gained_xp
 		else: remove_bane(get_bane("Slow"))
 	if item.name == "Disintegrate":
-		if hp_cur <= hit.user.unit.intellect * 3:
+		if hp_cur <= hit.panel.unit.intellect * 3:
 			var slay = load("res://resources/effects/banes/slay.tres")
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 			emit_signal("show_text", "+" + slay.name, pos)
@@ -159,9 +154,9 @@ func take_hit(hit: Hit) -> bool:
 		for bane in item.inflict_banes:
 			var chance = bane[2]
 			if item.name == "Hypnotize":
-				chance *= dmg_mod
+				chance *= hit.dmg_mod
 				print("Hypno chance: ", chance)
-			if item.sub_type == Enums.SubItemType.KNIFE and hit.user.unit.job == "Thief":
+			if item.sub_type == Enums.SubItemType.KNIFE and hit.panel.unit.job == "Thief":
 				chance = 100
 			if randi() % 100 + 1 > chance: # resisted
 				if effect_only:
@@ -179,8 +174,8 @@ func take_hit(hit: Hit) -> bool:
 		for boon in item.gain_boons:
 			if randi() % 100 + 1 > boon[2]: continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-			var success = hit.user.gain_boon(boon[0], boon[1])
-			if success: emit_signal("show_text", "+" + boon[0].name, hit.user_pos)
+			var success = hit.panel.gain_boon(boon[0], boon[1])
+			if success: emit_signal("show_text", "+" + boon[0].name, hit.panel_pos)
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	return gained_xp
@@ -237,7 +232,7 @@ func take_healing(amt: int) -> void:
 func take_damage(amt: int) -> void:
 	if !enabled: return
 	self.hp_cur -= amt
-	if amt != 0: emit_signal("show_dmg", str(amt), pos)
+	if amt != 0: emit_signal("show_dmg", str(amt), pos, false)
 
 func gain_bane(bane: Effect, duration: int) -> bool:
 	var found = false
@@ -427,10 +422,9 @@ func targetable(value: bool, display = true):
 
 func get_hit_and_crit_chance(hit) -> Array:
 	var hit_roll = 100
-	var crit_roll = 0
-	if hit.stat_hit != Enums.StatType.NA:
-		hit_roll = clamp(hit.item.hit_chance + float((hit.hit_chance) / float(get_stat(hit.stat_hit)) * 50 - 50), 0, 100)
-		crit_roll = hit.crit_chance
+	if hit.action.stat_hit != Enums.StatType.NA:
+		hit_roll = clamp(float((hit.hit_chance) / float(get_stat(hit.action.stat_hit)) * 50 - 50), 0, 100)
+	var crit_roll = hit.crit_chance if hit.can_crit else 0
 	return [hit_roll, crit_roll]
 
 func die():
@@ -445,6 +439,9 @@ func set_hp_cur(value: int):
 func set_ap(value: int) -> void:
 	ap = int(clamp(value, 0, 6))
 	unit.ap = ap
+
+func get_hp_percent() -> float:
+	return float(hp_cur) / hp_max
 
 func set_blocking(value: int) -> void:
 	blocking = value

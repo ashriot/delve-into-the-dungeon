@@ -2,9 +2,10 @@ extends Control
 
 onready var txt = $Text/Text
 
-func init(parent, text) -> void:
+func init(parent, text, crit) -> void:
 	execute(parent, text)
-	animate("Bounce")
+	if crit: animate("Crit")
+	else: animate("Bounce")
 
 func text(parent, text) -> void:
 	execute(parent, text)

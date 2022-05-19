@@ -39,7 +39,6 @@ func setup(_unit):
 
 func level_up() -> void:
 	unit.hp_growth = int((5 + unit.hp_rating) * (4 + unit.level) * (float(unit.level) / 100 + 1))
-	print(unit.name, ": ", (5 + unit.hp_rating), " x ", (4 + unit.level), " x ", (float(unit.level) / 100 + 1))
 	unit.str_growth = int(float(2 + unit.str_rating * 1.6) * float(8 + unit.level) / 10)
 	unit.agi_growth = int(float(2 + unit.agi_rating * 1.6) * float(8 + unit.level) / 10)
 	unit.int_growth = int(float(2 + unit.int_rating * 1.6) * float(8 + unit.level) / 10)
@@ -71,27 +70,21 @@ func targetable(value: bool, display = true):
 		hit_display.hide()
 		dmg_display.hide()
 
-func update_dmg_display(hit):
-	if hit == null: return
-	var item = hit.item as Item
-	var dmg = int((item.multiplier * hit.atk) + hit.bonus_dmg)
-	var def = get_stat(item.stat_vs)
-	var def_mod = int(float(def * 0.5) * item.multiplier)
-	dmg = int(dmg - def_mod) * (1 + hit.dmg_mod) * hit.item.max_hits
-	dmg /= hit.split
-	dmg_display.max_value = hp_max
-	dmg_display.value = clamp(hp_max - hp_cur + dmg, 0, hp_max)
-	dmg_display.show()
-
 func update_hit_chance(hit) -> void:
 	if not hit: return
+	hit.update_target_data(self)
 	if not (enabled or self.alive or valid_target): return
-	var value = 100
-	if hit.stat_hit != Enums.StatType.NA:
-		value = get_hit_and_crit_chance(hit)[0]
-		hit_display.text = str(int(value)) + "%"
+	if hit.action.stat_hit != Enums.StatType.NA:
+		hit_display.text = str(int(hit.hit_chance)) + "%"
 	else: hit_display.text = ""
 	update_dmg_display(hit)
+
+func update_dmg_display(hit):
+	if not hit: return
+	var item = hit.action as Item
+	dmg_display.max_value = hp_max
+	dmg_display.value = clamp(hp_max - hp_cur + hit.dmg, 0, hp_max)
+	dmg_display.show()
 
 func update_status() -> void:
 	.update_status()

@@ -150,6 +150,7 @@ func dict_to_perks(dict: Dictionary) -> Dictionary:
 			if not dict[i]: perks[i] = null
 			else:
 				var perk = ItemDb.get_perk(dict[i][0]) as Perk
+				assert(perk, dict[i][0] + " is missing!")
 				perks[i] = perk
 				perk.rank = dict[i][1]
 	return perks

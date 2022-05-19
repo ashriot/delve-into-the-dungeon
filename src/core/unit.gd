@@ -83,8 +83,11 @@ func get_crit_chance() -> int:
 
 func get_crit_power() -> int:
 	var total = 0
-	total += float(self.strength) * 0.5
 	total += power_bonus
+	total += float(self.strength) * 0.5
+	total += float(self.strength) * (get_perk("Heavy Criticals") * 0.05)
+	total += float(self.agility) * (get_perk("Precise Criticals") * 0.1)
+	total += float(self.intellect) * (get_perk("Focused Criticals") * 0.05)
 	return int(total)
 
 func base_hp_max() -> int:
@@ -110,6 +113,8 @@ func get_stat(stat) -> int:
 		Enums.StatType.AGI: return self.agility
 		Enums.StatType.INT: return self.intellect
 		Enums.StatType.DEF: return self.defense
+		Enums.StatType.CRIT: return self.crit_chance
+		Enums.StatType.POW: return self.crit_power
 		Enums.StatType.NA: return 0
 	return -999
 
@@ -156,4 +161,4 @@ func get_perk(perk_name) -> int:
 		if not perks[i]: continue
 		elif perks[i].name == perk_name:
 			return perks[i].rank
-	return -1
+	return 0

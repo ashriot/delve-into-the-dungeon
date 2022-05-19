@@ -114,8 +114,8 @@ func get_melee_penalty() -> bool:
 func take_hit(hit) -> void:
 	.take_hit(hit)
 	if gained_xp: return
-	calc_xp(hit.item.stat_vs, 0.5)
-	calc_xp(hit.stat_hit, 0.25)
+	calc_xp(hit.action.stat_vs, 0.5)
+	calc_xp(hit.action.stat_hit, 0.25)
 	gained_xp = true
 
 func take_friendly_hit(user, item) -> void:

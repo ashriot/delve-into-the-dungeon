@@ -231,7 +231,7 @@ func enemy_turns():
 			if enemy.blocking > 0: enemy.blocking = 0
 			enemy_take_action(enemy)
 			yield(self, "enemy_done")
-			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	yield(get_tree().create_timer(1 * GameManager.spd), "timeout")
 	if not battle_active: return
 	start_players_turns()
@@ -273,26 +273,11 @@ func enemy_take_action(panel: EnemyPanel):
 			if rand_targets:
 				targets = player_panels.get_random()
 				if targets == []: break
+			var split = targets.size()
 			for target in targets:
 				if not target.alive: continue
-				var atk = panel.get_stat(action.stat_used)
-				var dmg_mod = 0.0
-				var dmg_add = 0
-				if action.melee and panel.melee_penalty: dmg_mod -= 0.50
-				if action.name == "Drown":
-					dmg_mod += (1 - target.unit.hp_percent)
 				var hit = Hit.new()
-				var hit_chance = 100 if !panel.has_perk("Precise") else 150
-				if (action.item_type == Enums.ItemType.MARTIAL_SKILL or \
-					action.item_type == Enums.ItemType.WEAPON) and \
-					not panel.has_boon("Aim"):
-						hit_chance = panel.get_stat(Enums.StatType.AGI)
-				var crit_chance = action.crit_chance + panel.get_stat(Enums.StatType.CRIT)
-				hit.init(action, hit_chance, crit_chance, dmg_add, dmg_mod, atk, panel)
-				if panel.has_bane("Blind"):
-					hit.hit_chance /= 2
-					hit.item.hit_chance /= 2
-					hit.crit_chance = 0
+				hit.init(action, panel, split, target)
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(panel, action)
 				else: target.take_hit(hit)
@@ -341,10 +326,10 @@ func get_enemy_targets(panel: EnemyPanel, action: EnemyAction) -> Array:
 
 	return targets
 
-func show_dmg_text(text: String, pos: Vector2) -> void:
+func show_dmg_text(text: String, pos: Vector2, crit: bool) -> void:
 	var damage_text = DamageText.instance()
 	damage_text.rect_position = pos
-	damage_text.init(self, text)
+	damage_text.init(self, text, crit)
 
 func show_text(text: String, pos: Vector2, display = false) -> void:
 	var damage_text = DamageText.instance()
@@ -352,11 +337,11 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	if display: damage_text.display(self, text)
 	else: damage_text.text(self, text)
 
-func dmg_dealt(dmg: int, user: BattlePanel, action: Action) -> void:
+func dmg_dealt(dmg: int, user: BattlePanel, action: Action, crit: bool) -> void:
 	if user.has_perk("Deflection") and action.melee:
 		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		var amt = int(dmg * user.get_perk("Deflection") * 0.05)
-		show_dmg_text("+" + str(amt), user.pos)
+		show_dmg_text("+" + str(amt), user.pos, crit)
 		user.blocking = amt
 
 func learned_text(text: String, pos: Vector2) -> void:
@@ -393,45 +378,23 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	if cur_btn: cur_btn.selected = false
 	AudioController.click()
 	cur_btn = button
+	var action = cur_btn.item
 	cur_btn.selected = true
-	var target_type = cur_btn.item.target_type
-	if "Siphon" in cur_btn.item.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
-	var melee_penalty = button.item.melee and cur_player.melee_penalty
+	var melee_penalty = action.melee and cur_player.melee_penalty
+	var target_type = action.target_type
+	if "Siphon" in action.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 	if (cur_player.unit.job_tab == "Knives" and \
-		cur_btn.item.sub_type == Enums.SubItemType.KNIFE):
+		action.sub_type == Enums.SubactionType.KNIFE):
 			target_type = Enums.TargetType.ONE_ENEMY
 			melee_penalty = false
 	if target_type >= Enums.TargetType.MYSELF \
 		and target_type <= Enums.TargetType.RANDOM_ALLY:
-		player_panels.show_selectors(cur_player, button.item.target_type)
-	else:
-		if button.item.stat_hit == Enums.StatType.AGI and not cur_player.has_boon("Aim"):
-			cur_hit_chance = int(cur_player.get_stat(Enums.StatType.AGI)) \
-				 + (50 if cur_player.has_perk("Precise") else 0)
-			cur_stat_type = Enums.StatType.AGI
-			cur_crit_chance = cur_btn.item.crit_chance + cur_player.get_stat(Enums.StatType.CRIT)
-		else:
-			cur_hit_chance = 100
-			cur_crit_chance = 0
-			cur_stat_type = Enums.StatType.NA
-		var dmg_mod = 0.0
-		var dmg_add = 0
-		if melee_penalty: dmg_mod -= 0.50
-		if cur_btn.item.sub_type == Enums.SubItemType.SORCERY:
-			if cur_btn.item.name == "Mana Darts":
-				cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
-				cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
-			else:
-				dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.34
-		var atk = cur_player.get_stat(button.item.stat_used)
-		var hit = Hit.new()
-		hit.init(button.item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player)
-		if cur_player.has_bane("Blind"):
-			hit.hit_chance /= 2
-			hit.item.hit_chance /= 2
-			hit.crit_chance = 0
-		enemy_panels.update_item_stats(hit)
-		enemy_panels.show_selectors(target_type)
+		player_panels.show_selectors(cur_player, action.target_type)
+	var split = 1
+	var hit = Hit.new()
+	hit.init(button.item, cur_player, split)
+	enemy_panels.update_item_stats(hit)
+	enemy_panels.show_selectors(target_type)
 
 func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 	if !battle_active: return
@@ -460,17 +423,12 @@ func execute_vs_enemy(panel) -> void:
 	var user = cur_player as PlayerPanel
 	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
-	var dmg_mod = 0.0
-	var dmg_add = 0
 	var target_type = item.target_type
-	if "Siphon" in item.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 	if item.sub_type == Enums.SubItemType.SORCERY:
+		if "Siphon" in item.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 		if cur_btn.item.name == "Mana Darts":
 			cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
 			cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
-		else:
-			dmg_mod += cur_player.unit.job_data["sp_cur"] * 0.34
-		user.unit.job_data["sp_cur"] = 0
 	var ap_cost = cur_btn.ap_cost
 	if item.sub_type == Enums.SubItemType.PERFORM:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
@@ -511,29 +469,21 @@ func execute_vs_enemy(panel) -> void:
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
 	var atk = user.get_stat(item.stat_used)
-	var melee_penalty = item.melee and cur_player.melee_penalty
-	if (cur_player.unit.job == "Thief" and item.sub_type == Enums.SubItemType.KNIFE):
-		melee_penalty = false
-	if melee_penalty: dmg_mod -= 0.50
 	if user.has_perk("Magic Weapon") and item.sub_type != Enums.SubItemType.WAND:
 		atk += int(user.unit.intellect * (user.get_perk("Magic Weapon") * 0.5))
 		cur_hit_chance += 25
 	if item.sub_type == Enums.SubItemType.SWORD and user.has_perk("Sword Mastery"):
-		atk += int(user.unit.agility * (user.get_perk("Sword Mastery") * 0.05))
+		atk += user.unit.agility * (user.get_perk("Sword Mastery") * 0.05)
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
 			if targets == []: break
 		for target in targets:
 			if not target.alive: continue
-			var hit = Hit.new()
 			var split = 1
 			if item.split: split = targets.size()
-			hit.init(item, cur_hit_chance, cur_crit_chance, dmg_add, dmg_mod, atk, cur_player, split)
-			if cur_player.has_bane("Blind"):
-				hit.hit_chance /= 2
-				hit.item.hit_chance /= 2
-				hit.crit_chance = 0
+			var hit = Hit.new()
+			hit.init(item, cur_player, split, target)
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if target_type >= Enums.TargetType.ANY_ROW:
@@ -541,6 +491,7 @@ func execute_vs_enemy(panel) -> void:
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	if gained_xp: user.calc_xp(item.stat_used)
+	if item.sub_type == Enums.SubItemType.SORCERY: user.unit.job_data["sp_cur"] = 0
 	user.calc_xp(item.stat_hit, 0.25)
 	if quick:
 		if user == panel:
