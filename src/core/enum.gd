@@ -26,7 +26,8 @@ enum StatType {
 	DEF,
 	NA,
 	CRIT,
-	POW
+	POW,
+	MissHP
 }
 
 enum ItemType {

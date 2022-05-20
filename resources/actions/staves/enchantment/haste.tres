@@ -1,22 +1,22 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/boons/safe.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/boons/haste.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Stoneskin"
-description = "Grant {tgt} Safe."
-tier = 2
-ap_cost = 1
-quick = true
-item_type = 3
-sub_type = 10
+name = "Haste"
+description = "Grant Haste."
+tier = 3
+ap_cost = 2
+quick = false
+item_type = 4
+sub_type = 16
 melee = false
 target_type = 1
 damage_type = 7
-stat_used = 4
-stat_vs = 6
+stat_used = 0
+stat_vs = 0
 stat_hit = 6
 multiplier = 0.0
 bonus_damage = 0
@@ -28,8 +28,8 @@ split = false
 lifesteal = 0.0
 hit_chance = 0
 crit_chance = 0
-sound_fx = "safe"
-use_fx = "cast"
+sound_fx = "haste"
+use_fx = "staff"
 inflict_boons = [ [ ExtResource( 2 ), 100, 100 ] ]
 inflict_banes = [  ]
 gain_boons = [  ]

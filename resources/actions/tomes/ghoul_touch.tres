@@ -1,24 +1,24 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/banes/stun.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/banes/fear.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Aftershock"
-description = "Deal {potency} {dmg} damage to {tgt}. Inflict Stun."
-tier = 5
-ap_cost = 4
-quick = false
-item_type = 3
-sub_type = 12
-melee = false
-target_type = 9
-damage_type = 2
+name = "Ghoul Touch"
+description = "Deal {potency} {dmg} damage to {tgt} and inflict Fear."
+tier = 4
+ap_cost = 3
+quick = true
+item_type = 5
+sub_type = 20
+melee = true
+target_type = 7
+damage_type = 5
 stat_used = 4
 stat_vs = 4
 stat_hit = 6
-multiplier = 0.5
+multiplier = 1.5
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -28,8 +28,8 @@ split = false
 lifesteal = 0.0
 hit_chance = 0
 crit_chance = 0
-sound_fx = "rumble"
-use_fx = "cast"
+sound_fx = "down1"
+use_fx = "tome"
 inflict_boons = [  ]
 inflict_banes = [ [ ExtResource( 2 ), 100, 100 ] ]
 gain_boons = [  ]

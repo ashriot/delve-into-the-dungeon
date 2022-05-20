@@ -490,8 +490,16 @@ func execute_vs_enemy(panel) -> void:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
+	if item.damage_type >= Enums.DamageType.MARTIAL \
+	and item.damage_type < Enums.DamageType.HEAL \
+	and user.has_boon("Brave"):
+		user.remove_boon(user.get_boon("Brave"))
 	if gained_xp: user.calc_xp(item.stat_used)
-	if item.sub_type == Enums.SubItemType.SORCERY: user.unit.job_data["sp_cur"] = 0
+	if item.sub_type == Enums.SubItemType.SORCERY:
+		user.unit.job_data["sp_cur"] = 0
+		if quick:
+			setup_cur_player_panel()
+			setup_buttons()
 	user.calc_xp(item.stat_hit, 0.25)
 	if quick:
 		if user == panel:

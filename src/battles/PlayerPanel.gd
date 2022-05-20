@@ -131,6 +131,7 @@ func take_friendly_hit(user, item) -> void:
 func calc_xp(stat, mod = 1.0) -> void:
 	if stat < 2: return
 	var id = stat - 1
+	if id == 8: id = Enums.StatType.MaxHP
 	if id == 5: return
 	var stat_val = unit.get_base_stat(stat)
 	var threshold = float((enc_lv * 1) +  (15 * 1))

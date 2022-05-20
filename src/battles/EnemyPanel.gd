@@ -82,8 +82,16 @@ func update_hit_chance(hit) -> void:
 func update_dmg_display(hit):
 	if not hit: return
 	var item = hit.action as Item
+	var kill = false
+	if item.name == "Disintegrate":
+		if hp_cur <= hit.panel.unit.intellect * 3: kill = true
+	elif item.name == "Death Dance":
+		if hp_cur <= hit.panel.unit.agility * 1: kill = true
+	elif item.name == "Banish":
+		if hp_cur <= hit.panel.unit.intellect * 2: kill = true
+	var dmg = hp_max - hp_cur + hit.dmg if not kill else hp_max
 	dmg_display.max_value = hp_max
-	dmg_display.value = clamp(hp_max - hp_cur + hit.dmg, 0, hp_max)
+	dmg_display.value = clamp(dmg, 0, hp_max)
 	dmg_display.show()
 
 func update_status() -> void:

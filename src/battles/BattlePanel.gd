@@ -8,6 +8,7 @@ signal show_text(text, pos, display)
 signal dmg_dealt(dmg, user, action, crit)
 
 var arcanum = preload("res://resources/actions/skills/arcana/arcanum.tres")
+var slay = preload("res://resources/effects/banes/slay.tres")
 
 onready var button: = $Button
 onready var hp_gauge: = $HpGauge
@@ -132,9 +133,9 @@ func take_hit(hit: Hit) -> bool:
 		if hit.panel.has_bane("Blind"):
 			hit.panel.remove_bane(hit.panel.get_bane("Blind"))
 	emit_signal("show_dmg", dmg_text, pos, crit)
-	if item.target_type >= Enums.TargetType.ONE_ENEMY \
-		and item.target_type <= Enums.TargetType.ONE_BACK \
-		or item.target_type == Enums.TargetType.RANDOM_ENEMY:
+	if hit.target_type >= Enums.TargetType.ONE_ENEMY \
+		and hit.target_type <= Enums.TargetType.ONE_BACK \
+		or hit.target_type == Enums.TargetType.RANDOM_ENEMY:
 		AudioController.play_sfx(fx)
 	if has_bane("Sleep"):
 		remove_bane(get_bane("Sleep"))
@@ -146,12 +147,20 @@ func take_hit(hit: Hit) -> bool:
 		else: remove_bane(get_bane("Slow"))
 	if item.name == "Disintegrate":
 		if hp_cur <= hit.panel.unit.intellect * 3:
-			var slay = load("res://resources/effects/banes/slay.tres")
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+			emit_signal("show_text", "+" + slay.name, pos)
+			gain_bane(slay, 1)
+	elif item.name == "Death Dance":
+		if hp_cur <= hit.panel.unit.agility * 1:
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 			emit_signal("show_text", "+" + slay.name, pos)
 			gain_bane(slay, 1)
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
-		for bane in item.inflict_banes:
+		var banes = item.inflict_banes
+		if item.name == "Banish":
+			if hp_cur <= hit.panel.unit.intellect * 2:
+				banes[0][2] = 100
+		for bane in banes:
 			var chance = bane[2]
 			if item.name == "Hypnotize":
 				chance *= hit.dmg_mod
@@ -175,7 +184,7 @@ func take_hit(hit: Hit) -> bool:
 			if randi() % 100 + 1 > boon[2]: continue
 			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = hit.panel.gain_boon(boon[0], boon[1])
-			if success: emit_signal("show_text", "+" + boon[0].name, hit.panel_pos)
+			if success: emit_signal("show_text", "+" + boon[0].name, hit.panel.pos)
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	return gained_xp

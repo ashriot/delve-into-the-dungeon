@@ -8,6 +8,7 @@ export var hp_cur: int
 
 export var hp_max: int setget, get_hp_max
 export var hp_percent: float setget, get_hp_percent
+export var hp_missing: int setget, get_hp_missing
 export var ap: int
 export var strength: int setget, get_strength
 export var agility: int setget, get_agility
@@ -53,6 +54,9 @@ func get_hp_max() -> int:
 func get_hp_percent() -> float:
 	if self.hp_max < 1: return 0.0
 	return float(self.hp_cur) / self.hp_max
+
+func get_hp_missing() -> int:
+	return hp_max - hp_cur
 
 func get_strength() -> int:
 	var str_mod = 1.0
@@ -109,6 +113,7 @@ func get_stat(stat) -> int:
 	match stat:
 		Enums.StatType.CurHP: return self.hp_cur
 		Enums.StatType.MaxHP: return self.hp_max
+		Enums.StatType.MissHP: return self.hp_missing
 		Enums.StatType.STR: return self.strength
 		Enums.StatType.AGI: return self.agility
 		Enums.StatType.INT: return self.intellect
@@ -122,6 +127,7 @@ func get_base_stat(stat) -> int:
 	match stat:
 		Enums.StatType.CurHP: return hp_cur
 		Enums.StatType.MaxHP: return hp_max
+		Enums.StatType.MissHP: return hp_max
 		Enums.StatType.STR: return strength
 		Enums.StatType.AGI: return agility
 		Enums.StatType.INT: return intellect

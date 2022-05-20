@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Dull"
-desc = "INT reduced by 25%."
-frame = 24
+name = "Fear"
+desc = "Next attack taken deals 50% more damage."
+frame = 25
 permanent = false
 turn_start = false
 turn_end = true

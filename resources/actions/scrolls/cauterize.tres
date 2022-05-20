@@ -1,22 +1,22 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
-[ext_resource path="res://resources/effects/banes/stun.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/banes/burn.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Quell"
-description = "Deal {potency} {dmg} damage to {tgt}; Inflict Stun(50%)."
-tier = 3
+name = "Cauterize"
+description = "Gain Burn. Heal for 50% missing HP."
+tier = 1
 ap_cost = 2
 quick = false
-item_type = 4
-sub_type = 15
+item_type = 3
+sub_type = 13
 melee = false
-target_type = 6
-damage_type = 5
-stat_used = 4
-stat_vs = 4
+target_type = 0
+damage_type = 6
+stat_used = 9
+stat_vs = 6
 stat_hit = 6
 multiplier = 0.5
 bonus_damage = 0
@@ -28,10 +28,10 @@ split = false
 lifesteal = 0.0
 hit_chance = 0
 crit_chance = 0
-sound_fx = "ice"
-use_fx = "staff"
+sound_fx = "fire"
+use_fx = "cast"
 inflict_boons = [  ]
-inflict_banes = [ [ ExtResource( 2 ), 1, 75 ] ]
+inflict_banes = [ [ ExtResource( 2 ), 100, 100 ] ]
 gain_boons = [  ]
 gain_banes = [  ]
 max_uses = 0

@@ -14,6 +14,7 @@ var split: int
 var can_crit := false
 var user_pos: Vector2
 var melee_penalty: bool
+var target_type: int
 
 var dmg: int
 var crit_dmg: int
@@ -29,6 +30,8 @@ func init(_action, _panel, _split, _target = null):
 	can_crit = can_crit()
 	level = panel.unit.level if panel.unit is Enemy else 0
 	bonus_dmg = action.bonus_damage
+	target_type = action.target_type
+	if "Siphon" in action.name: target_type += max((panel.unit.job_data["sp_cur"] - 1), 0) * 3
 
 	melee_penalty = action.melee and panel.melee_penalty
 	if _target: update_target_data(_target)
@@ -64,8 +67,12 @@ func update_target_data(_target) -> void:
 	if not can_crit: crit_chance = 0
 	dmg_mod = 1.0
 	if melee_penalty: dmg_mod -= 0.50
+	if panel.has_boon("Brave"):
+		dmg_mod += 0.5
+	if target.has_bane("Fear"):
+		dmg_mod += 0.5
 	if action.name == "Caladbolg":
-		dmg_mod += panel.hp_percent / 2
+		dmg_mod += panel.hp_percent
 	elif action.name == "Drown":
 		dmg_mod += (0.5 - target.hp_percent / 2)
 	elif action.name == "Fireball":
@@ -86,3 +93,4 @@ func update_target_data(_target) -> void:
 	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
 	crit_dmg = max(int((crit_dmg - def_mod) * dmg_mod), 0)
 	dmg /= split
+	crit_dmg /= split
