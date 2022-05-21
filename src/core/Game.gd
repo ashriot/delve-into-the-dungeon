@@ -56,7 +56,7 @@ var inventory: Inventory = _Inventory.new()
 var profile_id: int
 
 func _ready():
-	randomize()
+#	randomize()
 	profiles.hide()
 	new_profile.hide()
 	fade.show()

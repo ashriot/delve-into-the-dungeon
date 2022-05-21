@@ -1,0 +1,42 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/banes/slow.tres" type="Resource" id=2]
+[ext_resource path="res://resources/effects/banes/frail.tres" type="Resource" id=3]
+[ext_resource path="res://resources/effects/banes/weak.tres" type="Resource" id=4]
+[ext_resource path="res://resources/effects/banes/dull.tres" type="Resource" id=5]
+
+[resource]
+script = ExtResource( 1 )
+name = "Ghoul Touch"
+description = "Inflict Dull, Frail, Slow, and Weak."
+tier = 5
+ap_cost = 2
+quick = true
+item_type = 5
+sub_type = 20
+melee = true
+target_type = 7
+damage_type = 5
+stat_used = 4
+stat_vs = 4
+stat_hit = 6
+multiplier = 1.5
+bonus_damage = 0
+min_hits = 1
+max_hits = 1
+gain_ap = 0
+grant_ap = 0
+split = false
+lifesteal = 0.0
+hit_chance = 0
+crit_chance = 0
+sound_fx = "malady"
+use_fx = "tome"
+inflict_boons = [  ]
+inflict_banes = [ [ ExtResource( 5 ), 100, 100 ], [ ExtResource( 3 ), 100, 100 ], [ ExtResource( 2 ), 100, 100 ], [ ExtResource( 4 ), 100, 100 ] ]
+gain_boons = [  ]
+gain_banes = [  ]
+max_uses = 0
+uses = 0
+price = 0

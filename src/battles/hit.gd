@@ -78,6 +78,8 @@ func update_target_data(_target) -> void:
 	elif action.name == "Fireball":
 		if target.has_bane("Burn"):
 			dmg_mod += 0.5
+	elif action.name == "Hex Bolt":
+		dmg_mod += 0.25 * target.banes.size()
 	if action.sub_type == Enums.SubItemType.SORCERY:
 		if action.name == "Mana Darts":
 			action.min_hits = 1 + panel.unit.job_data["sp_cur"]
@@ -90,7 +92,7 @@ func update_target_data(_target) -> void:
 	def_mod = int(float(def * 0.5) * action.multiplier)
 	var def = target.get_stat(action.stat_vs)
 	var def_mod = float(def * 0.5) * action.multiplier
-	dmg = max(int((dmg - def_mod) * dmg_mod), 0)
-	crit_dmg = max(int((crit_dmg - def_mod) * dmg_mod), 0)
+	dmg = max(int((dmg * dmg_mod) - def_mod), 0)
+	crit_dmg = max(int((crit_dmg * dmg_mod) - def_mod), 0)
 	dmg /= split
 	crit_dmg /= split

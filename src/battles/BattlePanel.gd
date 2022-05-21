@@ -171,7 +171,7 @@ func take_hit(hit: Hit) -> bool:
 				if effect_only:
 					emit_signal("show_text", "Resist", pos)
 				continue
-			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+#			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_bane(bane[0], bane[1])
 			if success:
 				emit_signal("show_text", "+" + bane[0].name, pos)
