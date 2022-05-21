@@ -5,10 +5,10 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Chill Touch"
+name = "Chilling Touch"
 description = "Deal {potency} {dmg} damage to {tgt} and inflict Fear."
 tier = 4
-ap_cost = 3
+ap_cost = 4
 quick = true
 item_type = 5
 sub_type = 20
@@ -18,7 +18,7 @@ damage_type = 5
 stat_used = 4
 stat_vs = 4
 stat_hit = 6
-multiplier = 1.5
+multiplier = 2.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1

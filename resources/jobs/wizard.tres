@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
-[ext_resource path="res://resources/actions/scrolls/chill.tres" type="Resource" id=2]
-[ext_resource path="res://resources/actions/scrolls/clarity.tres" type="Resource" id=3]
-[ext_resource path="res://resources/actions/scrolls/sear.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/scrolls/water/chill.tres" type="Resource" id=2]
+[ext_resource path="res://resources/actions/scrolls/water/clarity.tres" type="Resource" id=3]
+[ext_resource path="res://resources/actions/scrolls/fire/sear.tres" type="Resource" id=4]
 [ext_resource path="res://resources/actions/weapons/wands/novice_wand.tres" type="Resource" id=5]
 [ext_resource path="res://resources/equipment/body/worn_robe.tres" type="Resource" id=6]
 [ext_resource path="res://resources/equipment/hands/worn_bracelet.tres" type="Resource" id=7]

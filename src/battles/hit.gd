@@ -48,6 +48,10 @@ func update_target_data(_target) -> void:
 	if not _target: return
 	target = _target
 	atk = panel.get_stat(action.stat_used)
+	if action.name == "Rapier":
+		var strength = panel.get_stat(Enums.StatType.STR)
+		var agility = panel.get_stat(Enums.StatType.AGI)
+		atk = max(strength, agility)
 	hit_chance = 100
 	crit_chance = action.crit_chance + panel.unit.crit_chance
 	var target_type = action.target_type

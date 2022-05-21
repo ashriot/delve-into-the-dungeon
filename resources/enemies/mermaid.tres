@@ -39,10 +39,10 @@ level = 1
 ap_init = 2
 gold = 25
 hp_rating = 3
-str_rating = 3
+str_rating = 2
 agi_rating = 9
-int_rating = 6
-def_rating = 4
+int_rating = 8
+def_rating = 3
 actions = {
 0: ExtResource( 2 ),
 1: ExtResource( 4 ),
