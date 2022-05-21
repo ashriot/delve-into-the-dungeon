@@ -351,7 +351,7 @@ func decrement_banes(timing: String) -> void:
 				bane[1] -= 1
 				if bane[0].triggered:
 					trigger_bane(bane[0].name)
-					yield(get_tree().create_timer(0.25, true), "timeout")
+					yield(get_tree().create_timer(0.33, true), "timeout")
 				if bane[1] == 0:
 					remove_bane(bane[0])
 	call_deferred("emit_signal", "done")

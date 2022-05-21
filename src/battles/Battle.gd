@@ -256,7 +256,7 @@ func enemy_take_action(panel: EnemyPanel):
 		else:
 			panel.trigger_bane("Sleep")
 			stunned = true
-	if stunned: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+	if stunned: yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	else:
 		var action = panel.get_action()
 		AudioController.play_sfx(action.use_fx)
@@ -284,7 +284,7 @@ func enemy_take_action(panel: EnemyPanel):
 			if action.target_type >= Enums.TargetType.ANY_ROW:
 				AudioController.play_sfx(action.sound_fx)
 			if hit_num < hits - 1:
-				yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
+				yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		for target in targets:
 			if target is Player:
 				target.gained_xp = false
