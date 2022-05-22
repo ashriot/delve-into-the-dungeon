@@ -384,7 +384,7 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	var target_type = action.target_type
 	if "Siphon" in action.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 	if (cur_player.unit.job_tab == "Knives" and \
-		action.sub_type == Enums.SubactionType.KNIFE):
+		action.sub_type == Enums.SubItemType.KNIFE):
 			target_type = Enums.TargetType.ONE_ENEMY
 			melee_penalty = false
 	if target_type >= Enums.TargetType.MYSELF \

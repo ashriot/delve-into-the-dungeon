@@ -156,6 +156,7 @@ func take_hit(hit: Hit) -> bool:
 			emit_signal("show_text", "+" + slay.name, pos)
 			gain_bane(slay, 1)
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
+		if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 		var banes = item.inflict_banes
 		if item.name == "Banish":
 			if hp_cur <= hit.panel.unit.intellect * 2:
@@ -171,7 +172,6 @@ func take_hit(hit: Hit) -> bool:
 				if effect_only:
 					emit_signal("show_text", "Resist", pos)
 				continue
-#			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 			var success = gain_bane(bane[0], bane[1])
 			if success:
 				emit_signal("show_text", "+" + bane[0].name, pos)
