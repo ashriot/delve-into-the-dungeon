@@ -9,6 +9,7 @@ frame = 3
 hp_cur = 0
 hp_max = 50
 hp_percent = 0.0
+hp_missing = 0
 ap = 0
 strength = 3
 agility = 7

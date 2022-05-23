@@ -83,7 +83,8 @@ func get_defense() -> int:
 	return int((defense + def_bonus) * (def_mod))
 
 func get_crit_chance() -> int:
-	return crit_chance + crit_bonus
+	var bonus = get_perk("Critical Aim") * 2
+	return crit_chance + crit_bonus + bonus
 
 func get_crit_power() -> int:
 	var total = 0

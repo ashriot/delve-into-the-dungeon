@@ -34,7 +34,6 @@ func setup(_unit):
 	self.ap = unit.ap
 	sprite.position.y = 2
 	self.selected = false
-	self.ready = true
 	if unit.job == "Sorcerer":
 		unit.job_data["sp_cur"] = unit.job_data["sp_max"]
 
@@ -56,6 +55,11 @@ func set_ready(value: bool):
 		outline.modulate.a = 1
 		if blocking > 0: self.blocking = 0
 		quick_actions = 1
+		self.ap += 1
+		if has_perk("Adrenaline"):
+			if randi() % 100 + 1 < get_perk("Adrenaline") * 10:
+				print("Adrenaline!!")
+				self.ap += 1
 		decrement_boons("Start")
 		decrement_banes("Start")
 	else:

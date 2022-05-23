@@ -200,7 +200,6 @@ func start_players_turns() -> void:
 	if not battle_active: return
 	for panel in player_panels.get_children():
 		if panel.alive: panel.ready = true
-		panel.ap += 1
 	AudioController.play_sfx("player_turn")
 	get_next_player(false)
 
@@ -418,6 +417,7 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 		select_player(panel, true)
 
 func execute_vs_enemy(panel) -> void:
+	cur_player.crit_round = false
 	var gained_xp = false
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel

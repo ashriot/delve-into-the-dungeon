@@ -21,6 +21,7 @@ onready var status = $Status
 
 var enabled: bool
 var alive: bool setget, get_alive
+var crit_round: bool
 var unit: Unit = null
 var hp_cur: int setget set_hp_cur
 var hp_max: int
@@ -92,9 +93,10 @@ func take_hit(hit: Hit) -> bool:
 	var crit = false
 	var hit_roll = randi() % 100 + 1
 	var crit_roll = randi() % 100 + 1
-	if hit_roll > hit.hit_chance:
-		miss = true
-	elif crit_roll <= hit.crit_chance: crit = true
+	if hit_roll > hit.hit_chance: miss = true
+	elif crit_roll <= hit.crit_chance:
+		crit = true
+		hit.panel.just_crit()
 	var multi = item.multiplier
 	var dmg = hit.dmg if not crit else hit.crit_dmg
 	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
@@ -242,6 +244,12 @@ func take_damage(amt: int) -> void:
 	if !enabled: return
 	self.hp_cur -= amt
 	if amt != 0: emit_signal("show_dmg", str(amt), pos, false)
+
+func just_crit() -> void:
+	if not crit_round and has_perk("Critical Grace"):
+		self.ap += 1
+		emit_signal("show_text", "+1AP", pos)
+		crit_round = true
 
 func gain_bane(bane: Effect, duration: int) -> bool:
 	var found = false
