@@ -6,6 +6,7 @@ onready var HpGauge = $HpGauge
 onready var ApGauge = $ApGauge
 onready var sprite = $Sprite
 onready var selector = $Selector
+onready var status_icon = $Status
 
 var tab setget set_tab, get_tab
 
@@ -24,6 +25,7 @@ func setup(player: Player) -> void:
 	ApGauge.rect_size.x = player.ap * 2
 	HpGauge.max_value = player.hp_max
 	HpGauge.value = player.hp_cur
+	status_icon.hide()
 
 func get_hp_str(value: int) -> String:
 	if value > 99: return "[right]" + str(value)

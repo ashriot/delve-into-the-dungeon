@@ -63,9 +63,9 @@ margin_bottom = 26.0
 [node name="CloseButton" type="TextureButton" parent="."]
 modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_left = -1.0
-margin_top = 121.0
+margin_top = 123.0
 margin_right = 73.0
-margin_bottom = 129.0
+margin_bottom = 131.0
 texture_normal = ExtResource( 13 )
 expand = true
 __meta__ = {
@@ -98,10 +98,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -49.0
-margin_top = -15.0
-margin_right = -9.0
-margin_bottom = -8.0
+margin_left = -47.0
+margin_top = -14.0
+margin_right = -7.0
+margin_bottom = -7.0
 text = "125"
 align = 2
 valign = 1
@@ -117,7 +117,7 @@ centered = false
 [node name="Stats" type="ColorRect" parent="."]
 margin_top = 28.0
 margin_right = 72.0
-margin_bottom = 118.0
+margin_bottom = 122.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -391,9 +391,9 @@ __meta__ = {
 
 [node name="MainMenu" type="ColorRect" parent="."]
 visible = false
-margin_top = 30.0
+margin_top = 28.0
 margin_right = 72.0
-margin_bottom = 121.0
+margin_bottom = 115.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -402,9 +402,9 @@ __meta__ = {
 [node name="MenuButtons" type="VBoxContainer" parent="MainMenu"]
 modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_left = 2.0
-margin_top = 20.0
+margin_top = 22.0
 margin_right = 70.0
-margin_bottom = 74.0
+margin_bottom = 76.0
 custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -455,16 +455,17 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 9.0
-margin_bottom = 8.0
+margin_right = -2.0
+margin_bottom = 7.0
 mouse_filter = 2
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Items/Back"]
-margin_left = -7.0
-margin_right = 62.0
-margin_bottom = 7.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 custom_colors/font_color = Color( 0.152941, 0.152941, 0.152941, 1 )
 text = "Actions"
 align = 1
@@ -529,8 +530,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -35.0
-margin_top = -9.0
+margin_top = -10.0
 margin_right = 35.0
+margin_bottom = -1.0
 rect_min_size = Vector2( 70, 9 )
 __meta__ = {
 "_edit_use_anchors_": false

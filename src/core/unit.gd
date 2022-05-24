@@ -49,7 +49,7 @@ func get_hp_max() -> int:
 	var hp_mod = 1.0
 	for mod in hp_mods:
 		hp_mod *= mod
-	return int((hp_max + hp_bonus) * (hp_mod))
+	return int((hp_max + hp_bonus + self.strength) * (hp_mod))
 
 func get_hp_percent() -> float:
 	if self.hp_max < 1: return 0.0

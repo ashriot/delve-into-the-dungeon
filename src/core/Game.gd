@@ -118,6 +118,7 @@ func skip_title():
 
 func _on_StartGame_pressed():
 	AudioController.select()
+	$CanvasLayer/Title/StartGame.disabled = true
 	profiles.show()
 
 func _physics_process(delta: float) -> void:

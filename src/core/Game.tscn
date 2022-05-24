@@ -667,7 +667,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
 custom_colors/font_color = Color( 0.12549, 0.12549, 0.12549, 1 )
-text = "Party Menu"
+text = "Open Menu"
 align = 1
 valign = 1
 __meta__ = {
@@ -686,6 +686,7 @@ frame = 141
 visible = false
 
 [node name="Title" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {

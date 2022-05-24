@@ -15,7 +15,7 @@ __meta__ = {
 }
 
 [node name="Bg" type="TextureRect" parent="."]
-modulate = Color( 0.372549, 0.619608, 0.807843, 1 )
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
@@ -48,7 +48,7 @@ __meta__ = {
 }
 
 [node name="ApCost" type="Label" parent="."]
-modulate = Color( 0.713726, 0.835294, 0.235294, 1 )
+modulate = Color( 0.976471, 0.760784, 0.168627, 1 )
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0

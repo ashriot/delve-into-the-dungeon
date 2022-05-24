@@ -341,8 +341,9 @@ func dmg_dealt(dmg: int, user: BattlePanel, action: Action, crit: bool) -> void:
 	if user.has_perk("Deflection") and action.melee:
 		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		var amt = int(dmg * user.get_perk("Deflection") * 0.05)
-		show_dmg_text("+" + str(amt), user.pos, crit)
-		user.blocking = amt
+		if user.blocking < amt:
+			user.blocking = amt
+			show_dmg_text("+" + str(amt), user.pos, crit)
 
 func learned_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
