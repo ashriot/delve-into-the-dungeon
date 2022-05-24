@@ -15,6 +15,7 @@ var can_crit := false
 var user_pos: Vector2
 var melee_penalty: bool
 var target_type: int
+var targets: int
 
 var dmg: int
 var crit_dmg: int

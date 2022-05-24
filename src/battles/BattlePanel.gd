@@ -96,7 +96,7 @@ func take_hit(hit: Hit) -> bool:
 	if hit_roll > hit.hit_chance: miss = true
 	elif crit_roll <= hit.crit_chance:
 		crit = true
-		hit.panel.just_crit()
+		hit.panel.just_crit(hit.targets)
 	var multi = item.multiplier
 	var dmg = hit.dmg if not crit else hit.crit_dmg
 	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
@@ -245,11 +245,12 @@ func take_damage(amt: int) -> void:
 	self.hp_cur -= amt
 	if amt != 0: emit_signal("show_dmg", str(amt), pos, false)
 
-func just_crit() -> void:
+func just_crit(targets: int) -> void:
 	if not crit_round and has_perk("Critical Grace"):
-		self.ap += 1
-		emit_signal("show_text", "+1AP", pos)
-		crit_round = true
+		if randi() % 100 < (50 if targets > 1 else 100):
+			self.ap += 1
+			emit_signal("show_text", "+1AP", pos)
+			crit_round = true
 
 func gain_bane(bane: Effect, duration: int) -> bool:
 	var found = false

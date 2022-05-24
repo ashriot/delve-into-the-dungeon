@@ -277,6 +277,7 @@ func enemy_take_action(panel: EnemyPanel):
 				if not target.alive: continue
 				var hit = Hit.new()
 				hit.init(action, panel, split, target)
+				hit.targets = targets.size()
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(panel, action)
 				else: target.take_hit(hit)
@@ -484,6 +485,7 @@ func execute_vs_enemy(panel) -> void:
 			if item.split: split = targets.size()
 			var hit = Hit.new()
 			hit.init(item, cur_player, split, target)
+			hit.targets = targets.size()
 			gained_xp = target.take_hit(hit)
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if target_type >= Enums.TargetType.ANY_ROW:
