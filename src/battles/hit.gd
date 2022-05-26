@@ -49,10 +49,6 @@ func update_target_data(_target) -> void:
 	if not _target: return
 	target = _target
 	atk = panel.get_stat(action.stat_used)
-	if action.name == "Rapier":
-		var strength = panel.get_stat(Enums.StatType.STR)
-		var agility = panel.get_stat(Enums.StatType.AGI)
-		atk = max(strength, agility)
 	hit_chance = 100
 	crit_chance = action.crit_chance + panel.unit.crit_chance
 	var target_type = action.target_type
@@ -70,6 +66,14 @@ func update_target_data(_target) -> void:
 			hit_chance /= 2
 			crit_chance = 0
 	if not can_crit: crit_chance = 0
+	if action.name == "Rapier":
+		var strength = panel.get_stat(Enums.StatType.STR)
+		var agility = panel.get_stat(Enums.StatType.AGI)
+		atk = max(strength, agility)
+	if panel.has_perk("Magic Weapon") and action.sub_type != Enums.SubItemType.WAND:
+		atk += int(panel.unit.intellect * (panel.get_perk("Magic Weapon") * 0.05))
+	if action.sub_type == Enums.SubItemType.SWORD and panel.has_perk("Sword Mastery"):
+		atk += int(panel.unit.agility * (panel.get_perk("Sword Mastery") * 0.05))
 	dmg_mod = 1.0
 	if melee_penalty: dmg_mod -= 0.50
 	if panel.has_boon("Brave"):

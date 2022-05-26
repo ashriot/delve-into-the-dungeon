@@ -69,7 +69,7 @@ func steps() -> void:
 	play_sfx("footsteps")
 
 func set_bgm_volume() -> void:
-	vol_bgm = -5
+	vol_bgm = -20
 	bgm.volume_db = vol_bgm
 
 func set_sfx_volume() -> void:

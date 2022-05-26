@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/core/perk.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Lead the Charge"
+desc = "Weapon attacks have a 25% chance to grant a random ally 1 AP."
+rank = 1

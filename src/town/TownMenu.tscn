@@ -90,6 +90,7 @@ self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 9.0
 margin_right = 68.0
 margin_bottom = 16.0
+disabled = true
 text = "Alchemist"
 
 [node name="MonestaryBtn" parent="TownMenu" instance=ExtResource( 23 )]
@@ -97,6 +98,7 @@ self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 18.0
 margin_right = 68.0
 margin_bottom = 25.0
+disabled = true
 text = "Monestary"
 
 [node name="MageBtn" parent="TownMenu" instance=ExtResource( 23 )]
@@ -104,6 +106,7 @@ self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 27.0
 margin_right = 68.0
 margin_bottom = 34.0
+disabled = true
 text = "Mage Tower"
 
 [node name="TavernBtn" type="TextureButton" parent="TownMenu"]
@@ -167,7 +170,6 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-modulate = Color( 1, 0.984314, 0.937255, 1 )
 margin_top = 42.0
 margin_right = 71.0
 margin_bottom = 49.0
@@ -620,7 +622,6 @@ __meta__ = {
 }
 
 [node name="Tavern" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -6.0
@@ -697,6 +698,7 @@ __meta__ = {
 }
 
 [node name="BenchHero" type="Control" parent="Tavern"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {

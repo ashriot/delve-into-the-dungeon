@@ -57,9 +57,7 @@ func set_ready(value: bool):
 		quick_actions = 1
 		self.ap += 1
 		if has_perk("Adrenaline"):
-			if randi() % 100 + 1 < get_perk("Adrenaline") * 10:
-				print("Adrenaline!!")
-				self.ap += 1
+			if randi() % 100 + 1 < get_perk("Adrenaline") * 10: self.ap += 1
 		decrement_boons("Start")
 		decrement_banes("Start")
 	else:

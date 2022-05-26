@@ -726,6 +726,7 @@ anchor_bottom = 1.0
 margin_left = 9.0
 margin_bottom = 8.0
 mouse_filter = 2
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1163,6 +1164,7 @@ anchor_bottom = 1.0
 margin_left = 9.0
 margin_bottom = 8.0
 mouse_filter = 2
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1325,13 +1327,20 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="Options"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -6.0
+margin_bottom = -8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button" type="TextureButton" parent="Options/Panel"]
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 13.0
@@ -1352,24 +1361,34 @@ margin_left = 2.0
 margin_top = -3.5
 margin_right = 42.0
 margin_bottom = 3.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Mute BGM"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BackBanner" type="ColorRect" parent="Options/Panel"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 9.0
-margin_bottom = 7.0
+margin_top = 2.0
+margin_bottom = 9.0
 mouse_filter = 2
-color = Color( 1, 1, 0.921569, 1 )
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="Options/Panel/BackBanner"]
-margin_left = 1.0
+margin_left = -9.0
 margin_top = -1.0
-margin_right = 41.0
+margin_right = 62.0
 margin_bottom = 6.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "OPTIONS"
+text = "Options"
+align = 1
+valign = 1
 
 [node name="Recruit" type="Label" parent="."]
 visible = false

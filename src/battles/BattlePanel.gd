@@ -49,6 +49,7 @@ func init(battle) -> void:
 # warning-ignore:return_value_discarded
 	connect("show_text", battle, "show_text")
 	connect("dmg_dealt", battle, "dmg_dealt")
+	battle.connect("action_used", self, "action_used")
 
 func setup(_unit):
 	anim.stop()
@@ -126,7 +127,7 @@ func take_hit(hit: Hit) -> bool:
 				dmg = int(0.5 * dmg)
 		self.hp_cur -= dmg
 		dmg_text = str(dmg) + ("!" if crit else "")
-		if blocked: dmg_text += "{" + str(blocked) + "}"
+		if blocked: dmg_text += " [" + str(blocked) + "]"
 		anim.play("Hit")
 		emit_signal("dmg_dealt", dmg, hit.panel, hit.action, crit)
 	elif miss:
@@ -430,6 +431,12 @@ func update_status() -> void:
 	status_ptr = 0
 	delay = 0
 
+func action_used(action, user) -> void:
+	if user != self and has_perk("Improv"):
+		if randi() % 100 + 1 < 25:
+			emit_signal("show_text", "+1AP", pos)
+			self.ap += 1
+
 func targetable(value: bool, display = true):
 	if not enabled: return
 	if not self.alive: value = false
@@ -437,13 +444,6 @@ func targetable(value: bool, display = true):
 	if valid_target:
 		if display: target.show()
 	else: target.hide()
-
-func get_hit_and_crit_chance(hit) -> Array:
-	var hit_roll = 100
-	if hit.action.stat_hit != Enums.StatType.NA:
-		hit_roll = clamp(float((hit.hit_chance) / float(get_stat(hit.action.stat_hit)) * 50 - 50), 0, 100)
-	var crit_roll = hit.crit_chance if hit.can_crit else 0
-	return [hit_roll, crit_roll]
 
 func die():
 	enabled = false

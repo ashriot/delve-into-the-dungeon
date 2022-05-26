@@ -5,6 +5,7 @@ signal add_player
 onready var sprite = $Panel/Sprite
 onready var job_name = $ClassName
 onready var hp = $Stats/HP
+onready var crit = $Stats/CRIT
 onready var strength = $Stats/Stats/STR/Value
 onready var agility = $Stats/Stats/AGI/Value
 onready var intellect = $Stats/Stats/INT/Value
@@ -35,6 +36,7 @@ func setup_unit(unit: Player) -> void:
 	job_perk.text = unit.job_perk
 	job_desc.text = unit.perk_desc
 	hp.text = str(unit.hp_max)
+	crit.text = str(unit.crit_chance) + "%"
 	strength.text = str(unit.strength)
 	agility.text = str(unit.agility)
 	intellect.text = str(unit.intellect)

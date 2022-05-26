@@ -65,16 +65,22 @@ func get_strength() -> int:
 	return int((strength + str_bonus) * (str_mod))
 
 func get_agility() -> int:
+	var bonus = 0
+	if has_perk("Sharp Wit"):
+		bonus = intellect * 0.1
 	var agi_mod = 1.0
 	for mod in agi_mods:
 		agi_mod *= mod
-	return int((agility + agi_bonus) * (agi_mod))
+	return int((agility + agi_bonus + bonus) * (agi_mod))
 
 func get_intellect() -> int:
+	var bonus = 0
+	if has_perk("Sharp Wit"):
+		bonus = agility * 0.1
 	var int_mod = 1.0
 	for mod in int_mods:
 		int_mod *= mod
-	return int((intellect + int_bonus) * (int_mod))
+	return int((intellect + int_bonus + bonus) * (int_mod))
 
 func get_defense() -> int:
 	var def_mod = 1.0

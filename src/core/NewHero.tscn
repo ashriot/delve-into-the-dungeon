@@ -20,20 +20,9 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="ClassName" type="Label" parent="."]
-margin_top = 112.0
-margin_right = 72.0
-margin_bottom = 119.0
-text = "ARTIFICER"
-align = 1
-uppercase = true
-__meta__ = {
 "_edit_use_anchors_": false
 }
 
@@ -53,6 +42,7 @@ __meta__ = {
 }
 
 [node name="CheckBtn" type="TextureButton" parent="LineEdit"]
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -69,11 +59,12 @@ __meta__ = {
 }
 
 [node name="Banner" type="ColorRect" parent="."]
+modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -7.0
-color = Color( 1, 1, 0.921569, 1 )
+margin_top = -5.0
+margin_bottom = 2.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -82,7 +73,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
-text = "NEW HERO"
+text = "Recruit Hero"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -107,7 +98,7 @@ color = Color( 1, 1, 0.921569, 1 )
 margin_top = 34.0
 margin_right = 72.0
 margin_bottom = 41.0
-custom_colors/font_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "TINKER"
 align = 1
 autowrap = true
@@ -130,9 +121,9 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_left = 30.0
+margin_left = 5.0
 margin_top = 1.0
-margin_right = 42.0
+margin_right = 17.0
 margin_bottom = 13.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -294,8 +285,7 @@ valign = 1
 [node name="HP" type="Label" parent="Stats"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 24.0
-margin_right = 44.0
+margin_left = -8.0
 margin_bottom = 7.0
 custom_colors/font_color = Color( 0.313726, 0.760784, 0.227451, 1 )
 text = "50"
@@ -321,18 +311,65 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
 margin_right = 1.0
-custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HP"
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
+[node name="CRIT" type="Label" parent="Stats"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 20.0
+margin_right = 32.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.658824, 0.517647, 0.952941, 1 )
+text = "10%"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="ColorRect" parent="Stats/CRIT"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -18.0
+margin_top = -3.5
+margin_right = -1.0
+margin_bottom = 3.5
+color = Color( 0.658824, 0.517647, 0.952941, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Stats/CRIT/BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "CRIT"
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ClassName" type="Label" parent="."]
+margin_top = 113.0
+margin_right = 72.0
+margin_bottom = 120.0
+text = "ARTIFICER"
+align = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PrevBtn" type="TextureButton" parent="."]
 margin_left = 1.0
-margin_top = 112.0
+margin_top = 113.0
 margin_right = 9.0
-margin_bottom = 119.0
+margin_bottom = 120.0
 texture_normal = ExtResource( 4 )
 stretch_mode = 3
 __meta__ = {
@@ -341,9 +378,9 @@ __meta__ = {
 
 [node name="NextBtn" type="TextureButton" parent="."]
 margin_left = 64.0
-margin_top = 112.0
+margin_top = 113.0
 margin_right = 72.0
-margin_bottom = 119.0
+margin_bottom = 120.0
 texture_normal = ExtResource( 5 )
 stretch_mode = 3
 __meta__ = {

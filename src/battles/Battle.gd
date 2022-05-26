@@ -5,6 +5,7 @@ var draw_arcana = preload("res://resources/actions/skills/arcana/draw_arcana.tre
 
 signal enemy_done
 signal battle_done
+signal action_used(action, user)
 
 onready var player_panels = $PlayerPanels
 onready var enemy_panels = $EnemyPanels
@@ -198,8 +199,18 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 
 func start_players_turns() -> void:
 	if not battle_active: return
+	var wait = true
 	for panel in player_panels.get_children():
 		if panel.alive: panel.ready = true
+		if panel.has_perk("Healing Tune"):
+			var potency = int(panel.get_stat(Enums.StatType.INT) * 0.2)
+			show_text("Healing Tune", panel.pos)
+			AudioController.play_sfx("perform")
+			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+			heal_party(potency)
+			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			wait = false
+	if wait: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	AudioController.play_sfx("player_turn")
 	get_next_player(false)
 
@@ -231,7 +242,6 @@ func enemy_turns():
 			enemy_take_action(enemy)
 			yield(self, "enemy_done")
 			yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
-	yield(get_tree().create_timer(1 * GameManager.spd), "timeout")
 	if not battle_active: return
 	start_players_turns()
 
@@ -470,12 +480,6 @@ func execute_vs_enemy(panel) -> void:
 	if target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
-	var atk = user.get_stat(item.stat_used)
-	if user.has_perk("Magic Weapon") and item.sub_type != Enums.SubItemType.WAND:
-		atk += int(user.unit.intellect * (user.get_perk("Magic Weapon") * 0.5))
-		cur_hit_chance += 25
-	if item.sub_type == Enums.SubItemType.SWORD and user.has_perk("Sword Mastery"):
-		atk += user.unit.agility * (user.get_perk("Sword Mastery") * 0.05)
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
@@ -504,6 +508,7 @@ func execute_vs_enemy(panel) -> void:
 			setup_cur_player_panel()
 			setup_buttons()
 	user.calc_xp(item.stat_hit, 0.25)
+	emit_signal("action_used", cur_btn.item, cur_player)
 	if quick:
 		if user == panel:
 			setup_cur_player_panel()
@@ -560,6 +565,7 @@ func execute_vs_player(panel) -> void:
 			target.take_friendly_hit(user, item)
 		if hit_num > hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
+	emit_signal("action_used", cur_btn.item, cur_player)
 	if quick:
 		if user == panel:
 			setup_cur_player_panel()
@@ -596,6 +602,10 @@ func clear_selections() -> void:
 
 func roll() -> int:
 	return randi() % 100 + 1
+
+func heal_party(amt) -> void:
+	for panel in player_panels.get_children():
+		panel.take_healing(amt)
 
 func _on_EnemyPanel_died(panel: EnemyPanel) -> void:
 	var done = true
