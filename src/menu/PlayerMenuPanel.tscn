@@ -97,7 +97,7 @@ vframes = 10
 frame = 30
 
 [node name="HP" type="Sprite" parent="."]
-position = Vector2( 15, 3 )
+position = Vector2( 15, 2 )
 texture = ExtResource( 8 )
 centered = false
 hframes = 10

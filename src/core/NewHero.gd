@@ -14,10 +14,13 @@ onready var job_perk = $ClassAction
 onready var job_desc = $ClassAction/Features
 onready var hero_name = $LineEdit
 
-var units: = []
-var index: = 0
+var units := []
+var index := 0
+var able := false setget, get_able
+var game: Game
 
-func init(game:Game) -> void:
+func init(_game:Game) -> void:
+	game = _game
 	connect("add_player", game, "_on_add_player")
 	setup()
 
@@ -28,6 +31,7 @@ func setup() -> void:
 		units.append(load("res://resources/jobs/" + hero.to_lower() + ".tres"))
 	index = 0
 	setup_unit(units[index])
+	$LineEdit/CheckBtn.disabled = not self.able
 
 func setup_unit(unit: Player) -> void:
 	sprite.frame = unit.frame
@@ -58,7 +62,7 @@ func _on_BackBtn_pressed():
 
 func _on_LineEdit_text_changed(new_text):
 	var result = new_text.length() < 2
-	$LineEdit/CheckBtn.disabled = result
+	$LineEdit/CheckBtn.disabled = result and not self.able
 
 func _on_CheckBtn_pressed():
 	AudioController.confirm()
@@ -66,3 +70,6 @@ func _on_CheckBtn_pressed():
 	new_player.ready_equipment()
 	emit_signal("add_player", new_player)
 	hide()
+
+func get_able() -> bool:
+	return game.players.size() < 4

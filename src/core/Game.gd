@@ -337,6 +337,7 @@ func create_new_hero():
 	new_hero.show()
 
 func _on_add_player(player: Player) -> void:
+	print("Adding new player: ", player.name)
 	var i = players.size()
 	players[i] = player
 	player.slot = i

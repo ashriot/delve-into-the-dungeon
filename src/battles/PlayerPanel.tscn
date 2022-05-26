@@ -132,7 +132,7 @@ vframes = 20
 frame = 3
 
 [node name="Health" type="Sprite" parent="."]
-position = Vector2( 15, 3 )
+position = Vector2( 15, 2 )
 texture = ExtResource( 8 )
 centered = false
 hframes = 10
