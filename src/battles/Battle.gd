@@ -348,12 +348,7 @@ func show_text(text: String, pos: Vector2, display = false) -> void:
 	else: damage_text.text(self, text)
 
 func dmg_dealt(dmg: int, user: BattlePanel, action: Action, crit: bool) -> void:
-	if user.has_perk("Deflection") and action.melee:
-		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
-		var amt = int(dmg * user.get_perk("Deflection") * 0.05)
-		if user.blocking < amt:
-			user.blocking = amt
-			show_dmg_text("+" + str(amt), user.pos, crit)
+	pass
 
 func learned_text(text: String, pos: Vector2) -> void:
 	var damage_text = DamageText.instance()
@@ -415,7 +410,7 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 		enemy_info.show()
 		enemy_title.text = "Lv. " + str(panel.unit.level) + " " + panel.unit.name
 		enemy_desc.text = "HP: " + str(panel.hp_cur) + "/" + str(panel.hp_max)
-		enemy_desc.text += "\nSTR: " + str(panel.unit.strength) + "   AGI: " + str(panel.unit.agility)
+		enemy_desc.text += "\n\nSTR: " + str(panel.unit.strength) + "   AGI: " + str(panel.unit.agility)
 		enemy_desc.text += "\nINT: " + str(panel.unit.intellect) + "   DEF: " + str(panel.unit.defense)
 	else: execute_vs_enemy(panel)
 
@@ -480,6 +475,7 @@ func execute_vs_enemy(panel) -> void:
 	if target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
+	var all_hits = []
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
@@ -491,16 +487,28 @@ func execute_vs_enemy(panel) -> void:
 			var hit = Hit.new()
 			hit.init(item, cur_player, split, target)
 			hit.targets = targets.size()
-			gained_xp = target.take_hit(hit)
+			var data = target.take_hit(hit)
+			if "dmg" in data: all_hits.append(data["dmg"])
+			if "xp" in data: gained_xp = data["xp"]
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if target_type >= Enums.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
+	if user.has_perk("Deflection") and item.melee:
+		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+		var dmg = all_hits.max()
+		var amt = int(dmg * user.get_perk("Deflection") * 0.05)
+		if user.blocking < amt:
+			user.blocking = amt
+			show_dmg_text("+" + str(amt), user.pos, false)
 	if item.damage_type >= Enums.DamageType.MARTIAL \
 	and item.damage_type < Enums.DamageType.HEAL \
 	and user.has_boon("Brave"):
 		user.remove_boon(user.get_boon("Brave"))
+	for target in targets:
+		if target.has_bane("Fear"):
+			target.remove_bane(target.get_bane("Fear"))
 	if gained_xp: user.calc_xp(item.stat_used)
 	if item.sub_type == Enums.SubItemType.SORCERY:
 		user.unit.job_data["sp_cur"] = 0

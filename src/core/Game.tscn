@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://src/core/Game.gd" type="Script" id=1]
 [ext_resource path="res://src/battles/Battle.tscn" type="PackedScene" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://assets/images/icons/check_dark.png" type="Texture" id=31]
 [ext_resource path="res://assets/images/icons/check.png" type="Texture" id=32]
 [ext_resource path="res://assets/images/ui_ap_enemy_bg.png" type="Texture" id=33]
+[ext_resource path="res://resources/locales/planar_rift.tres" type="Resource" id=34]
 
 [sub_resource type="TileSet" id=1]
 0/name = "black_tile.png 0"
@@ -644,7 +645,8 @@ locales = {
 3: ExtResource( 11 ),
 4: ExtResource( 23 ),
 5: ExtResource( 22 ),
-6: ExtResource( 24 )
+6: ExtResource( 24 ),
+7: ExtResource( 34 )
 }
 
 [node name="Battle" parent="CanvasLayer" instance=ExtResource( 2 )]

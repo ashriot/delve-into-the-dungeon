@@ -192,7 +192,7 @@ func select_player(panel: PlayerMenuPanel) -> void:
 	cur_player.select(false)
 	cur_player = panel
 	cur_player.select(true)
-	update_stat_data()
+	if stats_panel.visible: update_stat_data()
 	if cur_menu == items_panel: update_item_data()
 	if cur_menu == equip_panel: update_equip_data()
 

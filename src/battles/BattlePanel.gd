@@ -84,7 +84,7 @@ func _exit_tree() -> void:
 func get_stat(stat) -> int:
 	return unit.get_stat(stat)
 
-func take_hit(hit: Hit) -> bool:
+func take_hit(hit: Hit) -> Dictionary:
 	var gained_xp = false
 	var item = hit.action as Action
 	var effect_only = item.damage_type == Enums.DamageType.EFFECT_ONLY
@@ -100,6 +100,7 @@ func take_hit(hit: Hit) -> bool:
 		hit.panel.just_crit(hit.targets)
 	var multi = item.multiplier
 	var dmg = hit.dmg if not crit else hit.crit_dmg
+	var final_dmg = dmg
 	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	print(" -> Hit: ", hit_roll, " < ", hit.hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit: ", crit_roll, " < ", hit.crit_chance, "% ", crit) 
@@ -190,7 +191,8 @@ func take_hit(hit: Hit) -> bool:
 			if success: emit_signal("show_text", "+" + boon[0].name, hit.panel.pos)
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
-	return gained_xp
+	return { "xp": gained_xp,
+			 "dmg": final_dmg }
 
 func take_friendly_hit(user: BattlePanel, item: Action) -> void:
 	if item.name == "Draw Arcana":

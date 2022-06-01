@@ -34,7 +34,7 @@ func setup(_unit):
 		if action.cooldown > 0:
 			cd = randi() % (1 + action.starting_cd - action.starting_min) + action.starting_min
 		cooldowns[i] = cd
-	emit_signal("show_text", "Lv." + str(unit.level), pos, true)
+	emit_signal("show_text", "Lv" + str(unit.level), pos, true)
 	show()
 
 func level_up() -> void:
