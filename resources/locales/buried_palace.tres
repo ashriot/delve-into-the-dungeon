@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Buried Palace"
-desc = "Deep beneath the scorching sands of the Viro desert, sleeps an ancient palace brimming with ancient magic and artifacts."
+desc = "Deep beneath the scorching sands of the Viro desert, sleeps an ancient palace brimming with dark magic and eerie artifacts."
 frame = 67
 enemy_lv = 20
 enemies = [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ) ]

@@ -19,6 +19,9 @@ onready var nav = $WorldMap/Nav/Sprite
 onready var prev = $WorldMap/Nav/Prev
 onready var next = $WorldMap/Nav/Next
 onready var scout = $WorldMap/Scout
+onready var chapter_panel = $ChapterText
+onready var chapter_num = $ChapterText/Label
+onready var chapter_text = $ChapterText/RichTextLabel
 
 var game: Game
 var map_pos: int setget set_map_pos
@@ -31,6 +34,7 @@ func _ready() -> void:
 	bench.hide()
 	map.hide()
 	scout.hide()
+	chapter_panel.hide()
 
 # warning-ignore:shadowed_variable
 func init(game: Game) -> void:
