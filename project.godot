@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/equipment.gd"
 }, {
+"base": "Resource",
+"class": "Event",
+"language": "GDScript",
+"path": "res://resources/storyEvents/event.gd"
+}, {
 "base": "Node2D",
 "class": "Game",
 "language": "GDScript",
@@ -166,6 +171,7 @@ _global_script_class_icons={
 "Enums": "",
 "EquipBtn": "",
 "Equipment": "",
+"Event": "",
 "Game": "",
 "Hit": "",
 "InvButton": "",
