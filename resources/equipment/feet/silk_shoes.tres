@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 name = "Silk Shoes"
 description = "Graceful shoes made from fine silk."
-quality = 1
+quality = 2
 rank = 0
 hp_bonus = 2
 str_bonus = 0

@@ -33,5 +33,5 @@ func get_quality(quality: int) -> void:
 		quality_label.text = "Masterwork"
 		quality_label.modulate = Enums.masterwork
 	if quality == 5:
-		quality_label.text = "Artefact"
+		quality_label.text = "Artifact"
 		quality_label.modulate = Enums.artefact

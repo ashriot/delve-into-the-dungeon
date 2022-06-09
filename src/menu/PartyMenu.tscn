@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/menu/PlayerMenuPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://assets/images/ui_tab.png" type="Texture" id=15]
 [ext_resource path="res://assets/images/ui_btn_tex.png" type="Texture" id=16]
 [ext_resource path="res://assets/images/crit_bar.png" type="Texture" id=17]
+[ext_resource path="res://src/menu/Perk.tscn" type="PackedScene" id=18]
 
 [node name="PartyMenu" type="Control"]
 anchor_right = 1.0
@@ -1182,7 +1183,6 @@ __meta__ = {
 }
 
 [node name="Tooltip" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 1.0
@@ -1196,7 +1196,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -7.0
-custom_constants/separation = 2
+custom_constants/separation = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1297,13 +1297,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Perk1" type="Panel" parent="Tooltip/Container"]
-margin_top = 62.0
+[node name="Perk1" parent="Tooltip/Container" instance=ExtResource( 18 )]
+
+[node name="Perk2" type="Panel" parent="Tooltip/Container"]
+margin_top = 71.0
 margin_right = 72.0
-margin_bottom = 71.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 72, 9 )
 
-[node name="Label" type="Label" parent="Tooltip/Container/Perk1"]
+[node name="Label" type="Label" parent="Tooltip/Container/Perk2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_bottom = -1.0
+text = "Assassin III"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Perk3" type="Panel" parent="Tooltip/Container"]
+margin_top = 81.0
+margin_right = 72.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 72, 9 )
+
+[node name="Label" type="Label" parent="Tooltip/Container/Perk3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 3.0
