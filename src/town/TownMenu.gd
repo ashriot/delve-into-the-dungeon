@@ -27,6 +27,7 @@ var game: Game
 var map_pos: int setget set_map_pos
 var map_max: int
 var depth: int setget set_depth
+var docks_lv := 1
 
 func _ready() -> void:
 	blacksmith.hide()
@@ -35,6 +36,7 @@ func _ready() -> void:
 	map.hide()
 	scout.hide()
 	chapter_panel.hide()
+	$Lv.text = str(docks_lv)
 
 # warning-ignore:shadowed_variable
 func init(game: Game) -> void:
@@ -180,7 +182,6 @@ func _on_TavernLeaveBtn_pressed():
 	AudioController.back()
 	tavern.hide()
 
-var docks_lv := 50
 
 func _on_DocksBtn_pressed():
 	if not game.players: return

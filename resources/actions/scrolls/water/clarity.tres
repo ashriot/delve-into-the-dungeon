@@ -9,6 +9,7 @@ name = "Clarity"
 description = "Grant {tgt} Wise."
 tier = 2
 ap_cost = 1
+instant = false
 quick = true
 item_type = 3
 sub_type = 14

@@ -5,6 +5,7 @@ export var name: String
 export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}.\n{aim}"
 export var tier: = 1
 export var ap_cost: = 2
+export var instant: = false setget, get_instant
 export var quick: = false setget, get_quick
 export(Enums.ItemType) var item_type
 export(Enums.SubItemType) var sub_type
@@ -89,6 +90,9 @@ func colorize(stat, text) -> String:
 		Enums.StatType.DEF:
 			color = "[color=#b4b4ae]"
 	return color + text + "[/color]"
+
+func get_instant() -> bool:
+	return instant
 
 func get_quick() -> bool:
 	return quick

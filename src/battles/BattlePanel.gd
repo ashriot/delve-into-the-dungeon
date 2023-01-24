@@ -98,13 +98,12 @@ func take_hit(hit: Hit) -> Dictionary:
 	elif crit_roll <= hit.crit_chance:
 		crit = true
 		hit.panel.just_crit(hit.targets)
-	var multi = item.multiplier
 	var dmg = hit.dmg if not crit else hit.crit_dmg
 	var final_dmg = dmg
-	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
+	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.potency, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
 	print(" -> Hit: ", hit_roll, " < ", hit.hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit: ", crit_roll, " < ", hit.crit_chance, "% ", crit) 
-	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(hit.def / 2) * hit.action.multiplier, " DMG: ", dmg)
+	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(hit.def / 2) * hit.potency, " DMG: ", dmg)
 	var dmg_text = ""
 	var blocked = 0
 	if not miss and !effect_only:
@@ -434,6 +433,7 @@ func update_status() -> void:
 	delay = 0
 
 func action_used(action, user) -> void:
+	if not enabled: return
 	if user != self and has_perk("Improv"):
 		if randi() % 100 + 1 < 25:
 			emit_signal("show_text", "+1AP", pos)

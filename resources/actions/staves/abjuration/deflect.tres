@@ -8,6 +8,7 @@ name = "Deflect"
 description = "Grant {tgt} {potency} Block until next turn."
 tier = 1
 ap_cost = 1
+instant = false
 quick = false
 item_type = 4
 sub_type = 15

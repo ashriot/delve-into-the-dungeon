@@ -17,6 +17,7 @@ frame = 35
 hp_cur = 0
 hp_max = 18
 hp_percent = 0.0
+hp_missing = 0
 ap = 0
 strength = 7
 agility = 12
@@ -45,7 +46,7 @@ perks = {
 }
 job = "Wizard"
 job_tab = "Scrolls"
-job_skill = 27
+job_skill = 28
 job_perk = "Wizardry"
 perk_desc = "Can equip 4 extra scrolls.
 

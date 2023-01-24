@@ -190,12 +190,12 @@ code = "shader_type canvas_item;
 
 void fragment() {
 	vec4 bg = texture(SCREEN_TEXTURE, SCREEN_UV);
-	float avg = (bg.r + bg.g + bg.b) > 0.4f ? 1f : 0f;
-	if (avg != 0f) {
-		COLOR = vec4(1f, 1f, 1f, 1f);
+	float avg = (bg.r + bg.g + bg.b) > 0.4 ? 1. : 0.;
+	if (avg != 0.) {
+		COLOR = vec4(1., 1., 1., 1.);
 	}
 	else {
-		COLOR = vec4(0f, 0f, 0f, 1f);
+		COLOR = vec4(0., 0., 0., 1.);
 	}
 }"
 
@@ -207,17 +207,17 @@ code = "shader_type canvas_item;
 
 void fragment() {
 	vec4 bg = texture(SCREEN_TEXTURE, SCREEN_UV);
-	float check = 0.22f;
-	float avg = 0f;
+	float check = 0.22;
+	float avg = 0.;
 	if ((bg.r > check || bg.g > check || bg.b > check) && 
-		(bg.r + bg.g + bg.b) / 3f > check) {
-		avg = 1f;
+		(bg.r + bg.g + bg.b) / 3. > check) {
+		avg = 1.;
 	}
-	if (avg != 0f) {
-		COLOR = vec4(0.79f, 0.78f, 0.72f, 1f);
+	if (avg != 0.) {
+		COLOR = vec4(0.79, 0.78, 0.72, 1.);
 	}
 	else {
-		COLOR = vec4(0f, 0f, 0f, 1f);
+		COLOR = vec4(0., 0., 0., 1.);
 	}
 }"
 
@@ -734,8 +734,8 @@ modulate = Color( 1, 1, 1, 0 )
 margin_left = 4.0
 margin_right = 68.0
 margin_bottom = 24.0
-custom_fonts/font = ExtResource( 17 )
 custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+custom_fonts/font = ExtResource( 17 )
 text = "   Pico
 Quest"
 valign = 1

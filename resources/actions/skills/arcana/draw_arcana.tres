@@ -8,6 +8,7 @@ name = "Draw Arcana"
 description = "Draw 5 Arcana."
 tier = 1
 ap_cost = 3
+instant = false
 quick = false
 item_type = 2
 sub_type = 22

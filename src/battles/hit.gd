@@ -17,13 +17,15 @@ var melee_penalty: bool
 var target_type: int
 var targets: int
 
+var potency: float
 var dmg: int
 var crit_dmg: int
 var def: int
 var def_mod: int
 var bonus_dmg: int
 
-func init(_action, _panel, _split, _target = null):
+func init(_action, _panel, _split, _potency: float, _target = null):
+	potency = _potency
 	action = _action as Action
 	panel = _panel
 	split = _split
@@ -95,12 +97,12 @@ func update_target_data(_target) -> void:
 			action.max_hits = 1 + panel.unit.job_data["sp_cur"]
 		else:
 			dmg_mod += panel.unit.job_data["sp_cur"] * 0.34
-	dmg = float((action.multiplier * (atk)) + bonus_dmg)
-	crit_dmg = dmg + float(panel.get_stat(Enums.StatType.POW)) * action.multiplier
+	dmg = float((potency * (atk)) + bonus_dmg)
+	crit_dmg = dmg + float(panel.get_stat(Enums.StatType.POW)) * potency
 	def = target.get_stat(action.stat_vs)
-	def_mod = int(float(def * 0.5) * action.multiplier)
+	def_mod = int(float(def * 0.5) * potency)
 	var def = target.get_stat(action.stat_vs)
-	var def_mod = float(def * 0.5) * action.multiplier
+	var def_mod = float(def * 0.5) * potency
 	dmg = max(int((dmg * dmg_mod) - def_mod), 0)
 	crit_dmg = max(int((crit_dmg * dmg_mod) - def_mod), 0)
 	dmg /= split

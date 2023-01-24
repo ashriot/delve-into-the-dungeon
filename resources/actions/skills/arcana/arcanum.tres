@@ -8,6 +8,7 @@ name = "Arcanum"
 description = "You should never see this!!"
 tier = 1
 ap_cost = 2
+instant = false
 quick = false
 item_type = 2
 sub_type = 22

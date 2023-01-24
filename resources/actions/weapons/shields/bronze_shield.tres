@@ -8,6 +8,7 @@ name = "Bronze Shield"
 description = "Gain up to {potency} Block."
 tier = 2
 ap_cost = 1
+instant = false
 quick = false
 item_type = 0
 sub_type = 6

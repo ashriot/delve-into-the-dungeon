@@ -178,7 +178,7 @@ func get_enemies(max_lv: int) -> Dictionary:
 	var enemy_picker = load("res://resources/locales/sea_caves.tres").enemies
 	var level_num = max_lv
 	var mod = int(min(level_num + 2, 6))
-	var mobs = 6
+	var mobs = randi() % 4 + 1
 # warning-ignore:integer_division
 	var min_lv = max(max_lv - 3, 1)
 	var encounter = {}
@@ -239,6 +239,7 @@ func close_menu() -> void:
 	dungeon.active = true
 
 func learned_skill(unit: Player) -> void:
+	if unit.job_tab == "Augur": return
 	var next = 7
 	var excluding = []
 	for i in range(4, 8):

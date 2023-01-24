@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=10 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/core/player.gd" type="Script" id=1]
 [ext_resource path="res://resources/actions/weapons/bows/bronze_bow.tres" type="Resource" id=2]
 [ext_resource path="res://resources/actions/weapons/knives/bronze_knife.tres" type="Resource" id=3]
 [ext_resource path="res://resources/actions/tools/potion.tres" type="Resource" id=4]
+[ext_resource path="res://resources/actions/weapons/knives/snake_knife.tres" type="Resource" id=5]
 [ext_resource path="res://resources/actions/weapons/boomerangs/boomerang.tres" type="Resource" id=6]
 [ext_resource path="res://resources/equipment/body/worn_vest.tres" type="Resource" id=7]
 [ext_resource path="res://resources/equipment/feet/worn_boots.tres" type="Resource" id=8]
@@ -17,6 +18,7 @@ frame = 33
 hp_cur = 0
 hp_max = 24
 hp_percent = 0.0
+hp_missing = 0
 ap = 0
 strength = 8
 agility = 13
@@ -45,7 +47,7 @@ perks = {
 }
 job = "Thief"
 job_tab = "Knives"
-job_skill = 27
+job_skill = 28
 job_perk = "Backstab"
 perk_desc = "Can equip 5 extra knives.
 
@@ -64,7 +66,7 @@ items = {
 2: ExtResource( 6 ),
 3: null,
 4: ExtResource( 4 ),
-5: null,
+5: ExtResource( 5 ),
 6: null,
 7: null,
 8: null,

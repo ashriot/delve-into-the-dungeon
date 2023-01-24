@@ -8,6 +8,7 @@ name = "Lesser Heal"
 description = "Heal {tgt} for {potency} + their INTx1."
 tier = 2
 ap_cost = 3
+instant = false
 quick = false
 item_type = 4
 sub_type = 18

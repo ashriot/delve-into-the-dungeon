@@ -9,6 +9,7 @@ name = "Shell Guard"
 description = "Gain {potency} {dmg} Block; gain Safe."
 tier = 1
 ap_cost = 2
+instant = false
 quick = false
 item_type = 2
 sub_type = 27

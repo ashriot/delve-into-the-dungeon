@@ -18,6 +18,7 @@ frame = 7
 hp_cur = 0
 hp_max = 27
 hp_percent = 0.0
+hp_missing = 0
 ap = 0
 strength = 9
 agility = 8
@@ -46,7 +47,7 @@ perks = {
 }
 job = "Priest"
 job_tab = "Staves"
-job_skill = 27
+job_skill = 28
 job_perk = "Staves"
 perk_desc = "Can equip 5 extra staves.
 

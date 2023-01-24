@@ -9,6 +9,7 @@ name = "Mana Spark"
 description = "Deal {potency} {dmg} damage to {tgt}."
 tier = 1
 ap_cost = 0
+instant = false
 quick = true
 item_type = 2
 sub_type = 26

@@ -62,6 +62,7 @@ func get_action() -> Action:
 	return action
 
 func targetable(value: bool, display = true):
+	if not enabled: return
 	.targetable(value, display)
 	if valid_target:
 		if hit_display.text != "": hit_display.show()
@@ -71,7 +72,7 @@ func targetable(value: bool, display = true):
 		dmg_display.hide()
 
 func update_hit_chance(hit) -> void:
-	if not hit: return
+	if not hit or not enabled: return
 	hit.update_target_data(self)
 	if not (enabled or self.alive or valid_target): return
 	if hit.action.stat_hit != Enums.StatType.NA:
@@ -80,7 +81,7 @@ func update_hit_chance(hit) -> void:
 	update_dmg_display(hit)
 
 func update_dmg_display(hit):
-	if not hit: return
+	if not hit or not enabled: return
 	var item = hit.action as Item
 	var kill = false
 	if item.name == "Disintegrate":

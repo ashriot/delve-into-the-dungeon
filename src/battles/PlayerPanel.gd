@@ -36,6 +36,8 @@ func setup(_unit):
 	self.selected = false
 	if unit.job == "Sorcerer":
 		unit.job_data["sp_cur"] = unit.job_data["sp_max"]
+	if unit.job_skill == Enums.SubItemType.DANCE:
+		unit.job_data["steps"] = []
 
 func update_status() -> void:
 	if statuses.size() == 0: status.hide()

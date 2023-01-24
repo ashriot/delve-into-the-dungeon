@@ -9,8 +9,8 @@
 [ext_resource path="res://src/battles/BattleButton.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/images/icons/sp_full.png" type="Texture" id=8]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=9]
-[ext_resource path="res://assets/images/icons/quick.png" type="Texture" id=10]
-[ext_resource path="res://assets/images/icons/ap.png" type="Texture" id=11]
+[ext_resource path="res://assets/images/icons/quick_clock.png" type="Texture" id=10]
+[ext_resource path="res://assets/images/icons/steps.png" type="Texture" id=11]
 [ext_resource path="res://assets/images/icons/sp_empty.png" type="Texture" id=12]
 [ext_resource path="res://assets/images/icons/bp_empty.png" type="Texture" id=13]
 [ext_resource path="res://assets/images/icons/bp_full.png" type="Texture" id=14]
@@ -19,9 +19,6 @@
 margin_right = 72.0
 margin_bottom = 130.0
 script = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BG" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -228,12 +225,9 @@ margin_left = 2.0
 margin_top = 75.0
 margin_right = 72.0
 margin_bottom = 83.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Portrait" type="Sprite" parent="CurrentPlayer"]
-position = Vector2( -1, 1 )
+position = Vector2( 4, 1 )
 texture = ExtResource( 9 )
 centered = false
 hframes = 10
@@ -241,64 +235,45 @@ vframes = 20
 frame = 23
 
 [node name="Name" type="RichTextLabel" parent="CurrentPlayer"]
-margin_left = 8.0
-margin_right = 43.0
+margin_left = 13.0
+margin_right = 48.0
 margin_bottom = 7.0
-text = "Cassandra"
+text = "Caliope"
 scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ApValue" type="RichTextLabel" parent="CurrentPlayer"]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -17.0
-margin_right = -6.0
+margin_left = -70.0
+margin_right = -66.0
 margin_bottom = -1.0
 custom_colors/default_color = Color( 0.968627, 0.588235, 0.0901961, 1 )
 bbcode_enabled = true
 bbcode_text = "3"
 text = "3"
 scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Ap" type="Sprite" parent="CurrentPlayer/ApValue"]
-modulate = Color( 0.968627, 0.588235, 0.0901961, 1 )
-position = Vector2( 4, 2 )
-texture = ExtResource( 11 )
-centered = false
 
 [node name="QuickIcon" type="TextureRect" parent="CurrentPlayer"]
-modulate = Color( 0.764706, 0.141176, 0.329412, 1 )
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -5.0
-margin_top = -3.0
-margin_right = -1.0
-margin_bottom = 2.0
+margin_left = -9.0
+margin_top = -4.0
+margin_right = -2.0
+margin_bottom = 3.0
 texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Resources" type="Control" parent="CurrentPlayer"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -35.0
+margin_left = -26.0
 margin_top = -5.0
-margin_right = -19.0
+margin_right = -10.0
 margin_bottom = 2.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Sorcery" type="Control" parent="CurrentPlayer/Resources"]
 visible = false
@@ -333,7 +308,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Dance" type="Control" parent="CurrentPlayer/Resources"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+
+[node name="Step1" type="Sprite" parent="CurrentPlayer/Resources/Dance"]
+position = Vector2( 12, 0 )
+texture = ExtResource( 11 )
+centered = false
+hframes = 8
+
+[node name="Step2" type="Sprite" parent="CurrentPlayer/Resources/Dance"]
+position = Vector2( 8, 0 )
+texture = ExtResource( 11 )
+centered = false
+hframes = 8
+
+[node name="Step3" type="Sprite" parent="CurrentPlayer/Resources/Dance"]
+position = Vector2( 4, 0 )
+texture = ExtResource( 11 )
+centered = false
+hframes = 8
+
+[node name="Step4" type="Sprite" parent="CurrentPlayer/Resources/Dance"]
+texture = ExtResource( 11 )
+centered = false
+hframes = 8
+
 [node name="Perform" type="Control" parent="CurrentPlayer/Resources"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -379,47 +383,77 @@ __meta__ = {
 [node name="BattleButton" parent="Buttons" instance=ExtResource( 7 )]
 margin_top = 0.0
 margin_bottom = 9.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton2" parent="Buttons" instance=ExtResource( 7 )]
 margin_top = 8.0
 margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton3" parent="Buttons" instance=ExtResource( 7 )]
 margin_top = 16.0
 margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton4" parent="Buttons" instance=ExtResource( 7 )]
 margin_top = 24.0
 margin_bottom = 33.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton5" parent="Buttons" instance=ExtResource( 7 )]
 margin_top = 32.0
 margin_bottom = 41.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton6" parent="Buttons" instance=ExtResource( 7 )]
 visible = false
 margin_top = 30.0
 margin_bottom = 39.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton7" parent="Buttons" instance=ExtResource( 7 )]
 visible = false
 margin_top = 30.0
 margin_bottom = 39.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton8" parent="Buttons" instance=ExtResource( 7 )]
 visible = false
 margin_top = 30.0
 margin_bottom = 39.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton9" parent="Buttons" instance=ExtResource( 7 )]
 visible = false
 margin_top = 30.0
 margin_bottom = 39.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton10" parent="Buttons" instance=ExtResource( 7 )]
 visible = false
 margin_top = 30.0
 margin_bottom = 39.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Tabs" type="Control" parent="."]
 margin_left = 1.0
@@ -501,14 +535,23 @@ __meta__ = {
 [node name="BattleButton" parent="BattleMenu" instance=ExtResource( 7 )]
 margin_top = 0.0
 margin_bottom = 9.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton2" parent="BattleMenu" instance=ExtResource( 7 )]
 margin_top = 8.0
 margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleButton3" parent="BattleMenu" instance=ExtResource( 7 )]
 margin_top = 16.0
 margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TopPanel" type="ColorRect" parent="."]
 visible = false

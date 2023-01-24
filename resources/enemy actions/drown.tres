@@ -10,6 +10,7 @@ description = "Deal {potency} {dmg} damage to {tgt}. Dmg increased by missing HP
 {aim}"
 tier = 1
 ap_cost = 2
+instant = false
 quick = false
 item_type = 0
 sub_type = 28

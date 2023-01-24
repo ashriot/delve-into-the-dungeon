@@ -2,6 +2,8 @@ extends Control
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
 var draw_arcana = preload("res://resources/actions/skills/arcana/draw_arcana.tres")
+var dances = [preload("res://resources/actions/skills/dance/new_dances/battle_bolero.tres"), \
+	preload("res://resources/actions/skills/dance/new_dances/mystic_mambo.tres")]
 
 signal enemy_done
 signal battle_done
@@ -30,6 +32,12 @@ onready var cp_perform = $CurrentPlayer/Resources/Perform
 onready var cp_bp_cur = $CurrentPlayer/Resources/Perform/BpCur
 onready var cp_bp_max = $CurrentPlayer/Resources/Perform/BpMax
 
+onready var cp_dance = $CurrentPlayer/Resources/Dance
+onready var cp_step1 = $CurrentPlayer/Resources/Dance/Step1
+onready var cp_step2 = $CurrentPlayer/Resources/Dance/Step2
+onready var cp_step3 = $CurrentPlayer/Resources/Dance/Step3
+onready var cp_step4 = $CurrentPlayer/Resources/Dance/Step4
+
 var cur_player: PlayerPanel
 var cur_btn = null
 var cur_hit_chance: int
@@ -39,6 +47,7 @@ var player_targets: = [false, false, false, false]
 
 var cur_tab: int
 var default_tab_color: Color
+var step_storage: Array
 
 var chose_next: bool
 var battle_active: bool
@@ -91,9 +100,12 @@ func setup_cur_player_panel() -> void:
 	cp_portrait.frame = cur_player.unit.frame + 20
 	cp_name.text = cur_player.unit.name
 	cp_ap.bbcode_text = str(cur_player.ap)
-	var quick_color = "#c32454" if cur_player.quick_actions > 0 else "#625565"
-	cp_quick.modulate = quick_color
+	var quick_alpha = 1.0 if cur_player.quick_actions > 0 else .5
+	cp_quick.modulate.a = quick_alpha
 	var unit = cur_player.unit
+	cp_sorcery.hide()
+	cp_perform.hide()
+	cp_dance.hide()
 	if unit.job == "Sorcerer":
 		var sp_cur = unit.job_data["sp_cur"]
 		var sp_max = unit.job_data["sp_max"]
@@ -102,8 +114,6 @@ func setup_cur_player_panel() -> void:
 		cp_sp_max.rect_size.x = sp_max * 3
 		cp_sp_max.rect_position.x = 17 - sp_max * 3
 		cp_sorcery.show()
-	else:
-		cp_sorcery.hide()
 	if unit.job == "Bard":
 		var bp_cur = unit.job_data["bp_cur"]
 		var bp_max = unit.job_data["bp_max"]
@@ -112,8 +122,16 @@ func setup_cur_player_panel() -> void:
 		cp_bp_max.rect_size.x = (bp_max * 3 - (1 if bp_max > 1 else 0))
 		cp_bp_max.rect_position.x = 16 - (bp_max * 3 - (1 if bp_max > 1 else 0))
 		cp_perform.show()
-	else:
-		cp_perform.hide()
+	if unit.job == "Dancer":
+		var steps = unit.job_data["steps"]
+		cp_dance.show()
+		for i in range(cp_dance.get_child_count()):
+			var child = cp_dance.get_child(i) as Sprite
+			if steps.size() > i:
+				child.show()
+				child.frame = steps[i]
+			else:
+				child.frame = 7
 	cp_panel.show()
 
 func setup_buttons() -> void:
@@ -286,7 +304,8 @@ func enemy_take_action(panel: EnemyPanel):
 			for target in targets:
 				if not target.alive: continue
 				var hit = Hit.new()
-				hit.init(action, panel, split, target)
+				var potency = action.multiplier
+				hit.init(action, panel, split, potency, target)
 				hit.targets = targets.size()
 				if action.target_type < Enums.TargetType.ONE_ENEMY:
 					target.take_friendly_hit(panel, action)
@@ -398,7 +417,8 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 		player_panels.show_selectors(cur_player, action.target_type)
 	var split = 1
 	var hit = Hit.new()
-	hit.init(button.item, cur_player, split)
+	var potency = button.item.multiplier
+	hit.init(button.item, cur_player, split, potency)
 	enemy_panels.update_item_stats(hit)
 	enemy_panels.show_selectors(target_type)
 
@@ -423,12 +443,23 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 		chose_next = true
 		select_player(panel, true)
 
+func set_dance(step_id: int) -> void:
+	step_storage = [cur_btn.item, cur_btn.get_index()]
+	cur_player.unit.items[cur_btn.get_index()] = dances[step_id]
+
+func revert_dance() -> void:
+	cur_player.unit.items[step_storage[1]] = step_storage[0]
+	step_storage = []
+	
 func execute_vs_enemy(panel) -> void:
 	cur_player.crit_round = false
 	var gained_xp = false
 	var item = cur_btn.item as Item
+	var min_hits = item.min_hits
+	var max_hits = item.max_hits
+	var potency = item.multiplier
 	var user = cur_player as PlayerPanel
-	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0
+	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0 or item.instant
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var target_type = item.target_type
 	if item.sub_type == Enums.SubItemType.SORCERY:
@@ -441,7 +472,37 @@ func execute_vs_enemy(panel) -> void:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
 		user.unit.job_data["bp_cur"] -= bp
 		ap_cost -= bp
-		if quick: setup_cur_player_panel()
+	if item.sub_type == Enums.SubItemType.DANCE:
+		var steps = user.unit.job_data["steps"] as Array
+		if "Step" in item.name:
+			if step_storage.size() > 0: revert_dance()
+			var step_id = 0
+			match (item.name):
+				"Battle Step": step_id = 0
+				"Mystic Step": step_id = 1
+			set_dance(step_id)
+			user.unit.job_data["steps"].append(step_id)
+			print("Steps: ", user.unit.job_data["steps"])
+			for i in range(cp_dance.get_child_count()):
+				var child = cp_dance.get_child(i) as Sprite
+				if steps.size() > i:
+					child.show()
+					child.frame = steps[i]
+				else:
+					child.frame = 7
+		else:
+			revert_dance()
+			match (item.name):
+				"Battle Bolero":
+					min_hits = steps.size()
+					max_hits = steps.size()
+				"Mystic Mambo":
+					potency *= steps.size()
+			for i in range(cp_dance.get_child_count()):
+				cp_dance.get_child(i).frame = 7
+				cur_player.unit.job_data["steps"] = []
+	if quick: setup_cur_player_panel()
+			
 	user.ap -= ap_cost
 	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA:
 		cur_player.unit.items[cur_btn.item_index] = draw_arcana
@@ -458,10 +519,11 @@ func execute_vs_enemy(panel) -> void:
 		user.unit.job_data["bp_cur"] = min(user.unit.job_data["bp_cur"] + 1, user.unit.job_data["bp_max"])
 		if quick: setup_cur_player_panel()
 	AudioController.play_sfx(item.use_fx)
-	finish_action(!quick)
+	finish_action(!quick, item.instant)
 	show_text(item.name, user.pos)
 	yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
 	user.ap += item.gain_ap
+	var hits = randi() % (1 + max_hits - min_hits) + min_hits
 	var targets = [panel]
 	var randoms = []
 	var rand_targets = false
@@ -471,7 +533,6 @@ func execute_vs_enemy(panel) -> void:
 	if target_type == Enums.TargetType.ALL_ENEMIES or \
 		target_type == Enums.TargetType.RANDOM_ENEMY:
 		targets = enemy_panels.get_all()
-	var hits = randi() % (1 + item.max_hits - item.min_hits) + item.min_hits
 	if target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
@@ -485,7 +546,7 @@ func execute_vs_enemy(panel) -> void:
 			var split = 1
 			if item.split: split = targets.size()
 			var hit = Hit.new()
-			hit.init(item, cur_player, split, target)
+			hit.init(item, cur_player, split, potency, target)
 			hit.targets = targets.size()
 			var data = target.take_hit(hit)
 			if "dmg" in data: all_hits.append(data["dmg"])
@@ -582,7 +643,7 @@ func execute_vs_player(panel) -> void:
 		cur_btn = null
 	else: get_next_player()
 
-func finish_action(spend_turn: = true) -> void:
+func finish_action(spend_turn: = true, instant: = false) -> void:
 	chose_next = false
 	enemy_panels.hide_all_selectors()
 	player_panels.hide_all_selectors()
@@ -594,7 +655,7 @@ func finish_action(spend_turn: = true) -> void:
 		clear_buttons()
 		cur_player.ready = false
 	else:
-		cur_player.quick_actions -= 1
+		if not instant: cur_player.quick_actions -= 1
 		setup_buttons()
 
 func clear_selections() -> void:
@@ -650,7 +711,8 @@ func victory() -> void:
 				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
 		var ranks_up = panel.calc_job_xp()
 		for _r in range(ranks_up):
-			if panel.unit.job_skill == Enums.SubItemType.NA: break
+			if panel.unit.job_skill == Enums.SubItemType.NA or \
+				panel.unit.job_skill == Enums.SubItemType.ARCANA: break
 			game.learned_skill(panel.unit)
 			var skill_name = yield(game, "done_learned_skill")
 			AudioController.play_sfx("skillup")

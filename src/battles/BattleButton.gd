@@ -3,6 +3,8 @@ class_name BattleButton
 
 onready var sprite = $Bg/Sprite
 onready var quick_icon: = $Quick
+onready var instant_icon: = $Instant
+onready var sub_icon: = $SubIcon
 onready var title = $Title
 onready var ap_label = $ApCost
 onready var uses = $Uses
@@ -30,6 +32,13 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 	self.available = true
 	sprite.frame = item.frame
 	title.text = item.name
+	if "Step" in item.name:
+		sub_icon.show()
+		match (item.name):
+			"Battle Step": sub_icon.frame = 0
+			"Mystic Step": sub_icon.frame = 1
+	else:
+		sub_icon.hide()
 	if panel:
 		unit = panel.unit
 		if item.sub_type == Enums.SubItemType.SORCERY:
@@ -38,10 +47,12 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 				title.text += "+" + str(sp_cur)
 		if (item.quick or panel.hasted) and panel.quick_actions > 0:
 			quick_icon.show()
-			ap_label.modulate = Enums.quick_color
 		else:
 			quick_icon.hide()
-			ap_label.modulate = Enums.ap_color
+		if (item.instant):
+			instant_icon.show()
+		else:
+			instant_icon.hide()
 		update_ap_cost()
 		if item.item_type == Enums.ItemType.MARTIAL_SKILL or \
 			item.item_type == Enums.ItemType.WEAPON:
