@@ -4,22 +4,22 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Battle Bolero"
+name = "Butterfly Waltz"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
 ap_cost = 0
 instant = false
 quick = false
-item_type = 1
+item_type = 2
 sub_type = 23
 melee = false
-target_type = 13
-damage_type = 0
-stat_used = 3
-stat_vs = 3
-stat_hit = 3
-multiplier = 0.5
+target_type = 4
+damage_type = 6
+stat_used = 0
+stat_vs = 4
+stat_hit = 4
+multiplier = 0.1
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -27,8 +27,8 @@ gain_ap = 0
 grant_ap = 0
 split = false
 lifesteal = 0.0
-hit_chance = 80
-crit_chance = 15
+hit_chance = 0
+crit_chance = 0
 sound_fx = "heavy_blade"
 use_fx = "dance"
 inflict_boons = [  ]

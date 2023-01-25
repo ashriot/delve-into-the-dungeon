@@ -189,9 +189,9 @@ func _on_DocksBtn_pressed():
 	game.battle_start(docks_lv)
 
 func _on_Down_pressed():
-	docks_lv = max(docks_lv - 5, 1)
+	docks_lv = max(docks_lv - 3, 1)
 	$Lv.text = str(docks_lv)
 
 func _on_Up_pressed():
-	docks_lv = min(docks_lv + 5, 99)
+	docks_lv = min(docks_lv + 3, 99)
 	$Lv.text = str(docks_lv)

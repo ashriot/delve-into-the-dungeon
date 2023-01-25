@@ -60,7 +60,8 @@ func update_target_data(_target) -> void:
 			melee_penalty = false
 	if action.stat_hit == Enums.StatType.AGI:
 		var base_hit = panel.unit.agility + (panel.get_perk("Precise") * 10)
-		hit_chance = clamp(action.hit_chance + float((base_hit) / (float(target.get_stat(action.stat_hit))) * 50) - 60, 0, 100)
+		hit_chance = clamp(action.hit_chance + float((base_hit) / (float(target.get_stat(action.stat_hit))) * 50) - 50, 0, 100)
+		print(action.hit_chance, ", ", base_hit, " ", target.get_stat(action.stat_hit) * 50)
 		if panel.has_boon("Aim"):
 			hit_chance = 100
 			crit_chance += 25

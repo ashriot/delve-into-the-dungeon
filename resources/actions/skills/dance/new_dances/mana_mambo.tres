@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Battle Bolero"
+name = "Mana Mambo"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
@@ -14,22 +14,22 @@ quick = false
 item_type = 1
 sub_type = 23
 melee = false
-target_type = 13
-damage_type = 0
-stat_used = 3
-stat_vs = 3
-stat_hit = 3
-multiplier = 0.5
+target_type = 4
+damage_type = 9
+stat_used = 0
+stat_vs = 0
+stat_hit = 6
+multiplier = 0.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
 gain_ap = 0
-grant_ap = 0
+grant_ap = 1
 split = false
 lifesteal = 0.0
-hit_chance = 80
-crit_chance = 15
-sound_fx = "heavy_blade"
+hit_chance = 0
+crit_chance = 0
+sound_fx = "ap_gain"
 use_fx = "dance"
 inflict_boons = [  ]
 inflict_banes = [  ]

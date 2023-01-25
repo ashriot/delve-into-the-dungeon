@@ -1,25 +1,26 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/banes/poison.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Battle Bolero"
+name = "Bee Step"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
-ap_cost = 0
-instant = false
+ap_cost = 1
+instant = true
 quick = false
-item_type = 1
+item_type = 2
 sub_type = 23
 melee = false
 target_type = 13
-damage_type = 0
-stat_used = 3
-stat_vs = 3
-stat_hit = 3
-multiplier = 0.5
+damage_type = 7
+stat_used = 0
+stat_vs = 0
+stat_hit = 6
+multiplier = 0.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1
@@ -32,7 +33,7 @@ crit_chance = 15
 sound_fx = "heavy_blade"
 use_fx = "dance"
 inflict_boons = [  ]
-inflict_banes = [  ]
+inflict_banes = [ [ ExtResource( 2 ), 5, 100 ] ]
 gain_boons = [  ]
 gain_banes = [  ]
 max_uses = 0

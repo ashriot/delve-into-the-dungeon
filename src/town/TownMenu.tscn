@@ -568,7 +568,7 @@ __meta__ = {
 
 [node name="Desc" type="Label" parent="WorldMap/Scout/ScrollContainer"]
 margin_right = 67.0
-margin_bottom = 114.0
+margin_bottom = 78.0
 rect_min_size = Vector2( 67, 0 )
 text = "Until recently, the sea caves weren't notable. Now, monsters of all shapes and sizes seem to be issuing forth from the dark depths.
 What has caused the disruption in the sea caves? And can it be reversed?"

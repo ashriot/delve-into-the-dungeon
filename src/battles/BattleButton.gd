@@ -37,6 +37,9 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 		match (item.name):
 			"Battle Step": sub_icon.frame = 0
 			"Mystic Step": sub_icon.frame = 1
+			"Mana Step": sub_icon.frame = 2
+			"Butterfly Step": sub_icon.frame = 3
+			"Bee Step": sub_icon.frame = 4
 	else:
 		sub_icon.hide()
 	if panel:

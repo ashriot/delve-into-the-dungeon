@@ -4,21 +4,21 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Battle Bolero"
+name = "Butterfly Step"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
-ap_cost = 0
-instant = false
+ap_cost = 1
+instant = true
 quick = false
-item_type = 1
+item_type = 2
 sub_type = 23
 melee = false
-target_type = 13
-damage_type = 0
-stat_used = 3
-stat_vs = 3
-stat_hit = 3
+target_type = 5
+damage_type = 6
+stat_used = 4
+stat_vs = 4
+stat_hit = 6
 multiplier = 0.5
 bonus_damage = 0
 min_hits = 1

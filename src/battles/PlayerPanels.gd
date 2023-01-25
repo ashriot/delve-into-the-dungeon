@@ -46,7 +46,7 @@ func show_selectors(player: PlayerPanel, target_type):
 	elif target_type == Enums.TargetType.ALL_ALLIES:
 		show_all_selector()
 	elif target_type == Enums.TargetType.RANDOM_ALLY:
-		show_all_selectors()
+		show_all_selector()
 
 func show_all_except_self(player):
 	for child in panels.get_children():
