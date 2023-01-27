@@ -38,3 +38,5 @@ gain_banes = [  ]
 max_uses = 0
 uses = 0
 price = 0
+temporary = false
+reverted_action_name = ""

@@ -99,12 +99,9 @@ func update_target_data(_target) -> void:
 		else:
 			dmg_mod += panel.unit.job_data["sp_cur"] * 0.34
 	dmg = float((potency * (atk)) + bonus_dmg)
-	crit_dmg = dmg * 2
 	def = target.get_stat(action.stat_vs)
 	def_mod = int(float(def * 0.5) * potency)
-	var def = target.get_stat(action.stat_vs)
-	var def_mod = float(def * 0.5) * potency
 	dmg = max(int((dmg * dmg_mod) - def_mod), 0)
-	crit_dmg = max(int((crit_dmg * dmg_mod) - def_mod), 0)
+	crit_dmg = max(int((dmg * 2 * dmg_mod) - def_mod), 0)
 	dmg /= split
 	crit_dmg /= split

@@ -22,7 +22,7 @@ onready var status = $Status
 var enabled: bool
 var alive: bool setget, get_alive
 var crit_round: bool
-var unit: Unit = null
+var unit: Unit
 var hp_cur: int setget set_hp_cur
 var hp_max: int
 var hp_percent: float setget, get_hp_percent

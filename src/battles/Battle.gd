@@ -2,11 +2,7 @@ extends Control
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
 var draw_arcana = preload("res://resources/actions/skills/arcana/draw_arcana.tres")
-var dances = [preload("res://resources/actions/skills/dance/new_dances/battle_bolero.tres"), \
-	preload("res://resources/actions/skills/dance/new_dances/mystic_mambo.tres"), \
-	preload("res://resources/actions/skills/dance/new_dances/mana_mambo.tres"), \
-	preload("res://resources/actions/skills/dance/new_dances/butterfly_waltz.tres"), \
-	preload("res://resources/actions/skills/dance/new_dances/bee_waltz.tres")]
+var step_ids = ["Battle Step", "Mystic Step", "Mana Step", "Butterfly Step", "Bee Step"]
 
 signal enemy_done
 signal battle_done
@@ -103,8 +99,7 @@ func setup_cur_player_panel() -> void:
 	cp_portrait.frame = cur_player.unit.frame + 20
 	cp_name.text = cur_player.unit.name
 	cp_ap.bbcode_text = str(cur_player.ap)
-	var quick_alpha = 1.0 if cur_player.quick_actions > 0 else .5
-	cp_quick.modulate.a = quick_alpha
+	cp_quick.modulate.a = 1.0 if cur_player.quick_actions > 0 else .1
 	var unit = cur_player.unit
 	cp_sorcery.hide()
 	cp_perform.hide()
@@ -448,52 +443,51 @@ func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
 func check_dance():
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel
-	if item.sub_type == Enums.SubItemType.DANCE:
-		var steps = user.unit.job_data["steps"] as Array
-		if "Step" in item.name:
-			if step_storage.size() > 0: revert_dance()
-			var step_id = 0
-			match (item.name):
-				"Battle Step": step_id = 0
-				"Mystic Step": step_id = 1
-				"Mana Step": step_id = 2
-				"Butterfly Step": step_id = 3
-				"Bee Step": step_id = 4
-			set_dance(step_id)
-			if user.unit.job_data["steps"].size() < 4: 
-				user.unit.job_data["steps"].append(step_id)
-			print("Steps: ", user.unit.job_data["steps"])
-			for i in range(cp_dance.get_child_count()):
-				var child = cp_dance.get_child(i) as Sprite
-				if steps.size() > i:
-					child.show()
-					child.frame = steps[i]
-				else:
-					child.frame = 7
-		else:
-			revert_dance()
-			match (item.name):
-				"Battle Bolero":
-					item.min_hits = steps.size()
-					item.max_hits = steps.size()
-				"Mystic Mambo":
-					print(item.multiplier, " ", steps.size())
-					item.multiplier *= steps.size()
-				"Mana Mambo":
-					item.multiplier *= steps.size()
-			for i in range(cp_dance.get_child_count()):
-				cp_dance.get_child(i).frame = 7
-				cur_player.unit.job_data["steps"] = []
+	var steps = user.unit.job_data["steps"] as Array
+	if "Step" in item.name:
+		if step_storage.size() > 0: revert_dance()
+		var step_id = step_ids.find(item.name)
 
-func set_dance(step_id: int) -> void:
-	step_storage = [cur_btn.item, cur_btn.get_index()]
-	cur_player.unit.items[cur_btn.get_index()] = dances[step_id]
+		var action = ItemDb.get_item(item.reverted_action_name)
+		cur_player.unit.items[cur_btn.get_index()] = action
+		if user.unit.job_data["steps"].size() < 4: 
+			user.unit.job_data["steps"].append(step_id)
+		print("Steps: ", user.unit.job_data["steps"])
+		for i in range(cp_dance.get_child_count()):
+			var child = cp_dance.get_child(i) as Sprite
+			if steps.size() > i:
+				child.show()
+				child.frame = steps[i]
+			else:
+				child.frame = 7
+	else:
+		revert_dance()
+		match (item.name):
+			"Battle Bolero":
+				item.min_hits = steps.size()
+				item.max_hits = steps.size()
+			"Mystic Mambo":
+				print(item.multiplier, " ", steps.size())
+				item.multiplier *= steps.size()
+			"Mana Mambo":
+				item.multiplier *= steps.size()
+		for i in range(cp_dance.get_child_count()):
+			cp_dance.get_child(i).frame = 7
+			cur_player.unit.job_data["steps"] = []
 
 func revert_dance() -> void:
 	if not step_storage: return
 	cur_player.unit.items[step_storage[1]] = step_storage[0]
 	step_storage = []
-	
+
+func check_fighter() -> void:
+	var item = cur_btn.item as Item
+	var user = cur_player as PlayerPanel
+	if item.name == "Slash": return
+	var action = ItemDb.get_item(item.reverted_action_name) as Item
+	print(action.name)
+	cur_player.unit.items[5] = action
+
 func execute_vs_enemy(panel) -> void:
 	cur_player.crit_round = false
 	var gained_xp = false
@@ -512,7 +506,8 @@ func execute_vs_enemy(panel) -> void:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
 		user.unit.job_data["bp_cur"] -= bp
 		ap_cost -= bp
-	check_dance()
+	if user.unit.job == "Dancer": check_dance()
+	if user.unit.job == "Fighter": check_fighter()
 	if quick: setup_cur_player_panel()
 	user.ap -= ap_cost
 	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA:
@@ -588,6 +583,7 @@ func execute_vs_enemy(panel) -> void:
 			setup_cur_player_panel()
 			setup_buttons()
 	user.calc_xp(item.stat_hit, 0.25)
+	if not cur_btn: return
 	emit_signal("action_used", cur_btn.item, cur_player)
 	if quick:
 		if user == panel:
@@ -597,7 +593,7 @@ func execute_vs_enemy(panel) -> void:
 	else: get_next_player()
 
 func execute_vs_player(panel) -> void:
-	var user = cur_player
+	var user = cur_player as PlayerPanel
 	var item = cur_btn.item as Item
 	var quick = (item.quick or cur_player.hasted) and cur_player.quick_actions > 0 or item.instant
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
@@ -609,7 +605,8 @@ func execute_vs_player(panel) -> void:
 		user.unit.job_data["bp_cur"] -= bp
 		ap_cost -= bp
 	if quick: setup_cur_player_panel()
-	check_dance()
+	if user.unit.job == "Dancer": check_dance()
+	if user.unit.job == "Fighter": check_fighter()
 	user.ap -= ap_cost
 	if cur_btn.item.sub_type == Enums.SubItemType.ARCANA:
 		if cur_btn.item.name != "Draw Arcana":

@@ -1,20 +1,21 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/core/item.gd" type="Script" id=1]
+[ext_resource path="res://resources/effects/banes/stun.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Bronze Spear"
+name = "Shield Bash"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
-tier = 2
+tier = 1
 ap_cost = 1
 instant = false
 quick = false
-item_type = 0
-sub_type = 7
+item_type = 1
+sub_type = 8
 melee = true
-target_type = 6
+target_type = 7
 damage_type = 0
 stat_used = 2
 stat_vs = 5
@@ -32,11 +33,11 @@ crit_chance = 10
 sound_fx = "wooden"
 use_fx = "melee"
 inflict_boons = [  ]
-inflict_banes = [  ]
+inflict_banes = [ [ ExtResource( 2 ), 1, 50 ] ]
 gain_boons = [  ]
 gain_banes = [  ]
 max_uses = 0
 uses = 0
 price = 0
-temporary = false
-reverted_action_name = ""
+temporary = true
+reverted_action_name = "Slash"

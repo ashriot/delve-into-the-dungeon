@@ -60,6 +60,7 @@ margin_bottom = -1.0
 text = "6"
 
 [node name="Quick" type="Sprite" parent="."]
+visible = false
 position = Vector2( 63, 1 )
 texture = ExtResource( 4 )
 centered = false

@@ -24,6 +24,7 @@ func _ready():
 func get_item(item_name: String) -> Item:
 	for item in items:
 		if item.name == item_name: return item.duplicate()
+	push_warning("ERROR: " + item_name + " does not exist!")
 	return null
 
 func get_perk(perk_name: String) -> Perk:

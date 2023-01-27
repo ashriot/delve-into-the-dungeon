@@ -1,13 +1,14 @@
 extends PressButton
 class_name BattleButton
 
-onready var sprite = $Bg/Sprite
-onready var quick_icon: = $Quick
-onready var instant_icon: = $Instant
-onready var sub_icon: = $SubIcon
-onready var title = $Title
-onready var ap_label = $ApCost
-onready var uses = $Uses
+onready var bg = $Bg as TextureRect
+onready var sprite = $Bg/Sprite as Sprite
+onready var quick_icon: = $Quick as Sprite
+onready var instant_icon: = $Instant as Sprite
+onready var sub_icon: = $SubIcon as Sprite
+onready var title = $Title as Label
+onready var ap_label = $ApCost as Label
+onready var uses = $Uses as Label
 
 var item: Item
 var unit: Player
@@ -17,6 +18,8 @@ var uses_remain: int setget set_uses_remain
 var selected: bool setget set_selected
 var available: bool setget set_available
 var enabled: = false
+
+var temp_color: = "#f6b258"
 
 func init(battle) -> void:
 	var err = connect("long_pressed", battle, "_on_BattleButton_long_pressed", [self])
@@ -96,11 +99,11 @@ func set_uses_remain(value):
 func set_selected(value: bool):
 	selected = value
 	if selected: $Bg.modulate = Enums.yellow_color
-	elif available: $Bg.modulate = Enums.default_color
+	elif available: $Bg.modulate = temp_color if item.temporary else Enums.default_color
 	else: $Bg.modulate = Enums.gray_color
 
 func set_available(value: bool):
 	available = value
 	if !selected:
-		if available: $Bg.modulate = Enums.default_color
+		if available: $Bg.modulate = temp_color if item.temporary else Enums.default_color
 		else: $Bg.modulate = Enums.gray_color
