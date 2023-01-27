@@ -490,6 +490,7 @@ func set_dance(step_id: int) -> void:
 	cur_player.unit.items[cur_btn.get_index()] = dances[step_id]
 
 func revert_dance() -> void:
+	if not step_storage: return
 	cur_player.unit.items[step_storage[1]] = step_storage[0]
 	step_storage = []
 	

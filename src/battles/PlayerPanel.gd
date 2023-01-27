@@ -88,7 +88,7 @@ func get_hp_str(value: int) -> String:
 
 func set_ap(value: int) -> void:
 	.set_ap(value)
-	ap_gauge.rect_size.x = ap * 2
+	ap_gauge.rect_size.x = ap * 5
 
 func die() -> void:
 	.die()

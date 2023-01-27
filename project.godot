@@ -214,8 +214,8 @@ AudioController="*res://src/core/AudioController.tscn"
 
 [display]
 
-window/size/width=72
-window/size/height=130
+window/size/width=74
+window/size/height=132
 window/size/test_width=576
 window/size/test_height=1040
 window/stretch/mode="viewport"

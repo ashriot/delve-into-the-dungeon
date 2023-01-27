@@ -99,7 +99,7 @@ func update_target_data(_target) -> void:
 		else:
 			dmg_mod += panel.unit.job_data["sp_cur"] * 0.34
 	dmg = float((potency * (atk)) + bonus_dmg)
-	crit_dmg = dmg + float(panel.get_stat(Enums.StatType.POW)) * potency
+	crit_dmg = dmg * 2
 	def = target.get_stat(action.stat_vs)
 	def_mod = int(float(def * 0.5) * potency)
 	var def = target.get_stat(action.stat_vs)

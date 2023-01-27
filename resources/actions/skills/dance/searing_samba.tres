@@ -11,6 +11,7 @@ description = "Deal {potency} {dmg} damage to {tgt};  +Weak (50%) +Burn (50%).
 {aim}"
 tier = 1
 ap_cost = 2
+instant = false
 quick = false
 item_type = 2
 sub_type = 23
@@ -20,7 +21,7 @@ damage_type = 3
 stat_used = 3
 stat_vs = 3
 stat_hit = 3
-multiplier = 1.5
+multiplier = 1.0
 bonus_damage = 0
 min_hits = 1
 max_hits = 1

@@ -38,11 +38,11 @@ func setup(_unit):
 	show()
 
 func level_up() -> void:
-	unit.hp_growth = int((4 + unit.hp_rating) * (4 + unit.level) * (float(unit.level) / 200 + 1))
-	unit.str_growth = int(float(2 + unit.str_rating * 1.6) * float(8 + unit.level) / 10)
-	unit.agi_growth = int(float(2 + unit.agi_rating * 1.6) * float(8 + unit.level) / 10)
-	unit.int_growth = int(float(2 + unit.int_rating * 1.6) * float(8 + unit.level) / 10)
-	unit.def_growth = int(float(2 + unit.def_rating * 1.6) * float(8 + unit.level) / 10)
+	unit.hp_growth = int((3 + unit.hp_rating) * (3 + unit.level) * (float(unit.level) / 200 + 1))
+	unit.str_growth = int(float(2 + unit.str_rating * 1.2) * float(5 + unit.level) / 10)
+	unit.agi_growth = int(float(2 + unit.agi_rating * 1.2) * float(5 + unit.level) / 10)
+	unit.int_growth = int(float(2 + unit.int_rating * 1.2) * float(5 + unit.level) / 10)
+	unit.def_growth = int(float(2 + unit.def_rating * 1.2) * float(5 + unit.level) / 10)
 	var cap = int((unit.level + 5) / 10)
 	cap = 10
 	for key in unit.actions:
