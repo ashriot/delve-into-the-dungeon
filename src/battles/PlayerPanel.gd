@@ -64,7 +64,7 @@ func set_ready(value: bool):
 		decrement_banes("Start")
 	else:
 		sprite.frame = unit.frame + 10
-		outline.modulate.a = 0.15
+		outline.modulate.a = 0.5
 
 func set_hp_cur(value):
 	if hp_cur > value and !gained_xp:

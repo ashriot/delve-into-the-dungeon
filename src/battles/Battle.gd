@@ -46,7 +46,6 @@ var player_targets: = [false, false, false, false]
 
 var cur_tab: int
 var default_tab_color: Color
-var step_storage: Array
 
 var chose_next: bool
 var battle_active: bool
@@ -445,7 +444,7 @@ func check_dance():
 	var user = cur_player as PlayerPanel
 	var steps = user.unit.job_data["steps"] as Array
 	if "Step" in item.name:
-		if step_storage.size() > 0: revert_dance()
+		if steps.size() > 0: revert_dance()
 		var step_id = step_ids.find(item.name)
 
 		var action = ItemDb.get_item(item.reverted_action_name)
@@ -476,9 +475,12 @@ func check_dance():
 			cur_player.unit.job_data["steps"] = []
 
 func revert_dance() -> void:
-	if not step_storage: return
-	cur_player.unit.items[step_storage[1]] = step_storage[0]
-	step_storage = []
+	if cur_player.unit.job_data["steps"].size() == 0: return
+	var index = int(6 + ((1 + cur_player.unit.job_data["steps"].back()) / 2))
+	print("Dance Index: ", index)
+	var item = cur_player.unit.items[index] as Item
+	var action = ItemDb.get_item(item.reverted_action_name) as Item
+	cur_player.unit.items[index] = action
 
 func check_fighter() -> void:
 	var item = cur_btn.item as Item
@@ -543,6 +545,7 @@ func execute_vs_enemy(panel) -> void:
 	if cur_player.has_boon("Aim"):
 		cur_player.remove_boon(cur_player.get_boon("Aim"))
 	var all_hits = []
+	var gain_block = 0
 	for hit_num in hits:
 		if rand_targets:
 			targets = enemy_panels.get_random()
@@ -557,18 +560,21 @@ func execute_vs_enemy(panel) -> void:
 			var data = target.take_hit(hit)
 			if "dmg" in data: all_hits.append(data["dmg"])
 			if "xp" in data: gained_xp = data["xp"]
+			if item.name == "Parry":
+				var dmg = all_hits.max()
+				gain_block = dmg
 			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
 		if target_type >= Enums.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
 			yield(get_tree().create_timer(0.33 * GameManager.spd), "timeout")
 	if user.has_perk("Deflection") and item.melee:
-		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		var dmg = all_hits.max()
-		var amt = int(dmg * user.get_perk("Deflection") * 0.05)
-		if user.blocking < amt:
-			user.blocking = amt
-			show_dmg_text("+" + str(amt), user.pos, false)
+		gain_block = int(dmg * user.get_perk("Deflection") * 0.05)
+	if user.blocking < gain_block:
+		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
+		user.blocking = gain_block
+		show_dmg_text("+" + str(gain_block), user.pos, false)
 	if item.damage_type >= Enums.DamageType.MARTIAL \
 	and item.damage_type < Enums.DamageType.HEAL \
 	and user.has_boon("Brave"):

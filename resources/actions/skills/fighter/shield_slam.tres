@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Shield Bash"
+name = "Shield Slam"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1

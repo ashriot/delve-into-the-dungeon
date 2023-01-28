@@ -1202,7 +1202,7 @@ __meta__ = {
 }
 
 [node name="Tooltip" type="Panel" parent="Tooltip/Container"]
-margin_right = 72.0
+margin_right = 74.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 72, 60 )
 __meta__ = {
@@ -1298,10 +1298,11 @@ __meta__ = {
 }
 
 [node name="Perk1" parent="Tooltip/Container" instance=ExtResource( 18 )]
+margin_right = 74.0
 
 [node name="Perk2" type="Panel" parent="Tooltip/Container"]
 margin_top = 71.0
-margin_right = 72.0
+margin_right = 74.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 72, 9 )
 
@@ -1318,7 +1319,7 @@ __meta__ = {
 
 [node name="Perk3" type="Panel" parent="Tooltip/Container"]
 margin_top = 81.0
-margin_right = 72.0
+margin_right = 74.0
 margin_bottom = 90.0
 rect_min_size = Vector2( 72, 9 )
 
