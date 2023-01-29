@@ -2,7 +2,7 @@ extends Control
 
 var DamageText = preload("res://src/battles/DamageText.tscn")
 var draw_arcana = preload("res://resources/actions/skills/arcana/draw_arcana.tres")
-var step_ids = ["Battle Step", "Mystic Step", "Mana Step", "Butterfly Step", "Bee Step"]
+var step_ids = ["Blade Step", "Mystic Step", "Mana Step", "Butterfly Step", "Bee Step"]
 
 signal enemy_done
 signal battle_done
@@ -95,11 +95,11 @@ func start(players: Dictionary, enemies: Dictionary) -> void:
 	start_players_turns()
 
 func setup_cur_player_panel() -> void:
-	cp_portrait.frame = cur_player.unit.frame + 20
-	cp_name.text = cur_player.unit.name
+	var unit = cur_player.unit
+	cp_portrait.frame = unit.frame + 20
+	cp_name.text = unit.name
 	cp_ap.bbcode_text = str(cur_player.ap)
 	cp_quick.modulate.a = 1.0 if cur_player.quick_actions > 0 else .1
-	var unit = cur_player.unit
 	cp_sorcery.hide()
 	cp_perform.hide()
 	cp_dance.hide()
@@ -120,15 +120,17 @@ func setup_cur_player_panel() -> void:
 		cp_bp_max.rect_position.x = 16 - (bp_max * 3 - (1 if bp_max > 1 else 0))
 		cp_perform.show()
 	if unit.job == "Dancer":
-		var steps = unit.job_data["steps"]
 		cp_dance.show()
+		var steps = unit.job_data["steps"] as Array
+		var max_steps = 2
 		for i in range(cp_dance.get_child_count()):
 			var child = cp_dance.get_child(i) as Sprite
+			child.show()
 			if steps.size() > i:
-				child.show()
 				child.frame = steps[i]
 			else:
-				child.frame = 7
+				if i < max_steps: child.frame = 7
+				else: child.hide()
 	cp_panel.show()
 
 func setup_buttons() -> void:
@@ -443,26 +445,20 @@ func check_dance():
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel
 	var steps = user.unit.job_data["steps"] as Array
+	var max_steps = 2
 	if "Step" in item.name:
 		if steps.size() > 0: revert_dance()
 		var step_id = step_ids.find(item.name)
 
 		var action = ItemDb.get_item(item.reverted_action_name)
 		cur_player.unit.items[cur_btn.get_index()] = action
-		if user.unit.job_data["steps"].size() < 4: 
-			user.unit.job_data["steps"].append(step_id)
-		print("Steps: ", user.unit.job_data["steps"])
-		for i in range(cp_dance.get_child_count()):
-			var child = cp_dance.get_child(i) as Sprite
-			if steps.size() > i:
-				child.show()
-				child.frame = steps[i]
-			else:
-				child.frame = 7
+		if user.unit.job_data["steps"].size() == max_steps:
+			user.unit.job_data["steps"].pop_front()
+		user.unit.job_data["steps"].append(step_id)
 	else:
 		revert_dance()
 		match (item.name):
-			"Battle Bolero":
+			"Blade Dance":
 				item.min_hits = steps.size()
 				item.max_hits = steps.size()
 			"Mystic Mambo":
@@ -470,9 +466,14 @@ func check_dance():
 				item.multiplier *= steps.size()
 			"Mana Mambo":
 				item.multiplier *= steps.size()
-		for i in range(cp_dance.get_child_count()):
-			cp_dance.get_child(i).frame = 7
-			cur_player.unit.job_data["steps"] = []
+	for i in range(cp_dance.get_child_count()):
+		var child = cp_dance.get_child(i) as Sprite
+		if steps.size() > i:
+			child.show()
+			child.frame = steps[i]
+		else:
+			if i < max_steps: child.frame = 7
+			else: child.hide()
 
 func revert_dance() -> void:
 	if cur_player.unit.job_data["steps"].size() == 0: return

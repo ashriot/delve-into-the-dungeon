@@ -4,12 +4,12 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Battle Bolero"
+name = "Blade Step"
 description = "Deal {potency} {dmg} damage to {tgt}.
 {aim}"
 tier = 1
-ap_cost = 0
-instant = false
+ap_cost = 1
+instant = true
 quick = false
 item_type = 1
 sub_type = 23
@@ -39,4 +39,4 @@ max_uses = 0
 uses = 0
 price = 0
 temporary = false
-reverted_action_name = "Battle Step"
+reverted_action_name = "Blade Dance"
