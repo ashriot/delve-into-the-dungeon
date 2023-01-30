@@ -1,15 +1,19 @@
 extends BattlePanel
 class_name PlayerPanel
 
+onready var sp_gauge: = $SpGauge
+onready var sp_gauge_full: = $SpGaugeFull
 onready var hp_cur_display = $HPCur
 onready var selector = $Selector
 onready var outline = $Outline
 
+var sp: int setget set_sp
 var tab: int setget set_tab
 
 var ready:= true setget set_ready
 var selected:= false setget set_selected
 var quick_actions := 1
+var rushing := false
 
 var enc_lv: float
 var gained_xp: bool
@@ -32,6 +36,8 @@ func setup(_unit):
 	.setup(_unit)
 	self.hp_cur = unit.hp_cur
 	self.ap = unit.ap
+	self.sp = unit.sp
+	
 	sprite.position.y = 2
 	self.selected = false
 	if unit.job == "Sorcerer":
@@ -58,6 +64,7 @@ func set_ready(value: bool):
 		if blocking > 0: self.blocking = 0
 		quick_actions = 1
 		self.ap += 1
+		self.sp += 4
 		if has_perk("Adrenaline"):
 			if randi() % 100 + 1 < get_perk("Adrenaline") * 10: self.ap += 1
 		decrement_boons("Start")
@@ -89,6 +96,12 @@ func get_hp_str(value: int) -> String:
 func set_ap(value: int) -> void:
 	.set_ap(value)
 	ap_gauge.rect_size.x = ap * 5
+
+func set_sp(value: int) -> void:
+	sp = int(clamp(value, 0, 24))
+	unit.sp = sp
+	sp_gauge.rect_size.x = sp
+	sp_gauge_full.rect_size.x = (sp / 8) * 8
 
 func die() -> void:
 	.die()

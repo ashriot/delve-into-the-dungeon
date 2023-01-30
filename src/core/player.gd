@@ -3,6 +3,7 @@ class_name Player
 
 signal player_changed
 
+var sp: int
 var slot: int
 var tab: int
 export var job: String

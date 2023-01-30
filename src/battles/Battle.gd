@@ -13,6 +13,7 @@ onready var enemy_panels = $EnemyPanels
 onready var buttons = $Buttons
 onready var tab1 = $Tabs/Tab1
 onready var tab2 = $Tabs/Tab2
+onready var rush := $Rush as Button
 onready var battleMenu = $BattleMenu
 onready var enemy_info = $EnemyInfo
 onready var enemy_title = $EnemyInfo/Panel/Title
@@ -60,6 +61,7 @@ func init(game):
 	battle_active = false
 	battleMenu.hide()
 	cp_panel.hide()
+	rush.hide()
 #	for child in buttons.get_children():
 #		child.init(self)
 	var inspect = load("res://resources/battleCommands/inspect.tres")
@@ -100,6 +102,7 @@ func setup_cur_player_panel() -> void:
 	cp_name.text = unit.name
 	cp_ap.bbcode_text = str(cur_player.ap)
 	cp_quick.modulate.a = 1.0 if cur_player.quick_actions > 0 else .1
+	rush.disabled = cur_player.sp < 8
 	cp_sorcery.hide()
 	cp_perform.hide()
 	cp_dance.hide()
@@ -157,6 +160,7 @@ func setup_buttons() -> void:
 	$Tabs/Tab2/Label.text = cur_player.unit.job_tab
 	display_tabs()
 	buttons.show()
+	rush.show()
 
 func display_tabs() -> void:
 	tab1.show()
@@ -201,6 +205,7 @@ func select_player(panel: PlayerPanel, beep = false) -> void:
 		cur_player.selected = false
 		cur_player = null
 		buttons.hide()
+		rush.hide()
 		cp_panel.hide()
 		tab1.hide()
 		tab2.hide()
@@ -752,3 +757,13 @@ func _on_Close_pressed():
 	print("Closing tooltip")
 	AudioController.back()
 	enemy_info.hide()
+
+func _on_Rush_pressed():
+	if not cur_player: return
+	if cur_player.rushing:
+		AudioController.back()
+		rush.self_modulate = "#f0eae3"
+	else:
+		AudioController.play_sfx("flame")
+		rush.self_modulate = "#a884f3"
+	cur_player.rushing = not cur_player.rushing

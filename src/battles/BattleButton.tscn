@@ -9,9 +9,9 @@
 
 [node name="BattleButton" type="Button" groups=["battle_btns"]]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_right = 70.0
+margin_right = 74.0
 margin_bottom = 9.0
-rect_min_size = Vector2( 70, 9 )
+rect_min_size = Vector2( 74, 9 )
 align = 0
 script = ExtResource( 2 )
 
@@ -20,14 +20,16 @@ modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -64.0
+margin_left = -69.0
 margin_top = 1.0
+margin_right = -1.0
 margin_bottom = -1.0
 texture = ExtResource( 1 )
+stretch_mode = 1
 
 [node name="Sprite" type="Sprite" parent="Bg"]
 modulate = Color( 0.262745, 0.262745, 0.262745, 0.203922 )
-position = Vector2( 36, 0 )
+position = Vector2( 40, 0 )
 texture = ExtResource( 3 )
 centered = false
 hframes = 10
@@ -35,39 +37,35 @@ vframes = 10
 frame = 10
 
 [node name="SubIcon" type="Sprite" parent="."]
-position = Vector2( 58, 1 )
+position = Vector2( 61, 1 )
 texture = ExtResource( 6 )
 centered = false
 hframes = 8
 
 [node name="Title" type="Label" parent="."]
 modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
-anchor_left = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -62.0
+margin_left = 7.0
 margin_top = 1.0
+margin_right = 66.0
+margin_bottom = 1.0
 text = "Iron Sword"
 
 [node name="ApCost" type="Label" parent="."]
 self_modulate = Color( 0.301961, 0.607843, 0.901961, 1 )
-anchor_left = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -68.0
+margin_left = 1.0
 margin_top = 1.0
-margin_bottom = -1.0
+margin_right = 5.0
 text = "6"
 
 [node name="Quick" type="Sprite" parent="."]
-visible = false
-position = Vector2( 63, 1 )
+position = Vector2( 66, 1 )
 texture = ExtResource( 4 )
 centered = false
 
 [node name="Instant" type="Sprite" parent="."]
-visible = false
-position = Vector2( 63, 1 )
+position = Vector2( 66, 1 )
 texture = ExtResource( 5 )
 centered = false
 

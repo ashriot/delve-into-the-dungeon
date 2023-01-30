@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/battles/EnemyPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/battles/EnemyPanels.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://assets/images/icons/sp_empty.png" type="Texture" id=12]
 [ext_resource path="res://assets/images/icons/bp_empty.png" type="Texture" id=13]
 [ext_resource path="res://assets/images/icons/bp_full.png" type="Texture" id=14]
+[ext_resource path="res://assets/images/icons/spirit.png" type="Texture" id=15]
 
 [node name="Battle" type="Control"]
 anchor_right = 1.0
@@ -233,12 +234,12 @@ __meta__ = {
 
 [node name="CurrentPlayer" type="Control" parent="."]
 margin_left = 3.0
-margin_top = 75.0
+margin_top = 76.0
 margin_right = 73.0
-margin_bottom = 83.0
+margin_bottom = 84.0
 
 [node name="Portrait" type="Sprite" parent="CurrentPlayer"]
-position = Vector2( 5, 1 )
+position = Vector2( 2, 1 )
 texture = ExtResource( 9 )
 centered = false
 hframes = 10
@@ -246,40 +247,30 @@ vframes = 20
 frame = 23
 
 [node name="Name" type="RichTextLabel" parent="CurrentPlayer"]
-margin_left = 14.0
-margin_right = 49.0
+margin_left = 11.0
+margin_right = 46.0
 margin_bottom = 7.0
-text = "Caliope"
+text = "Cassandra"
 scroll_active = false
 
 [node name="ApValue" type="RichTextLabel" parent="CurrentPlayer"]
 self_modulate = Color( 0.301961, 0.607843, 0.901961, 1 )
 anchor_bottom = 1.0
-margin_right = 4.0
+margin_left = -2.0
+margin_right = 2.0
 bbcode_enabled = true
 bbcode_text = "3"
 text = "3"
 scroll_active = false
-
-[node name="QuickIcon" type="TextureRect" parent="CurrentPlayer"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -9.0
-margin_top = -4.0
-margin_right = -2.0
-margin_bottom = 3.0
-texture = ExtResource( 10 )
 
 [node name="Resources" type="Control" parent="CurrentPlayer"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -26.0
+margin_left = -23.0
 margin_top = -5.0
-margin_right = -10.0
+margin_right = -7.0
 margin_bottom = 2.0
 
 [node name="Sorcery" type="Control" parent="CurrentPlayer/Resources"]
@@ -374,18 +365,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="QuickIcon" type="TextureRect" parent="CurrentPlayer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -4.0
+margin_bottom = 3.0
+texture = ExtResource( 10 )
+
 [node name="Buttons" type="VBoxContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.0
 margin_top = -50.0
-margin_right = -3.0
 margin_bottom = -9.0
+rect_min_size = Vector2( 74, 0 )
 custom_constants/separation = -1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BattleButton" parent="Buttons" instance=ExtResource( 7 )]
 __meta__ = {
@@ -461,6 +458,7 @@ __meta__ = {
 }
 
 [node name="Tabs" type="Control" parent="."]
+visible = false
 margin_left = 2.0
 margin_top = 121.0
 margin_right = 72.0
@@ -725,4 +723,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Rush" type="Button" parent="."]
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
+margin_left = 65.0
+margin_top = 123.0
+margin_right = 75.0
+margin_bottom = 133.0
+icon = ExtResource( 15 )
+icon_align = 1
+
+[node name="Sprite" type="Sprite" parent="Rush"]
+visible = false
+position = Vector2( 2, 2 )
+rotation = 0.0222894
+texture = ExtResource( 15 )
+centered = false
+
 [connection signal="pressed" from="EnemyInfo/Close" to="." method="_on_Close_pressed"]
+[connection signal="pressed" from="Rush" to="." method="_on_Rush_pressed"]
