@@ -125,14 +125,14 @@ func setup_cur_player_panel() -> void:
 	if unit.job == "Dancer":
 		cp_dance.show()
 		var steps = unit.job_data["steps"] as Array
-		var max_steps = 2
+		var steps_max = unit.job_data["steps_max"] as int
 		for i in range(cp_dance.get_child_count()):
 			var child = cp_dance.get_child(i) as Sprite
 			child.show()
 			if steps.size() > i:
 				child.frame = steps[i]
 			else:
-				if i < max_steps: child.frame = 7
+				if i < steps_max: child.frame = 7
 				else: child.hide()
 	cp_panel.show()
 
@@ -450,14 +450,14 @@ func check_dance():
 	var item = cur_btn.item as Item
 	var user = cur_player as PlayerPanel
 	var steps = user.unit.job_data["steps"] as Array
-	var max_steps = 2
+	var steps_max = user.unit.job_data["steps_max"] as int
 	if "Step" in item.name:
-		if steps.size() > 0: revert_dance()
+		if steps.size() > 0 and steps.size() < steps_max: revert_dance()
 		var step_id = step_ids.find(item.name)
 
 		var action = ItemDb.get_item(item.reverted_action_name)
 		cur_player.unit.items[cur_btn.get_index()] = action
-		if user.unit.job_data["steps"].size() == max_steps:
+		if user.unit.job_data["steps"].size() == steps_max:
 			user.unit.job_data["steps"].pop_front()
 		user.unit.job_data["steps"].append(step_id)
 	else:
@@ -477,13 +477,12 @@ func check_dance():
 			child.show()
 			child.frame = steps[i]
 		else:
-			if i < max_steps: child.frame = 7
+			if i < steps_max: child.frame = 7
 			else: child.hide()
 
 func revert_dance() -> void:
 	if cur_player.unit.job_data["steps"].size() == 0: return
 	var index = int(6 + ((1 + cur_player.unit.job_data["steps"].back()) / 2))
-	print("Dance Index: ", index)
 	var item = cur_player.unit.items[index] as Item
 	var action = ItemDb.get_item(item.reverted_action_name) as Item
 	cur_player.unit.items[index] = action
