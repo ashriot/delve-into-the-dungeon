@@ -10,6 +10,7 @@ description = "Deal {potency} {dmg} damage to {tgt}. Strike 1~3 times.
 tier = 1
 ap_cost = 0
 quick = false
+instant = false
 item_type = 1
 sub_type = 23
 melee = false

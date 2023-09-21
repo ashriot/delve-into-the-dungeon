@@ -1,17 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/images/ui_btn.png" type="Texture" id=1]
 [ext_resource path="res://src/battles/BattleButton.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/sheets/ui_icons.png" type="Texture" id=3]
 [ext_resource path="res://assets/images/icons/quick.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/icons/instant.png" type="Texture" id=5]
 
-[node name="BattleButton" type="Button" groups=[
-"battle_btns",
-]]
+[node name="BattleButton" type="Button" groups=["battle_btns"]]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 10.0
-margin_right = 70.0
-margin_bottom = 19.0
+margin_right = 72.0
+margin_bottom = 9.0
 rect_min_size = Vector2( 0, 9 )
 align = 0
 script = ExtResource( 2 )
@@ -19,21 +17,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bg" type="TextureRect" parent="."]
+[node name="Bg" type="NinePatchRect" parent="."]
 modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 6.0
+margin_left = 4.0
 margin_top = 1.0
 margin_bottom = -1.0
 texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Sprite" type="Sprite" parent="Bg"]
 modulate = Color( 0.776471, 0.776471, 0.776471, 1 )
-position = Vector2( 42, 0 )
+position = Vector2( 44, 0 )
 texture = ExtResource( 3 )
 centered = false
 hframes = 10
@@ -42,9 +37,9 @@ frame = 10
 
 [node name="Title" type="Label" parent="."]
 modulate = Color( 0.152941, 0.152941, 0.152941, 1 )
-margin_left = 8.0
+margin_left = 6.0
 margin_top = 1.0
-margin_right = 63.0
+margin_right = 61.0
 margin_bottom = 8.0
 text = "Iron Sword"
 __meta__ = {
@@ -53,13 +48,10 @@ __meta__ = {
 
 [node name="ApCost" type="Label" parent="."]
 modulate = Color( 0.968627, 0.588235, 0.0901961, 1 )
-anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -69.0
 margin_top = -3.5
-margin_right = -64.0
+margin_right = 4.0
 margin_bottom = 3.5
 text = "6"
 align = 2
@@ -67,15 +59,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Quick" type="Sprite" parent="."]
-visible = false
-self_modulate = Color( 0.764706, 0.141176, 0.329412, 1 )
-position = Vector2( 65, 2 )
+[node name="Quick" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -3.5
+margin_bottom = 3.5
 texture = ExtResource( 4 )
-centered = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Instant" type="TextureRect" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -3.5
+margin_bottom = 3.5
+texture = ExtResource( 5 )
 
 [node name="Uses" type="Label" parent="."]
-visible = false
 modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
 anchor_left = 1.0
 anchor_top = 0.5
@@ -85,7 +93,7 @@ margin_left = -20.0
 margin_top = -3.5
 margin_right = -7.0
 margin_bottom = 3.5
-text = "*99"
+text = "*5"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false

@@ -1,0 +1,432 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/battles/BattleUI.gd" type="Script" id=1]
+[ext_resource path="res://src/battles/CurrentPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/battles/EnemyPanels.gd" type="Script" id=4]
+[ext_resource path="res://src/battles/PlayerPanels.gd" type="Script" id=6]
+[ext_resource path="res://assets/images/icons/selector_variable.png" type="Texture" id=7]
+[ext_resource path="res://src/battles/EnemyPanel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/battles/PlayerPanel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/battles/BattleButton.tscn" type="PackedScene" id=11]
+
+[node name="BattleUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyPanels" type="Control" parent="."]
+anchor_right = 1.0
+margin_left = 5.0
+margin_right = -7.0
+margin_bottom = 44.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AllSelect" type="NinePatchRect" parent="EnemyPanels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_right = 3.0
+margin_bottom = 2.0
+texture = ExtResource( 7 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackSelect" type="NinePatchRect" parent="EnemyPanels"]
+visible = false
+anchor_right = 1.0
+margin_left = -3.0
+margin_right = 3.0
+margin_bottom = 22.0
+texture = ExtResource( 7 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrontSelect" type="NinePatchRect" parent="EnemyPanels"]
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = -20.0
+margin_right = 3.0
+margin_bottom = 2.0
+texture = ExtResource( 7 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackRow" type="Control" parent="EnemyPanels"]
+anchor_right = 1.0
+margin_bottom = 22.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyPanel0" parent="EnemyPanels/BackRow" instance=ExtResource( 8 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -9.0
+margin_bottom = 9.0
+
+[node name="EnemyPanel1" parent="EnemyPanels/BackRow" instance=ExtResource( 8 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 9.0
+
+[node name="EnemyPanel2" parent="EnemyPanels/BackRow" instance=ExtResource( 8 )]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -9.0
+margin_bottom = 9.0
+
+[node name="FrontRow" type="Control" parent="EnemyPanels"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -19.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyPanel0" parent="EnemyPanels/FrontRow" instance=ExtResource( 8 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -9.0
+margin_bottom = 9.0
+
+[node name="EnemyPanel1" parent="EnemyPanels/FrontRow" instance=ExtResource( 8 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 9.0
+
+[node name="EnemyPanel2" parent="EnemyPanels/FrontRow" instance=ExtResource( 8 )]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -9.0
+margin_bottom = 9.0
+
+[node name="PlayerPanels" type="Control" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -21.0
+margin_bottom = 9.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panels" type="Control" parent="PlayerPanels"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerPanel" parent="PlayerPanels/Panels" instance=ExtResource( 10 )]
+
+[node name="PlayerPanel2" parent="PlayerPanels/Panels" instance=ExtResource( 10 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -35.0
+margin_right = 0.0
+
+[node name="PlayerPanel3" parent="PlayerPanels/Panels" instance=ExtResource( 10 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -12.0
+margin_bottom = 0.0
+
+[node name="PlayerPanel4" parent="PlayerPanels/Panels" instance=ExtResource( 10 )]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -35.0
+margin_top = -12.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="AllSelector" type="NinePatchRect" parent="PlayerPanels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 7 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentPlayer" parent="." instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = 9.0
+margin_right = 36.0
+margin_bottom = 18.0
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -36.0
+margin_top = -50.0
+margin_right = 36.0
+margin_bottom = -9.0
+custom_constants/separation = -1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BattleButton" parent="Buttons" instance=ExtResource( 11 )]
+
+[node name="BattleButton2" parent="Buttons" instance=ExtResource( 11 )]
+margin_top = 8.0
+margin_bottom = 17.0
+
+[node name="BattleButton3" parent="Buttons" instance=ExtResource( 11 )]
+margin_top = 16.0
+margin_bottom = 25.0
+
+[node name="BattleButton4" parent="Buttons" instance=ExtResource( 11 )]
+margin_top = 24.0
+margin_bottom = 33.0
+
+[node name="BattleButton5" parent="Buttons" instance=ExtResource( 11 )]
+margin_top = 32.0
+margin_bottom = 41.0
+
+[node name="BattleButton6" parent="Buttons" instance=ExtResource( 11 )]
+visible = false
+margin_top = 40.0
+margin_bottom = 49.0
+
+[node name="BattleButton7" parent="Buttons" instance=ExtResource( 11 )]
+visible = false
+margin_top = 48.0
+margin_bottom = 57.0
+
+[node name="BattleButton8" parent="Buttons" instance=ExtResource( 11 )]
+visible = false
+margin_top = 56.0
+margin_bottom = 65.0
+
+[node name="BattleButton9" parent="Buttons" instance=ExtResource( 11 )]
+visible = false
+margin_top = 64.0
+margin_bottom = 73.0
+
+[node name="BattleButton10" parent="Buttons" instance=ExtResource( 11 )]
+visible = false
+margin_top = 72.0
+margin_bottom = 81.0
+
+[node name="Tabs" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -38.0
+margin_top = -9.0
+margin_right = 38.0
+rect_min_size = Vector2( 70, 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tab1" type="Button" parent="Tabs"]
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -1.0
+margin_top = -3.5
+margin_right = 35.0
+margin_bottom = 4.5
+rect_min_size = Vector2( 33, 7 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Tabs/Tab1"]
+self_modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+text = "Items"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tab2" type="Button" parent="Tabs"]
+self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -35.0
+margin_top = -3.5
+margin_right = 1.0
+margin_bottom = 4.5
+rect_min_size = Vector2( 33, 7 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Tabs/Tab2"]
+self_modulate = Color( 0.12549, 0.12549, 0.12549, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+text = "Items"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BattleMenu" type="VBoxContainer" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 45.0
+margin_right = -1.0
+margin_bottom = 89.0
+custom_constants/separation = -1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BattleButton" parent="BattleMenu" instance=ExtResource( 11 )]
+
+[node name="BattleButton2" parent="BattleMenu" instance=ExtResource( 11 )]
+margin_top = 8.0
+margin_bottom = 17.0
+
+[node name="BattleButton3" parent="BattleMenu" instance=ExtResource( 11 )]
+margin_top = 16.0
+margin_bottom = 25.0
+
+[node name="EnemyInfo" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="EnemyInfo"]
+margin_top = 1.0
+margin_right = 72.0
+margin_bottom = 52.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="EnemyInfo/Panel"]
+anchor_right = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = 7.0
+color = Color( 0.941176, 0.917647, 0.890196, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="EnemyInfo/Panel"]
+margin_left = 2.0
+margin_right = 71.0
+margin_bottom = 7.0
+custom_colors/font_color = Color( 0.0588235, 0.0588235, 0.0784314, 1 )
+text = "Lv.XX Enemy Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Desc" type="Label" parent="EnemyInfo/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 6.0
+text = "Testing
+Testing
+Testing
+Testing
+Testing
+Testing
+Testing"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Close" type="Button" parent="EnemyInfo"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="EnemyInfo/Close" to="." method="_on_Close_pressed"]

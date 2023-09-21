@@ -3,6 +3,7 @@ class_name BattleButton
 
 onready var sprite = $Bg/Sprite
 onready var quick_icon: = $Quick
+onready var instant_icon: = $Instant
 onready var title = $Title
 onready var ap_label = $ApCost
 onready var uses = $Uses
@@ -16,9 +17,10 @@ var selected: bool setget set_selected
 var available: bool setget set_available
 var enabled: = false
 
-func init(battle) -> void:
-	var err = connect("long_pressed", battle, "_on_BattleButton_long_pressed", [self])
-	err = connect("pressed", battle, "_on_BattleButton_pressed", [self])
+func init(ui) -> void:
+	var err = connect("long_pressed", ui, \
+		"_on_BattleButton_long_pressed", [self])
+	err = connect("pressed", ui, "_on_BattleButton_pressed", [self])
 	if err: print("There was an error connecting: ", err)
 
 func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
@@ -36,12 +38,10 @@ func setup(_item: Item, index: int, panel: PlayerPanel = null) -> void:
 			var sp_cur = unit.job_data["sp_cur"]
 			if sp_cur > 0:
 				title.text += "+" + str(sp_cur)
-		if (item.quick or panel.hasted) and panel.quick_actions > 0:
-			quick_icon.show()
-			ap_label.modulate = Enums.quick_color
-		else:
-			quick_icon.hide()
-			ap_label.modulate = Enums.ap_color
+		instant_icon.visible = item.instant or \
+			(panel.hasted and item.quick)
+		quick_icon.visible = (item.quick or panel.hasted) \
+			and panel.quick_actions > 0
 		update_ap_cost()
 		if item.item_type == Enums.ItemType.MARTIAL_SKILL or \
 			item.item_type == Enums.ItemType.WEAPON:

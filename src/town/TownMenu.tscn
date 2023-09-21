@@ -60,7 +60,7 @@ frame = 24
 [node name="TownMenu" type="VBoxContainer" parent="."]
 margin_left = 2.0
 margin_top = 50.0
-margin_right = 70.0
+margin_right = 72.0
 margin_bottom = 111.0
 custom_constants/separation = 2
 __meta__ = {
@@ -69,7 +69,7 @@ __meta__ = {
 
 [node name="BlacksmithBtn" type="TextureButton" parent="TownMenu"]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 7.0
 rect_min_size = Vector2( 0, 7 )
 texture_normal = ExtResource( 22 )
@@ -89,7 +89,7 @@ __meta__ = {
 [node name="AlchemistBtn" parent="TownMenu" instance=ExtResource( 23 )]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 9.0
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 16.0
 disabled = true
 text = "Alchemist"
@@ -97,7 +97,7 @@ text = "Alchemist"
 [node name="MonestaryBtn" parent="TownMenu" instance=ExtResource( 23 )]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 18.0
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 25.0
 disabled = true
 text = "Monestary"
@@ -105,7 +105,7 @@ text = "Monestary"
 [node name="MageBtn" parent="TownMenu" instance=ExtResource( 23 )]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 27.0
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 34.0
 disabled = true
 text = "Mage Tower"
@@ -113,7 +113,7 @@ text = "Mage Tower"
 [node name="TavernBtn" type="TextureButton" parent="TownMenu"]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 36.0
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 43.0
 rect_min_size = Vector2( 0, 7 )
 texture_normal = ExtResource( 22 )
@@ -133,7 +133,7 @@ __meta__ = {
 [node name="DocksBtn" type="TextureButton" parent="TownMenu"]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 45.0
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 52.0
 rect_min_size = Vector2( 0, 7 )
 texture_normal = ExtResource( 22 )
@@ -153,7 +153,7 @@ __meta__ = {
 [node name="GatesBtn" type="TextureButton" parent="TownMenu"]
 self_modulate = Color( 0.941176, 0.917647, 0.890196, 1 )
 margin_top = 54.0
-margin_right = 68.0
+margin_right = 70.0
 margin_bottom = 61.0
 rect_min_size = Vector2( 0, 7 )
 texture_normal = ExtResource( 22 )

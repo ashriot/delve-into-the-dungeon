@@ -39,7 +39,7 @@ func get_equip(equip_name: String) -> Equipment:
 func get_random_arcana() -> Item:
 	var rand = randi() % arcana.size()
 	return arcana[rand]
-	
+
 func get_five_arcana() -> Array:
 	arcana.shuffle()
 	return arcana.slice(0, 4)

@@ -19,7 +19,7 @@ onready var enemy_desc = $EnemyInfo/Panel/Desc
 onready var cp_panel = $CurrentPlayer
 onready var cp_portrait = $CurrentPlayer/Portrait
 onready var cp_name = $CurrentPlayer/Name
-onready var cp_ap = $CurrentPlayer/ApValue
+onready var cp_ap = $CurrentPlayer/ApGauge
 onready var cp_quick = $CurrentPlayer/QuickIcon
 
 onready var cp_sorcery = $CurrentPlayer/Resources/Sorcery
@@ -46,7 +46,6 @@ var battle_active: bool
 var enc_lv: float
 var game: Game
 
-# warning-ignore:shadowed_variable
 func init(game):
 	enemy_info.hide()
 	self.game = game
@@ -90,8 +89,8 @@ func start(players: Dictionary, enemies: Dictionary) -> void:
 func setup_cur_player_panel() -> void:
 	cp_portrait.frame = cur_player.unit.frame + 20
 	cp_name.text = cur_player.unit.name
-	cp_ap.bbcode_text = str(cur_player.ap)
-	var quick_color = "#c32454" if cur_player.quick_actions > 0 else "#625565"
+	cp_ap.rect_size.x = cur_player.unit.ap * 12
+	var quick_color = "#fff" if cur_player.quick_actions > 0 else "#333"
 	cp_quick.modulate = quick_color
 	var unit = cur_player.unit
 	if unit.job == "Sorcerer":
@@ -108,9 +107,9 @@ func setup_cur_player_panel() -> void:
 		var bp_cur = unit.job_data["bp_cur"]
 		var bp_max = unit.job_data["bp_max"]
 		cp_bp_cur.rect_size.x = (bp_cur * 3 - (1 if bp_cur > 1 else 0))
-		cp_bp_cur.rect_position.x = 16 - (bp_max * 3 - (1 if bp_max > 1 else 0))
+		cp_bp_cur.rect_position.x = 21 - (bp_max * 3 - (1 if bp_max > 1 else 0))
 		cp_bp_max.rect_size.x = (bp_max * 3 - (1 if bp_max > 1 else 0))
-		cp_bp_max.rect_position.x = 16 - (bp_max * 3 - (1 if bp_max > 1 else 0))
+		cp_bp_max.rect_position.x = 21 - (bp_max * 3 - (1 if bp_max > 1 else 0))
 		cp_perform.show()
 	else:
 		cp_perform.hide()
@@ -276,8 +275,10 @@ func enemy_take_action(panel: EnemyPanel):
 		var targets = get_enemy_targets(panel, action)
 		var randoms = [] # Fix random targeting
 		var rand_targets = false
-		var hits = randi() % (1 + action.max_hits - action.min_hits) + action.min_hits
-		if action.target_type == Enums.TargetType.RANDOM_ENEMY: rand_targets = true
+		var hits = randi() % (1 + action.max_hits - action.min_hits) + \
+			action.min_hits
+		if action.target_type == Enums.TargetType.RANDOM_ENEMY: \
+			rand_targets = true
 		for hit_num in hits:
 			if rand_targets:
 				targets = player_panels.get_random()
@@ -388,7 +389,8 @@ func _on_BattleButton_pressed(button: BattleButton) -> void:
 	cur_btn.selected = true
 	var melee_penalty = action.melee and cur_player.melee_penalty
 	var target_type = action.target_type
-	if "Siphon" in action.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
+	if "Siphon" in action.name: target_type += \
+		max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 	if (cur_player.unit.job_tab == "Knives" and \
 		action.sub_type == Enums.SubItemType.KNIFE):
 			target_type = Enums.TargetType.ONE_ENEMY
@@ -410,8 +412,10 @@ func _on_EnemyPanel_pressed(panel: EnemyPanel) -> void:
 		enemy_info.show()
 		enemy_title.text = "Lv. " + str(panel.unit.level) + " " + panel.unit.name
 		enemy_desc.text = "HP: " + str(panel.hp_cur) + "/" + str(panel.hp_max)
-		enemy_desc.text += "\n\nSTR: " + str(panel.unit.strength) + "   AGI: " + str(panel.unit.agility)
-		enemy_desc.text += "\nINT: " + str(panel.unit.intellect) + "   DEF: " + str(panel.unit.defense)
+		enemy_desc.text += "\n\nSTR: " + str(panel.unit.strength) + \
+			"   AGI: " + str(panel.unit.agility)
+		enemy_desc.text += "\nINT: " + str(panel.unit.intellect) + \
+			"   DEF: " + str(panel.unit.defense)
 	else: execute_vs_enemy(panel)
 
 func _on_PlayerPanel_pressed(panel: PlayerPanel) -> void:
@@ -432,7 +436,8 @@ func execute_vs_enemy(panel) -> void:
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var target_type = item.target_type
 	if item.sub_type == Enums.SubItemType.SORCERY:
-		if "Siphon" in item.name: target_type += max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
+		if "Siphon" in item.name: target_type += \
+			max((cur_player.unit.job_data["sp_cur"] - 1), 0) * 3
 		if cur_btn.item.name == "Mana Darts":
 			cur_btn.item.min_hits = 1 + cur_player.unit.job_data["sp_cur"]
 			cur_btn.item.max_hits = 1 + cur_player.unit.job_data["sp_cur"]
@@ -449,13 +454,15 @@ func execute_vs_enemy(panel) -> void:
 		if quick: setup_buttons()
 	if user.unit.job == "Sorcerer" and item.sub_type != Enums.SubItemType.SORCERY:
 		var sp_max = user.unit.job_data["sp_max"]
-		user.unit.job_data["sp_cur"] = min(user.unit.job_data["sp_cur"] + 1, user.unit.job_data["sp_max"])
+		user.unit.job_data["sp_cur"] = \
+			min(user.unit.job_data["sp_cur"] + 1, user.unit.job_data["sp_max"])
 		if quick:
 			setup_cur_player_panel()
 			setup_buttons()
 	if user.unit.job == "Bard" and item.sub_type != Enums.SubItemType.PERFORM:
 		var bp_max = user.unit.job_data["bp_max"]
-		user.unit.job_data["bp_cur"] = min(user.unit.job_data["bp_cur"] + 1, user.unit.job_data["bp_max"])
+		user.unit.job_data["bp_cur"] = \
+			min(user.unit.job_data["bp_cur"] + 1, user.unit.job_data["bp_max"])
 		if quick: setup_cur_player_panel()
 	AudioController.play_sfx(item.use_fx)
 	finish_action(!quick)
@@ -490,7 +497,8 @@ func execute_vs_enemy(panel) -> void:
 			var data = target.take_hit(hit)
 			if "dmg" in data: all_hits.append(data["dmg"])
 			if "xp" in data: gained_xp = data["xp"]
-			if randoms.size() > 0: if not target.alive: rand_targets.remove(hit_num)
+			if randoms.size() > 0: if not target.alive: \
+				rand_targets.remove(hit_num)
 		if target_type >= Enums.TargetType.ANY_ROW:
 			AudioController.play_sfx(item.sound_fx)
 		if hit_num < hits - 1:
@@ -516,13 +524,14 @@ func execute_vs_enemy(panel) -> void:
 			setup_cur_player_panel()
 			setup_buttons()
 	user.calc_xp(item.stat_hit, 0.25)
-	emit_signal("action_used", cur_btn.item, cur_player)
-	if quick:
-		if user == panel:
-			setup_cur_player_panel()
-			get_tree().call_group("battle_btns", "update_ap_cost")
-		cur_btn = null
-	else: get_next_player()
+	if cur_player:
+		emit_signal("action_used", cur_btn.item, cur_player)
+		if quick:
+			if user == panel:
+				setup_cur_player_panel()
+				get_tree().call_group("battle_btns", "update_ap_cost")
+			cur_btn = null
+		else: get_next_player()
 
 func execute_vs_player(panel) -> void:
 	var user = cur_player
@@ -531,7 +540,8 @@ func execute_vs_player(panel) -> void:
 	if item.max_uses > 0: cur_btn.uses_remain -= 1
 	var ap_cost = cur_btn.ap_cost
 	if user.unit.job == "Sorcerer" and item.sub_type != Enums.SubItemType.SORCERY:
-		user.unit.job_data["sp_cur"] = min(user.unit.job_data["sp_cur"] + 1, user.unit.job_data["sp_max"])
+		user.unit.job_data["sp_cur"] = \
+			min(user.unit.job_data["sp_cur"] + 1, user.unit.job_data["sp_max"])
 	if item.sub_type == Enums.SubItemType.PERFORM:
 		var bp = min(user.unit.job_data["bp_cur"], ap_cost)
 		user.unit.job_data["bp_cur"] -= bp
@@ -545,7 +555,8 @@ func execute_vs_player(panel) -> void:
 			if quick: setup_buttons()
 	if user.unit.job == "Bard" and item.sub_type != Enums.SubItemType.PERFORM:
 		var bp_max = user.unit.job_data["bp_max"]
-		user.unit.job_data["bp_cur"] = min(user.unit.job_data["bp_cur"] + 1, user.unit.job_data["bp_max"])
+		user.unit.job_data["bp_cur"] = \
+			min(user.unit.job_data["bp_cur"] + 1, user.unit.job_data["bp_max"])
 		if quick: setup_cur_player_panel()
 	AudioController.play_sfx(item.use_fx)
 	if item.sub_type == Enums.SubItemType.SHIELD:
@@ -572,7 +583,8 @@ func execute_vs_player(panel) -> void:
 			if not target.alive: continue
 			target.take_friendly_hit(user, item)
 		if hit_num > hits - 1:
-			yield(get_tree().create_timer(0.33 * GameManager.spd, false), "timeout")
+			yield(get_tree().create_timer(0.33 * GameManager.spd, false), \
+				"timeout")
 	emit_signal("action_used", cur_btn.item, cur_player)
 	if quick:
 		if user == panel:
@@ -645,9 +657,11 @@ func victory() -> void:
 				var amt = panel.unit.gains[i]
 				panel.unit.increase_base_stat(i + 1, int(amt))
 				show_text(Enums.get_stat_name(i + 1) + "+" + str(amt), panel.pos)
-				print(panel.unit.name, " -> ", Enums.get_stat_name(i + 1), " increased by ", amt, "!")
+				print(panel.unit.name, " -> ", Enums.get_stat_name(i + 1), \
+					" increased by ", amt, "!")
 				AudioController.play_sfx("statup")
-				yield(get_tree().create_timer(1 * GameManager.spd, true), "timeout")
+				yield(get_tree().create_timer(1 * GameManager.spd, true), \
+					"timeout")
 		var ranks_up = panel.calc_job_xp()
 		for _r in range(ranks_up):
 			if panel.unit.job_skill == Enums.SubItemType.NA: break

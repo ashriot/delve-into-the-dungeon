@@ -9,6 +9,7 @@ description = "Draw 5 Arcana."
 tier = 1
 ap_cost = 3
 quick = false
+instant = false
 item_type = 2
 sub_type = 22
 melee = false

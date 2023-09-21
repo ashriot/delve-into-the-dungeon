@@ -18,6 +18,7 @@ frame = 30
 hp_cur = 0
 hp_max = 18
 hp_percent = 0.0
+hp_missing = 0
 ap = 0
 strength = 8
 agility = 10
@@ -45,7 +46,7 @@ perks = {
 4: null
 }
 job = "Seer"
-job_tab = "Augur"
+job_tab = "Tarot"
 job_skill = 22
 job_perk = "Augury"
 perk_desc = "Can draw 5 Arcana. After an arcanum is used, you must redraw your hand."

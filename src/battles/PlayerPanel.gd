@@ -86,7 +86,7 @@ func get_hp_str(value: int) -> String:
 
 func set_ap(value: int) -> void:
 	.set_ap(value)
-	ap_gauge.rect_size.x = ap * 2
+	ap_gauge.rect_size.x = ap * 5
 
 func die() -> void:
 	.die()
@@ -102,7 +102,7 @@ func victory() -> void:
 	unit.int_mods.clear()
 	unit.def_mods.clear()
 	if not ready: self.ready = true
-	
+
 	print(unit.name, " ", unit.gains)
 	anim.play("Victory")
 

@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/battles/PlayerPanel.gd" type="Script" id=1]
 [ext_resource path="res://assets/themes/ui/texture_progress.png" type="Texture" id=2]
 [ext_resource path="res://assets/images/ui_outline.png" type="Texture" id=3]
-[ext_resource path="res://assets/images/icons/selector.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/ui_selector.png" type="Texture" id=4]
 [ext_resource path="res://assets/images/sheets/sprites.png" type="Texture" id=5]
 [ext_resource path="res://assets/images/icons/selector_variable.png" type="Texture" id=6]
-[ext_resource path="res://assets/images/ui_ap.png" type="Texture" id=7]
+[ext_resource path="res://assets/images/icons/ap_gauge_small.png" type="Texture" id=7]
 [ext_resource path="res://assets/images/sheets/statuses.png" type="Texture" id=8]
+[ext_resource path="res://assets/images/icons/ap_bg_small.png" type="Texture" id=9]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Hit"
@@ -69,7 +70,7 @@ tracks/1/keys = {
 }
 
 [node name="PlayerPanel" type="Control"]
-margin_right = 32.0
+margin_right = 35.0
 margin_bottom = 12.0
 rect_min_size = Vector2( 33, 12 )
 script = ExtResource( 1 )
@@ -92,8 +93,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -12.0
+margin_left = -13.0
 margin_top = -4.0
+margin_right = -1.0
 margin_bottom = 3.0
 bbcode_enabled = true
 bbcode_text = "[right][color=#242428]0[/color]23[/right]"
@@ -108,9 +110,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -12.0
+margin_left = -13.0
 margin_top = -3.0
-margin_right = -1.0
+margin_right = -2.0
 margin_bottom = -2.0
 mouse_filter = 2
 value = 50.0
@@ -124,6 +126,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 2, 2 )
 texture = ExtResource( 5 )
 centered = false
@@ -149,7 +152,6 @@ frame = 4
 
 [node name="Selector" type="Sprite" parent="."]
 visible = false
-self_modulate = Color( 0.301961, 0.607843, 0.901961, 1 )
 texture = ExtResource( 4 )
 centered = false
 
@@ -172,11 +174,25 @@ __meta__ = {
 anims/Hit = SubResource( 1 )
 anims/Victory = SubResource( 2 )
 
-[node name="ApGauge" type="TextureRect" parent="."]
-self_modulate = Color( 0.968627, 0.588235, 0.0901961, 1 )
-margin_left = 21.0
+[node name="ApBg" type="TextureRect" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = -1.0
 margin_right = 32.0
-margin_bottom = 2.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ApGauge" type="TextureRect" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = -1.0
+margin_right = 22.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 2

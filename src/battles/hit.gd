@@ -44,7 +44,7 @@ func can_crit() -> bool:
 	and action.sub_type == Enums.SubItemType.SORCERY:
 		return true
 	return false
-	
+
 func update_target_data(_target) -> void:
 	if not _target: return
 	target = _target

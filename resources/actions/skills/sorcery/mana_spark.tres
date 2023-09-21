@@ -10,6 +10,7 @@ description = "Deal {potency} {dmg} damage to {tgt}."
 tier = 1
 ap_cost = 0
 quick = true
+instant = false
 item_type = 2
 sub_type = 26
 melee = false

@@ -87,7 +87,7 @@ func init() -> void:
 	GameManager.initialize_party()
 	var _err = connect("level_changed", GameManager, "_on_level_changed")
 	new_hero.init(self)
-	battle.init(self)
+	battle.init()
 	dungeon.init(self)
 	party_menu.init(self)
 	town_menu.init(self)
@@ -155,7 +155,7 @@ func battle_start(lv: int):
 	fade.fade_to_black()
 	yield(fade, "done")
 	hud.hide()
-	var enemies = get_enemies(lv)
+	var enemies = get_enemies(lv) as Dictionary
 	yield(get_tree().create_timer(0.25), "timeout")
 	battle.start(players, enemies)
 	fade.fade_from_black()
@@ -174,25 +174,35 @@ func battle_start(lv: int):
 	menu_button.show()
 
 func get_enemies(max_lv: int) -> Dictionary:
-#	var enemy_picker = dungeon.get_enemies()
-	var enemy_picker = load("res://resources/locales/sea_caves.tres").enemies
+	var enemy_data = load_enemy_data()
 	var level_num = max_lv
-	var mod = int(min(level_num + 2, 6))
-	var mobs = 6
-# warning-ignore:integer_division
+	var mobs = 2
 	var min_lv = max(max_lv - 3, 1)
 	var encounter = {}
+
 	for i in range(mobs):
-		var slot = 1 if mobs == 1 else i
-		var lv = randi() % (1 + max_lv - min_lv) + min_lv
-		if mobs == 1 and level_num > 1: lv += 1
-		if mobs == 2 and i == 1: slot = 2
-		if mobs == 3 and i == 1: slot = (randi() % 2) * 3 + 1
-		encounter[slot] = [enemy_picker[randi() % enemy_picker.size()], lv].duplicate()
+		var slot = determine_slot(i, mobs, level_num)
+		var lv = randi() % (max_lv - min_lv + 1) + min_lv
+		encounter[slot] = pick_enemy(enemy_data, lv)
 	return encounter
 
+func load_enemy_data() -> Array:
+	return load("res://resources/locales/sea_caves.tres").enemies
+
+func determine_slot(index: int, mobs: int, level_num: int) -> int:
+	if mobs == 1:
+		return 1
+	elif mobs == 2:
+		return index + 1
+	elif mobs == 3 and index == 1:
+		return (randi() % 2) * 3 + 1
+	return 1
+
+func pick_enemy(enemy_data: Array, level: int) -> Array:
+	var enemy = enemy_data[randi() % enemy_data.size()]
+	return [enemy, level]
+
 func _on_Chest_opened() -> void:
-# warning-ignore:integer_division
 	var lv = int(level_num / 5) + 2
 	var item = ItemDb.get_random_item(lv)
 	var text = item.name

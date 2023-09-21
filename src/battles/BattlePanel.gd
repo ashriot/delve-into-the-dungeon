@@ -39,19 +39,20 @@ var status_ptr: int
 var blocking: int setget set_blocking
 var hasted: bool setget, get_hasted
 
-func init(battle) -> void:
+func init(ui) -> void:
 	anim.playback_speed = 1 / GameManager.spd
 	pos = rect_global_position
 	pos.x -= 23
 	pos.y += rect_size.y / 2
 # warning-ignore:return_value_discarded
-	connect("show_dmg", battle, "show_dmg_text")
+	connect("show_dmg", ui, "show_dmg_text")
 # warning-ignore:return_value_discarded
-	connect("show_text", battle, "show_text")
-	connect("dmg_dealt", battle, "dmg_dealt")
-	battle.connect("action_used", self, "action_used")
+	connect("show_text", ui, "show_text")
+	connect("dmg_dealt", ui, "dmg_dealt")
+	ui.connect("action_used", self, "action_used")
 
 func setup(_unit):
+	unit = _unit
 	anim.stop()
 	sprite.visible = true
 	enabled = true
@@ -84,6 +85,10 @@ func _exit_tree() -> void:
 func get_stat(stat) -> int:
 	return unit.get_stat(stat)
 
+func update_ui() -> void:
+	self.hp_cur = unit.hp_cur
+	self.ap = unit.ap
+
 func take_hit(hit: Hit) -> Dictionary:
 	var gained_xp = false
 	var item = hit.action as Action
@@ -101,10 +106,15 @@ func take_hit(hit: Hit) -> Dictionary:
 	var multi = item.multiplier
 	var dmg = hit.dmg if not crit else hit.crit_dmg
 	var final_dmg = dmg
-	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), "% = ", hit.dmg)
+	print(hit.panel.unit.name, " uses ", hit.action.name, " -> Base ATK: ", \
+		hit.atk, " x ", hit.action.multiplier, " x ", (hit.dmg_mod * 100), \
+		"% = ", hit.dmg)
 	var lifesteal_heal = int(float(min(dmg, hp_cur)) * lifesteal)
-	print(" -> Hit: ", hit_roll, " < ", hit.hit_chance, "? ", ("Miss..." if miss else "Hit!!"), " Crit: ", crit_roll, " < ", hit.crit_chance, "% ", crit) 
-	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", float(hit.def / 2) * hit.action.multiplier, " DMG: ", dmg)
+	print(" -> Hit: ", hit_roll, " < ", hit.hit_chance, "? ", ("MISS!" \
+		if miss else "Hit!"), " Crit: ", crit_roll, " < ", hit.crit_chance, \
+		"% ", crit)
+	print(unit.name, " -> Base DEF: ", unit.get_stat(item.stat_vs), " DEF: ", \
+		float(hit.def / 2) * hit.action.multiplier, " DMG: ", dmg)
 	var dmg_text = ""
 	var blocked = 0
 	if not miss and !effect_only:
@@ -130,7 +140,6 @@ func take_hit(hit: Hit) -> Dictionary:
 		dmg_text = str(dmg) + ("!" if crit else "")
 		if blocked: dmg_text += " [" + str(blocked) + "]"
 		anim.play("Hit")
-		emit_signal("dmg_dealt", dmg, hit.panel, hit.action, crit)
 	elif miss:
 		dmg_text = "Miss"
 		fx = "miss"
@@ -160,7 +169,8 @@ func take_hit(hit: Hit) -> Dictionary:
 			emit_signal("show_text", "+" + slay.name, pos)
 			gain_bane(slay, 1)
 	if item.inflict_banes.size() > 0 and not miss and self.alive:
-		if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+		if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), \
+			"timeout")
 		var banes = item.inflict_banes
 		if item.name == "Banish":
 			if hp_cur <= hit.panel.unit.intellect * 2:
@@ -170,7 +180,8 @@ func take_hit(hit: Hit) -> Dictionary:
 			if item.name == "Hypnotize":
 				chance *= hit.dmg_mod
 				print("Hypno chance: ", chance)
-			if item.sub_type == Enums.SubItemType.KNIFE and hit.panel.unit.job == "Thief":
+			if item.sub_type == Enums.SubItemType.KNIFE and \
+				hit.panel.unit.job == "Thief":
 				chance = 100
 			if randi() % 100 + 1 > chance: # resisted
 				if effect_only:
@@ -186,9 +197,11 @@ func take_hit(hit: Hit) -> Dictionary:
 	if item.gain_boons and not miss:
 		for boon in item.gain_boons:
 			if randi() % 100 + 1 > boon[2]: continue
-			if not effect_only: yield(get_tree().create_timer(0.5 * GameManager.spd), "timeout")
+			if not effect_only: yield(get_tree().create_timer(0.5 * \
+				GameManager.spd), "timeout")
 			var success = hit.panel.gain_boon(boon[0], boon[1])
-			if success: emit_signal("show_text", "+" + boon[0].name, hit.panel.pos)
+			if success: emit_signal("show_text", "+" + boon[0].name, \
+				hit.panel.pos)
 			yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 		yield(get_tree().create_timer(0.25 * GameManager.spd), "timeout")
 	return { "xp": gained_xp,
@@ -434,6 +447,7 @@ func update_status() -> void:
 	delay = 0
 
 func action_used(action, user) -> void:
+	if not unit: return
 	if user != self and has_perk("Improv"):
 		if randi() % 100 + 1 < 25:
 			emit_signal("show_text", "+1AP", pos)
@@ -461,6 +475,7 @@ func set_ap(value: int) -> void:
 	unit.ap = ap
 
 func get_hp_percent() -> float:
+	if hp_max == 0: return 0.0
 	return float(hp_cur) / hp_max
 
 func set_blocking(value: int) -> void:

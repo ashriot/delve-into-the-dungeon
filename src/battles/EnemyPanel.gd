@@ -17,7 +17,10 @@ func init(battle) -> void:
 # warning-ignore:return_value_discarded
 	connect("died", battle, "_on_EnemyPanel_died", [self])
 
-func setup(_unit):
+func setup(_unit: Array) -> void:
+	if not _unit:
+		clear()
+		return
 	unit = _unit[0].duplicate()
 	unit.level = _unit[1]
 	level_up()
@@ -72,8 +75,8 @@ func targetable(value: bool, display = true):
 
 func update_hit_chance(hit) -> void:
 	if not hit: return
-	hit.update_target_data(self)
 	if not (enabled or self.alive or valid_target): return
+	hit.update_target_data(self)
 	if hit.action.stat_hit != Enums.StatType.NA:
 		hit_display.text = str(int(hit.hit_chance)) + "%"
 	else: hit_display.text = ""

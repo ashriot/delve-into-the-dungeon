@@ -1,4 +1,5 @@
 extends Control
+class_name PlayerPanels
 
 onready var panels = $Panels
 onready var all_selector = $AllSelector
@@ -48,9 +49,9 @@ func show_selectors(player: PlayerPanel, target_type):
 	elif target_type == Enums.TargetType.RANDOM_ALLY:
 		show_all_selectors()
 
-func show_all_except_self(player):
+func show_all_except_self(hero):
 	for child in panels.get_children():
-		if child == player: continue
+		if child == hero: continue
 		child.targetable(true, true)
 
 func show_all_selectors():

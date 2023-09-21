@@ -13,8 +13,8 @@ var tab setget set_tab, get_tab
 var menu
 var unit: Player
 
-func init(menu) -> void:
-	self.menu = menu
+func init(_menu) -> void:
+	menu = _menu
 # warning-ignore:return_value_discarded
 	$Button.connect("pressed", menu, "_on_PlayerMenuPanel_pressed", [self])
 

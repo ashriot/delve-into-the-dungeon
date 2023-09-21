@@ -2,10 +2,12 @@ extends Resource
 class_name Action
 
 export var name: String
-export(String, MULTILINE) var description = "Deal {potency} {dmg} damage to {tgt}.\n{aim}"
+export(String, MULTILINE) var description = \
+	"Deal {potency} {dmg} damage to {tgt}.\n{aim}"
 export var tier: = 1
 export var ap_cost: = 2
 export var quick: = false setget, get_quick
+export var instant: = false setget, get_instant
 export(Enums.ItemType) var item_type
 export(Enums.SubItemType) var sub_type
 export var melee: bool
@@ -64,12 +66,14 @@ func get_frame() -> int:
 func get_desc() -> String:
 	var sub = description as String
 	var dmg = Enums.get_stat_name(stat_used) + "*" + str(multiplier)
-	var hits = str(max_hits) if min_hits == max_hits else (str(min_hits) + "-" + str(max_hits))
+	var hits = str(max_hits) if min_hits == max_hits else (str(min_hits) \
+		+ "-" + str(max_hits))
 	dmg += ("(*" + hits + ")") if max_hits > 1 else ""
 	sub = sub.replace("{potency}", dmg)
 	sub = sub.replace("{dmg}", Enums.get_damage_name(damage_type))
 	sub = sub.replace("{tgt}", Enums.get_target_name(target_type))
-	sub = sub.replace("{aim}", "Hit: " + str(hit_chance) + "% | Crit: " + str(crit_chance) + "%" )
+	sub = sub.replace("{aim}", "Hit: " + str(hit_chance) + "% | Crit: " \
+		+ str(crit_chance) + "%" )
 	sub = sub.replace("{vs}", "vs. " + Enums.get_stat_name(stat_vs) )
 	return sub
 
@@ -92,3 +96,6 @@ func colorize(stat, text) -> String:
 
 func get_quick() -> bool:
 	return quick
+
+func get_instant() -> bool:
+	return instant

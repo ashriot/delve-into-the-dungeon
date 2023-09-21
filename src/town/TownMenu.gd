@@ -95,8 +95,8 @@ func set_map_pos(value) -> void:
 
 func set_depth(value) -> void:
 	depth = value
-	$WorldMap/Progress/Depth.text = "Depth: " + str(depth) + "/" + str(game.dungeon_lvs[map_pos - 1])
-# warning-ignore:integer_division
+	$WorldMap/Progress/Depth.text = "Depth: " + str(depth) + \
+		"/" + str(game.dungeon_lvs[map_pos - 1])
 	var lv = locales[map_pos].enemy_lv + int(depth / 3)
 	$WorldMap/Progress/Level.text = "Avg. Lv: " + str(lv)
 
@@ -180,7 +180,7 @@ func _on_TavernLeaveBtn_pressed():
 	AudioController.back()
 	tavern.hide()
 
-var docks_lv := 50
+var docks_lv := 1
 
 func _on_DocksBtn_pressed():
 	if not game.players: return
